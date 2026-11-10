@@ -660,6 +660,150 @@ test("the problem chapter stays active from the form examples through the shared
 });
 
 for (const reducedMotion of ["reduce", "no-preference"] as const) {
+  test(`revisiting solutions keeps their order and the current panel open with ${reducedMotion} motion`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion });
+    await page.goto("/#chapter-02-continued");
+    await expect(
+      page.getByRole("button", { name: "Start presentation timer" }),
+    ).toBeEnabled();
+    const problems = page.getByRole("region", { name: "But also..." });
+    const toggles = problems.locator(".problem-pillars").getByRole("button");
+    const solution = problems.locator(".problem-solution");
+
+    for (const index of [2, 0, 1]) {
+      await toggles.nth(index).click();
+      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
+    }
+
+    const answers = [
+      "Open source & shared maintenance",
+      "Material · Bootstrap · PrimeNG",
+      "Core · MCP · Builder",
+    ];
+    for (const index of [0, 1, 2]) {
+      const history = problems.locator(".problem-solution-history");
+      await expect(history.locator(".problem-icon")).toHaveCount(2);
+      const button = history.getByRole("button", {
+        name: answers[index],
+        exact: true,
+      });
+      const icon = button.locator(".problem-icon");
+      await expect(icon).toBeVisible();
+      await expect(button).toHaveAttribute("aria-expanded", "false");
+      const iconPath = await icon.locator("path").getAttribute("d");
+      if (index === 0) {
+        await button.scrollIntoViewIfNeeded();
+        const bounds = (await icon.boundingBox())!;
+        await page.mouse.click(
+          bounds.x + bounds.width / 2,
+          bounds.y + bounds.height / 2,
+        );
+      } else {
+        await button.press(index === 1 ? "Enter" : "Space");
+      }
+      await expect(solution.locator(".problem-solution-page")).toHaveCount(1);
+      await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
+        answers[index],
+      );
+      await expect(solution.locator(".problem-icon path")).toHaveAttribute(
+        "d",
+        iconPath!,
+      );
+      await expect(problems.locator(".problem-result")).toBeFocused();
+      const positions = await problems
+        .locator(".problem-solution-history li, .problem-solution")
+        .evaluateAll((elements) =>
+          elements
+            .sort(
+              (a, b) =>
+                a.getBoundingClientRect().top - b.getBoundingClientRect().top,
+            )
+            .map(
+              (element) =>
+                element.querySelector("h4")?.textContent ?? element.textContent,
+            ),
+        );
+      expect(positions).toEqual(answers);
+      await toggles.nth(index).press("Enter");
+      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
+      await expect(solution).toHaveCount(1);
+    }
+  });
+
+  test(`solution pages slide within the card with ${reducedMotion} motion`, async ({
+    page,
+  }) => {
+    await page.clock.install();
+    await page.emulateMedia({ reducedMotion });
+    await page.goto("/#chapter-02-continued");
+    await expect(
+      page.getByRole("button", { name: "Start presentation timer" }),
+    ).toBeEnabled();
+    const problems = page.getByRole("region", { name: "But also..." });
+    const toggles = problems.locator(".problem-pillars").getByRole("button");
+    const solution = problems.locator(".problem-solution");
+    const pages = solution.locator(".problem-solution-page");
+    await toggles.first().click();
+    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
+      "Open source & shared maintenance",
+    );
+    await expect(solution).toHaveCSS("overflow", "hidden");
+    await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000));
+
+    for (const index of [1, 0]) {
+      await toggles
+        .nth(index)
+        .evaluate((button: HTMLButtonElement) => button.click());
+      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
+      await page.clock.runFor(100);
+      const current = solution.locator(
+        ".problem-solution-page[aria-hidden='false']",
+      );
+      const outgoing = solution.locator(
+        ".problem-solution-page[aria-hidden='true']",
+      );
+      if (reducedMotion === "reduce") {
+        await expect(pages).toHaveCount(1);
+        await expect(current).toHaveCSS("transform", "none");
+      } else {
+        await expect(pages).toHaveCount(2);
+        await expect(outgoing).toHaveAttribute("inert", "");
+        const incomingY = await current.evaluate(
+          (element) =>
+            new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
+        );
+        const outgoingY = await outgoing.evaluate(
+          (element) =>
+            new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
+        );
+        expect(incomingY * (index === 1 ? 1 : -1)).toBeGreaterThan(0);
+        expect(outgoingY * (index === 1 ? 1 : -1)).toBeLessThan(0);
+        await expect(solution.getByRole("heading", { level: 4 })).toHaveCount(
+          1,
+        );
+      }
+      await page.clock.runFor(500);
+      await expect(pages).toHaveCount(1);
+      await expect(pages).toHaveCSS("transform", "none");
+    }
+
+    for (const index of [2, 1, 0]) {
+      await toggles
+        .nth(index)
+        .evaluate((button: HTMLButtonElement) => button.click());
+      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
+      await page.clock.runFor(50);
+    }
+    await page.clock.runFor(500);
+    await expect(pages).toHaveCount(1);
+    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
+      "Open source & shared maintenance",
+    );
+    await expect(pages).toHaveCSS("transform", "none");
+  });
+
   test(`problem cards share one solution panel with ${reducedMotion} motion`, async ({
     page,
     isMobile,
@@ -670,13 +814,26 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       page.getByRole("button", { name: "Start presentation timer" }),
     ).toBeEnabled();
     const problems = page.getByRole("region", { name: "But also..." });
-    const toggles = problems.getByRole("button");
+    const toggles = problems.locator(".problem-pillars").getByRole("button");
     const solution = problems.locator(".problem-solution");
-    const heading = page.locator("#chapter-02").getByRole("heading", { level: 2 });
+    const heading = page
+      .locator("#chapter-02")
+      .getByRole("heading", { level: 2 });
+    const history = problems.getByRole("list", {
+      name: "Previously shown solutions",
+    });
+    const titles = history.getByRole("listitem");
     await expect(heading).toHaveAccessibleName("02 The Problems");
-    await expect(toggles).toHaveCount(3);
+    await expect(toggles).toHaveText([
+      "Ongoing cost",
+      "Different designs",
+      "Repeated work",
+    ]);
     await expect(solution).toHaveCount(0);
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(3);
+    await expect(history).toHaveCount(0);
+    await expect(problems.locator(".problem-description:visible")).toHaveCount(
+      3,
+    );
 
     const first = toggles.first();
     const firstCard = problems.locator(".problem-card").first();
@@ -687,9 +844,13 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
     expect(selectedSize.width).toBeCloseTo(originalSize.width);
     expect(selectedSize.height).toBeCloseTo(originalSize.height);
     await expect(firstCard.locator(".problem-icon")).toHaveCount(0);
-    await expect(first).toHaveAccessibleName("Hide solution: Ongoing cost");
+    await expect(first).toHaveAccessibleName("Show solution: Ongoing cost");
     await expect(first).toHaveAttribute("aria-expanded", "true");
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(3);
+    await expect(firstCard).toHaveCSS("background-color", "rgb(238, 235, 229)");
+    await expect(history).toHaveCount(0);
+    await expect(problems.locator(".problem-description:visible")).toHaveCount(
+      3,
+    );
     await expect(solution).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     await expect(solution).toHaveCSS("border-top-color", "rgb(79, 107, 82)");
     await expect(solution).toHaveCSS("border-top-width", "2px");
@@ -700,9 +861,13 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       solution.getByRole("list", { name: "Core team" }).getByRole("listitem"),
     ).toHaveCount(7);
     await expect(
-      solution.getByRole("list", { name: "Community contributors" }).getByRole("listitem"),
+      solution
+        .getByRole("list", { name: "Community contributors" })
+        .getByRole("listitem"),
     ).toHaveCount(100);
-    await expect(solution.getByRole("link", { name: "107 contributors" })).toBeVisible();
+    await expect(
+      solution.getByRole("link", { name: "107 contributors" }),
+    ).toBeVisible();
 
     const cards = (await problems.locator(".problem-pillars").boundingBox())!;
     const panel = (await solution.boundingBox())!;
@@ -713,76 +878,122 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       expect(panel.x).toBeGreaterThan(cards.x + cards.width);
       expect(panel.y).toBeCloseTo(cards.y);
       expect(panel.height).toBeCloseTo(cards.height);
-      const content = solution.getByRole("region", { name: "Open source & shared maintenance" });
-      expect(await content.evaluate((element) => element.scrollHeight))
-        .toBeGreaterThan(await content.evaluate((element) => element.clientHeight));
+      const content = solution.getByRole("region", {
+        name: "Open source & shared maintenance",
+      });
+      expect(
+        await content.evaluate((element) => element.scrollHeight),
+      ).toBeGreaterThan(
+        await content.evaluate((element) => element.clientHeight),
+      );
       await content.press("End");
-      await expect.poll(() => content.evaluate((element) => element.scrollTop))
+      await expect
+        .poll(() => content.evaluate((element) => element.scrollTop))
         .toBeGreaterThan(0);
     }
     const solutionIcon = solution.locator(".problem-icon");
-    await expect.poll(async () => {
-      const icon = (await solutionIcon.boundingBox())!;
-      const panel = (await solution.boundingBox())!;
-      return panel.x + panel.width - (icon.x + icon.width);
-    }).toBeCloseTo((isMobile ? 12 : 20) + 2, 0);
+    await expect
+      .poll(async () => {
+        const icon = (await solutionIcon.boundingBox())!;
+        const panel = (await solution.boundingBox())!;
+        return panel.x + panel.width - (icon.x + icon.width);
+      })
+      .toBeCloseTo((isMobile ? 12 : 20) + 2, 0);
     if (reducedMotion === "reduce") {
       await expect(solution).toHaveCSS("animation-name", "none");
     }
 
-    await toggles.nth(1).press("Enter");
+    await toggles.last().press("Enter");
     await expect(heading).toHaveAccessibleName("02 The Solutions");
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(3);
+    await expect(problems.locator(".problem-description:visible")).toHaveCount(
+      3,
+    );
     await expect(first).toHaveAttribute("aria-expanded", "false");
+    await expect(firstCard).toHaveCSS("background-color", "rgb(238, 235, 229)");
+    await expect(titles).toHaveText(["Open source & shared maintenance"]);
+    const historyBounds = (await history.boundingBox())!;
+    expect(historyBounds.y + historyBounds.height).toBeLessThan(
+      (await solution.boundingBox())!.y,
+    );
     await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Core · Builder · MCP",
+      "Core · MCP · Builder",
     );
-    await toggles.last().click();
+    await toggles.nth(1).click();
     await expect(heading).toHaveAccessibleName("02 The Solutions");
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(3);
-    await expect(problems.getByRole("button", { expanded: true })).toHaveCount(1);
-    const link = solution.getByRole("link", { name: "Angular Aria" });
-    await expect(link).toHaveAttribute(
-      "href",
-      "https://angular.dev/guide/aria/overview",
+    await expect(problems.locator(".problem-description:visible")).toHaveCount(
+      3,
     );
+    await expect(problems.getByRole("button", { expanded: true })).toHaveCount(
+      1,
+    );
+    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
+      "Material · Bootstrap · PrimeNG",
+    );
+    await expect(titles).toHaveText([
+      "Open source & shared maintenance",
+      "Core · MCP · Builder",
+    ]);
+    for (const card of await problems.locator(".problem-card").all()) {
+      await expect(card).toHaveCSS("background-color", "rgb(238, 235, 229)");
+    }
     const oblique = solution.getByRole("link", { name: "Oblique compatible" });
     await expect(oblique).toHaveAttribute(
       "href",
       "https://oblique.bit.admin.ch/introductions/welcome",
     );
     await expect(oblique.locator("img")).toBeVisible();
-    expect(await oblique.locator("img").evaluate((image: HTMLImageElement) =>
-      image.complete && image.naturalWidth > 0,
-    )).toBe(true);
+    expect(
+      await oblique
+        .locator("img")
+        .evaluate(
+          (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+        ),
+    ).toBe(true);
     const checkmark = oblique.locator(".oblique-checkmark");
     await expect(checkmark.locator("path")).toHaveCSS(
       "animation-name",
       reducedMotion === "reduce" ? "none" : "checkmark-draw",
     );
-    await expect(checkmark.locator("path")).toHaveCSS("stroke-dashoffset", "0px");
+    await expect(checkmark.locator("path")).toHaveCSS(
+      "stroke-dashoffset",
+      "0px",
+    );
     const logoBounds = (await oblique.locator("img").boundingBox())!;
     const checkBounds = (await checkmark.boundingBox())!;
     expect(checkBounds.x).toBeGreaterThan(logoBounds.x + logoBounds.width / 2);
     expect(checkBounds.y).toBeLessThan(logoBounds.y);
     await oblique.focus();
     await expect(oblique).toBeFocused();
-    await link.focus();
-    await expect(link).toBeFocused();
-    await toggles.last().press("Space");
-    await expect(heading).toHaveAccessibleName("02 The Problems");
-    await expect(solution).toHaveCount(0);
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(3);
-    await expect(problems.locator(".problem-card .problem-icon")).toHaveCount(3);
-    await toggles.last().click();
-    if (reducedMotion === "no-preference") {
-      expect(await checkmark.locator("path").evaluate((path) =>
-        path.getAnimations().some((animation) => animation.playState === "running"),
-      )).toBe(true);
-    }
-    await expect(checkmark.locator("path")).toHaveCSS("stroke-dashoffset", "0px");
-    expect(await page.evaluate(() => document.documentElement.scrollWidth))
-      .toBeLessThanOrEqual(page.viewportSize()!.width);
+    await toggles.nth(1).press("Space");
+    await expect(heading).toHaveAccessibleName("02 The Solutions");
+    await expect(solution).toHaveCount(1);
+    await expect(toggles.nth(1)).toHaveAttribute("aria-expanded", "true");
+    await expect(problems.locator(".problem-description:visible")).toHaveCount(
+      3,
+    );
+    await expect(problems.locator(".problem-card .problem-icon")).toHaveCount(
+      2,
+    );
+    await toggles.nth(1).click();
+    await expect(checkmark.locator("path")).toHaveCSS(
+      "stroke-dashoffset",
+      "0px",
+    );
+    await expect(titles).toHaveText([
+      "Open source & shared maintenance",
+      "Core · MCP · Builder",
+    ]);
+    await first.click();
+    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
+      "Open source & shared maintenance",
+    );
+    await expect(titles).toHaveText([
+      "Material · Bootstrap · PrimeNG",
+      "Core · MCP · Builder",
+    ]);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBeLessThanOrEqual(page.viewportSize()!.width);
   });
 }
 

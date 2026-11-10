@@ -78,7 +78,7 @@ Suggested opening speaker notes:
 
 ## Chapter 02
 
-Developed from the user's handwritten "Problems" notes. The title starts as "The Problems", changes to "The Solutions" while a problem is selected, and returns when the selection is cleared. Keep the five-minute allocation and the stable `chapter-02` anchor.
+Developed from the user's handwritten "Problems" notes. The title starts as "The Problems" and changes to "The Solutions" once a problem is selected. Selecting the current problem keeps its solution open. Previously shown solutions keep their original top-to-bottom order when revisited, with summaries above and below the selected solution. Each summary keeps its solution icon; clicking the summary or icon reopens that solution. Keep the five-minute allocation and the stable `chapter-02` anchor.
 
 The story follows joining one project and building a form, then joining another project with familiar form requirements and a different stack. Six static form illustrations repeat the same name and email fields across six distinct designs: Material-inspired, Bootstrap-inspired, custom, rounded fields, a compact layout and a high-contrast design. The user approved illustrative examples for now; the caption labels the fictional data. These are presentation illustrations, not live forms or screenshots of BIT applications.
 
