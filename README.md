@@ -41,7 +41,7 @@ Install the browser once. Tests cover chapter navigation, skipping extras, direc
 - `src/styles.css` contains the presentation styles and reduced-motion fallback.
 - `HANDOFF.md` records the agreed content and the next work.
 
-The title page is unnumbered. Chapters 09 and 10 are optional extras. Chapter 08 has a **Skip extras** link to chapter 11. Normal scrolling and browser anchor links remain available.
+The title page is unnumbered. Chapter 09 is an optional extra. Chapter 10 was removed; the remaining chapter numbers stay stable. Chapter 08 has a **Skip extras** link to chapter 11. Normal scrolling and browser anchor links remain available.
 
 TanStack generates `src/routeTree.gen.ts`; do not edit it manually. Production hosting is not configured yet.
 

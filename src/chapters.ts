@@ -20,7 +20,7 @@ export const chapters: Chapter[] = [
   },
   {
     number: "02",
-    title: "The problem",
+    title: "The Problems",
     minutes: 5,
     kind: "main",
     summary:
@@ -81,13 +81,6 @@ export const chapters: Chapter[] = [
     kind: "extra",
     summary:
       "Translate labels and validation messages with ngx-translate while keeping the form model stable.",
-  },
-  {
-    number: "10",
-    title: "Portless",
-    minutes: 3,
-    kind: "extra",
-    summary: "Use named local URLs to move between development projects.",
   },
   {
     number: "11",

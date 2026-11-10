@@ -23,24 +23,23 @@ The user chose TanStack Start, React and Motion for a scrolling presentation. Wo
 | 07      | Periscope                              | 8       | Main                            |
 | 08      | A shared form approach at BIT          | 2       | Main                            |
 | 09      | Multilingual forms with ngx-translate  | 4       | Optional extra                  |
-| 10      | Portless development workflow          | 3       | Optional extra                  |
 | 11      | Q&A                                    | 15      | Discussion                      |
 
-The main content totals 38 minutes. The extras add 7 minutes and may be skipped. Keep the numbers stable when developing each chapter.
+The main content totals 38 minutes. The optional multilingual forms chapter adds 4 minutes and may be skipped. Keep the numbers stable when developing each chapter.
 
 ## Content decisions
 
 - Treat MCP/WebMCP as implemented for the presentation, as the user requested. The scaffold does not implement an MCP server or WebMCP integration itself.
 - Periscope is the user's event, workflow and survey tool. Its actual screens and demo flow are still needed.
 - The exact validation service and intended playground still need clarification. The earlier slide draft used ngx-formly Builder as the proposed playground.
-- Keep Portless and translation optional. They support the main presentation but must not displace it.
+- Keep translation optional. It supports the main presentation but must not displace it.
 - Do not invent adoption statistics, time savings or Periscope implementation details.
 
 ## Current setup
 
 - Repository: `/Users/raphael.balet/Documents/Open-source/ngx-presentation`.
 - Run `pnpm dev` through Portless and open the printed URL (normally https://ngx-presentation.localhost). Playwright bypasses the proxy and uses port 4310.
-- Chapter IDs are `chapter-01` through `chapter-11` and support direct hash links.
+- Chapter IDs are `chapter-01` through `chapter-09`, plus `chapter-11` for Q&A, and support direct hash links. Chapter 10 was removed; the remaining numbers stay stable.
 - Motion applies a small scroll-linked vertical transition. Reduced-motion mode disables it and smooth anchor scrolling.
 - Navigation uses normal links, with a skip-extras link before the optional chapters.
 - No hosting, authentication, backend or demo integration is configured.
@@ -79,7 +78,7 @@ Suggested opening speaker notes:
 
 ## Chapter 02
 
-Developed from the user's handwritten "Problems" notes. Keep the title "The problem", the five-minute allocation and the stable `chapter-02` anchor.
+Developed from the user's handwritten "Problems" notes. The title starts as "The Problems", changes to "The Solutions" while a problem is selected, and returns when the selection is cleared. Keep the five-minute allocation and the stable `chapter-02` anchor.
 
 The story follows joining one project and building a form, then joining another project with familiar form requirements and a different stack. Six static form illustrations repeat the same name and email fields across six distinct designs: Material-inspired, Bootstrap-inspired, custom, rounded fields, a compact layout and a high-contrast design. The user approved illustrative examples for now; the caption labels the fictional data. These are presentation illustrations, not live forms or screenshots of BIT applications.
 

@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import type { Chapter } from '../chapters';
 import { ChapterTitle } from './chapter-title';
 
@@ -25,29 +25,12 @@ export function ChapterSection({ chapter, previous, next, subtitle = chapter.sub
   continuations?: Continuation[];
 }) {
   const firstSlide = useRef<HTMLDivElement>(null);
-  const [showRunningTitle, setShowRunningTitle] = useState(false);
   const { scrollYProgress } = useScroll({ target: firstSlide, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [32, 0, 0, -32]);
   const chapterId = `chapter-${chapter.number}`;
   const hasContinuation = continuations.length > 0;
 
-  useEffect(() => {
-    if (!hasContinuation) return;
-    const title = firstSlide.current!.querySelector('h2')!;
-    const header = document.querySelector('.site-header')!;
-    const updateRunningTitle = () => {
-      setShowRunningTitle(title.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom);
-    };
-
-    updateRunningTitle();
-    window.addEventListener('scroll', updateRunningTitle, { passive: true });
-    window.addEventListener('resize', updateRunningTitle);
-    return () => {
-      window.removeEventListener('scroll', updateRunningTitle);
-      window.removeEventListener('resize', updateRunningTitle);
-    };
-  }, [hasContinuation]);
-
+  const title = <ChapterTitle number={chapter.number} title={chapter.title} subtitle={hasContinuation ? undefined : subtitle} />;
   const previousLink = (
     <a href={previous ? `#chapter-${previous.number}` : '#overview'}>
       {previous ? `Previous: ${previous.number}` : 'Back to overview'}
@@ -70,16 +53,13 @@ export function ChapterSection({ chapter, previous, next, subtitle = chapter.sub
       tabIndex={-1}
     >
       {hasContinuation && (
-        <div className="chapter-running-title" data-visible={showRunningTitle} aria-hidden="true">
-          <div className="chapter-running-title-inner">
-            <span className="chapter-number">{chapter.number}</span>
-            <span>{chapter.title}</span>
-          </div>
+        <div className="chapter-running-title">
+          {title}
         </div>
       )}
       <div className="chapter-slide" ref={firstSlide}>
         <motion.div className="chapter-content" style={{ y }}>
-          <ChapterTitle number={chapter.number} title={chapter.title} subtitle={subtitle} />
+          {hasContinuation ? subtitle && <p className="chapter-subtitle">{subtitle}</p> : title}
           {chapter.kind === 'extra' && <p className="chapter-label">Optional extra</p>}
           {children ?? <p className="chapter-summary">{chapter.summary}</p>}
         </motion.div>

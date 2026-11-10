@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { chapters } from "../chapters";
-import { AboutChapter } from "../components/about-chapter";
+import { AboutChapter, useMetricReveal } from "../components/about-chapter";
 import { ChapterSection } from "../components/chapter-section";
 import { ProblemChapter, ProblemRequirements } from "../components/problem-chapter";
+import { ThemeToggle } from "../components/theme-toggle";
 
 export const Route = createFileRoute("/")({ component: Presentation });
 
@@ -27,6 +28,7 @@ function Presentation() {
   const alignedInitialSlide = useRef(false);
   const indexListRef = useRef<HTMLOListElement>(null);
   const [activeChapter, setActiveChapter] = useState<string>();
+  const [activeProblem, setActiveProblem] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState<number | null>();
   const [elapsed, setElapsed] = useState(0);
   const elapsedMinutes = Math.floor(elapsed / 60_000);
@@ -52,7 +54,7 @@ function Presentation() {
     {
       id: "chapter-02-continued",
       label: "Continue to requirements",
-      content: <ProblemRequirements />,
+      content: <ProblemRequirements active={activeProblem} onSelect={setActiveProblem} />,
     },
   ];
 
@@ -64,6 +66,8 @@ function Presentation() {
       document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: "instant" });
     }
   }, [splitDenseSlides]);
+
+  useMetricReveal(splitDenseSlides);
 
   useEffect(() => {
     try {
@@ -112,10 +116,10 @@ function Presentation() {
 
   useEffect(() => {
     const header = document.querySelector("header")!;
-    const sections = chapters.map(
-      (chapter) => document.getElementById(`chapter-${chapter.number}`)!,
-    );
     const updateNavigation = () => {
+      const sections = chapters.map(
+        (chapter) => document.getElementById(`chapter-${chapter.number}`)!,
+      );
       const headerHeight = header.offsetHeight;
       const readingLine =
         headerHeight + (window.innerHeight - headerHeight) / 3;
@@ -163,7 +167,7 @@ function Presentation() {
           <img src="/formly.svg" width="27" height="29" alt="" />
           ngx-formly
         </a>
-        <a href="#chapters">Chapters</a>
+        <ThemeToggle />
       </header>
 
       <main id="main" className="presentation" tabIndex={-1}>
@@ -203,6 +207,7 @@ function Presentation() {
                 <path d="M12 4v15m-6-6 6 6 6-6" />
               </svg>
             </a>
+            <a className="opening-chapters" href="#chapters">Chapters</a>
           </div>
         </section>
 
@@ -234,7 +239,10 @@ function Presentation() {
                         )}
                       </span>
                       <span className="index-time">
-                        {completed ? (
+                        <span className="index-duration" aria-hidden={completed}>
+                          {chapter.minutes} min
+                        </span>
+                        {completed && (
                           <svg
                             width="16"
                             height="16"
@@ -251,8 +259,6 @@ function Presentation() {
                               strokeLinejoin="round"
                             />
                           </svg>
-                        ) : (
-                          `${chapter.minutes} min`
                         )}
                       </span>
                     </a>
@@ -296,7 +302,9 @@ function Presentation() {
           {chapters.map((chapter, index) => (
             <ChapterSection
               key={chapter.number}
-              chapter={chapter}
+              chapter={chapter.number === "02" && activeProblem !== null
+                ? { ...chapter, title: "The Solutions" }
+                : chapter}
               previous={chapters[index - 1]}
               next={chapters[index + 1]}
               continuations={chapter.number === "01" ? aboutContinuations :

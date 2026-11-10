@@ -9,6 +9,15 @@
         "value": "arial",
         "createdAt": "2026-11-09T17:45:35.610Z",
         "reason": "Codex: Arial is the existing presentation typeface in src/styles.css; this navigation-only refinement preserves the established typography."
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(0.5, -0.24, 0.38, 1.14)",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-11-10T13:39:28.338Z",
+        "reason": "User confirmed the playful icon motion and requested a smaller overshoot with a snappier landing."
       }
     ]
   }

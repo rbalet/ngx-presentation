@@ -20,11 +20,11 @@ ngx-formly describes Angular forms as configuration. Teams can reuse field behav
 
 ## Operating Context
 
-The session has a 60-minute slot. The main talk takes 38 minutes, the two optional chapters add seven, and Q&A takes 15. The presenter scrolls through the deck, jumps via the chapter index, and can skip the extras to go directly to Q&A. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
+The session has a 60-minute slot. The main talk takes 38 minutes, the optional multilingual forms chapter adds four, and Q&A takes 15. The presenter scrolls through the deck, jumps via the chapter index, and can skip the extras to go directly to Q&A. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
 
 ## Capabilities and Constraints
 
-- Keep the cover unnumbered and the chapter anchors stable from `#chapter-01` through `#chapter-11`. Chapters 09 and 10 are optional, and chapter 11 is Q&A.
+- Keep the cover unnumbered and the chapter anchors stable: `#chapter-01` through `#chapter-09`, plus `#chapter-11`. Chapter 09 is optional, chapter 10 was removed, and chapter 11 is Q&A.
 - Develop the talk one chapter at a time. The introduction and problem chapters have full content. Later chapters currently have summaries.
 - The talk covers MCP and WebMCP as implemented capabilities. The playground choice, validation service, and Periscope screens and demo flow are open.
 
@@ -37,7 +37,7 @@ The session has a 60-minute slot. The main talk takes 38 minutes, the two option
 
 - Start with work developers repeat, such as validation, conditional behavior and API integration. Use those examples to explain what teams could maintain together.
 - Preserve each project's component and design choices when describing shared form behavior.
-- Keep translation and Portless optional so the presenter can protect discussion time.
+- Keep translation optional so the presenter can protect discussion time.
 - Use sourced figures and verified demo details. Leave BIT adoption and savings claims open until evidence is available.
 
 ## Accessibility & Inclusion
