@@ -1,0 +1,6 @@
+# Preserve these existing locked versions while they pass pnpm's release-age window.
+minimumReleaseAgeExclude:
+  - framer-motion@14.11.1
+  - isbot@5.2.3
+  - motion-dom@14.11.1
+  - motion@14.11.1
