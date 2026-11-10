@@ -2,10 +2,10 @@ export function AboutChapter() {
   return (
     <div className="about-intro">
       <p className="about-presenter">
-        <a href="https://raphael-balert.ch" target="_blank" rel="noreferrer">
+        <a href="https://raphael-balet.ch" target="_blank" rel="noreferrer">
           Raphaël Balet
         </a>
-        <span>Expert Front-end Developer at BIT</span>
+        <span>Expert Developer at BIT</span>
       </p>
 
       <div className="about-cards">
@@ -52,7 +52,7 @@ export function AboutChapter() {
           className="maintainer-group"
           aria-labelledby="maintainer-title"
         >
-          <h3 id="maintainer-title">Open-source maintainer</h3>
+          <h3 id="maintainer-title">Open-source</h3>
           <article className="metric-card" aria-labelledby="translate-title">
             <img
               className="metric-logo"
@@ -125,14 +125,6 @@ export function AboutChapter() {
           </article>
         </section>
       </div>
-
-      <p className="metric-source">
-        Weekly npm downloads, 2 to 8 November 2026. Core packages only.
-        <span>
-          Background graphs show 52 weeks of downloads and public Stack Overflow
-          reputation gains.
-        </span>
-      </p>
     </div>
   );
 }

@@ -81,8 +81,8 @@ h1 span { color: var(--red); }
 .index-time { min-width: 3em; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .index-time svg { vertical-align: -0.2em; }
 .chapter-index small { display: block; margin-top: 0.2rem; }
-.presentation-timer-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
-.presentation-timer { --timer-fill: var(--rule); display: block; appearance: none; width: 100%; height: 1rem; border: 1px solid var(--rule); background: var(--paper); }
+.presentation-timer-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; gap: 0.75rem; margin-top: 1.5rem; }
+.presentation-timer { --timer-fill: var(--rule); display: block; appearance: none; width: 100%; height: auto; border: 1px solid var(--rule); background: var(--paper); }
 .presentation-timer--overdue { --timer-fill: var(--red); }
 .presentation-timer::-webkit-progress-bar { background: var(--paper); }
 .presentation-timer::-webkit-progress-value { background: var(--timer-fill); }
@@ -120,7 +120,8 @@ h1 span { color: var(--red); }
 
 #chapter-01 { padding-top: clamp(2rem, 5vh, 4rem); }
 #chapter-01 .chapter-content { padding-bottom: 2rem; }
-#chapter-01 h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
+#chapter-01 h2,
+#chapter-02 h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
 .about-presenter { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 1rem; row-gap: 0.35rem; margin-top: 1.5rem; font-size: 1.2rem; line-height: 1.5; }
 .about-presenter a { font-weight: 700; }
 .about-presenter span { color: var(--muted); }

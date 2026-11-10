@@ -16,9 +16,10 @@ function Presentation() {
   const [startedAt, setStartedAt] = useState<number | null>();
   const [elapsed, setElapsed] = useState(0);
   const overdue = elapsed > presentationDuration;
-  const timerDescription = startedAt == null
-    ? "Presentation not started"
-    : `${Math.floor(elapsed / 60000)} of 60 minutes elapsed${overdue ? ", over time" : ""}`;
+  const timerDescription =
+    startedAt == null
+      ? "Presentation not started"
+      : `${Math.floor(elapsed / 60000)} of 60 minutes elapsed${overdue ? ", over time" : ""}`;
   const activeChapterIndex = chapters.findIndex(
     (chapter) => chapter.number === activeChapter,
   );
@@ -27,7 +28,9 @@ function Presentation() {
     try {
       const savedStart = Number(localStorage.getItem(timerStorageKey));
       setStartedAt(
-        Number.isFinite(savedStart) && savedStart > 0 && savedStart <= Date.now()
+        Number.isFinite(savedStart) &&
+          savedStart > 0 &&
+          savedStart <= Date.now()
           ? savedStart
           : null,
       );
@@ -68,8 +71,8 @@ function Presentation() {
 
   useEffect(() => {
     const header = document.querySelector("header")!;
-    const sections = chapters.map((chapter) =>
-      document.getElementById(`chapter-${chapter.number}`)!,
+    const sections = chapters.map(
+      (chapter) => document.getElementById(`chapter-${chapter.number}`)!,
     );
     const updateNavigation = () => {
       const headerHeight = header.offsetHeight;
@@ -136,7 +139,7 @@ function Presentation() {
               Extensive form manipulation with ngx-formly, a unified approach.
             </p>
             <p className="presenter">
-              Raphaël Balet <span>Expert Front-end Developer at BIT</span>
+              Raphaël Balet <span>Expert Developer at BIT</span>
             </p>
             <a
               className="start-link"
@@ -192,7 +195,11 @@ function Presentation() {
                             role="img"
                             aria-label="Completed"
                           >
-                            <path d="m5 12 4 4L19 6" strokeLinecap="round" strokeLinejoin="round" />
+                            <path
+                              d="m5 12 4 4L19 6"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
                           </svg>
                         ) : (
                           `${chapter.minutes} min`
@@ -206,7 +213,7 @@ function Presentation() {
             <div className="presentation-timer-controls">
               <progress
                 className={`presentation-timer${overdue ? " presentation-timer--overdue" : ""}`}
-                value={Math.min(elapsed / presentationDuration * 100, 100)}
+                value={Math.min((elapsed / presentationDuration) * 100, 100)}
                 max={100}
                 aria-label="Presentation time"
                 aria-valuetext={timerDescription}
@@ -216,8 +223,14 @@ function Presentation() {
                 type="button"
                 className="timer-button"
                 disabled={startedAt === undefined}
-                onClick={startedAt == null ? startPresentation : resetPresentation}
-                aria-label={startedAt == null ? "Start presentation timer" : "Reset presentation timer"}
+                onClick={
+                  startedAt == null ? startPresentation : resetPresentation
+                }
+                aria-label={
+                  startedAt == null
+                    ? "Start presentation timer"
+                    : "Reset presentation timer"
+                }
               >
                 {startedAt == null ? "Start" : "Reset"}
               </button>
@@ -232,10 +245,19 @@ function Presentation() {
               chapter={chapter}
               previous={chapters[index - 1]}
               next={chapters[index + 1]}
-              subtitle={chapter.number === "02" ? <>Familiar form, <strong>Different stack.</strong></> : undefined}
+              subtitle={
+                chapter.number === "02" ? (
+                  <>
+                    Familiar form, <strong>Different stack.</strong>
+                  </>
+                ) : undefined
+              }
             >
-              {chapter.number === "01" ? <AboutChapter /> :
-                chapter.number === "02" ? <ProblemChapter /> : undefined}
+              {chapter.number === "01" ? (
+                <AboutChapter />
+              ) : chapter.number === "02" ? (
+                <ProblemChapter />
+              ) : undefined}
             </ChapterSection>
           ))}
         </div>

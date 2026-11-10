@@ -6,25 +6,25 @@ Present ngx-formly to BIT colleagues and management to gain support for a shared
 
 Title: **Why are we still rebuilding the same forms?**
 
-Subtitle: *_Extensive form manipulation with ngx-formly, a unified approach._
+Subtitle: \*_Extensive form manipulation with ngx-formly, a unified approach._
 
 The user chose TanStack Start, React and Motion for a scrolling presentation. Work through one chapter at a time. Chapters 01 and 02 have their first full content. The remaining chapters contain short topic summaries.
 
 ## Chapter numbers
 
-| Chapter | Topic                                  | Minutes | Status                        |
-| ------- | -------------------------------------- | ------- | ----------------------------- |
-| 01      | About me                               | 2       | Main, first slide implemented |
+| Chapter | Topic                                  | Minutes | Status                          |
+| ------- | -------------------------------------- | ------- | ------------------------------- |
+| 01      | About me                               | 2       | Main, first slide implemented   |
 | 02      | Repeated form implementation           | 5       | Main, first content implemented |
-| 03      | Introduction to ngx-formly             | 7       | Main                          |
-| 04      | MCP and WebMCP                         | 4       | Main                          |
-| 05      | Playground                             | 6       | Main                          |
-| 06      | API integration and validation service | 4       | Main                          |
-| 07      | Periscope                              | 8       | Main                          |
-| 08      | A shared form approach at BIT          | 2       | Main                          |
-| 09      | Multilingual forms with ngx-translate  | 4       | Optional extra                |
-| 10      | Portless development workflow          | 3       | Optional extra                |
-| 11      | Q&A                                    | 15      | Discussion                    |
+| 03      | Introduction to ngx-formly             | 7       | Main                            |
+| 04      | MCP and WebMCP                         | 4       | Main                            |
+| 05      | Playground                             | 6       | Main                            |
+| 06      | API integration and validation service | 4       | Main                            |
+| 07      | Periscope                              | 8       | Main                            |
+| 08      | A shared form approach at BIT          | 2       | Main                            |
+| 09      | Multilingual forms with ngx-translate  | 4       | Optional extra                  |
+| 10      | Portless development workflow          | 3       | Optional extra                  |
+| 11      | Q&A                                    | 15      | Discussion                      |
 
 The main content totals 38 minutes. The extras add 7 minutes and may be skipped. Keep the numbers stable when developing each chapter.
 
@@ -55,7 +55,7 @@ All three cards are neutral by default. Hovering a card turns its border and mai
 
 Match the user's portfolio reference with a small source logo at the top right and a subtle graph behind the foreground content. Show exact npm counts, not abbreviated figures. Keep Fanatic as the Stack Overflow headline. The graph behind it shows public reputation gains, not visits or progress toward the badge.
 
-Content lives in `src/components/about-chapter.tsx`. The slide introduces Raphaël Balet as an Expert Front-end Developer at BIT. It uses the Fanatic badge as the joke and ends the Formly card with "The reason we're here."
+Content lives in `src/components/about-chapter.tsx`. The slide introduces Raphaël Balet as an Expert Developer at BIT. It uses the Fanatic badge as the joke and ends the Formly card with "The reason we're here."
 
 Verified sources, checked 9 November 2026:
 
@@ -75,7 +75,7 @@ These are static, dated snapshots of the core packages. Do not add the HTTP load
 
 Suggested opening speaker notes:
 
-"I'm Raphaël, an Expert Front-end Developer at BIT. Before we talk about forms, a quick introduction through my vanity metrics. Stack Overflow gave me a gold badge for visiting 100 days in a row. Yes, Fanatic is the official name. You'll also find my actual answers there. I help maintain ngx-translate, with about 1.9 million downloads a week, and ngx-formly, with about 311,000. That last one is why we're here. We keep solving the same form problems across teams, and I'd like to show what we could share."
+"I'm Raphaël, an Expert Developer at BIT. Before we talk about forms, a quick introduction through my vanity metrics. Stack Overflow gave me a gold badge for visiting 100 days in a row. Yes, Fanatic is the official name. You'll also find my actual answers there. I help maintain ngx-translate, with about 1.9 million downloads a week, and ngx-formly, with about 311,000. That last one is why we're here. We keep solving the same form problems across teams, and I'd like to show what we could share."
 
 ## Chapter 02
 
