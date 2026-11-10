@@ -1,21 +1,27 @@
-import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router';
-import { MotionConfig } from 'motion/react';
-import styles from '../styles.css?url';
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from "@tanstack/react-router";
+import { MotionConfig } from "motion/react";
+import styles from "../styles.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Why are we still rebuilding the same forms? | ngx-formly' },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Why are we still rebuilding the same forms? | ngx-formly" },
       {
-        name: 'description',
-        content: 'Reusable forms for people and AI with ngx-formly. A presentation by Raphaël Balet for BIT.',
+        name: "description",
+        content:
+          "Extensive form manipulation with ngx-formly, a unified approach. A presentation by Raphaël Balet for BIT.",
       },
     ],
     links: [
-      { rel: 'stylesheet', href: styles },
-      { rel: 'icon', href: '/formly.svg', type: 'image/svg+xml' },
+      { rel: "stylesheet", href: styles },
+      { rel: "icon", href: "/formly.svg", type: "image/svg+xml" },
     ],
   }),
   component: Root,
@@ -30,9 +36,13 @@ export const Route = createRootRoute({
 function Root() {
   return (
     <html lang="en">
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+      </head>
       <body>
-        <MotionConfig reducedMotion="user"><Outlet /></MotionConfig>
+        <MotionConfig reducedMotion="user">
+          <Outlet />
+        </MotionConfig>
         <Scripts />
       </body>
     </html>

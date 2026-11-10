@@ -1,6 +1,7 @@
 export type Chapter = {
   number: string;
   title: string;
+  subtitle?: string;
   minutes: number;
   kind: 'main' | 'extra' | 'discussion';
   summary: string;
@@ -9,12 +10,12 @@ export type Chapter = {
 // Keep these numbers stable so each chapter can be discussed and edited independently.
 export const chapters: Chapter[] = [
   {
-    number: '01', title: 'Background', minutes: 2, kind: 'main',
-    summary: 'Raphaël Balet. Expert Front-end Developer at BIT and member of the ngx-formly core team.',
+    number: '01', title: 'About me', subtitle: 'And my vanity metrics', minutes: 2, kind: 'main',
+    summary: 'Raphaël Balet. Expert Front-end Developer at BIT, Stack Overflow contributor and open-source maintainer.',
   },
   {
     number: '02', title: 'The problem', minutes: 5, kind: 'main',
-    summary: 'Teams keep implementing the same form behavior, validation rules and API integration.',
+    summary: 'Familiar forms, different stacks. Share the cost and maintenance with an open-source, extensible approach that adapts to each design.',
   },
   {
     number: '03', title: 'Meet ngx-formly', minutes: 7, kind: 'main',
@@ -53,6 +54,3 @@ export const chapters: Chapter[] = [
     summary: 'Which form behavior should we maintain together?',
   },
 ];
-
-export const minutesFor = (kind: Chapter['kind']) =>
-  chapters.filter((chapter) => chapter.kind === kind).reduce((minutes, chapter) => minutes + chapter.minutes, 0);

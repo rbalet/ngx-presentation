@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "createdAt": "2026-11-09T17:45:35.610Z",
+        "reason": "Codex: Arial is the existing presentation typeface in src/styles.css; this navigation-only refinement preserves the established typography."
+      }
+    ]
+  }
+}
