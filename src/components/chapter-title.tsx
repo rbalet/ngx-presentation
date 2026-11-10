@@ -1,6 +1,10 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-export function ChapterTitle({ number, title, subtitle }: {
+export function ChapterTitle({
+  number,
+  title,
+  subtitle,
+}: {
   number: string;
   title: string;
   subtitle?: ReactNode;
@@ -10,7 +14,7 @@ export function ChapterTitle({ number, title, subtitle }: {
       <span className="chapter-number">{number}</span>
       <span>
         {title}
-        {subtitle && <em className="chapter-subtitle">{subtitle}</em>}
+        {subtitle && <p className="chapter-subtitle">{subtitle}</p>}
       </span>
     </h2>
   );

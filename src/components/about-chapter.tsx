@@ -1,15 +1,8 @@
-export function AboutChapter() {
+export function AboutChapter({ part }: { part?: 'community' | 'maintainers' }) {
   return (
     <div className="about-intro">
-      <p className="about-presenter">
-        <a href="https://raphael-balet.ch" target="_blank" rel="noreferrer">
-          Raphaël Balet
-        </a>
-        <span>Expert Developer at BIT</span>
-      </p>
-
-      <div className="about-cards">
-        <article
+      <div className={part ? `about-cards about-cards--${part}` : 'about-cards'}>
+        {part !== 'maintainers' && <article
           className="metric-card community-card"
           aria-labelledby="stackoverflow-title"
         >
@@ -46,9 +39,9 @@ export function AboutChapter() {
           >
             For those who remember.
           </a>
-        </article>
+        </article>}
 
-        <section
+        {part !== 'community' && <section
           className="maintainer-group"
           aria-labelledby="maintainer-title"
         >
@@ -123,7 +116,7 @@ export function AboutChapter() {
             </a>
             <p className="metric-caption">The reason we're here.</p>
           </article>
-        </section>
+        </section>}
       </div>
     </div>
   );

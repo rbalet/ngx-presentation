@@ -1,28 +1,69 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { chapters } from "../chapters";
 import { AboutChapter } from "../components/about-chapter";
 import { ChapterSection } from "../components/chapter-section";
-import { ProblemChapter } from "../components/problem-chapter";
+import { ProblemChapter, ProblemRequirements } from "../components/problem-chapter";
 
 export const Route = createFileRoute("/")({ component: Presentation });
 
 const timerStorageKey = "ngx-presentation-started-at";
-const presentationDuration = 60 * 60 * 1000;
+const presentationMinutes = 60;
+const presentationDuration = presentationMinutes * 60_000;
+const compactSlides = "(max-width: 700px), (max-height: 650px)";
+
+function subscribeToSlideSize(onChange: () => void) {
+  const media = window.matchMedia(compactSlides);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
 
 function Presentation() {
-  const indexRef = useRef<HTMLElement>(null);
+  const splitDenseSlides = useSyncExternalStore(
+    subscribeToSlideSize,
+    () => window.matchMedia(compactSlides).matches,
+    () => false,
+  );
+  const alignedInitialSlide = useRef(false);
+  const indexListRef = useRef<HTMLOListElement>(null);
   const [activeChapter, setActiveChapter] = useState<string>();
   const [startedAt, setStartedAt] = useState<number | null>();
   const [elapsed, setElapsed] = useState(0);
+  const elapsedMinutes = Math.floor(elapsed / 60_000);
   const overdue = elapsed > presentationDuration;
   const timerDescription =
     startedAt == null
       ? "Presentation not started"
-      : `${Math.floor(elapsed / 60000)} of 60 minutes elapsed${overdue ? ", over time" : ""}`;
+      : `${elapsedMinutes} of ${presentationMinutes} minutes elapsed${overdue ? ", over time" : ""}`;
   const activeChapterIndex = chapters.findIndex(
     (chapter) => chapter.number === activeChapter,
   );
+  const aboutContinuations = splitDenseSlides ? [{
+    id: "chapter-01-continued",
+    label: "Continue to open source",
+    content: <AboutChapter part="maintainers" />,
+  }] : undefined;
+  const problemContinuations = [
+    ...(splitDenseSlides ? [{
+      id: "chapter-02-more-examples",
+      label: "Continue to custom example",
+      content: <ProblemChapter part="custom" />,
+    }] : []),
+    {
+      id: "chapter-02-continued",
+      label: "Continue to requirements",
+      content: <ProblemRequirements />,
+    },
+  ];
+
+  useLayoutEffect(() => {
+    if (alignedInitialSlide.current || splitDenseSlides !== window.matchMedia(compactSlides).matches) return;
+    alignedInitialSlide.current = true;
+    // The initial hash can land before the compact slides have been added.
+    if (splitDenseSlides) {
+      document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: "instant" });
+    }
+  }, [splitDenseSlides]);
 
   useEffect(() => {
     try {
@@ -95,20 +136,20 @@ function Presentation() {
   }, []);
 
   useEffect(() => {
-    const index = indexRef.current!;
+    const list = indexListRef.current!;
     const updateIndex = () => {
-      if (getComputedStyle(index).position === "sticky") {
-        const current = index.querySelector<HTMLElement>(
+      if (getComputedStyle(list).overflowY === "auto") {
+        const current = list.querySelector<HTMLElement>(
           '[aria-current="location"]',
         );
-        index.scrollTop = current
-          ? current.offsetTop - (index.clientHeight - current.offsetHeight) / 2
+        list.scrollTop = current
+          ? current.offsetTop - (list.clientHeight - current.offsetHeight) / 2
           : 0;
       }
     };
     updateIndex();
     const resizeObserver = new ResizeObserver(updateIndex);
-    resizeObserver.observe(index);
+    resizeObserver.observe(list);
     return () => resizeObserver.disconnect();
   }, [activeChapter]);
 
@@ -147,19 +188,28 @@ function Presentation() {
               aria-disabled={startedAt === undefined}
               onClick={startPresentation}
             >
-              Start with chapter 01 <span aria-hidden="true">↓</span>
+              Start with chapter 01
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 4v15m-6-6 6 6 6-6" />
+              </svg>
             </a>
           </div>
         </section>
 
         <div id="chapters" className="chapter-index-slot">
-          <nav
-            ref={indexRef}
-            className="chapter-index"
-            aria-label="Chapter index"
-          >
+          <nav className="chapter-index" aria-label="Chapter index">
             <h2>Chapters</h2>
-            <ol role="list">
+            <ol ref={indexListRef} role="list">
               {chapters.map((chapter, index) => {
                 const completed = index < activeChapterIndex;
                 return (
@@ -211,6 +261,10 @@ function Presentation() {
               })}
             </ol>
             <div className="presentation-timer-controls">
+              <p className="timer-readout" aria-hidden="true">
+                <span>Presentation time</span>
+                <span>{elapsedMinutes} / {presentationMinutes} min</span>
+              </p>
               <progress
                 className={`presentation-timer${overdue ? " presentation-timer--overdue" : ""}`}
                 value={Math.min((elapsed / presentationDuration) * 100, 100)}
@@ -245,6 +299,8 @@ function Presentation() {
               chapter={chapter}
               previous={chapters[index - 1]}
               next={chapters[index + 1]}
+              continuations={chapter.number === "01" ? aboutContinuations :
+                chapter.number === "02" ? problemContinuations : undefined}
               subtitle={
                 chapter.number === "02" ? (
                   <>
@@ -254,9 +310,9 @@ function Presentation() {
               }
             >
               {chapter.number === "01" ? (
-                <AboutChapter />
+                <AboutChapter part={splitDenseSlides ? "community" : undefined} />
               ) : chapter.number === "02" ? (
-                <ProblemChapter />
+                <ProblemChapter part={splitDenseSlides ? "comparison" : undefined} />
               ) : undefined}
             </ChapterSection>
           ))}

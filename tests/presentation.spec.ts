@@ -16,6 +16,7 @@ test('the presentation timer starts empty, survives reloads and turns primary on
 
   await page.clock.setFixedTime(new Date(start.getTime() + 30 * 60000));
   await expect(timer).toHaveAttribute('value', '50');
+  await expect(page.getByText('30 / 60 min', { exact: true })).toBeVisible();
   await expect(timer).toHaveCSS('--timer-fill', '#d9d6d0');
   await page.reload();
   await expect(timer).toHaveAttribute('value', '50');
@@ -127,6 +128,10 @@ test('all numbered chapters are reachable and extras can be skipped', async ({ p
 });
 
 test('direct links work with reduced motion and without horizontal overflow', async ({ page }) => {
+  const hydrationErrors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error' && /hydrat/i.test(message.text())) hydrationErrors.push(message.text());
+  });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-09');
   await expect(page.getByRole('heading', { name: '09 Multilingual forms' })).toBeInViewport();
@@ -135,6 +140,7 @@ test('direct links work with reduced motion and without horizontal overflow', as
   await expect(page.locator('html')).toHaveCSS('scroll-behavior', 'auto');
   await expect(page.getByRole('navigation', { name: 'Chapter index', exact: true }).locator('[aria-current="location"]')).toContainText('Multilingual forms');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  expect(hydrationErrors).toEqual([]);
 });
 
 test('the same chapter index sticks without jumping and highlights the chapter while scrolling', async ({ page, isMobile }) => {
@@ -148,7 +154,8 @@ test('the same chapter index sticks without jumping and highlights the chapter w
   const originalBounds = await index.boundingBox();
   const chapterTop = await page.locator('#chapter-01').evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
 
-  await page.evaluate(() => window.scrollTo(0, 200));
+  await page.locator('#chapter-01').evaluate((element) => element.scrollIntoView());
+  await expect(current).toHaveAttribute('href', '#chapter-01');
   await expect(index).toHaveCSS('position', isMobile ? 'static' : 'sticky');
   expect(await index.evaluate((element, original) => element === original, originalIndex)).toBe(true);
   const scrolledBounds = await index.boundingBox();
@@ -174,9 +181,13 @@ test('the same chapter index sticks without jumping and highlights the chapter w
     await expect(current).toHaveAttribute('href', '#chapter-11');
     await expect(page.getByRole('heading', { name: '11 Q&A' })).toBeInViewport();
     await page.setViewportSize({ width: 1280, height: 500 });
+    await page.goto('/#chapter-03');
+    await expect(current).toHaveAttribute('href', '#chapter-03');
+    await expect(index.getByRole('progressbar', { name: 'Presentation time' })).toBeInViewport({ ratio: 1 });
     await page.goto('/#chapter-11');
     await expect(current).toHaveAttribute('href', '#chapter-11');
     await expect(current).toBeInViewport();
+    await expect(index.getByRole('heading', { name: 'Chapters' })).toBeInViewport({ ratio: 1 });
   }
 
   await page.locator('.site-header').getByRole('link', { name: 'Chapters', exact: true }).click();
@@ -216,9 +227,10 @@ test('the introduction keeps three cards aligned and groups the maintainers', as
   await page.goto('/#chapter-01');
   const chapter = page.locator('#chapter-01');
   await expect(chapter.getByRole('heading', { level: 2 })).toBeInViewport();
+  await expect(chapter.locator('.chapter-slide')).toHaveCount(isMobile ? 2 : 1);
   const cards = chapter.getByRole('article');
   await expect(cards).toHaveCount(3);
-  const maintainers = chapter.getByRole('region', { name: 'Open-source maintainer' });
+  const maintainers = chapter.getByRole('region', { name: 'Open-source', exact: true });
   await expect(maintainers.getByRole('article')).toHaveCount(2);
   await expect(maintainers.getByRole('heading', { name: 'Stack Overflow' })).toHaveCount(0);
 
@@ -239,15 +251,30 @@ test('the introduction keeps three cards aligned and groups the maintainers', as
   await expect(page.getByRole('heading', { name: '02 The problem' })).toBeInViewport();
 });
 
-test('the problem chapter stays active from the form examples through the shared requirements', async ({ page }) => {
+test('the problem chapter stays active from the form examples through the shared requirements', async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-02');
   const chapter = page.locator('#chapter-02');
+  const slide = chapter.locator('.chapter-slide').first();
+  const runningTitle = chapter.locator('.chapter-running-title');
   const current = page.getByRole('navigation', { name: 'Chapter index', exact: true }).locator('[aria-current="location"]');
   await expect(chapter.getByRole('heading', { level: 2 })).toBeInViewport();
+  await expect(runningTitle).toBeHidden();
   await expect(current).toHaveAttribute('href', '#chapter-02');
-  const gallery = chapter.getByRole('figure', { name: 'Same fields. Different designs.' });
+  const gallery = chapter.getByRole('figure', { name: 'Same fields, different designs' });
+  await expect(gallery.getByRole('heading', { level: 3 })).toHaveCount(isMobile ? 2 : 3);
   await expect(gallery).toContainText('Illustrative examples with fictional data.');
+  expect((await slide.boundingBox())!.height).toBeCloseTo(page.viewportSize()!.height);
+  if (isMobile) {
+    await chapter.getByRole('link', { name: 'Continue to custom example' }).click();
+    await expect(page).toHaveURL(/#chapter-02-more-examples$/);
+    await expect(chapter.getByRole('figure', { name: 'Custom form example' })).toBeInViewport();
+  }
+  await chapter.getByRole('link', { name: 'Continue to requirements' }).click();
+  await expect(page).toHaveURL(/#chapter-02-continued$/);
+  await expect(runningTitle).toBeVisible();
+  await expect(runningTitle).toHaveText(/02\s*The problem/);
+  expect((await runningTitle.boundingBox())!.y).toBe((await page.locator('.site-header').boundingBox())!.height);
   const requirements = chapter.getByRole('region', { name: 'What do we need from a shared approach?' });
   await requirements.scrollIntoViewIfNeeded();
   await expect(requirements.getByRole('heading', { name: '3 Adaptive' })).toBeInViewport();
@@ -258,11 +285,33 @@ test('the problem chapter stays active from the form examples through the shared
   }))).toBe(true);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 
+  await page.locator('#chapter-02-continued').getByRole('link', { name: 'Previous slide' }).click();
+  if (isMobile) await page.locator('#chapter-02-more-examples').getByRole('link', { name: 'Previous slide' }).click();
+  await expect(page).toHaveURL(/#chapter-02$/);
+  await expect(runningTitle).toBeHidden();
   await chapter.getByRole('link', { name: 'Previous: 01' }).click();
   await expect(page.locator('#title-01')).toBeInViewport();
   await page.locator('#chapter-01').getByRole('link', { name: 'Next: 02' }).click();
   await expect(chapter.getByRole('heading', { level: 2 })).toBeInViewport();
+  await page.goto('/?slide=requirements#chapter-02-continued');
+  await expect(runningTitle).toBeVisible();
+  await expect.poll(async () => Math.abs((await page.locator('#chapter-02-continued').boundingBox())!.y)).toBeLessThanOrEqual(1);
   await chapter.getByRole('link', { name: 'Next: 03' }).click();
   await expect(page.locator('#title-03')).toBeInViewport();
   await expect(current).toHaveAttribute('href', '#chapter-03');
+});
+
+test('scrolling settles on the nearest slide within a chapter', async ({ page, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#chapter-02');
+  const slides = page.locator('#chapter-02 .chapter-slide');
+  await expect(slides).toHaveCount(isMobile ? 3 : 2);
+  const [start, next] = await slides.evaluateAll((elements) =>
+    elements.map((element) => element.getBoundingClientRect().top + window.scrollY),
+  );
+
+  for (const [fraction, expected] of [[0.35, start], [0.65, next]]) {
+    await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), start + (next - start) * fraction);
+    await expect.poll(() => page.evaluate((top) => Math.abs(window.scrollY - top), expected)).toBeLessThanOrEqual(1);
+  }
 });
