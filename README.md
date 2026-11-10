@@ -6,25 +6,29 @@ TanStack Start, React, TypeScript and Motion. Chapter content will be developed 
 
 ## Local development
 
-Use Node.js 24 and npm 11.19.0.
+Use Node.js 24 and [pnpm 12.18.0](https://pnpm.io/installation).
 
 ```sh
-npm ci
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Open http://127.0.0.1:4310. The port is fixed so an occupied port produces an error rather than opening a different project.
+Open the URL printed by [Portless](https://github.com/vercel-labs/portless), normally https://ngx-presentation.localhost. Portless assigns Vite a free port and keeps the browser URL stable. Linked git worktrees get their own subdomain.
+
+The first run sets up a local HTTPS certificate and may ask for `sudo`. To use plain HTTP without certificate setup on macOS, run `pnpm exec portless proxy start --unprivileged` before `pnpm dev`; the URL will be http://ngx-presentation.localhost.
+
+To run Vite directly, use `PORTLESS=0 pnpm dev` and open the URL Vite prints.
 
 ## Checks
 
 ```sh
-npm run build
-npm run typecheck
-npx playwright install chromium
-npm test
+pnpm build
+pnpm typecheck
+pnpm exec playwright install chromium
+pnpm test
 ```
 
-Install the browser once. Tests cover chapter navigation, skipping extras, direct links, reduced motion, the introduction's card layout, navigation through the problem chapter and mobile overflow. Playwright starts the development server when needed.
+Install the browser once. Tests cover chapter navigation, skipping extras, direct links, reduced motion, the introduction's card layout, navigation through the problem chapter and mobile overflow. Playwright bypasses Portless and starts Vite at http://127.0.0.1:4310 when needed, with a strict port so it cannot silently switch to another port.
 
 ## Editing chapters
 

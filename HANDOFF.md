@@ -39,7 +39,7 @@ The main content totals 38 minutes. The extras add 7 minutes and may be skipped.
 ## Current setup
 
 - Repository: `/Users/raphael.balet/Documents/Open-source/ngx-presentation`.
-- Run `npm run dev` on port 4310.
+- Run `pnpm dev` through Portless and open the printed URL (normally https://ngx-presentation.localhost). Playwright bypasses the proxy and uses port 4310.
 - Chapter IDs are `chapter-01` through `chapter-11` and support direct hash links.
 - Motion applies a small scroll-linked vertical transition. Reduced-motion mode disables it and smooth anchor scrolling.
 - Navigation uses normal links, with a skip-extras link before the optional chapters.

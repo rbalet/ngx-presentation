@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "packageManager": "npm@11.19.0",
+  "packageManager": "pnpm@12.18.0",
   "engines": {
     "node": ">=24.0.0 <25"
   },
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "portless run vite --host 127.0.0.1",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "test": "playwright test"
@@ -26,6 +26,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.3.0",
+    "portless": "0.17.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.7"
   }
