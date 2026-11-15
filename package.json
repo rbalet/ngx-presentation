@@ -5,29 +5,34 @@
   "type": "module",
   "packageManager": "pnpm@12.18.0",
   "engines": {
-    "node": ">=24.0.0 <25"
+    "node": ">=24.15.0 <25"
   },
   "scripts": {
-    "dev": "portless run vite --host 127.0.0.1",
-    "build": "vite build",
-    "typecheck": "tsc --noEmit",
-    "test": "playwright test"
+    "dev": "portless run ng serve --host 127.0.0.1",
+    "build": "ng build",
+    "typecheck": "ngc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.spec.json",
+    "test": "playwright test",
+    "check:i18n": "node .agents/skills/ngx-translate/scripts/check.mjs audit --root src/i18n --source en.json --target de.json --target fr.json"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.170.46",
-    "@tanstack/react-start": "^1.169.5",
-    "motion": "^14.11.1",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "@angular/common": "^22.2.6",
+    "@angular/compiler": "^22.2.6",
+    "@angular/core": "^22.2.6",
+    "@angular/forms": "^22.2.6",
+    "@angular/platform-browser": "^22.2.6",
+    "@angular/router": "^22.2.6",
+    "@ngx-formly/core": "^11.2.0",
+    "@ngx-translate/core": "^18.1.0",
+    "rxjs": "^7.8.2",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
+    "@angular/build": "^22.2.7",
+    "@angular/cli": "^22.2.7",
+    "@angular/compiler-cli": "^22.2.6",
     "@playwright/test": "^1.65.0",
     "@types/node": "^24.19.2",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.3.0",
     "portless": "0.17.0",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.7"
+    "typescript": "~6.0.3"
   }
 }

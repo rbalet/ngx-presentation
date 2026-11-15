@@ -1,0 +1,151 @@
+{
+  "app": {
+    "title": "Pourquoi recréons-nous toujours les mêmes formulaires ?",
+    "heading": "Pourquoi recréons-nous toujours <span>les mêmes formulaires ?</span>",
+    "subtitle": "Manipulation avancée des formulaires avec ngx-formly, une approche unifiée.",
+    "description": "Manipulation avancée des formulaires avec ngx-formly, une approche unifiée. Une présentation de Raphaël Balet pour l’OFIT.",
+    "role": "Expert Developer à l’OFIT",
+    "skip": "Aller à la présentation",
+    "start": "Commencer au chapitre 01",
+    "language": "Langue",
+    "notFound": "Page introuvable",
+    "open": "Ouvrir la présentation"
+  },
+  "theme": {
+    "dark": "Mode sombre",
+    "toLight": "Passer au mode clair",
+    "toDark": "Passer au mode sombre"
+  },
+  "nav": {
+    "chapters": "Chapitres",
+    "index": "Sommaire",
+    "optional": "Chapitre facultatif",
+    "completed": "Terminé",
+    "minutes": "{{minutes}} min",
+    "chapter": "Navigation du chapitre {{number}}",
+    "slide": "Navigation du chapitre {{number}}, diapositive {{slide}}",
+    "previous": "Précédent : {{number}}",
+    "next": "Suivant : {{number}}",
+    "overview": "Retour à la vue d’ensemble",
+    "skipExtras": "Passer les chapitres facultatifs",
+    "previousSlide": "Diapositive précédente",
+    "maintainers": "Continuer vers l’open source",
+    "custom": "Continuer vers l’exemple personnalisé",
+    "requirements": "Continuer vers les exigences"
+  },
+  "timer": {
+    "title": "Durée de la présentation",
+    "idle": "Présentation non commencée",
+    "elapsed": "{{elapsed}} minutes écoulées sur {{total}}",
+    "overdue": ", temps dépassé",
+    "readout": "{{elapsed}} / {{total}} min",
+    "startLabel": "Démarrer le chronomètre",
+    "resetLabel": "Réinitialiser le chronomètre",
+    "start": "Démarrer",
+    "reset": "Réinitialiser"
+  },
+  "about": {
+    "visits": "100 jours de visite consécutifs",
+    "remember": "Pour celles et ceux qui s’en souviennent.",
+    "openSource": "Open source",
+    "downloads": "Téléchargements npm / semaine",
+    "source": "Téléchargements npm / semaine pour {{library}}, source",
+    "popular": "La bibliothèque Angular la plus téléchargée sur npm.",
+    "reason": "La raison de notre présence."
+  },
+  "problem": {
+    "subtitle": "Un formulaire familier, <strong>une autre stack.</strong>",
+    "solutions": "Les solutions",
+    "gallery": "Mêmes champs, designs différents",
+    "customExample": "Exemple de formulaire personnalisé",
+    "contact": "Coordonnées",
+    "access": "Demande d’accès",
+    "event": "Inscription à un événement",
+    "material": "Inspiré de Material",
+    "bootstrap": "Inspiré de Bootstrap",
+    "custom": "Design personnalisé",
+    "name": "Nom",
+    "email": "E-mail",
+    "required": "obligatoire",
+    "repetition": "Le design change. <strong>Le travail se répète.</strong>",
+    "maintenance": "Champs obligatoires, validation, logique conditionnelle, intégration API et maintenance continue.",
+    "also": "Mais aussi…",
+    "show": "Afficher la solution : {{title}}",
+    "history": "Solutions déjà présentées",
+    "cost": {
+      "title": "Coûts récurrents",
+      "description": "Chaque équipe maintient ses propres formulaires bien après leur lancement, parfois avec des frais mensuels ou annuels.",
+      "answer": "Open source et maintenance partagée"
+    },
+    "design": {
+      "title": "Des designs différents",
+      "description": "Chaque projet a besoin de son propre style, ce qui complique la réutilisation des formulaires.",
+      "answer": "Material · Bootstrap · PrimeNG",
+      "solution": "Material, Bootstrap ou votre propre langage visuel.",
+      "oblique": "Compatible avec Oblique"
+    },
+    "reuse": {
+      "title": "Un travail répétitif",
+      "description": "La même logique de formulaire est recréée dans différents outils et projets.",
+      "answer": "Core · MCP · Builder",
+      "solution": "Réutiliser la logique des formulaires dans différents outils et projets.",
+      "diagram": "Les formulaires Core, MCP et Builder partagent la même logique."
+    }
+  },
+  "contributors": {
+    "core": "Équipe principale",
+    "community": "Contributions de la communauté",
+    "total": "{{count}} contributeurs"
+  },
+  "future": {
+    "framework": "Indépendant du framework (utilisable partout)",
+    "aria": "Bibliothèque commune de composants ARIA (envoi de fichiers, téléphone, code, …)"
+  },
+  "chapters": {
+    "01": {
+      "title": "À propos de moi",
+      "subtitle": "Et mes statistiques flatteuses",
+      "summary": "Raphaël Balet. Expert Developer à l’OFIT, contributeur Stack Overflow et mainteneur open source."
+    },
+    "02": {
+      "title": "Les problèmes",
+      "summary": "Des formulaires familiers, des stacks différentes. Partager les coûts et la maintenance grâce à une approche open source extensible, adaptée à chaque design."
+    },
+    "03": {
+      "title": "Découvrez ngx-formly",
+      "summary": "Décrire un formulaire par sa configuration. Réutiliser les composants de champs et la validation dans plusieurs applications."
+    },
+    "04": {
+      "title": "MCP & WebMCP",
+      "summary": "Aider les assistants IA à créer des formulaires et à interagir avec eux dans le navigateur."
+    },
+    "05": {
+      "title": "Bac à sable",
+      "summary": "Créer un formulaire, modifier ses règles, prévisualiser le résultat et exporter sa configuration."
+    },
+    "06": {
+      "title": "API et validation",
+      "summary": "Connecter la validation des formulaires à l’API et afficher des retours utiles au bon endroit."
+    },
+    "07": {
+      "title": "Periscope",
+      "summary": "Notre outil de gestion d’événements, de workflows et de sondages. Un vrai formulaire, de la configuration à l’envoi."
+    },
+    "08": {
+      "title": "Une approche commune à l’OFIT",
+      "summary": "Commencer par un cas d’usage, définir la responsabilité des composants communs et démontrer leur réutilisation dans une autre application."
+    },
+    "09": {
+      "title": "Formulaires multilingues",
+      "summary": "Traduire les libellés et les messages de validation avec ngx-translate tout en gardant un modèle de formulaire stable."
+    },
+    "11": {
+      "title": "Questions-réponses",
+      "summary": "Quels comportements de formulaire devrions-nous maintenir ensemble ?"
+    },
+    "12": {
+      "title": "Et ensuite ?",
+      "summary": "Des formulaires indépendants du framework et une bibliothèque commune de composants ARIA."
+    }
+  }
+}

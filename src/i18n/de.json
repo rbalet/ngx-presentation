@@ -1,0 +1,151 @@
+{
+  "app": {
+    "title": "Warum bauen wir immer wieder dieselben Formulare?",
+    "heading": "Warum bauen wir immer wieder <span>dieselben Formulare?</span>",
+    "subtitle": "Umfassende Formularbearbeitung mit ngx-formly, ein gemeinsamer Ansatz.",
+    "description": "Umfassende Formularbearbeitung mit ngx-formly, ein gemeinsamer Ansatz. Eine Präsentation von Raphaël Balet für das BIT.",
+    "role": "Expert Developer beim BIT",
+    "skip": "Zur Präsentation springen",
+    "start": "Mit Kapitel 01 beginnen",
+    "language": "Sprache",
+    "notFound": "Seite nicht gefunden",
+    "open": "Präsentation öffnen"
+  },
+  "theme": {
+    "dark": "Dunkler Modus",
+    "toLight": "Zum hellen Modus wechseln",
+    "toDark": "Zum dunklen Modus wechseln"
+  },
+  "nav": {
+    "chapters": "Kapitel",
+    "index": "Kapitelübersicht",
+    "optional": "Optionales Zusatzkapitel",
+    "completed": "Abgeschlossen",
+    "minutes": "{{minutes}} Min.",
+    "chapter": "Navigation für Kapitel {{number}}",
+    "slide": "Navigation für Kapitel {{number}}, Folie {{slide}}",
+    "previous": "Zurück: {{number}}",
+    "next": "Weiter: {{number}}",
+    "overview": "Zurück zur Übersicht",
+    "skipExtras": "Zusatzkapitel überspringen",
+    "previousSlide": "Vorherige Folie",
+    "maintainers": "Weiter zu Open Source",
+    "custom": "Weiter zum individuellen Beispiel",
+    "requirements": "Weiter zu den Anforderungen"
+  },
+  "timer": {
+    "title": "Präsentationszeit",
+    "idle": "Präsentation noch nicht gestartet",
+    "elapsed": "{{elapsed}} von {{total}} Minuten verstrichen",
+    "overdue": ", Zeit überschritten",
+    "readout": "{{elapsed}} / {{total}} Min.",
+    "startLabel": "Präsentations-Timer starten",
+    "resetLabel": "Präsentations-Timer zurücksetzen",
+    "start": "Starten",
+    "reset": "Zurücksetzen"
+  },
+  "about": {
+    "visits": "100 Tage in Folge besucht",
+    "remember": "Für alle, die sich erinnern.",
+    "openSource": "Open Source",
+    "downloads": "npm-Downloads / Woche",
+    "source": "npm-Downloads / Woche für {{library}}, Quelle",
+    "popular": "Meistgeladene Angular-Bibliothek auf npm.",
+    "reason": "Der Grund, warum wir hier sind."
+  },
+  "problem": {
+    "subtitle": "Vertrautes Formular, <strong>anderer Tech-Stack.</strong>",
+    "solutions": "Die Lösungen",
+    "gallery": "Gleiche Felder, andere Designs",
+    "customExample": "Individuelles Formularbeispiel",
+    "contact": "Kontaktdaten",
+    "access": "Zugriffsanfrage",
+    "event": "Veranstaltungsanmeldung",
+    "material": "Von Material inspiriert",
+    "bootstrap": "Von Bootstrap inspiriert",
+    "custom": "Individuelles Design",
+    "name": "Name",
+    "email": "E-Mail",
+    "required": "erforderlich",
+    "repetition": "Das Design ändert sich. <strong>Die Arbeit wiederholt sich.</strong>",
+    "maintenance": "Pflichtfelder, Validierung, bedingte Logik, API-Integration – und laufende Wartung.",
+    "also": "Aber auch …",
+    "show": "Lösung anzeigen: {{title}}",
+    "history": "Bereits gezeigte Lösungen",
+    "cost": {
+      "title": "Laufende Kosten",
+      "description": "Jedes Team wartet seine eigenen Formulare noch lange nach dem Start, manchmal sogar mit monatlichen oder jährlichen Gebühren.",
+      "answer": "Open Source & gemeinsame Wartung"
+    },
+    "design": {
+      "title": "Unterschiedliche Designs",
+      "description": "Jedes Projekt braucht sein eigenes Design. Das erschwert die Wiederverwendung gemeinsamer Formulare.",
+      "answer": "Material · Bootstrap · PrimeNG",
+      "solution": "Material, Bootstrap oder die eigene Designsprache.",
+      "oblique": "Mit Oblique kompatibel"
+    },
+    "reuse": {
+      "title": "Wiederholte Arbeit",
+      "description": "Dieselbe Formularlogik wird in verschiedenen Tools und Projekten immer wieder neu gebaut.",
+      "answer": "Core · MCP · Builder",
+      "solution": "Formularlogik über Tools und Projekte hinweg wiederverwenden.",
+      "diagram": "Core-Formulare, MCP und Builder teilen dieselbe Formularlogik."
+    }
+  },
+  "contributors": {
+    "core": "Kernteam",
+    "community": "Mitwirkende aus der Community",
+    "total": "{{count}} Mitwirkende"
+  },
+  "future": {
+    "framework": "Framework-unabhängig (überall einsetzbar)",
+    "aria": "Gemeinsame ARIA-Komponentenbibliothek (Datei-Upload, Telefon, Code, …)"
+  },
+  "chapters": {
+    "01": {
+      "title": "Über mich",
+      "subtitle": "Und meine Eitelkeitsstatistiken",
+      "summary": "Raphaël Balet. Expert Developer beim BIT, Mitwirkender bei Stack Overflow und Open-Source-Maintainer."
+    },
+    "02": {
+      "title": "Die Probleme",
+      "summary": "Vertraute Formulare, verschiedene Tech-Stacks. Kosten und Wartung teilen mit einem erweiterbaren Open-Source-Ansatz, der sich jedem Design anpasst."
+    },
+    "03": {
+      "title": "ngx-formly kennenlernen",
+      "summary": "Ein Formular als Konfiguration beschreiben. Feldkomponenten und Validierung in mehreren Anwendungen wiederverwenden."
+    },
+    "04": {
+      "title": "MCP & WebMCP",
+      "summary": "KI-Assistenten dabei unterstützen, Formulare zu erstellen und im Browser mit ihnen zu interagieren."
+    },
+    "05": {
+      "title": "Playground",
+      "summary": "Ein Formular erstellen, seine Regeln ändern, das Ergebnis ansehen und die Konfiguration exportieren."
+    },
+    "06": {
+      "title": "API & Validierung",
+      "summary": "Formularvalidierung mit der API verbinden und hilfreiche Rückmeldungen dort anzeigen, wo sie gebraucht werden."
+    },
+    "07": {
+      "title": "Periscope",
+      "summary": "Unser Tool für Veranstaltungen, Workflows und Umfragen. Ein echtes Formular, von der Konfiguration bis zum Absenden."
+    },
+    "08": {
+      "title": "Ein gemeinsamer Ansatz beim BIT",
+      "summary": "Mit einem Anwendungsfall beginnen, die Verantwortung für gemeinsame Komponenten klären und die Wiederverwendung in einer anderen Anwendung zeigen."
+    },
+    "09": {
+      "title": "Mehrsprachige Formulare",
+      "summary": "Beschriftungen und Validierungsmeldungen mit ngx-translate übersetzen und dabei das Formularmodell beibehalten."
+    },
+    "11": {
+      "title": "Fragen & Antworten",
+      "summary": "Welche Formularfunktionen sollten wir gemeinsam pflegen?"
+    },
+    "12": {
+      "title": "Wie geht es weiter?",
+      "summary": "Framework-unabhängige Formulare und eine gemeinsame ARIA-Komponentenbibliothek."
+    }
+  }
+}

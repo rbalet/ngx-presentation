@@ -1,0 +1,151 @@
+{
+  "app": {
+    "title": "Why are we still rebuilding the same forms?",
+    "heading": "Why are we still rebuilding <span>the same forms?</span>",
+    "subtitle": "Extensive form manipulation with ngx-formly, a unified approach.",
+    "description": "Extensive form manipulation with ngx-formly, a unified approach. A presentation by Raphaël Balet for BIT.",
+    "role": "Expert Developer at BIT",
+    "skip": "Skip to presentation",
+    "start": "Start with chapter 01",
+    "language": "Language",
+    "notFound": "Page not found",
+    "open": "Open the presentation"
+  },
+  "theme": {
+    "dark": "Dark mode",
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode"
+  },
+  "nav": {
+    "chapters": "Chapters",
+    "index": "Chapter index",
+    "optional": "Optional extra",
+    "completed": "Completed",
+    "minutes": "{{minutes}} min",
+    "chapter": "Chapter {{number}} navigation",
+    "slide": "Chapter {{number}}, slide {{slide}} navigation",
+    "previous": "Previous: {{number}}",
+    "next": "Next: {{number}}",
+    "overview": "Back to overview",
+    "skipExtras": "Skip extras",
+    "previousSlide": "Previous slide",
+    "maintainers": "Continue to open source",
+    "custom": "Continue to custom example",
+    "requirements": "Continue to requirements"
+  },
+  "timer": {
+    "title": "Presentation time",
+    "idle": "Presentation not started",
+    "elapsed": "{{elapsed}} of {{total}} minutes elapsed",
+    "overdue": ", over time",
+    "readout": "{{elapsed}} / {{total}} min",
+    "startLabel": "Start presentation timer",
+    "resetLabel": "Reset presentation timer",
+    "start": "Start",
+    "reset": "Reset"
+  },
+  "about": {
+    "visits": "100 consecutive days of visits",
+    "remember": "For those who remember.",
+    "openSource": "Open-source",
+    "downloads": "npm downloads / week",
+    "source": "npm downloads / week for {{library}}, source",
+    "popular": "Most downloaded angular library on npm.",
+    "reason": "The reason we're here."
+  },
+  "problem": {
+    "subtitle": "Familiar form, <strong>Different stack.</strong>",
+    "solutions": "The Solutions",
+    "gallery": "Same fields, different designs",
+    "customExample": "Custom form example",
+    "contact": "Contact details",
+    "access": "Access request",
+    "event": "Event registration",
+    "material": "Material-inspired",
+    "bootstrap": "Bootstrap-inspired",
+    "custom": "Custom design",
+    "name": "Name",
+    "email": "Email",
+    "required": "required",
+    "repetition": "The design changes. <strong>The work repeats.</strong>",
+    "maintenance": "Required fields, validation, conditional logic, API integration — and ongoing maintenance.",
+    "also": "But also...",
+    "show": "Show solution: {{title}}",
+    "history": "Previously shown solutions",
+    "cost": {
+      "title": "Ongoing cost",
+      "description": "Every team maintains its own forms long after launch, sometimes even with a monthly/yearly fee.",
+      "answer": "Open source & shared maintenance"
+    },
+    "design": {
+      "title": "Different designs",
+      "description": "Each project needs its own look, making shared forms hard to reuse.",
+      "answer": "Material · Bootstrap · PrimeNG",
+      "solution": "Material, Bootstrap or your own visual language.",
+      "oblique": "Oblique compatible"
+    },
+    "reuse": {
+      "title": "Repeated work",
+      "description": "The same form logic gets rebuilt across tools and projects.",
+      "answer": "Core · MCP · Builder",
+      "solution": "Reuse the form logic across tools and projects.",
+      "diagram": "Core forms, MCP and Builder share the same form logic."
+    }
+  },
+  "contributors": {
+    "core": "Core team",
+    "community": "Community contributors",
+    "total": "{{count}} contributors"
+  },
+  "future": {
+    "framework": "Framework agnostic (run it everywhere)",
+    "aria": "Shared ARIA component library (file upload, telephone, code, …)"
+  },
+  "chapters": {
+    "01": {
+      "title": "About me",
+      "subtitle": "And my vanity metrics",
+      "summary": "Raphaël Balet. Expert Developer at BIT, Stack Overflow contributor and open-source maintainer."
+    },
+    "02": {
+      "title": "The Problems",
+      "summary": "Familiar forms, different stacks. Share the cost and maintenance with an open-source, extensible approach that adapts to each design."
+    },
+    "03": {
+      "title": "Meet ngx-formly",
+      "summary": "Describe a form as configuration. Reuse field components and validation across applications."
+    },
+    "04": {
+      "title": "MCP & WebMCP",
+      "summary": "Help AI assistants create forms and interact with them in the browser."
+    },
+    "05": {
+      "title": "Playground",
+      "summary": "Build a form, change its rules, preview the result and export its configuration."
+    },
+    "06": {
+      "title": "API & validation",
+      "summary": "Connect form validation to the API and show useful feedback where people need it."
+    },
+    "07": {
+      "title": "Periscope",
+      "summary": "Our event, workflow and survey tool. One real form, from configuration to submission."
+    },
+    "08": {
+      "title": "A shared approach at BIT",
+      "summary": "Start with one use case, agree who owns the shared components and demonstrate reuse in another application."
+    },
+    "09": {
+      "title": "Multilingual forms",
+      "summary": "Translate labels and validation messages with ngx-translate while keeping the form model stable."
+    },
+    "11": {
+      "title": "Q&A",
+      "summary": "Which form behavior should we maintain together?"
+    },
+    "12": {
+      "title": "What's next",
+      "summary": "Framework agnostic forms and a shared ARIA component library."
+    }
+  }
+}

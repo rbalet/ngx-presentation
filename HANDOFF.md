@@ -2,13 +2,13 @@
 
 ## Goal
 
-Present ngx-formly to BIT colleagues and management to gain support for a shared form approach. The talk is in English. The full slot is 60 minutes, with up to 45 minutes of presentation and 15 minutes of Q&A.
+Present ngx-formly to BIT colleagues and management to gain support for a shared form approach. The talk defaults to English, with German and French available from the header language selector. The full slot is 60 minutes, with up to 45 minutes of presentation and 15 minutes of Q&A.
 
 Title: **Why are we still rebuilding the same forms?**
 
 Subtitle: \*_Extensive form manipulation with ngx-formly, a unified approach._
 
-The user chose TanStack Start, React and Motion for a scrolling presentation. Work through one chapter at a time. Chapters 01 and 02 have their first full content. The remaining chapters contain short topic summaries.
+The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. Work through one chapter at a time. Chapters 01 and 02 have their first full content. Chapter 12 lists future plans. The remaining chapters contain short topic summaries.
 
 ## Chapter numbers
 
@@ -24,8 +24,9 @@ The user chose TanStack Start, React and Motion for a scrolling presentation. Wo
 | 08      | A shared form approach at BIT          | 2       | Main                            |
 | 09      | Multilingual forms with ngx-translate  | 4       | Optional extra                  |
 | 11      | Q&A                                    | 15      | Discussion                      |
+| 12      | What's next                            | 3       | Main, future plans              |
 
-The main content totals 38 minutes. The optional multilingual forms chapter adds 4 minutes and may be skipped. Keep the numbers stable when developing each chapter.
+The main content totals 41 minutes. The optional multilingual forms chapter adds 4 minutes and may be skipped. Keep the numbers stable when developing each chapter.
 
 ## Content decisions
 
@@ -39,22 +40,25 @@ The main content totals 38 minutes. The optional multilingual forms chapter adds
 
 - Repository: `/Users/raphael.balet/Documents/Open-source/ngx-presentation`.
 - Run `pnpm dev` through Portless and open the printed URL (normally https://ngx-presentation.localhost). Playwright bypasses the proxy and uses port 4310.
-- Chapter IDs are `chapter-01` through `chapter-09`, plus `chapter-11` for Q&A, and support direct hash links. Chapter 10 was removed; the remaining numbers stay stable.
-- Motion applies a small scroll-linked vertical transition. Reduced-motion mode disables it and smooth anchor scrolling.
+- Chapter IDs are `chapter-01` through `chapter-09`, plus `chapter-11` for Q&A and `chapter-12` for What's next, and support direct hash links. Chapter 10 was removed; the remaining numbers stay stable.
+- Native CSS applies a small scroll-linked vertical transition where supported. Reduced-motion mode disables animations and smooth anchor scrolling.
 - Navigation uses normal links, with a skip-extras link before the optional chapters.
+- ngx-translate loads bundled catalogues from `src/i18n/{en,de,fr}.json`; English is the default and fallback. Language changes update document metadata and accessibility labels and persist when storage is available.
+- ngx-formly core is registered in `src/app.config.ts`. No UI adapter or live demo form is selected.
+- Official Angular, ngx-translate and ngx-formly skills live in `.agents/skills`. Run `pnpm check:i18n` after editing translations.
 - No hosting, authentication, backend or demo integration is configured.
 
 ## Chapter 01
 
 Use "About me" as the title and "And my vanity metrics" as a smaller subtitle beneath it. Hide the duration on this slide; retain its two-minute allocation in the agenda.
 
-The user requested a playful introduction inspired by simple three-card presentation slides. Keep Stack Overflow, ngx-translate and ngx-formly in that order, on one row on desktop. The two libraries share an **Open-source maintainer** container. The cards stack on small screens. Keep the existing scroll animation and reduced-motion support.
+The user requested a playful introduction inspired by simple three-card presentation slides. Keep Stack Overflow, ngx-translate and ngx-formly in that order, on one row on desktop. The two libraries share an **Open-source maintainer** container. The cards stack on small screens. Keep the scroll animation and reduced-motion support.
 
 All three cards are neutral by default. Hovering a card turns its border and main metric the primary red; the highlight follows the pointer. Apply this only on devices that support hover to avoid a sticky highlight on touch screens.
 
 Match the user's portfolio reference with a small source logo at the top right and a subtle graph behind the foreground content. Show exact npm counts, not abbreviated figures. Keep Fanatic as the Stack Overflow headline. The graph behind it shows public reputation gains, not visits or progress toward the badge.
 
-Content lives in `src/components/about-chapter.tsx`. The slide introduces Raphaël Balet as an Expert Developer at BIT. It uses the Fanatic badge as the joke and ends the Formly card with "The reason we're here."
+Content lives in `src/components/about-chapter.ts`. The slide introduces Raphaël Balet as an Expert Developer at BIT. It uses the Fanatic badge as the joke and ends the Formly card with "The reason we're here."
 
 Verified sources, checked 9 November 2026:
 
@@ -90,7 +94,7 @@ The three requirements follow the sketch:
 
 "aria" is interpreted as [Angular Aria](https://angular.dev/guide/aria/overview), the headless accessible directives, rather than a visual theme. The requirements describe the desired shared approach; they do not claim a shipped Formly adapter for Angular Aria. [Formly's setup guide](https://formly.dev/docs/guide/getting-started/) documents its Material, Bootstrap and PrimeNG themes.
 
-Content lives in `src/components/problem-chapter.tsx`. It uses the existing chapter scroll motion and navigation. Examples and requirements stack on mobile. Navigation must keep chapter 02 active while scrolling through its longer content.
+Content lives in `src/components/problem-chapter.ts` and `src/components/problem-requirements.ts`. It uses the chapter scroll motion and navigation. Examples and requirements stack on mobile. Navigation must keep chapter 02 active while scrolling through its longer content.
 
 Suggested speaker notes:
 

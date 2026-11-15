@@ -1,0 +1,57 @@
+<ng-template #titleTemplate>
+  <h2 appChapterTitle [number]="chapter().number" [title]="title()" [subtitle]="continuations().length ? undefined : subtitle()"></h2>
+</ng-template>
+<ng-template #nextLinks>
+  <div>
+    @if (next()?.kind === 'extra') { <a href="#chapter-11" class="skip-extras">{{ 'nav.skipExtras' | translate }}</a> }
+    <a [href]="next() ? '#chapter-' + next()!.number : '#overview'">{{ (next() ? 'nav.next' : 'nav.overview') | translate: { number: next()?.number } }}</a>
+  </div>
+</ng-template>
+<ng-template #connector let-slide>
+  <a class="slide-connector" [href]="'#' + slide.id">
+    {{ slide.label | translate }}
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v19m-5-5 5 5 5-5" /></svg>
+  </a>
+</ng-template>
+@if (continuations().length) {
+  <div class="chapter-running-title"><ng-container [ngTemplateOutlet]="titleTemplate" /></div>
+}
+<div class="chapter-slide">
+  <div class="chapter-content chapter-content--motion">
+    @if (continuations().length) {
+      @if (subtitle(); as text) { <p class="chapter-subtitle" [innerHTML]="text | translate"></p> }
+    } @else { <ng-container [ngTemplateOutlet]="titleTemplate" /> }
+    @if (chapter().kind === 'extra') { <p class="chapter-label">{{ 'nav.optional' | translate }}</p> }
+    @switch (chapter().number) {
+      @case ('01') { <app-about-chapter [part]="compact() ? 'community' : undefined" /> }
+      @case ('02') { <app-problem-chapter [part]="compact() ? 'comparison' : undefined" /> }
+      @case ('12') {
+        <ul class="chapter-summary"><li>{{ 'future.framework' | translate }}</li><li>{{ 'future.aria' | translate }}</li></ul>
+      }
+      @default { <p class="chapter-summary">{{ chapter().summary | translate }}</p> }
+    }
+  </div>
+  <nav class="chapter-controls" [attr.aria-label]="'nav.chapter' | translate: { number: chapter().number }">
+    <a [href]="previous() ? '#chapter-' + previous()!.number : '#overview'">{{ (previous() ? 'nav.previous' : 'nav.overview') | translate: { number: previous()?.number } }}</a>
+    @if (continuations().length) {
+      <ng-container [ngTemplateOutlet]="connector" [ngTemplateOutletContext]="{ $implicit: continuations()[0] }" />
+    } @else { <ng-container [ngTemplateOutlet]="nextLinks" /> }
+  </nav>
+</div>
+@for (slide of continuations(); track slide.id; let index = $index) {
+  <div [id]="slide.id" class="chapter-slide chapter-slide--continuation" tabindex="-1">
+    <div class="chapter-content">
+      @switch (slide.content) {
+        @case ('maintainers') { <app-about-chapter part="maintainers" /> }
+        @case ('custom') { <app-problem-chapter part="custom" /> }
+        @case ('requirements') { <app-problem-requirements [(active)]="activeProblem" /> }
+      }
+    </div>
+    <nav class="chapter-controls" [attr.aria-label]="'nav.slide' | translate: { number: chapter().number, slide: index + 2 }">
+      <a [href]="'#' + (continuations()[index - 1]?.id ?? 'chapter-' + chapter().number)">{{ 'nav.previousSlide' | translate }}</a>
+      @if (continuations()[index + 1]; as nextSlide) {
+        <ng-container [ngTemplateOutlet]="connector" [ngTemplateOutletContext]="{ $implicit: nextSlide }" />
+      } @else { <ng-container [ngTemplateOutlet]="nextLinks" /> }
+    </nav>
+  </div>
+}

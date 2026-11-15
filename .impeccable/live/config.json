@@ -1,6 +1,8 @@
 {
-  "files": ["src/routes/__root.tsx"],
-  "insertBefore": "<Scripts",
-  "commentSyntax": "jsx",
+  "files": [
+    "src/index.html"
+  ],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
   "cspChecked": true
 }

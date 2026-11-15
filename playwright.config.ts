@@ -11,7 +11,7 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['iPhone 13'], defaultBrowserType: 'chromium' } },
   ],
   webServer: {
-    command: 'vite --host 127.0.0.1 --port 4310 --strictPort',
+    command: 'ng serve --host 127.0.0.1 --port 4310',
     url: 'http://127.0.0.1:4310',
     reuseExistingServer: !process.env.CI,
   },

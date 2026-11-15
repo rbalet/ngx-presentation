@@ -11,82 +11,80 @@ export type Chapter = {
 export const chapters: Chapter[] = [
   {
     number: "01",
-    title: "About me",
-    subtitle: "And my vanity metrics",
+    title: "chapters.01.title",
+    subtitle: "chapters.01.subtitle",
     minutes: 2,
     kind: "main",
-    summary:
-      "Raphaël Balet. Expert Developer at BIT, Stack Overflow contributor and open-source maintainer.",
+    summary: "chapters.01.summary",
   },
   {
     number: "02",
-    title: "The Problems",
+    title: "chapters.02.title",
     minutes: 5,
     kind: "main",
-    summary:
-      "Familiar forms, different stacks. Share the cost and maintenance with an open-source, extensible approach that adapts to each design.",
+    summary: "chapters.02.summary",
   },
   {
     number: "03",
-    title: "Meet ngx-formly",
+    title: "chapters.03.title",
     minutes: 7,
     kind: "main",
-    summary:
-      "Describe a form as configuration. Reuse field components and validation across applications.",
+    summary: "chapters.03.summary",
   },
   {
     number: "04",
-    title: "MCP & WebMCP",
+    title: "chapters.04.title",
     minutes: 4,
     kind: "main",
-    summary:
-      "Help AI assistants create forms and interact with them in the browser.",
+    summary: "chapters.04.summary",
   },
   {
     number: "05",
-    title: "Playground",
+    title: "chapters.05.title",
     minutes: 6,
     kind: "main",
-    summary:
-      "Build a form, change its rules, preview the result and export its configuration.",
+    summary: "chapters.05.summary",
   },
   {
     number: "06",
-    title: "API & validation",
+    title: "chapters.06.title",
     minutes: 4,
     kind: "main",
-    summary:
-      "Connect form validation to the API and show useful feedback where people need it.",
+    summary: "chapters.06.summary",
   },
   {
     number: "07",
-    title: "Periscope",
+    title: "chapters.07.title",
     minutes: 8,
     kind: "main",
-    summary:
-      "Our event, workflow and survey tool. One real form, from configuration to submission.",
+    summary: "chapters.07.summary",
   },
   {
     number: "08",
-    title: "A shared approach at BIT",
+    title: "chapters.08.title",
     minutes: 2,
     kind: "main",
-    summary:
-      "Start with one use case, agree who owns the shared components and demonstrate reuse in another application.",
+    summary: "chapters.08.summary",
   },
   {
     number: "09",
-    title: "Multilingual forms",
+    title: "chapters.09.title",
     minutes: 4,
     kind: "extra",
-    summary:
-      "Translate labels and validation messages with ngx-translate while keeping the form model stable.",
+    summary: "chapters.09.summary",
   },
   {
     number: "11",
-    title: "Q&A",
+    title: "chapters.11.title",
     minutes: 15,
     kind: "discussion",
-    summary: "Which form behavior should we maintain together?",
+    summary: "chapters.11.summary",
+  },
+  {
+    number: "12",
+    title: "chapters.12.title",
+    minutes: 3,
+    kind: "main",
+    summary: "chapters.12.summary",
   },
 ];

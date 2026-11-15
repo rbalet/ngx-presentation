@@ -203,7 +203,8 @@ test("all numbered chapters are reachable and extras can be skipped", async ({
     name: "Chapter index",
     exact: true,
   });
-  await expect(index.getByRole("link")).toHaveCount(10);
+  await expect(index.getByRole("link")).toHaveCount(11);
+  await expect(index.getByRole("link").last()).toHaveAttribute("href", "#chapter-12");
   await expect(page.locator("#chapter-10")).toHaveCount(0);
   await expect(
     page.locator("#chapter-09").getByRole("link", { name: "Next: 11" }),
@@ -226,8 +227,17 @@ test("all numbered chapters are reachable and extras can be skipped", async ({
   await expect(page.getByRole("heading", { name: "11 Q&A" })).toBeInViewport();
   await page
     .getByRole("region", { name: "11 Q&A" })
-    .getByRole("link", { name: "Back to overview" })
+    .getByRole("link", { name: "Next: 12" })
     .click();
+  await expect(page).toHaveURL(/#chapter-12$/);
+  const whatsNext = page.getByRole("region", { name: "12 What's next" });
+  await expect(whatsNext.getByRole("heading")).toBeInViewport();
+  await expect(whatsNext.getByRole("listitem")).toHaveText([
+    "Framework agnostic (run it everywhere)",
+    "Shared ARIA component library (file upload, telephone, code, …)",
+  ]);
+  await expect(whatsNext.getByRole("link", { name: "Previous: 11" })).toHaveAttribute("href", "#chapter-11");
+  await whatsNext.getByRole("link", { name: "Back to overview" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
   expect(errors).toEqual([]);
 });
@@ -703,10 +713,10 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       } else {
         await button.press(index === 1 ? "Enter" : "Space");
       }
-      await expect(solution.locator(".problem-solution-page")).toHaveCount(1);
       await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
         answers[index],
       );
+      await expect(solution.locator(".problem-solution-page")).toHaveCount(1);
       await expect(solution.locator(".problem-icon path")).toHaveAttribute(
         "d",
         iconPath!,
@@ -756,8 +766,17 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       await toggles
         .nth(index)
         .evaluate((button: HTMLButtonElement) => button.click());
-      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
+      // Angular schedules rendering; CSS animations use the browser timeline.
       await page.clock.runFor(100);
+      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
+      await pages.evaluateAll(elements => {
+        for (const element of elements) {
+          for (const animation of element.getAnimations()) {
+            animation.pause();
+            animation.currentTime = 100;
+          }
+        }
+      });
       const current = solution.locator(
         ".problem-solution-page[aria-hidden='false']",
       );
@@ -793,8 +812,8 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       await toggles
         .nth(index)
         .evaluate((button: HTMLButtonElement) => button.click());
-      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
       await page.clock.runFor(50);
+      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
     }
     await page.clock.runFor(500);
     await expect(pages).toHaveCount(1);

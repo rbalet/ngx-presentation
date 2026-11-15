@@ -1,0 +1,119 @@
+<div class="about-intro">
+      <div [class]="part() ? 'about-cards about-cards--' + part() : 'about-cards'">
+        @if (part() !== 'maintainers') { <article
+          class="metric-card community-card"
+          aria-labelledby="stackoverflow-title"
+        >
+          <img
+            class="metric-logo"
+            src="/metrics/stackoverflow.svg"
+            width="28"
+            height="28"
+            alt=""
+          />
+          <img
+            class="metric-history"
+            src="/metrics/stackoverflow-reputation.svg"
+            width="320"
+            height="180"
+            alt=""
+          />
+          <h3 id="stackoverflow-title">
+            <a
+              href="https://stackoverflow.com/users/11135174/rapha%C3%ABl-balet"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Stack Overflow
+            </a>
+          </h3>
+          <p class="metric-value fanatic-badge">Fanatic</p>
+          <p class="metric-label">{{ 'about.visits' | translate }}</p>
+          <a
+            class="metric-caption"
+            href="https://stackoverflow.com/help/badges/83/fanatic"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {{ 'about.remember' | translate }}
+          </a>
+        </article>}
+
+        @if (part() !== 'community') { <section
+          class="maintainer-group"
+          aria-labelledby="maintainer-title"
+        >
+          <h3 id="maintainer-title">{{ 'about.openSource' | translate }}</h3>
+          <article class="metric-card" aria-labelledby="translate-title">
+            <img
+              class="metric-logo"
+              src="/metrics/npm.svg"
+              width="28"
+              height="28"
+              alt=""
+            />
+            <img
+              class="metric-history"
+              src="/metrics/translate-downloads.svg"
+              width="320"
+              height="180"
+              alt=""
+            />
+            <h4 id="translate-title">
+              <a
+                href="https://ngx-translate.org/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                ngx-translate
+              </a>
+            </h4>
+            <p class="metric-value">1,912,458</p>
+            <a
+              class="metric-label"
+              href="https://api.npmjs.org/downloads/point/2026-11-02:2026-11-08/%40ngx-translate%2Fcore"
+              target="_blank"
+              rel="noreferrer"
+              [attr.aria-label]="'about.source' | translate: { library: 'ngx-translate' }"
+            >
+              {{ 'about.downloads' | translate }}
+            </a>
+            <p class="metric-caption">
+              {{ 'about.popular' | translate }}
+            </p>
+          </article>
+          <article class="metric-card" aria-labelledby="formly-title">
+            <img
+              class="metric-logo"
+              src="/metrics/npm.svg"
+              width="28"
+              height="28"
+              alt=""
+            />
+            <img
+              class="metric-history"
+              src="/metrics/formly-downloads.svg"
+              width="320"
+              height="180"
+              alt=""
+            />
+            <h4 id="formly-title">
+              <a href="https://formly.dev/" target="_blank" rel="noreferrer">
+                ngx-formly
+              </a>
+            </h4>
+            <p class="metric-value">311,233</p>
+            <a
+              class="metric-label"
+              href="https://api.npmjs.org/downloads/point/2026-11-02:2026-11-08/%40ngx-formly%2Fcore"
+              target="_blank"
+              rel="noreferrer"
+              [attr.aria-label]="'about.source' | translate: { library: 'ngx-formly' }"
+            >
+              {{ 'about.downloads' | translate }}
+            </a>
+            <p class="metric-caption">{{ 'about.reason' | translate }}</p>
+          </article>
+        </section>}
+      </div>
+    </div>

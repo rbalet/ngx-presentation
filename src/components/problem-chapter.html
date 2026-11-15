@@ -1,0 +1,27 @@
+<div class="problem-chapter">
+  <figure class="problem-gallery" [class.problem-gallery--partial]="part()"
+    [attr.aria-label]="(part() === 'custom' ? 'problem.customExample' : 'problem.gallery') | translate">
+    <div class="form-examples">
+      @for (example of examples(); track example.theme) {
+        <div [class]="'form-example form-example--' + example.theme">
+          <div class="form-example-header">
+            <h3>{{ example.title | translate }}</h3><p>{{ example.design | translate }}</p>
+          </div>
+          <dl class="form-example-fields">
+            <div>
+              <dt>{{ 'problem.name' | translate }} <span [attr.aria-label]="'problem.required' | translate">*</span></dt>
+              <dd>Alex Morgan</dd>
+            </div>
+            <div>
+              <dt>{{ 'problem.email' | translate }} <span [attr.aria-label]="'problem.required' | translate">*</span></dt>
+              <dd>alex&#64;example.org</dd>
+            </div>
+          </dl>
+        </div>
+      }
+    </div>
+  </figure>
+  @if (part() !== 'comparison') {
+    <p class="problem-repetition" [innerHTML]="('problem.repetition' | translate) + '<span>' + ('problem.maintenance' | translate) + '</span>'"></p>
+  }
+</div>
