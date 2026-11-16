@@ -24,9 +24,8 @@
             <button class="problem-toggle" type="button" [attr.aria-expanded]="active() === index" aria-controls="problem-result"
               [attr.aria-label]="'problem.show' | translate: { title: ('problem.' + problem.key + '.title' | translate) }" (click)="select(index)">
               {{ 'problem.' + problem.key + '.title' | translate }}
-              <span class="problem-icon-slot">
-                @if (active() !== index) { <ng-container [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: problem.problemIcon }" /> }
-              </span>
+              <ng-container [ngTemplateOutlet]="icon"
+                [ngTemplateOutletContext]="{ $implicit: active() === index ? 'M4 12h15m-6-6 6 6-6 6' : problem.problemIcon }" />
             </button>
           </h4>
           <p class="problem-description">{{ 'problem.' + problem.key + '.description' | translate }}</p>

@@ -18,14 +18,14 @@ Use **Focus view** on desktop to hide the chapter index. Left/right arrows or Pa
 | 01 · About me | 2 min | Introduce the maintainer perspective. Download metrics are dated snapshots, not unique users. |
 | 02 · The Problems | 5 min | Ask who has rebuilt the same validation in a second project. Reveal the three solutions. |
 | 03 · Meet ngx-formly | 7 min | Connect field configuration, native controls, validation, and the model. Change attendance to show conditional behavior. |
-| 04 · From prompt to form | 4 min | Copy the prompt into your coding agent, then show its repository changes in subsection 04.1. Review the working form together. |
+| 04 · Agentic Workflow | 4 min | Copy the prompt into your coding agent, then show its repository changes in subsection 04.1. Review the working form together. |
 | 05 · Make it yours | 6 min | Ask a colleague for a field-label or required-field change. Preview it, export the configuration, import it into the real Studio and continue editing there. |
 | 06 · API & validation | 4 min | Trigger invalid input and the labeled mock API response. Discuss which validation belongs in the browser and which the API must enforce. |
 | 07 · Periscope | 8 min | Walk through events, workflows and surveys, then switch to the actual application if it is running. Reuse the same registration story. |
 | 08 · A shared approach at BIT | 2 min | Pick one form, one owner and a second application in which to prove reuse. No adoption or savings claims. |
 | 09 · Multilingual forms | 4 min, optional | Switch labels and validation language while keeping model keys stable. Skip this chapter when discussion needs the time. |
 | 12 · What's next | 3 min | Discuss the framework-independent and shared accessible-component ambitions as future work. |
-| 11 · Q&A | 15 min | Ask which repeated behavior the team would share first. |
+| 11 · Q&A | 15 min | Invite the audience to share what they think is missing. |
 
 The original chapter IDs and agenda allocations stay stable: 41 minutes of main content, four optional minutes, 15 minutes of discussion. Chapter 12 comes before Q&A so discussion closes the session.
 

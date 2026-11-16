@@ -2,7 +2,7 @@
   "app": {
     "title": "Warum bauen wir immer wieder dieselben Formulare?",
     "heading": "Warum bauen wir immer wieder <span>dieselben Formulare?</span>",
-    "subtitle": "Umfassende Formularbearbeitung mit ngx-formly, ein gemeinsamer Ansatz.",
+    "subtitle": "Komplexe Formulare mit ngx-formly gemeinsam entwickeln.",
     "description": "Umfassende Formularbearbeitung mit ngx-formly, ein gemeinsamer Ansatz. Eine Präsentation von Raphaël Balet für das BIT.",
     "role": "Expert Developer beim BIT",
     "skip": "Zur Präsentation springen",
@@ -75,21 +75,21 @@
     "history": "Bereits gezeigte Lösungen",
     "cost": {
       "title": "Laufende Kosten",
-      "description": "Jedes Team wartet seine eigenen Formulare noch lange nach dem Start, manchmal sogar mit monatlichen oder jährlichen Gebühren.",
+      "description": "Jedes Team wartet seine Formulare nach dem Start, teils mit laufenden Gebühren.",
       "answer": "Open Source & gemeinsame Wartung"
     },
     "design": {
       "title": "Unterschiedliche Designs",
-      "description": "Jedes Projekt braucht sein eigenes Design. Das erschwert die Wiederverwendung gemeinsamer Formulare.",
+      "description": "Eigene Designs erschweren die Wiederverwendung von Formularen.",
       "answer": "Material · Bootstrap · PrimeNG",
-      "solution": "Material, Bootstrap oder die eigene Designsprache.",
+      "solution": "Material, Bootstrap oder ein eigenes Design nutzen.",
       "oblique": "Mit Oblique kompatibel"
     },
     "reuse": {
       "title": "Wiederholte Arbeit",
-      "description": "Dieselbe Formularlogik wird in verschiedenen Tools und Projekten immer wieder neu gebaut.",
+      "description": "Dieselbe Logik, von Projekt zu Projekt neu gebaut",
       "answer": "Core · MCP · Builder",
-      "solution": "Formularlogik über Tools und Projekte hinweg wiederverwenden.",
+      "solution": "Formularlogik in mehreren Tools und Projekten nutzen.",
       "diagram": "Core-Formulare, MCP und Builder teilen dieselbe Formularlogik."
     }
   },
@@ -110,23 +110,23 @@
     },
     "02": {
       "title": "Die Probleme",
-      "summary": "Vertraute Formulare, verschiedene Tech-Stacks. Kosten und Wartung teilen mit einem erweiterbaren Open-Source-Ansatz, der sich jedem Design anpasst."
+      "summary": "Formularkosten und Wartung teilen, mit erweiterbaren Open-Source-Tools für jedes Design."
     },
     "03": {
       "title": "ngx-formly kennenlernen",
-      "summary": "Ein Formular als Konfiguration beschreiben. Feldkomponenten und Validierung in mehreren Anwendungen wiederverwenden."
+      "summary": "Formulare konfigurieren. Feldkomponenten und Validierung in mehreren Apps nutzen."
     },
     "04": {
-      "title": "Vom Prompt zum Formular",
-      "summary": "Mit dem ngx-formly-Skill ein Anmeldeformular erstellen, das Ergebnis prüfen und im Builder weiterbearbeiten."
+      "title": "Agentischer Workflow",
+      "summary": "Mit dem ngx-formly-Skill ein Anmeldeformular erstellen, prüfen und im Builder öffnen."
     },
     "05": {
       "title": "Jetzt seid ihr dran",
-      "summary": "Dasselbe Formular bearbeiten, die Konfiguration exportieren und in Formly Studio weiterarbeiten."
+      "summary": "Formular bearbeiten und die Konfiguration nach Formly Studio exportieren."
     },
     "06": {
       "title": "API & Validierung",
-      "summary": "Formularvalidierung mit der API verbinden und hilfreiche Rückmeldungen dort anzeigen, wo sie gebraucht werden."
+      "summary": "API-Validierungsfehler an den betroffenen Feldern anzeigen."
     },
     "07": {
       "title": "Periscope",
@@ -134,11 +134,11 @@
     },
     "08": {
       "title": "Ein gemeinsamer Ansatz beim BIT",
-      "summary": "Mit einem Anwendungsfall beginnen, die Verantwortung für gemeinsame Komponenten klären und die Wiederverwendung in einer anderen Anwendung zeigen."
+      "summary": "Ein Formular wählen, die Wartung gemeinsamer Komponenten klären und die Wiederverwendung in einer zweiten App testen."
     },
     "09": {
       "title": "Mehrsprachige Formulare",
-      "summary": "Beschriftungen und Validierungsmeldungen mit ngx-translate übersetzen und dabei das Formularmodell beibehalten."
+      "summary": "Beschriftungen und Fehler mit ngx-translate übersetzen. Das Formularmodell bleibt gleich."
     },
     "11": {
       "title": "Fragen & Antworten",
@@ -155,23 +155,23 @@
     "keys": "Mit Pfeil links / rechts zwischen Folien wechseln."
   },
   "periscope": {
-    "intro": "Das Projekt, an dem ich arbeite: Veranstaltungen, Workflows und Umfragen mit konfigurierbaren Formularen.",
+    "intro": "Mein aktuelles Projekt nutzt konfigurierbare Formulare für Events, Workflows und Umfragen.",
     "chooseArea": "Periscope erkunden",
     "chooseStep": "Den Weg eines Formulars erkunden",
     "events": {
       "name": "Veranstaltungen",
       "title": "Teilnehmende anmelden",
-      "description": "Anmeldephasen und Formulare für einzelne Teilnehmende und Delegationen konfigurieren."
+      "description": "Anmeldephasen und Formulare für Einzelpersonen und Delegationen einrichten."
     },
     "workflows": {
       "name": "Workflows",
       "title": "Einen Antrag weiterführen",
-      "description": "Einen Workflow definieren, einen Antrag erfassen und den Fall durch zugewiesene Aufgaben begleiten."
+      "description": "Workflows definieren, Anträge erfassen und zugewiesene Aufgaben verfolgen."
     },
     "surveys": {
       "name": "Umfragen",
       "title": "Antworten sammeln und prüfen",
-      "description": "Formulare und Prüfprozesse konfigurieren, damit Personen ihre Umfrageantworten ausfüllen können."
+      "description": "Umfrageformulare und die Prüfung der Antworten einrichten."
     },
     "steps": {
       "configure": "Konfigurieren",
@@ -180,28 +180,28 @@
     },
     "details": {
       "configure": {
-        "title": "Eine Definition, die die Anwendung darstellen kann",
-        "text": "Administratoren bearbeiten Feldbeschriftungen, Typen, Pflichtangaben und Reihenfolge. Periscope übersetzt die gespeicherte Backend-Definition in Formly-Felder."
+        "title": "Von der Konfiguration zu den Feldern",
+        "text": "Admins legen Beschriftungen, Typen, Pflichtfelder und Reihenfolge fest. Periscope erzeugt aus der gespeicherten Definition Formly-Felder."
       },
       "preview": {
-        "title": "Vor dem Teilen ausprobieren",
-        "text": "Das gespeicherte Formular in der Vorschau mit Testantworten prüfen. Eine Vorschau sendet keine Anmeldung oder Antwort ab."
+        "title": "Vor der Freigabe testen",
+        "text": "Validierung mit Testantworten prüfen. Die Vorschau sendet nichts ab."
       },
       "use": {
-        "title": "Gemeinsame Felder, echte Anwendungsregeln",
-        "text": "Formly stellt das konfigurierte Formular dar. Periscope verwaltet den Ablauf, den Zugriff, gespeicherte Antworten und das Absenden."
+        "title": "Anzeige und Versand",
+        "text": "Formly zeigt das Formular an. Periscope verwaltet Ablauf, Zugriff, gespeicherte Antworten und Versand."
       }
     },
     "stack": "Angular · Formly · Material · Oblique · ngx-translate",
     "open": "Periscope lokal öffnen",
-    "local": "Lokale Demo: Periscope und seine API zuerst starten. Diese Folie zeigt einen Produktrundgang."
+    "local": "Produktrundgang. Für eine Live-Demo Periscope und seine API starten."
   },
   "closing": {
     "pilot": {
       "title": "Probieren wir es an einem echten Formular aus.",
       "choose": {
         "title": "Einen Anwendungsfall wählen",
-        "text": "Ein Formular mit Validierung und bedingten Feldern auswählen, das auch ein anderes Team braucht."
+        "text": "Ein Formular finden, das beide Teams brauchen, mit Validierung und bedingten Feldern."
       },
       "own": {
         "title": "Die Wartung klären",
@@ -209,38 +209,26 @@
       },
       "reuse": {
         "title": "In einer zweiten Anwendung einsetzen",
-        "text": "Das Design dieser Anwendung behalten. Prüfen, welches Verhalten sich übernehmen lässt und was angepasst werden muss."
+        "text": "Das Design der zweiten App behalten. Prüfen, was sich übernehmen oder anpassen lässt."
       },
       "ask": "Wer hat einen guten Kandidaten?"
     },
     "language": {
       "title": "Die Sprache wechseln. Die Antworten behalten.",
       "name": "Vollständiger Name",
-      "hint": "Diesen fiktiven Namen ändern, dann die Sprache wechseln.",
+      "hint": "Beispielnamen ändern, dann die Sprache wechseln.",
       "model": "Das Formularmodell",
-      "takeaway": "Beschriftungen und Meldungen übersetzen; Feldschlüssel stabil halten."
+      "takeaway": "Beschriftungen und Meldungen übersetzen. Feldschlüssel beibehalten."
     },
     "discussion": {
-      "title": "Zeigt mir euer schwierigstes Formular.",
-      "choose": "Diskussionsthema",
-      "validation": {
-        "title": "Validierung",
-        "question": "Welche Validierungsregel habt ihr in mehr als einer Anwendung implementiert?"
-      },
-      "design": {
-        "title": "Designsysteme",
-        "question": "Was bräuchte euer Team, um Verhalten zu teilen und die eigenen Komponenten zu behalten?"
-      },
-      "ownership": {
-        "title": "Verantwortung",
-        "question": "Wer soll die gemeinsamen Felder betreuen und wie sollen Teams Änderungen beitragen?"
-      },
+      "title": "Und ihr?",
+      "question": "Fehlt euch etwas?",
       "replay": "Zum interaktiven Formular"
     },
     "future": {
       "framework": "überall einsetzbar",
-      "aria": "Wiederverwendbare, barrierefreie Feldkomponenten für Uploads, Telefonnummern und Code entwickeln.",
-      "invitation": "Zukunftsideen. Ein guter Pilot hilft uns, die ersten Prioritäten zu wählen."
+      "aria": "Wiederverwendbare, barrierefreie Felder für Uploads, Telefonnummern und Code.",
+      "invitation": "Mit dem Pilotprojekt Prioritäten setzen."
     }
   },
   "demo": {
@@ -267,61 +255,68 @@
       "failed": "Kopieren nicht verfügbar. Text markieren oder JSON herunterladen."
     },
     "intro": {
-      "lead": "Beschreibt Felder, Regeln und Verhalten. Angular stellt das Formular dar.",
+      "lead": "Felder und Regeln konfigurieren. Angular rendert das Formular.",
       "configuration": "Konfiguration des Feldes Vollständiger Name",
-      "try": "label, required, minLength oder maxLength ändern, um das Feld anzupassen. model.name unten ändern, um es auszufüllen.",
+      "try": "label, required, minLength oder maxLength ändern. Den Wert in model.name setzen.",
       "configurationError": "Gültiges JSON mit key \"name\", type \"input\", props (label, required, positive minLength und maxLength mit minLength ≤ maxLength) und validation.messages.minLength (Meldung oder Übersetzungsschlüssel, 1–200 Zeichen) verwenden.",
       "additionalFields": "E-Mail, Auswahloptionen und bedingte Felder",
       "template": "Felder und Modell mit Angular verbinden",
       "translation": "Eigene Fehlermeldungen mit ngx-translate"
     },
     "skill": {
-      "lead": "Die Absicht beschreiben. Die erzeugte Konfiguration prüfen. Die Kontrolle über das Ergebnis behalten.",
+      "lead": "Formular beschreiben und generierte Konfiguration prüfen.",
       "promptTitle": "Dem Skill eine konkrete Aufgabe geben",
       "prompt": "Implementiere mit dem ngx-formly-Skill ein Anmeldeformular für einen Teamtag direkt im Unterabschnitt 04.1 (#chapter-04-result). Ersetze den Platzhalter in src/components/skill-result.ts durch das funktionierende Formular. Verwende DemoFormState und unsere registrierten Typen input, select und textarea. Vollständiger Name und gültige E-Mail-Adresse sind Pflicht. Biete Teilnahme vor Ort oder online an. Zeige Ernährungswünsche nur bei Teilnahme vor Ort und lösche den Wert beim Ausblenden. Ergänze eine aufklappbare Modellvorschau. Halte die Konfiguration in Kapitel 05 bearbeitbar und exportierbar und unterstütze Englisch, Deutsch und Französisch. Ändere dieses Repository und prüfe das Formular und den Build.",
       "copy": "Prompt kopieren",
-      "reviewTitle": "Gemeinsam prüfen",
       "resultTitle": "04.1 · Ergebnis des Agenten",
-      "check1": "Entspricht jedes Feld der Anforderung?",
-      "check2": "Funktionieren Validierung und bedingte Felder?",
-      "check3": "Lässt sich dieselbe Konfiguration im Builder verwenden?",
       "continue": "Ergebnis des Agenten ansehen",
-      "skillRole": "Projektanweisungen zum Erzeugen und Prüfen des Codes.",
-      "mcpRole": "Dokumentation und Werkzeuge für den Assistenten.",
-      "webmcpRole": "Strukturierte Aktionen, die eine Webanwendung bereitstellt.",
-      "instructions": "Kopiere diesen Prompt in deinen Coding-Agenten mit diesem Repository geöffnet. Zeige nach dem Speichern der Änderungen das Ergebnis im Unterabschnitt 04.1.",
-      "resultEmpty": "Hier erscheint das Formular, das dein Agent erstellt. Führe den Prompt aus und kehre dann zu diesem Unterabschnitt zurück, um das Ergebnis gemeinsam auszuprobieren."
+      "choose": "MCP, WebMCP und Skill kennenlernen",
+      "readGuide": "Dokumentation lesen",
+      "capabilities": {
+        "mcp": {
+          "summary": "Den Assistenten mit Dokumentation und Werkzeugen verbinden."
+        },
+        "webmcp": {
+          "summary": "Einen Browser-Agenten mit einem laufenden Formular arbeiten lassen.",
+          "fieldSetup": "webMcp: true setzen, um das Feld für Browser-Agenten freizugeben.",
+          "exampleLabel": "Feldkonfiguration mit aktiviertem WebMCP"
+        },
+        "skill": {
+          "summary": "Dem Coding-Agenten einen Formly-Arbeitsablauf geben."
+        }
+      },
+      "resultEmpty": "Prompt ausführen und das Formular hier testen."
     },
     "builder": {
-      "lead": "Dieselben Felder bleiben bearbeitbar. Hier eine kleine Änderung machen, dann die Konfiguration in Formly Studio öffnen.",
+      "lead": "Dasselbe Formular hier bearbeiten und in Formly Studio öffnen.",
       "editTitle": "Das Publikum wählt eine Änderung",
-      "challenge": "Ein Feld umbenennen oder zum Pflichtfeld machen. Die lokale Vorschau wird sofort aktualisiert.",
+      "challenge": "Ein Feld umbenennen oder als Pflichtfeld setzen. Die Vorschau reagiert sofort.",
       "field": "Feld bearbeiten",
       "label": "Feldbeschriftung",
       "required": "Pflichtfeld",
       "handoffTitle": "Im echten Builder weiterarbeiten",
-      "handoff": "JSON herunterladen, Formly Studio öffnen und Import Form → Choose File wählen. UI Library für Vanilla leer lassen. Ein Feld bearbeiten und zu Preview wechseln.",
+      "handoff": "JSON herunterladen. In Formly Studio Import Form → Choose File wählen. UI Library für Vanilla leer lassen. Ein Feld bearbeiten und Preview öffnen.",
       "download": "JSON herunterladen",
       "open": "Formly Studio öffnen",
-      "offline": "Studio öffnet einen neuen Tab und benötigt eine Verbindung. Diese lokale Vorschau funktioniert offline.",
+      "offline": "Studio braucht Internet und öffnet sich in einem neuen Tab. Die Vorschau funktioniert offline.",
       "configuration": "Exportierte Konfiguration ansehen",
       "copy": "JSON kopieren",
       "reset": "Demo zurücksetzen"
     },
     "validation": {
-      "lead": "Ein gutes Formular verarbeitet auch die Antwort. Eine Ablehnung ausprobieren und ohne Datenverlust korrigieren.",
+      "lead": "Eine abgelehnte Anmeldung korrigieren und die Eingaben behalten.",
       "title": "Validierung hat zwei Aufgaben",
-      "mock": "Lokale API-Simulation mit fiktiven Daten. Es wird keine Anfrage oder Anmeldung gesendet.",
+      "mock": "Lokale API-Simulation mit fiktiven Daten. Es wird nichts gesendet.",
       "client": "Pflichtfelder und E-Mail-Format im Browser prüfen.",
-      "server": "Geschäftsregeln und Berechtigungen auf dem Server durchsetzen.",
-      "feedback": "Den Fehler am passenden Feld zeigen und Eingaben behalten.",
+      "server": "Geschäftsregeln und Berechtigungen auf dem Server prüfen.",
+      "feedback": "Fehler am betroffenen Feld zeigen. Eingaben behalten.",
       "duplicate": "Angemeldete E-Mail testen",
       "valid": "Neue Anmeldung testen",
       "idle": "Ein Beispiel wählen und das Formular absenden.",
       "invalid": "Bitte die markierten Felder vor dem Absenden prüfen.",
       "pending": "Anmeldung wird geprüft…",
-      "rejected": "409 · Bereits angemeldet. Die Eingaben bleiben erhalten; E-Mail ändern und erneut versuchen.",
-      "success": "201 · Demo-Anmeldung angenommen. Hier ist das abgesendete Modell.",
+      "rejected": "409 · E-Mail bereits registriert. Adresse ändern und erneut versuchen. Die Eingaben bleiben erhalten.",
+      "success": "201 · Demo-Anmeldung angenommen.",
       "payload": "Abgesendetes Modell",
       "sending": "Wird geprüft…",
       "submit": "Demo-Anmeldung absenden"

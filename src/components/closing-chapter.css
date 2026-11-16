@@ -8,18 +8,16 @@ p { line-height: 1.5; }
 .pilot-steps li > span { font-size: 1.5rem; font-weight: 700; color: var(--red); font-variant-numeric: tabular-nums; }
 .pilot-steps p { max-width: 65ch; }
 .closing-line { margin-top: 1.75rem; font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 700; color: var(--red); }
-.language-buttons, .discussion-topics { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.language-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 button { min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
 button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.discussion-topics button { color: var(--on-dark); border-color: var(--on-dark); }
-.discussion-topics button[aria-pressed="true"] { background: var(--on-dark); color: var(--dark-surface); }
 .language-example { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 2rem; margin-top: 2rem; }
 .language-example label { display: block; margin-bottom: 0.5rem; font-weight: 700; }
 .language-example input { width: 100%; min-height: 2.75rem; padding: 0.75rem; border: 1px solid var(--muted); border-radius: 6px; background: var(--surface); color: var(--ink); font: inherit; caret-color: var(--red); }
 .language-example p { margin-top: 0.75rem; font-size: 0.875rem; color: var(--muted); }
 .language-example h3 { font-size: 1rem; }
 pre { margin: 0; padding: 1rem; background: var(--group); border-radius: 6px; font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
-.discussion-question { min-height: 4.5em; max-width: 42ch; margin-block: 2rem; font-size: clamp(1.25rem, 2.5vw, 2rem); line-height: 1.45; }
+.discussion-question { margin-block: 0 2rem; font-size: clamp(1.25rem, 2.5vw, 2rem); line-height: 1.45; }
 .resources { display: flex; flex-wrap: wrap; gap: 1rem 2rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
 .resources a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 .future-directions { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 0; list-style: none; }
@@ -29,7 +27,6 @@ pre { margin: 0; padding: 1rem; background: var(--group); border-radius: 6px; fo
 @media (max-width: 700px) {
   .language-example, .future-directions { grid-template-columns: 1fr; gap: 1.25rem; }
   .big-question { margin-block: 1rem 1.5rem; }
-  .discussion-question { min-height: 0; }
 }
 @media (max-height: 760px) and (min-width: 701px) {
   .big-question { margin-block: 1rem; font-size: clamp(1.5rem, 2.5vw, 2.25rem); }

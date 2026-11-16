@@ -13,6 +13,4 @@ export class ClosingChapter {
   readonly chapter = input.required<string>();
   readonly languages = inject(Languages);
   readonly name = signal('Alex Example');
-  readonly topics = ['validation', 'design', 'ownership'] as const;
-  readonly topic = signal<(typeof this.topics)[number]>('validation');
 }

@@ -2,7 +2,7 @@
   "app": {
     "title": "Why are we still rebuilding the same forms?",
     "heading": "Why are we still rebuilding <span>the same forms?</span>",
-    "subtitle": "Extensive form manipulation with ngx-formly, a unified approach.",
+    "subtitle": "One approach to complex forms with ngx-formly.",
     "description": "Extensive form manipulation with ngx-formly, a unified approach. A presentation by Raphaël Balet for BIT.",
     "role": "Expert Developer at BIT",
     "skip": "Skip to presentation",
@@ -75,21 +75,21 @@
     "history": "Previously shown solutions",
     "cost": {
       "title": "Ongoing cost",
-      "description": "Every team maintains its own forms long after launch, sometimes even with a monthly/yearly fee.",
+      "description": "Each team maintains its forms after launch, sometimes with recurring fees.",
       "answer": "Open source & shared maintenance"
     },
     "design": {
       "title": "Different designs",
-      "description": "Each project needs its own look, making shared forms hard to reuse.",
+      "description": "Project-specific designs make forms harder to reuse.",
       "answer": "Material · Bootstrap · PrimeNG",
-      "solution": "Material, Bootstrap or your own visual language.",
+      "solution": "Use Material, Bootstrap or your own design.",
       "oblique": "Oblique compatible"
     },
     "reuse": {
       "title": "Repeated work",
-      "description": "The same form logic gets rebuilt across tools and projects.",
+      "description": "Same logic, rebuilt across projects",
       "answer": "Core · MCP · Builder",
-      "solution": "Reuse the form logic across tools and projects.",
+      "solution": "Share form logic across tools and projects.",
       "diagram": "Core forms, MCP and Builder share the same form logic."
     }
   },
@@ -110,23 +110,23 @@
     },
     "02": {
       "title": "The Problems",
-      "summary": "Familiar forms, different stacks. Share the cost and maintenance with an open-source, extensible approach that adapts to each design."
+      "summary": "Share form costs and maintenance with extensible open-source tools that fit each design."
     },
     "03": {
       "title": "Meet ngx-formly",
-      "summary": "Describe a form as configuration. Reuse field components and validation across applications."
+      "summary": "Configure forms. Reuse field components and validation across apps."
     },
     "04": {
-      "title": "From prompt to form",
-      "summary": "Use the ngx-formly skill to generate an event-registration form. Inspect the result, then take it into the builder."
+      "title": "Agentic Workflow",
+      "summary": "Generate an event registration form with the ngx-formly skill. Review it, then open it in the builder."
     },
     "05": {
       "title": "Make it yours",
-      "summary": "Edit the same form, export its configuration and continue in Formly Studio."
+      "summary": "Edit the form and export its configuration to Formly Studio."
     },
     "06": {
       "title": "API & validation",
-      "summary": "Connect form validation to the API and show useful feedback where people need it."
+      "summary": "Show API validation errors on the relevant fields."
     },
     "07": {
       "title": "Periscope",
@@ -134,11 +134,11 @@
     },
     "08": {
       "title": "A shared approach at BIT",
-      "summary": "Start with one use case, agree who owns the shared components and demonstrate reuse in another application."
+      "summary": "Pick one form, agree who maintains shared components and test reuse in a second app."
     },
     "09": {
       "title": "Multilingual forms",
-      "summary": "Translate labels and validation messages with ngx-translate while keeping the form model stable."
+      "summary": "Translate labels and errors with ngx-translate. Keep the same form model."
     },
     "11": {
       "title": "Q&A",
@@ -155,23 +155,23 @@
     "keys": "Left / right arrow keys move between slides."
   },
   "periscope": {
-    "intro": "The project I’m working on: events, workflows and surveys built around configurable forms.",
+    "intro": "My current project uses configurable forms for events, workflows and surveys.",
     "chooseArea": "Explore Periscope",
     "chooseStep": "Explore the form journey",
     "events": {
       "name": "Events",
       "title": "Register participants",
-      "description": "Configure registration phases and forms for individual participants and delegations."
+      "description": "Set up registration phases and forms for individuals and delegations."
     },
     "workflows": {
       "name": "Workflows",
       "title": "Move a request forward",
-      "description": "Define a workflow, collect a request and follow its case through assigned tasks."
+      "description": "Define workflows, collect requests and track assigned tasks."
     },
     "surveys": {
       "name": "Surveys",
       "title": "Collect and review responses",
-      "description": "Configure forms and validation processes, then let people complete their survey responses."
+      "description": "Set up survey forms and response validation."
     },
     "steps": {
       "configure": "Configure",
@@ -180,28 +180,28 @@
     },
     "details": {
       "configure": {
-        "title": "A definition the application can render",
-        "text": "Administrators edit field labels, types, required rules and order. Periscope maps the saved backend definition to Formly fields."
+        "title": "From configuration to fields",
+        "text": "Admins set labels, types, required fields and order. Periscope maps the saved definition to Formly fields."
       },
       "preview": {
-        "title": "Try the experience before sharing it",
-        "text": "Preview the saved form and reveal validation with trial answers. A preview does not submit a registration or response."
+        "title": "Test before sharing",
+        "text": "Test validation with sample answers. The preview sends nothing."
       },
       "use": {
-        "title": "Shared fields, real application rules",
-        "text": "Formly renders the configured form. Periscope manages the surrounding journey, access, saved answers and submission."
+        "title": "Rendering and submission",
+        "text": "Formly renders the form. Periscope handles the flow, access, saved answers and submission."
       }
     },
     "stack": "Angular · Formly · Material · Oblique · ngx-translate",
     "open": "Open local Periscope",
-    "local": "Local demo: start Periscope and its API first. This slide is a product walkthrough."
+    "local": "Walkthrough. For a live demo, start Periscope and its API."
   },
   "closing": {
     "pilot": {
       "title": "Let’s try this on one real form.",
       "choose": {
         "title": "Choose a use case",
-        "text": "Pick a form with validation and conditional fields that another team also needs."
+        "text": "Find a form both teams need, with validation and conditional fields."
       },
       "own": {
         "title": "Agree who maintains it",
@@ -209,38 +209,26 @@
       },
       "reuse": {
         "title": "Use it in a second application",
-        "text": "Keep that application’s design. Check which behavior carries across and what needs adapting."
+        "text": "Keep the second app’s design. See what carries over and what needs adapting."
       },
       "ask": "Who has a good candidate?"
     },
     "language": {
       "title": "Change the language. Keep the answers.",
       "name": "Full name",
-      "hint": "Edit this fictional name, then switch languages.",
+      "hint": "Edit the sample name, then switch languages.",
       "model": "The form model",
-      "takeaway": "Translate labels and messages; keep field keys stable."
+      "takeaway": "Translate labels and messages. Keep field keys stable."
     },
     "discussion": {
-      "title": "Bring your hardest form.",
-      "choose": "Discussion topic",
-      "validation": {
-        "title": "Validation",
-        "question": "Which validation rule have you implemented in more than one application?"
-      },
-      "design": {
-        "title": "Design systems",
-        "question": "What would your team need to share behavior while keeping its own components?"
-      },
-      "ownership": {
-        "title": "Ownership",
-        "question": "Who should own the shared fields, and how should teams contribute changes?"
-      },
+      "title": "And you?",
+      "question": "Is it missing something?",
       "replay": "Revisit the live form"
     },
     "future": {
       "framework": "run it everywhere",
-      "aria": "Build reusable, accessible field components for needs such as uploads, telephone numbers and code.",
-      "invitation": "Future directions. A good pilot will help us choose what matters first."
+      "aria": "Reusable, accessible fields for uploads, phone numbers and code.",
+      "invitation": "Use the pilot to set priorities."
     }
   },
   "demo": {
@@ -267,61 +255,68 @@
       "failed": "Copy unavailable. Select the text or download the JSON."
     },
     "intro": {
-      "lead": "Describes the fields, rules and behavior. Angular renders the form.",
+      "lead": "Configure fields and rules. Angular renders the form.",
       "configuration": "Full name field configuration",
-      "try": "Edit label, required, minLength or maxLength to update the field. Change model.name below to fill it.",
+      "try": "Edit label, required, minLength or maxLength. Set the value in model.name.",
       "configurationError": "Use valid JSON with key \"name\", type \"input\", props (label, required, positive minLength and maxLength with minLength ≤ maxLength), and validation.messages.minLength (a message or translation key, 1–200 characters).",
       "additionalFields": "Email, select options and conditional fields",
       "template": "Bind the fields and model to Angular",
       "translation": "Custom error messages with ngx-translate"
     },
     "skill": {
-      "lead": "Describe the intent. Review the generated configuration. Keep control of what ships.",
+      "lead": "Describe the form. Review the generated configuration.",
       "promptTitle": "Give the skill a real task",
       "prompt": "Use the ngx-formly skill to implement a team-day registration form directly in subsection 04.1 (#chapter-04-result). Replace the placeholder in src/components/skill-result.ts with the working form. Reuse DemoFormState and our registered input, select and textarea types. Require a full name and a valid email. Offer in-person or online attendance. Show dietary requirements only for in-person attendees and clear the value when hidden. Include a collapsible model preview. Keep the configuration editable and exportable in chapter 05, and support English, German and French. Make the changes in this repository and verify the form and build.",
       "copy": "Copy prompt",
-      "reviewTitle": "What to review together",
       "resultTitle": "04.1 · Agent result",
-      "check1": "Does every field match the request?",
-      "check2": "Do validation and conditional fields behave correctly?",
-      "check3": "Can the same configuration move into the builder?",
       "continue": "See the agent result",
-      "skillRole": "Project instructions for generating and checking the code.",
-      "mcpRole": "Documentation and tools available to the assistant.",
-      "webmcpRole": "Structured actions exposed by a web application.",
-      "instructions": "Copy this prompt into your coding agent with this repository open. Once the changes are saved, show the result in subsection 04.1.",
-      "resultEmpty": "The form your agent builds will appear here. Run the prompt, then return to this subsection to try the result together."
+      "choose": "Explore MCP, WebMCP and Skill",
+      "readGuide": "Read the guide",
+      "capabilities": {
+        "mcp": {
+          "summary": "Connect your assistant to docs and tools."
+        },
+        "webmcp": {
+          "summary": "Let a browser agent work with a live form.",
+          "fieldSetup": "Set webMcp: true to expose the field to a browser agent.",
+          "exampleLabel": "Field configuration with WebMCP enabled"
+        },
+        "skill": {
+          "summary": "Give your coding agent a Formly workflow."
+        }
+      },
+      "resultEmpty": "Run the prompt, then return here to try the form."
     },
     "builder": {
-      "lead": "The same fields stay editable. Make a small change here, then take the configuration into Formly Studio.",
+      "lead": "Edit the same form here, then continue in Formly Studio.",
       "editTitle": "Let the room choose a change",
-      "challenge": "Rename a field or make it required. This local preview updates immediately.",
+      "challenge": "Rename a field or make it required. See the change live.",
       "field": "Field to edit",
       "label": "Field label",
       "required": "Required field",
       "handoffTitle": "Continue in the real builder",
-      "handoff": "Download the JSON, open Formly Studio, then choose Import Form → Choose File. Leave UI Library blank for Vanilla. Edit a field and switch to Preview.",
+      "handoff": "Download JSON. In Formly Studio, select Import Form → Choose File. Leave UI Library blank for Vanilla. Edit a field, then open Preview.",
       "download": "Download JSON",
       "open": "Open Formly Studio",
-      "offline": "Studio opens in a new tab and needs a connection. This local preview works offline.",
+      "offline": "Studio needs internet and opens in a new tab. The preview works offline.",
       "configuration": "Inspect the exported configuration",
       "copy": "Copy JSON",
       "reset": "Reset the demo"
     },
     "validation": {
-      "lead": "A useful form handles the response, too. Let’s try a rejection and recover without losing the input.",
+      "lead": "Try a rejected submission. Correct it with your input intact.",
       "title": "Validation has two jobs",
-      "mock": "Local API simulation with fictional data. No request or registration is sent.",
+      "mock": "Local API simulation with fictional data. Nothing is sent.",
       "client": "Check required fields and email format in the browser.",
-      "server": "Let the server enforce business rules and permissions.",
-      "feedback": "Return the error to the right field and keep the input.",
+      "server": "Enforce business rules and permissions on the server.",
+      "feedback": "Show errors on the right field. Keep the input.",
       "duplicate": "Try a registered email",
       "valid": "Try a new registration",
       "idle": "Choose an example, then submit the form.",
       "invalid": "Check the highlighted fields before submitting.",
       "pending": "Checking the registration…",
-      "rejected": "409 · Already registered. Your input is preserved; change the email and try again.",
-      "success": "201 · Demo registration accepted. Here is the submitted model.",
+      "rejected": "409 · Email already registered. Change it and retry. Your input stays in the form.",
+      "success": "201 · Demo registration accepted.",
       "payload": "Submitted model",
       "sending": "Checking…",
       "submit": "Submit demo registration"

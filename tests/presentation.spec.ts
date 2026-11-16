@@ -892,7 +892,12 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
     const selectedSize = (await firstCard.boundingBox())!;
     expect(selectedSize.width).toBeCloseTo(originalSize.width);
     expect(selectedSize.height).toBeCloseTo(originalSize.height);
-    await expect(firstCard.locator(".problem-icon")).toHaveCount(0);
+    await expect(firstCard.locator(".problem-icon path")).toHaveAttribute(
+      "d",
+      "M4 12h15m-6-6 6 6-6 6",
+    );
+    await expect(firstCard).toHaveCSS("outline-width", "2px");
+    await expect(firstCard).toHaveCSS("outline-color", "rgb(79, 107, 82)");
     await expect(first).toHaveAccessibleName("Show solution: Ongoing cost");
     await expect(first).toHaveAttribute("aria-expanded", "true");
     await expect(firstCard).toHaveCSS("background-color", "rgb(238, 235, 229)");
@@ -958,6 +963,11 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       3,
     );
     await expect(first).toHaveAttribute("aria-expanded", "false");
+    await expect(firstCard).toHaveCSS("outline-style", "none");
+    await expect(problems.locator(".problem-card").last()).toHaveCSS(
+      "outline-width",
+      "2px",
+    );
     await expect(firstCard).toHaveCSS("background-color", "rgb(238, 235, 229)");
     await expect(titles).toHaveText(["Open source & shared maintenance"]);
     const historyBounds = (await history.boundingBox())!;
@@ -1019,9 +1029,6 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
     await expect(toggles.nth(1)).toHaveAttribute("aria-expanded", "true");
     await expect(problems.locator(".problem-description:visible")).toHaveCount(
       3,
-    );
-    await expect(problems.locator(".problem-card .problem-icon")).toHaveCount(
-      2,
     );
     await toggles.nth(1).click();
     await expect(checkmark.locator("path")).toHaveCSS(

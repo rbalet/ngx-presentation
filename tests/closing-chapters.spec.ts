@@ -7,10 +7,10 @@ test('Periscope walkthrough changes area and explains preview without pretending
   await chapter.getByRole('button', { name: 'Surveys', exact: true }).click();
   await expect(chapter.getByRole('heading', { name: 'Collect and review responses' })).toBeVisible();
   await chapter.getByRole('button', { name: 'Preview', exact: true }).click();
-  await expect(chapter.getByText('A preview does not submit', { exact: false })).toBeVisible();
+  await expect(chapter.getByText('The preview sends nothing.', { exact: false })).toBeVisible();
   await expect(chapter.getByRole('button', { name: 'Preview', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(chapter.getByRole('link', { name: 'Open local Periscope' })).toHaveAttribute('href', 'https://periscope.localhost/error/login');
-  await expect(chapter.getByText('This slide is a product walkthrough.', { exact: false })).toBeVisible();
+  await expect(chapter.getByText('Walkthrough. For a live demo, start Periscope and its API.')).toBeVisible();
 });
 
 test('changing the optional example language preserves the field key and answer', async ({ page }) => {
@@ -26,11 +26,12 @@ test('changing the optional example language preserves the field key and answer'
   await expect(chapter.locator('pre')).toContainText('"fullName": "Sam Example"');
 });
 
-test('Q&A topics select a concrete discussion question', async ({ page }) => {
+test('Q&A shows the audience prompts and resource links', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-11');
-  const chapter = page.locator('#chapter-11');
-  await chapter.getByRole('button', { name: 'Ownership', exact: true }).click();
-  await expect(chapter.getByText('Who should own the shared fields, and how should teams contribute changes?')).toBeVisible();
-  await expect(chapter.getByRole('button', { name: 'Ownership', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  const content = page.locator('#chapter-11 app-closing-chapter');
+  await expect(content.getByText('And you?', { exact: true })).toBeVisible();
+  await expect(content.getByText('Is it missing something?', { exact: true })).toBeVisible();
+  await expect(content.getByRole('button')).toHaveCount(0);
+  await expect(content.getByRole('link', { name: 'Revisit the live form' })).toHaveAttribute('href', '#chapter-05');
 });

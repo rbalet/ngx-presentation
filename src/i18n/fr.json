@@ -2,7 +2,7 @@
   "app": {
     "title": "Pourquoi recréons-nous toujours les mêmes formulaires ?",
     "heading": "Pourquoi recréons-nous toujours <span>les mêmes formulaires ?</span>",
-    "subtitle": "Manipulation avancée des formulaires avec ngx-formly, une approche unifiée.",
+    "subtitle": "Une approche commune des formulaires complexes avec ngx-formly.",
     "description": "Manipulation avancée des formulaires avec ngx-formly, une approche unifiée. Une présentation de Raphaël Balet pour l’OFIT.",
     "role": "Expert Developer à l’OFIT",
     "skip": "Aller à la présentation",
@@ -75,21 +75,21 @@
     "history": "Solutions déjà présentées",
     "cost": {
       "title": "Coûts récurrents",
-      "description": "Chaque équipe maintient ses propres formulaires bien après leur lancement, parfois avec des frais mensuels ou annuels.",
+      "description": "Chaque équipe maintient ses formulaires après le lancement, parfois avec des frais récurrents.",
       "answer": "Open source et maintenance partagée"
     },
     "design": {
       "title": "Des designs différents",
-      "description": "Chaque projet a besoin de son propre style, ce qui complique la réutilisation des formulaires.",
+      "description": "Des designs propres à chaque projet compliquent la réutilisation des formulaires.",
       "answer": "Material · Bootstrap · PrimeNG",
-      "solution": "Material, Bootstrap ou votre propre langage visuel.",
+      "solution": "Utiliser Material, Bootstrap ou votre propre design.",
       "oblique": "Compatible avec Oblique"
     },
     "reuse": {
       "title": "Un travail répétitif",
-      "description": "La même logique de formulaire est recréée dans différents outils et projets.",
+      "description": "La même logique, recréée d’un projet à l’autre",
       "answer": "Core · MCP · Builder",
-      "solution": "Réutiliser la logique des formulaires dans différents outils et projets.",
+      "solution": "Partager la logique des formulaires entre outils et projets.",
       "diagram": "Les formulaires Core, MCP et Builder partagent la même logique."
     }
   },
@@ -110,23 +110,23 @@
     },
     "02": {
       "title": "Les problèmes",
-      "summary": "Des formulaires familiers, des stacks différentes. Partager les coûts et la maintenance grâce à une approche open source extensible, adaptée à chaque design."
+      "summary": "Partager les coûts et la maintenance avec des outils open source extensibles, adaptés à chaque design."
     },
     "03": {
       "title": "Découvrez ngx-formly",
-      "summary": "Décrire un formulaire par sa configuration. Réutiliser les composants de champs et la validation dans plusieurs applications."
+      "summary": "Configurer les formulaires. Réutiliser les composants et la validation entre applications."
     },
     "04": {
-      "title": "De la demande au formulaire",
-      "summary": "Utiliser le skill ngx-formly pour générer un formulaire d’inscription, puis l’ouvrir dans le builder."
+      "title": "Flux de travail agentique",
+      "summary": "Générer un formulaire d’inscription avec le skill ngx-formly, le vérifier, puis l’ouvrir dans le builder."
     },
     "05": {
       "title": "À vous de jouer",
-      "summary": "Modifier le même formulaire, exporter sa configuration et continuer dans Formly Studio."
+      "summary": "Modifier le formulaire et exporter sa configuration vers Formly Studio."
     },
     "06": {
       "title": "API et validation",
-      "summary": "Connecter la validation des formulaires à l’API et afficher des retours utiles au bon endroit."
+      "summary": "Afficher les erreurs de validation de l’API sur les champs concernés."
     },
     "07": {
       "title": "Periscope",
@@ -134,11 +134,11 @@
     },
     "08": {
       "title": "Une approche commune à l’OFIT",
-      "summary": "Commencer par un cas d’usage, définir la responsabilité des composants communs et démontrer leur réutilisation dans une autre application."
+      "summary": "Choisir un formulaire, désigner qui maintient les composants partagés et tester leur réutilisation dans une seconde application."
     },
     "09": {
       "title": "Formulaires multilingues",
-      "summary": "Traduire les libellés et les messages de validation avec ngx-translate tout en gardant un modèle de formulaire stable."
+      "summary": "Traduire les libellés et les erreurs avec ngx-translate. Le modèle reste le même."
     },
     "11": {
       "title": "Questions-réponses",
@@ -155,23 +155,23 @@
     "keys": "Les flèches gauche / droite changent de diapositive."
   },
   "periscope": {
-    "intro": "Le projet sur lequel je travaille : événements, workflows et sondages construits autour de formulaires configurables.",
+    "intro": "Mon projet actuel utilise des formulaires configurables pour les événements, workflows et sondages.",
     "chooseArea": "Explorer Periscope",
     "chooseStep": "Explorer le parcours du formulaire",
     "events": {
       "name": "Événements",
       "title": "Inscrire les participants",
-      "description": "Configurer les phases d’inscription et les formulaires pour les participants individuels et les délégations."
+      "description": "Configurer les phases et formulaires d’inscription pour les personnes et les délégations."
     },
     "workflows": {
       "name": "Workflows",
       "title": "Faire avancer une demande",
-      "description": "Définir un workflow, recueillir une demande et suivre son dossier au fil des tâches attribuées."
+      "description": "Définir les workflows, recueillir les demandes et suivre les tâches attribuées."
     },
     "surveys": {
       "name": "Sondages",
       "title": "Recueillir et examiner les réponses",
-      "description": "Configurer les formulaires et les processus de validation, puis permettre aux personnes de répondre au sondage."
+      "description": "Configurer les formulaires de sondage et la validation des réponses."
     },
     "steps": {
       "configure": "Configurer",
@@ -180,28 +180,28 @@
     },
     "details": {
       "configure": {
-        "title": "Une définition que l’application peut afficher",
-        "text": "Les administrateurs modifient les libellés, types, champs obligatoires et ordre. Periscope transforme la définition enregistrée côté serveur en champs Formly."
+        "title": "De la configuration aux champs",
+        "text": "Les admins règlent les libellés, les types, les champs obligatoires et leur ordre. Periscope convertit la définition enregistrée en champs Formly."
       },
       "preview": {
-        "title": "Essayer le parcours avant de le partager",
-        "text": "Prévisualiser le formulaire enregistré et tester sa validation avec des réponses d’essai. Un aperçu n’envoie aucune inscription ni réponse."
+        "title": "Tester avant de partager",
+        "text": "Tester la validation avec des réponses d’essai. L’aperçu n’envoie rien."
       },
       "use": {
-        "title": "Des champs partagés, les règles de l’application",
-        "text": "Formly affiche le formulaire configuré. Periscope gère le parcours, les accès, les réponses enregistrées et l’envoi."
+        "title": "Affichage et envoi",
+        "text": "Formly affiche le formulaire. Periscope gère le parcours, les accès, les réponses enregistrées et l’envoi."
       }
     },
     "stack": "Angular · Formly · Material · Oblique · ngx-translate",
     "open": "Ouvrir Periscope en local",
-    "local": "Démo locale : démarrer Periscope et son API d’abord. Cette diapositive présente un parcours du produit."
+    "local": "Aperçu du produit. Pour une démo en direct, démarrer Periscope et son API."
   },
   "closing": {
     "pilot": {
       "title": "Essayons avec un vrai formulaire.",
       "choose": {
         "title": "Choisir un cas d’usage",
-        "text": "Prendre un formulaire avec validation et champs conditionnels dont une autre équipe a aussi besoin."
+        "text": "Trouver un formulaire utile aux deux équipes, avec validation et champs conditionnels."
       },
       "own": {
         "title": "Définir qui le maintient",
@@ -209,38 +209,26 @@
       },
       "reuse": {
         "title": "L’utiliser dans une deuxième application",
-        "text": "Conserver le design de cette application. Vérifier les comportements réutilisables et ceux à adapter."
+        "text": "Garder le design de la seconde application. Voir quoi réutiliser ou adapter."
       },
       "ask": "Qui a un bon candidat ?"
     },
     "language": {
       "title": "Changer la langue. Garder les réponses.",
       "name": "Nom complet",
-      "hint": "Modifier ce nom fictif, puis changer de langue.",
+      "hint": "Modifier le nom d’exemple, puis changer de langue.",
       "model": "Le modèle du formulaire",
-      "takeaway": "Traduire les libellés et les messages ; garder les clés des champs stables."
+      "takeaway": "Traduire les libellés et messages. Garder les mêmes clés de champ."
     },
     "discussion": {
-      "title": "Parlons de votre formulaire le plus difficile.",
-      "choose": "Sujet de discussion",
-      "validation": {
-        "title": "Validation",
-        "question": "Quelle règle de validation avez-vous implémentée dans plusieurs applications ?"
-      },
-      "design": {
-        "title": "Systèmes de design",
-        "question": "De quoi votre équipe aurait-elle besoin pour partager le comportement en gardant ses composants ?"
-      },
-      "ownership": {
-        "title": "Responsabilité",
-        "question": "Qui devrait maintenir les champs partagés et comment les équipes devraient-elles contribuer ?"
-      },
+      "title": "Et vous ?",
+      "question": "Est-ce qu’il manque quelque chose ?",
       "replay": "Revoir le formulaire interactif"
     },
     "future": {
       "framework": "utilisable partout",
-      "aria": "Créer des composants de champs réutilisables et accessibles pour les fichiers, numéros de téléphone et codes.",
-      "invitation": "Des pistes pour la suite. Un bon pilote nous aidera à choisir les premières priorités."
+      "aria": "Champs accessibles et réutilisables pour les fichiers, numéros de téléphone et codes.",
+      "invitation": "Fixer les priorités à partir du pilote."
     }
   },
   "demo": {
@@ -267,61 +255,68 @@
       "failed": "Copie indisponible. Sélectionnez le texte ou téléchargez le JSON."
     },
     "intro": {
-      "lead": "Décrit les champs, les règles et le comportement. Angular affiche le formulaire.",
+      "lead": "Configurer les champs et les règles. Angular affiche le formulaire.",
       "configuration": "Configuration du champ Nom complet",
-      "try": "Modifiez label, required, minLength ou maxLength pour mettre à jour le champ. Changez model.name ci-dessous pour le remplir.",
+      "try": "Modifiez label, required, minLength ou maxLength. Définissez la valeur dans model.name.",
       "configurationError": "Utilisez un JSON valide avec key \"name\", type \"input\", props (label, required, minLength et maxLength positifs avec minLength ≤ maxLength) et validation.messages.minLength (message ou clé de traduction, 1 à 200 caractères).",
       "additionalFields": "E-mail, options de sélection et champs conditionnels",
       "template": "Lier les champs et le modèle à Angular",
       "translation": "Messages d’erreur personnalisés avec ngx-translate"
     },
     "skill": {
-      "lead": "Décrivez le besoin. Relisez la configuration générée. Gardez la maîtrise du résultat.",
+      "lead": "Décrivez le formulaire, puis vérifiez la configuration générée.",
       "promptTitle": "Donner une vraie tâche au Skill",
       "prompt": "Utilise le Skill ngx-formly pour implémenter un formulaire d’inscription à une journée d’équipe directement dans la sous-section 04.1 (#chapter-04-result). Remplace le contenu provisoire de src/components/skill-result.ts par le formulaire fonctionnel. Réutilise DemoFormState et nos types input, select et textarea. Exige un nom complet et un e-mail valide. Propose une participation sur place ou en ligne. Affiche les besoins alimentaires uniquement sur place et efface la valeur lorsque le champ est masqué. Ajoute un aperçu repliable du modèle. Garde la configuration modifiable et exportable au chapitre 05 et prends en charge l’anglais, l’allemand et le français. Modifie ce dépôt et vérifie le formulaire et la compilation.",
       "copy": "Copier le prompt",
-      "reviewTitle": "À vérifier ensemble",
       "resultTitle": "04.1 · Résultat de l’agent",
-      "check1": "Chaque champ correspond-il au besoin ?",
-      "check2": "La validation et les champs conditionnels fonctionnent-ils ?",
-      "check3": "La même configuration peut-elle passer dans le builder ?",
       "continue": "Voir le résultat de l’agent",
-      "skillRole": "Des instructions de projet pour générer et vérifier le code.",
-      "mcpRole": "De la documentation et des outils accessibles à l’assistant.",
-      "webmcpRole": "Des actions structurées exposées par une application web.",
-      "instructions": "Copiez ce prompt dans votre agent de développement avec ce dépôt ouvert. Une fois les modifications enregistrées, montrez le résultat dans la sous-section 04.1.",
-      "resultEmpty": "Le formulaire créé par votre agent apparaîtra ici. Lancez le prompt, puis revenez dans cette sous-section pour tester le résultat ensemble."
+      "choose": "Découvrir MCP, WebMCP et Skill",
+      "readGuide": "Lire la documentation",
+      "capabilities": {
+        "mcp": {
+          "summary": "Relier l’assistant à la documentation et aux outils."
+        },
+        "webmcp": {
+          "summary": "Faire interagir un agent du navigateur avec un formulaire.",
+          "fieldSetup": "Définissez webMcp: true pour rendre le champ accessible à un agent du navigateur.",
+          "exampleLabel": "Configuration d’un champ avec WebMCP activé"
+        },
+        "skill": {
+          "summary": "Donner une méthode Formly à l’agent de développement."
+        }
+      },
+      "resultEmpty": "Lancez le prompt, puis revenez ici pour tester le formulaire."
     },
     "builder": {
-      "lead": "Les mêmes champs restent modifiables. Faites un petit changement ici, puis ouvrez la configuration dans Formly Studio.",
+      "lead": "Modifiez le même formulaire ici, puis ouvrez-le dans Formly Studio.",
       "editTitle": "Laisser la salle choisir un changement",
-      "challenge": "Renommez un champ ou rendez-le obligatoire. L’aperçu local se met à jour immédiatement.",
+      "challenge": "Renommez un champ ou rendez-le obligatoire. L’aperçu se met à jour aussitôt.",
       "field": "Champ à modifier",
       "label": "Libellé du champ",
       "required": "Champ obligatoire",
       "handoffTitle": "Continuer dans le vrai builder",
-      "handoff": "Téléchargez le JSON, ouvrez Formly Studio, puis choisissez Import Form → Choose File. Laissez UI Library vide pour Vanilla. Modifiez un champ et passez à Preview.",
+      "handoff": "Téléchargez le JSON. Dans Formly Studio, choisissez Import Form → Choose File. Laissez UI Library vide pour Vanilla. Modifiez un champ, puis ouvrez Preview.",
       "download": "Télécharger le JSON",
       "open": "Ouvrir Formly Studio",
-      "offline": "Studio s’ouvre dans un nouvel onglet avec une connexion. Cet aperçu local fonctionne hors ligne.",
+      "offline": "Studio requiert Internet et s’ouvre dans un nouvel onglet. L’aperçu fonctionne hors ligne.",
       "configuration": "Voir la configuration exportée",
       "copy": "Copier le JSON",
       "reset": "Réinitialiser la démo"
     },
     "validation": {
-      "lead": "Un bon formulaire gère aussi la réponse. Essayons un refus, puis corrigeons sans perdre la saisie.",
+      "lead": "Corrigez un envoi refusé en conservant votre saisie.",
       "title": "La validation a deux rôles",
-      "mock": "Simulation d’API locale avec des données fictives. Aucune requête ni inscription n’est envoyée.",
+      "mock": "Simulation locale d’API avec des données fictives. Aucun envoi.",
       "client": "Vérifier les champs obligatoires et le format de l’e-mail dans le navigateur.",
-      "server": "Laisser le serveur appliquer les règles métier et les autorisations.",
-      "feedback": "Renvoyer l’erreur au bon champ et conserver la saisie.",
+      "server": "Appliquer les règles métier et les autorisations côté serveur.",
+      "feedback": "Afficher l’erreur sur le champ concerné. Garder la saisie.",
       "duplicate": "Essayer un e-mail déjà inscrit",
       "valid": "Essayer une nouvelle inscription",
       "idle": "Choisissez un exemple, puis envoyez le formulaire.",
       "invalid": "Vérifiez les champs signalés avant l’envoi.",
       "pending": "Vérification de l’inscription…",
-      "rejected": "409 · Déjà inscrit. La saisie est conservée ; changez l’e-mail et réessayez.",
-      "success": "201 · Inscription de démonstration acceptée. Voici le modèle envoyé.",
+      "rejected": "409 · Adresse déjà inscrite. Changez-la et réessayez. La saisie est conservée.",
+      "success": "201 · Inscription de démonstration acceptée.",
       "payload": "Modèle envoyé",
       "sending": "Vérification…",
       "submit": "Envoyer l’inscription de démo"

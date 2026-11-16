@@ -219,6 +219,8 @@ Product areas, language examples, and discussion prompts use compact outlined bu
 
 ### Inputs and form previews
 
+The cover has scattered decorative form outlines, clipped to the hero behind its content. They use muted ink at 16% opacity and tint individually to chapter red at 32% on pointer hover, with a 240ms color transition only when reduced motion is not requested. These shapes have no form behavior or keyboard stops and are hidden from assistive technology.
+
 The preview is a raised-paper card with a group-rule border. Inputs, selects, and textareas use the shared surface/ink pair, a stronger muted border, the control radius, and a minimum height of 2.75rem. Editor controls use that same visible boundary. Labels are visibly associated with their controls; required markers are red. Error text appears beside the field's red border and is linked with `aria-describedby`; `aria-invalid` communicates the state. Textareas can grow vertically.
 
 The live indicator combines a small green dot with text. Model and configuration details use native disclosure controls. Copy and submission outcomes use status regions so feedback is available without relying on motion or color.

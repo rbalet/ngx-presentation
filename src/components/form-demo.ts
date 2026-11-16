@@ -1,5 +1,5 @@
 import { Component, computed, DestroyRef, effect, inject, input, linkedSignal, signal, untracked, viewChild } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 import { FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -7,12 +7,32 @@ import { DemoFormState, Registration } from '../demo/demo-form-state';
 
 @Component({
   selector: 'app-form-demo',
-  imports: [FormlyForm, ReactiveFormsModule, JsonPipe, TranslatePipe],
+  imports: [FormlyForm, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe],
   templateUrl: './form-demo.html',
   styleUrl: './form-demo.css',
 })
 export class FormDemo {
   readonly mode = input<'intro' | 'skill' | 'builder' | 'validation'>('intro');
+  readonly capabilities = [
+    { id: 'mcp', title: 'MCP', href: 'https://formly.dev/guide/mcp' },
+    { id: 'webmcp', title: 'WebMCP', href: 'https://formly.dev/guide/web-mcp' },
+    { id: 'skill', title: 'Skill', href: 'https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md' },
+  ];
+  readonly capabilitySelection = signal<{ current: number; previous: number | null }>({ current: 0, previous: null });
+  readonly mcpTools = [
+    { name: 'formly_search', icon: 'M20 20l-4.5-4.5M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z' },
+    { name: 'formly_lookup', icon: 'M12 6v14M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Z' },
+    { name: 'formly_examples', icon: 'm8 6-6 6 6 6m8-12 6 6-6 6m-2-15-4 18' },
+    { name: 'formly_validate_fields', icon: 'M9 4H6v16h12V4h-3M9 3h6v4H9Zm0 10 2 2 4-4' },
+  ];
+  readonly webMcpExample = `fields: FormlyFieldConfig[] = [
+  {
+    key: 'name',
+    type: 'input',
+    webMcp: true,
+    props: { label: 'Name', required: true },
+  },
+];`;
   readonly state = inject(DemoFormState);
   readonly translate = inject(TranslateService);
   readonly form = new FormGroup({});
@@ -58,9 +78,13 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
   readonly submitted = signal<Registration | null>(null);
   readonly formDirective = viewChild(FormGroupDirective);
   private pendingRequest?: ReturnType<typeof setTimeout>;
+  private capabilityTransition?: ReturnType<typeof setTimeout>;
 
   constructor() {
-    inject(DestroyRef).onDestroy(() => clearTimeout(this.pendingRequest));
+    inject(DestroyRef).onDestroy(() => {
+      clearTimeout(this.pendingRequest);
+      clearTimeout(this.capabilityTransition);
+    });
     effect(() => {
       this.state.revision();
       const directive = this.formDirective();
@@ -71,6 +95,19 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
         this.submitted.set(null);
       });
     });
+  }
+
+  selectCapability(index: number) {
+    this.copied.set('idle');
+    const { current } = this.capabilitySelection();
+    if (index === current) return;
+
+    clearTimeout(this.capabilityTransition);
+    const animate = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.capabilitySelection.set({ current: index, previous: animate ? current : null });
+    if (animate) {
+      this.capabilityTransition = setTimeout(() => this.capabilitySelection.set({ current: index, previous: null }), 380);
+    }
   }
 
   updateLabel(value: string) {

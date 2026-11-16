@@ -1,28 +1,63 @@
 <p class="demo-lead">{{ ('demo.' + mode() + '.lead') | translate }}</p>
 @if (mode() === 'skill') {
+  @let selection = capabilitySelection();
+  @let guideLabel = 'demo.skill.readGuide' | translate;
   <div class="skill-layout">
-    <div class="prompt-sheet">
-      <h3>{{ 'demo.skill.promptTitle' | translate }}</h3>
-      <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>
-      <div class="demo-actions">
-        <button class="demo-primary" type="button" (click)="copy(translate.instant('demo.skill.prompt'))">{{ 'demo.skill.copy' | translate }}</button>
-      </div>
-      <p class="demo-note">{{ 'demo.skill.instructions' | translate }}</p>
-      <p class="demo-status" role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</p>
+    <div class="capability-cards" role="group" [attr.aria-label]="'demo.skill.choose' | translate">
+      @for (capability of capabilities; track capability.id; let index = $index) {
+        <button class="capability-card" type="button" [attr.aria-pressed]="selection.current === index" aria-controls="capability-detail" [attr.aria-labelledby]="'capability-' + capability.id" [attr.aria-describedby]="'capability-summary-' + capability.id" (click)="selectCapability(index)">
+          <strong [id]="'capability-' + capability.id">{{ capability.title }}</strong>
+          <span [id]="'capability-summary-' + capability.id">{{ ('demo.skill.capabilities.' + capability.id + '.summary') | translate }}</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+        </button>
+      }
     </div>
-    <div class="skill-result">
-      <h3>{{ 'demo.skill.reviewTitle' | translate }}</h3>
-      <ul class="review-list">
-        <li>{{ 'demo.skill.check1' | translate }}</li>
-        <li>{{ 'demo.skill.check2' | translate }}</li>
-        <li>{{ 'demo.skill.check3' | translate }}</li>
-      </ul>
-      <div class="capability-note">
-        <p><a href="https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md" target="_blank" rel="noopener noreferrer"><strong>Skill</strong></a> · {{ 'demo.skill.skillRole' | translate }}</p>
-        <p><a href="https://formly.dev/guide/mcp" target="_blank" rel="noopener noreferrer"><strong>MCP</strong></a> · {{ 'demo.skill.mcpRole' | translate }}</p>
-        <p><a href="https://formly.dev/guide/web-mcp" target="_blank" rel="noopener noreferrer"><strong>WebMCP</strong></a> · {{ 'demo.skill.webmcpRole' | translate }}</p>
-      </div>
-    </div>
+    <section class="capability-detail" id="capability-detail" tabindex="0"
+      [attr.aria-labelledby]="'capability-title-' + selection.current"
+      [style.--slide-direction]="selection.previous !== null && selection.current < selection.previous ? -1 : 1">
+      @for (index of [selection.previous, selection.current]; track index) {
+        @if (index !== null) {
+          @let capability = capabilities[index];
+          @let outgoing = index === selection.previous;
+          <div class="capability-page" [class.solution-enter]="selection.previous !== null && !outgoing"
+            [class.solution-exit]="outgoing" [attr.inert]="outgoing ? '' : null">
+            <div class="capability-heading">
+              <h3 [id]="'capability-title-' + index">{{ capability.title }}</h3>
+              <a class="demo-secondary capability-source" [href]="capability.href" target="_blank" rel="noopener noreferrer"
+                [attr.aria-label]="guideLabel" [title]="guideLabel">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 4h6v6m-1-5L9 15M10 4H4v16h16v-6" /></svg>
+              </a>
+            </div>
+            @if (capability.id === 'mcp') {
+              <pre class="code-window capability-example"><code>https://formly.dev/mcp</code></pre>
+              <ul class="mcp-tools" role="list">
+                @for (tool of mcpTools; track tool.name) {
+                  <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path [attr.d]="tool.icon" />
+                    </svg>
+                    <code>{{ tool.name }}</code>
+                  </li>
+                }
+              </ul>
+            } @else if (capability.id === 'webmcp') {
+              <p>{{ 'demo.skill.capabilities.webmcp.fieldSetup' | translate }}</p>
+              <pre class="code-window capability-example" tabindex="0" [attr.aria-label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate"><code>{{ webMcpExample }}</code></pre>
+            }
+            @if (capability.id === 'skill') {
+              <div class="prompt-sheet">
+                <h4>{{ 'demo.skill.promptTitle' | translate }}</h4>
+                <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>
+                <div class="demo-actions">
+                  <button class="demo-primary" type="button" (click)="copy(translate.instant('demo.skill.prompt'))">{{ 'demo.skill.copy' | translate }}</button>
+                  <span class="demo-status" role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      }
+    </section>
   </div>
 } @else {
   <div class="demo-workbench" [class.demo-workbench--validation]="mode() === 'validation'">
@@ -39,16 +74,6 @@
             </details>
             <code>];</code>
             <p class="visually-hidden" id="intro-configuration-hint">{{ 'demo.intro.try' | translate }}</p>
-            <div class="model-example">
-              <code>const model = &#123;</code>
-              <div class="model-property">
-                <label for="intro-name-value">name:</label>
-                <span aria-hidden="true">"</span>
-                <input id="intro-name-value" aria-label="model.name" type="text" spellcheck="false" [maxLength]="state.exportFields()[0].props.maxLength" [value]="state.model().name ?? ''" (input)="updateName($any($event.target).value)" />
-                <span aria-hidden="true">"</span>
-              </div>
-              <code>&#125;;</code>
-            </div>
             <details class="code-example">
               <summary>{{ 'demo.intro.template' | translate }}</summary>
               <pre><code>{{ introTemplate }}</code></pre>
@@ -110,7 +135,26 @@
           @if (mode() === 'validation') { <button type="submit" class="demo-primary" [disabled]="apiStatus() === 'pending'">{{ (apiStatus() === 'pending' ? 'demo.validation.sending' : 'demo.validation.submit') | translate }}</button> }
         </fieldset>
       </form>
-      @if (mode() !== 'validation') {
+      @if (mode() === 'intro') {
+        <section class="model-details" aria-labelledby="intro-model-title">
+          <h4 id="intro-model-title">{{ 'demo.model' | translate }}</h4>
+          <div class="code-window model-example">
+            <code>const model = &#123;</code>
+            @for (property of state.model() | keyvalue; track property.key) {
+              @if (property.key !== 'name') {
+                <pre><code>{{ property.key }}: {{ property.value | json }},</code></pre>
+              }
+            }
+            <div class="model-property">
+              <label for="intro-name-value">name:</label>
+              <span aria-hidden="true">"</span>
+              <input id="intro-name-value" aria-label="model.name" type="text" spellcheck="false" [maxLength]="state.exportFields()[0].props.maxLength" [value]="state.model().name ?? ''" (input)="updateName($any($event.target).value)" />
+              <span aria-hidden="true">"</span>
+            </div>
+            <code>&#125;;</code>
+          </div>
+        </section>
+      } @else if (mode() === 'builder') {
         <details class="model-details"><summary>{{ 'demo.model' | translate }}</summary><pre class="code-window"><code>{{ state.model() | json }}</code></pre></details>
       }
     </div>

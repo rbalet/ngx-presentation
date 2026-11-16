@@ -29,12 +29,7 @@
   }
   @case ('11') {
     <p class="big-question">{{ 'closing.discussion.title' | translate }}</p>
-    <div class="discussion-topics" role="group" [attr.aria-label]="'closing.discussion.choose' | translate">
-      @for (item of topics; track item) {
-        <button type="button" [attr.aria-pressed]="topic() === item" (click)="topic.set(item)">{{ 'closing.discussion.' + item + '.title' | translate }}</button>
-      }
-    </div>
-    <p class="discussion-question" aria-live="polite">{{ 'closing.discussion.' + topic() + '.question' | translate }}</p>
+    <p class="discussion-question">{{ 'closing.discussion.question' | translate }}</p>
     <div class="resources"><a href="https://formly.dev/" target="_blank" rel="noopener noreferrer">formly.dev</a><a href="#chapter-05">{{ 'closing.discussion.replay' | translate }}</a><a href="#chapter-07">Periscope</a></div>
   }
   @case ('12') {

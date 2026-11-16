@@ -17,7 +17,7 @@ The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. 
 | 01      | About me                               | 2       | Main, first slide implemented   |
 | 02      | Repeated form implementation           | 5       | Main, first content implemented |
 | 03      | Introduction to ngx-formly             | 7       | Main                            |
-| 04      | From prompt to form                    | 4       | Main, agent result in 04.1      |
+| 04      | Agentic Workflow                       | 4       | Main, agent result in 04.1      |
 | 05      | Make it yours                          | 6       | Main, editing and Studio export |
 | 06      | API integration and validation service | 4       | Main                            |
 | 07      | Periscope                              | 8       | Main                            |
@@ -109,7 +109,7 @@ Rehearse the complete flow in PRESENTING.md. Confirm the real Periscope environm
 - Work is on `codex/interactive-presentation`, uncommitted. No dependencies added.
 - Chapter 03 renders real Formly fields and shows their configuration. Chapter 04 presents the installed skill prompt; it directs the coding agent to replace `src/components/skill-result.ts`, displayed in subsection 04.1 at `#chapter-04-result`. That subsection starts with a placeholder. Chapter 05 edits the shared configuration and downloads portable JSON; import it into the hosted Studio using the on-slide instructions.
 - Chapter 06 demonstrates invalid input, a registered-email rejection and successful submission against a labeled local simulation. It sends no real registration.
-- Chapter 07 shows documented Periscope areas and configure/preview/use stages. Chapters 08, 09, 11 and 12 now contain the pilot proposal, a working language example, selectable discussion prompts and future plans.
+- Chapter 07 shows documented Periscope areas and configure/preview/use stages. Chapters 08, 09, 11 and 12 contain the pilot proposal, a working language example, two audience prompts and future plans.
 - All new copy is translated into English, German and French. Desktop focus view and keyboard navigation support live presenting; fields retain their normal keyboard behavior.
 - [PRESENTING.md](PRESENTING.md) contains the full run of show and rehearsal steps.
 - [Builder release handoff](docs/builder-release.md) records the tested npm candidate, durable version patch and genuine publication prerequisites. Nothing has been published.

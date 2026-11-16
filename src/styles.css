@@ -139,14 +139,67 @@ h2 {
 }
 
 .overview {
+  position: relative;
+  isolation: isolate;
   width: 100%;
-  max-width: 80rem;
   min-height: var(--slide-height);
-  margin-inline: auto;
   padding: calc(var(--header-height) + var(--slide-inset)) var(--gutter)
     var(--slide-inset);
   display: grid;
   align-items: center;
+}
+.opening {
+  width: 100%;
+  max-width: calc(80rem - 2 * var(--gutter));
+  margin-inline: auto;
+  pointer-events: none;
+}
+.opening > * {
+  pointer-events: auto;
+}
+.hero-forms {
+  position: absolute;
+  inset: var(--header-height) 0 0;
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+}
+.hero-form {
+  position: absolute;
+  width: clamp(9rem, 19vw, 17rem);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: color-mix(in srgb, var(--muted) 16%, transparent);
+  pointer-events: auto;
+}
+.hero-form--profile { top: 9%; left: -3%; rotate: -12deg; }
+.hero-form--input { top: 7%; left: 35%; rotate: 7deg; }
+.hero-form--registration { top: 13%; right: 5%; rotate: 10deg; }
+.hero-form--choices { top: 53%; left: 3%; width: clamp(7rem, 14vw, 12rem); rotate: -7deg; }
+.hero-form--select { top: 52%; right: -4%; rotate: -9deg; }
+.hero-form--message { bottom: 4%; left: 23%; rotate: 6deg; }
+.hero-form--survey { bottom: -5%; right: 13%; rotate: -8deg; }
+@media (hover: hover) and (pointer: fine) {
+  .hero-form:hover {
+    color: color-mix(in srgb, var(--red) 32%, transparent);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-form {
+    transition: color 240ms ease-out;
+  }
+}
+@media (max-width: 700px) {
+  .hero-form--profile { top: 3%; left: -16%; }
+  .hero-form--input { top: 4%; left: 49%; }
+  .hero-form--registration { top: 31%; right: -22%; }
+  .hero-form--choices { left: -18%; }
+  .hero-form--message { bottom: 3%; left: -12%; }
+  .hero-form--survey { bottom: -3%; right: -9%; }
+  .hero-form--select { display: none; }
 }
 h1 {
   max-width: 12ch;
@@ -924,6 +977,10 @@ h1 {
 .problem-card[data-visited="true"] {
   background: var(--group);
 }
+.problem-card:has([aria-expanded="true"]) {
+  outline: 2px solid var(--success);
+  outline-offset: -2px;
+}
 .problem-result {
   display: flex;
   flex-direction: column;
@@ -1016,7 +1073,6 @@ h1 {
   inset: 0;
   content: "";
 }
-.problem-icon-slot,
 .problem-icon {
   display: block;
   flex: none;
@@ -1026,6 +1082,9 @@ h1 {
 }
 .problem-icon {
   color: var(--red);
+}
+.problem-card [aria-expanded="true"] .problem-icon {
+  color: var(--success);
 }
 .problem-solution-history .problem-icon {
   color: var(--ink);
@@ -1414,6 +1473,9 @@ h1 {
 @media (max-width: 700px) {
   .problem-layout {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .problem-card [aria-expanded="true"] .problem-icon {
+    rotate: 90deg;
   }
   .problem-result:empty {
     display: none;

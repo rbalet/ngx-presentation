@@ -10,6 +10,9 @@ test('the intro edits the name configuration and keeps its model value in sync',
   const intro = page.locator('#chapter-03');
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
   const value = intro.getByLabel('model.name', { exact: true });
+  await expect(intro.locator('.preview-sheet').getByLabel('model.name', { exact: true })).toBeVisible();
+  await expect(intro.locator('.demo-explanation .model-example')).toHaveCount(0);
+  await expect(intro.locator('.model-details summary')).toHaveCount(0);
   const field = JSON.parse(await editor.inputValue());
   expect(field.key).toBe('name');
   await intro.getByRole('textbox', { name: /^Email/ }).fill('jamie@example.test');
@@ -145,9 +148,9 @@ test('the shared form hides conditional data, edits fields and exports clean bui
   await intro.getByLabel('Dietary requirements').fill('Vegetarian');
   await intro.getByLabel('Attendance').selectOption('remote');
   await expect(intro.getByLabel('Dietary requirements')).toHaveCount(0);
-  await intro.getByText('Inspect the form model', { exact: true }).click();
-  await expect(intro.locator('.model-details pre')).toContainText('Jamie Example');
-  await expect(intro.locator('.model-details pre')).not.toContainText('Vegetarian');
+  await expect(intro.locator('.model-details').getByLabel('model.name', { exact: true })).toHaveValue('Jamie Example');
+  await expect(intro.locator('.model-details')).toContainText('attendance: "remote"');
+  await expect(intro.locator('.model-details')).not.toContainText('Vegetarian');
 
   await page.locator('#chapter-05').scrollIntoViewIfNeeded();
   const builder = page.locator('#chapter-05');
@@ -192,9 +195,48 @@ test('the local API simulation blocks invalid data and recovers from a field err
   await expect(demo.locator('.payload')).toContainText('new@example.test');
 });
 
-test('the skill prompt points to the in-deck result subsection', async ({ page }) => {
+test('capability cards explain each integration and finish with the skill prompt', async ({ page, isMobile }) => {
   await page.goto('/#chapter-04');
   const skill = page.locator('#chapter-04');
+  const cards = skill.getByRole('group', { name: 'Explore MCP, WebMCP and Skill' }).getByRole('button');
+  const detail = skill.locator('#capability-detail');
+  await expect(cards.locator('strong')).toHaveText(['MCP', 'WebMCP', 'Skill']);
+  await expect(cards.first()).toHaveAttribute('aria-pressed', 'true');
+  await expect(detail.getByRole('heading', { name: 'MCP', exact: true })).toBeVisible();
+  await expect(detail.locator('.capability-heading + pre')).toHaveCount(1);
+  await expect(detail.locator('.capability-example')).toHaveText('https://formly.dev/mcp');
+  const tools = detail.getByRole('listitem');
+  await expect(tools).toHaveText(['formly_search', 'formly_lookup', 'formly_examples', 'formly_validate_fields']);
+  await expect(tools.locator('svg + code')).toHaveCount(4);
+  await expect(detail.getByRole('heading', { level: 4 })).toHaveCount(0);
+  await expect(detail.locator('.capability-heading').getByRole('link', { name: 'Read the guide' })).toHaveAttribute('href', 'https://formly.dev/guide/mcp');
+  await expect(skill.locator('.prompt-text')).toHaveCount(0);
+  const cardBounds = (await skill.locator('.capability-cards').boundingBox())!;
+  const detailBounds = (await detail.boundingBox())!;
+  if (isMobile) {
+    expect(detailBounds.y).toBeGreaterThan(cardBounds.y + cardBounds.height);
+  } else {
+    expect(cardBounds.x).toBeGreaterThan(detailBounds.x + detailBounds.width);
+  }
+  await cards.nth(1).click();
+  await expect(cards.first()).toHaveAttribute('aria-pressed', 'false');
+  await expect(detail.getByRole('heading', { name: 'WebMCP', exact: true })).toBeVisible();
+  await expect(detail.locator('.capability-page:not([inert]) > p')).toHaveText([
+    'Set webMcp: true to expose the field to a browser agent.',
+  ]);
+  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("key: 'name'");
+  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText('webMcp: true');
+  await expect(detail.getByRole('heading', { level: 4 })).toHaveCount(0);
+  await expect(detail.getByRole('link', { name: 'Read the guide' })).toHaveAttribute('href', 'https://formly.dev/guide/web-mcp');
+  await expect(skill.locator('.prompt-text')).toHaveCount(0);
+  await cards.last().focus();
+  await cards.last().press('Enter');
+  await expect(cards.last()).toBeFocused();
+  await expect(cards.last()).toHaveAttribute('aria-pressed', 'true');
+  await expect(detail.getByRole('heading', { name: 'Skill', exact: true })).toBeVisible();
+  await expect(detail.locator('.capability-page:not([inert]) > p')).toHaveCount(0);
+  await expect(detail.getByRole('heading', { level: 4 })).toHaveText('Give the skill a real task');
+  await expect(detail.getByRole('link', { name: 'Read the guide' })).toHaveAttribute('href', /skills\/ngx-formly\/SKILL.md$/);
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {
     configurable: true,
     value: { writeText: async (text: string) => { sessionStorage.setItem('copied-prompt', text); } },
@@ -203,22 +245,52 @@ test('the skill prompt points to the in-deck result subsection', async ({ page }
   expect(prompt).toContain('src/components/skill-result.ts');
   expect(prompt).toContain('#chapter-04-result');
   await skill.getByRole('button', { name: 'Copy prompt', exact: true }).click();
-  await expect(skill.getByRole('status')).toHaveText('Copied.');
+  await expect(skill.locator('.demo-actions').getByRole('status')).toHaveText('Copied.');
   expect(await page.evaluate(() => sessionStorage.getItem('copied-prompt'))).toBe(prompt);
+  await cards.first().press('Space');
+  await expect(skill.locator('.prompt-text')).toHaveCount(0);
+  await cards.last().click();
+  await expect(skill.getByRole('status')).toBeEmpty();
   await skill.getByRole('link', { name: 'See the agent result', exact: true }).click();
   await expect(page).toHaveURL(/#chapter-04-result$/);
   const result = page.locator('#chapter-04-result');
   await expect(result.getByRole('heading', { name: '04.1 · Agent result' })).toBeVisible();
-  await expect(result).toContainText('The form your agent builds will appear here.');
+  await expect(result).toContainText('Run the prompt, then return here to try the form.');
   for (const [language, heading] of [['fr', '04.1 · Résultat de l’agent'], ['de', '04.1 · Ergebnis des Agenten'], ['en', '04.1 · Agent result']]) {
     await page.locator('.language-select').selectOption(language);
     await expect(result.getByRole('heading', { name: heading, exact: true })).toBeVisible();
     await expect(skill.locator('.prompt-text')).toContainText('src/components/skill-result.ts');
+    await expect(detail.getByRole('link')).toHaveAccessibleName(({ fr: 'Lire la documentation', de: 'Dokumentation lesen', en: 'Read the guide' } as Record<string, string>)[language]);
+    await expect(detail.getByRole('link')).toHaveText('');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
   await result.getByRole('link', { name: 'Next: 05', exact: true }).click();
   await expect(page).toHaveURL(/#chapter-05$/);
 });
+
+for (const reducedMotion of ['reduce', 'no-preference'] as const) {
+  test(`capability details follow card order with ${reducedMotion} motion`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion });
+    await page.goto('/#chapter-04');
+    const cards = page.getByRole('group', { name: 'Explore MCP, WebMCP and Skill' });
+    const detail = page.locator('#capability-detail');
+    const panels = detail.locator('.capability-page');
+
+    for (const [title, previous, direction] of [['Skill', 'MCP', '1'], ['MCP', 'Skill', '-1']]) {
+      await cards.getByRole('button', { name: title, exact: true }).press('Enter');
+      if (reducedMotion === 'no-preference') {
+        await expect(detail).toHaveCSS('--slide-direction', direction);
+        await expect(detail.locator('[inert]')).toContainText(previous);
+        await expect(detail.locator('.solution-enter')).toHaveCSS('animation-name', 'solution-enter');
+      } else {
+        await expect(panels).toHaveCSS('animation-name', 'none');
+      }
+      await expect(detail).toHaveAccessibleName(title);
+      await expect(detail.getByRole('heading', { name: previous, exact: true })).toHaveCount(0);
+      await expect(panels).toHaveCount(1);
+    }
+  });
+}
 
 test('changing language retains shared model keys and values', async ({ page }) => {
   await page.goto('/#chapter-05');
