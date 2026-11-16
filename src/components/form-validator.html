@@ -8,7 +8,10 @@
       </div>
     </div>
     <div class="json-editor" #editorHost></div>
-    <p class="editor-note" id="builder-editor-note">{{ 'demo.builder.local' | translate }}</p>
+    <div class="validator-footer">
+      <a href="https://formly.dev/tools/validator" target="_blank" rel="noopener noreferrer">formly.dev/tools/validator</a>
+      <button type="button" class="reset-button" (click)="state.reset(); loadExample()">{{ 'demo.builder.reset' | translate }}</button>
+    </div>
   </section>
   <section class="diagnostics-panel" aria-labelledby="builder-diagnostics-title">
     <h3 id="builder-diagnostics-title">{{ 'demo.builder.diagnostics' | translate }}</h3>
@@ -35,8 +38,4 @@
       }
     </ol>
   </section>
-</div>
-<div class="validator-footer">
-  <p><a href="https://formly.dev/tools/validator" target="_blank" rel="noopener noreferrer">formly.dev/tools/validator</a></p>
-  <button type="button" class="reset-button" (click)="state.reset(); loadExample()">{{ 'demo.builder.reset' | translate }}</button>
 </div>

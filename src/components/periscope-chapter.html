@@ -7,41 +7,15 @@
   }
 </div>
 <div class="walkthrough">
-  <div class="journey">
+  <div class="journey" aria-live="polite" aria-atomic="true">
     <h3>{{ 'periscope.' + area() + '.title' | translate }}</h3>
-    <p>{{ 'periscope.' + area() + '.description' | translate }}</p>
-    <ol class="journey-steps" [attr.aria-label]="'periscope.chooseStep' | translate">
-      @for (item of steps; track item; let index = $index) {
-        <li>
-          <button type="button" [attr.aria-pressed]="step() === item" (click)="step.set(item)">
-            <span class="step-number" aria-hidden="true">{{ index + 1 }}</span>
-            {{ 'periscope.steps.' + item | translate }}
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>
-          </button>
-        </li>
+    <ul class="formly-capabilities" [attr.aria-label]="'periscope.capabilities' | translate">
+      @for (capability of ('periscope.' + area() + '.capabilities' | translate); track $index) {
+        <li>{{ capability }}</li>
       }
-    </ol>
+    </ul>
   </div>
-  <div class="journey-detail" aria-live="polite" aria-atomic="true">
-    @for (item of steps; track item) {
-      @if (step() === item) {
-        <div class="detail-content" animate.enter="detail-enter">
-          <svg class="form-flow" viewBox="0 0 320 104" fill="none" aria-hidden="true">
-            <path class="flow-path" d="M78 52h52m60 0h52" stroke="currentColor" stroke-width="2" pathLength="1" />
-            <rect x="8" y="16" width="70" height="72" rx="8" fill="var(--surface)" stroke="currentColor" />
-            <path d="M23 33h40M23 44h25M23 60h40M23 71h25" stroke="currentColor" stroke-width="2" />
-            <rect x="130" y="22" width="60" height="60" rx="12" fill="var(--paper)" stroke="var(--red)" stroke-width="2" />
-            <path d="m151 39-9 13 9 13m18-26 9 13-9 13m-6-30-6 34" stroke="var(--red)" stroke-width="2" />
-            <rect x="242" y="16" width="70" height="72" rx="8" fill="var(--surface)" stroke="currentColor" />
-            <path d="M254 34h30M254 51h45M254 68h45" stroke="currentColor" stroke-width="2" />
-          </svg>
-          <p class="detail-title">{{ 'periscope.details.' + item + '.title' | translate }}</p>
-          <p>{{ 'periscope.details.' + item + '.text' | translate }}</p>
-          <p class="implementation">{{ 'periscope.stack' | translate }}</p>
-        </div>
-      }
-    }
-  </div>
+  <img class="area-image" [src]="'periscope/' + area() + '.png'" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
 </div>
 <div class="demo-link">
   <a href="https://periscope.localhost/error/login" target="_blank" rel="noopener noreferrer">

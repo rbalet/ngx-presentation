@@ -80,7 +80,6 @@
       "title": "Unterschiedliche Designs",
       "description": "Eigene Designs erschweren die Wiederverwendung von Formularen.",
       "answer": "Material · Bootstrap · PrimeNG",
-      "solution": "Material, Bootstrap oder ein eigenes Design nutzen.",
       "oblique": "Mit Oblique kompatibel"
     },
     "reuse": {
@@ -98,7 +97,7 @@
   },
   "future": {
     "framework": "Framework-unabhängig",
-    "aria": "Gemeinsame ARIA-Komponentenbibliothek (Datei-Upload, Telefon, Code, …)"
+    "aria": "Gemeinsame ARIA-Komponente"
   },
   "chapters": {
     "01": {
@@ -130,10 +129,6 @@
       "title": "Periscope",
       "summary": "Unser Tool für Veranstaltungen, Workflows und Umfragen. Ein echtes Formular, von der Konfiguration bis zum Absenden."
     },
-    "08": {
-      "title": "Ein gemeinsamer Ansatz beim BIT",
-      "summary": "Ein Formular wählen, die Wartung gemeinsamer Komponenten klären und die Wiederverwendung in einer zweiten App testen."
-    },
     "11": {
       "title": "Fragen & Antworten",
       "summary": "Welche Formularfunktionen sollten wir gemeinsam pflegen?"
@@ -151,71 +146,44 @@
   "periscope": {
     "intro": "Mein aktuelles Projekt nutzt konfigurierbare Formulare für Events, Workflows und Umfragen.",
     "chooseArea": "Periscope erkunden",
-    "chooseStep": "Den Weg eines Formulars erkunden",
     "events": {
       "name": "Veranstaltungen",
       "title": "Teilnehmende anmelden",
-      "description": "Anmeldephasen und Formulare für Einzelpersonen und Delegationen einrichten."
+      "capabilities": [
+        "Anmeldefelder für jede Veranstaltung konfigurieren.",
+        "Passende Felder für Einzelpersonen oder Delegationen anzeigen.",
+        "Pflichtangaben und E-Mail-Adressen validieren."
+      ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Einen Antrag weiterführen",
-      "description": "Workflows definieren, Anträge erfassen und zugewiesene Aufgaben verfolgen."
+      "capabilities": [
+        "Für jeden Workflow-Schritt ein Formular definieren.",
+        "Felder je nach Status des Antrags anzeigen oder deaktivieren.",
+        "Feldtypen und Validierung in mehreren Workflows wiederverwenden."
+      ]
     },
     "surveys": {
       "name": "Umfragen",
       "title": "Antworten sammeln und prüfen",
-      "description": "Umfrageformulare und die Prüfung der Antworten einrichten."
+      "capabilities": [
+        "Fragebögen aus wiederverwendbaren Fragetypen erstellen.",
+        "Folgefragen abhängig von bisherigen Antworten einblenden.",
+        "Pflichtantworten und Antwortformate validieren."
+      ]
     },
-    "steps": {
-      "configure": "Konfigurieren",
-      "preview": "Vorschau",
-      "use": "Anwenden"
-    },
-    "details": {
-      "configure": {
-        "title": "Von der Konfiguration zu den Feldern",
-        "text": "Admins legen Beschriftungen, Typen, Pflichtfelder und Reihenfolge fest. Periscope erzeugt aus der gespeicherten Definition Formly-Felder."
-      },
-      "preview": {
-        "title": "Vor der Freigabe testen",
-        "text": "Validierung mit Testantworten prüfen. Die Vorschau sendet nichts ab."
-      },
-      "use": {
-        "title": "Anzeige und Versand",
-        "text": "Formly zeigt das Formular an. Periscope verwaltet Ablauf, Zugriff, gespeicherte Antworten und Versand."
-      }
-    },
-    "stack": "Angular · Formly · Material · Oblique · ngx-translate",
     "open": "Periscope lokal öffnen",
-    "local": "Produktrundgang. Für eine Live-Demo Periscope und seine API starten."
+    "local": "Produktrundgang. Für eine Live-Demo Periscope und seine API starten.",
+    "capabilities": "Was ngx-formly ermöglicht"
   },
   "closing": {
-    "pilot": {
-      "title": "Probieren wir es an einem echten Formular aus.",
-      "choose": {
-        "title": "Einen Anwendungsfall wählen",
-        "text": "Ein Formular finden, das beide Teams brauchen, mit Validierung und bedingten Feldern."
-      },
-      "own": {
-        "title": "Die Wartung klären",
-        "text": "Gemeinsamem Feldverhalten, Barrierefreiheit und Validierung einen klaren Ort und eine Verantwortung geben."
-      },
-      "reuse": {
-        "title": "In einer zweiten Anwendung einsetzen",
-        "text": "Das Design der zweiten App behalten. Prüfen, was sich übernehmen oder anpassen lässt."
-      },
-      "ask": "Wer hat einen guten Kandidaten?"
-    },
     "discussion": {
-      "title": "Und ihr?",
-      "question": "Fehlt euch etwas?",
-      "replay": "Zum interaktiven Formular"
+      "question": "Fehlt euch etwas?"
     },
     "future": {
       "framework": "überall einsetzbar",
-      "aria": "Wiederverwendbare, barrierefreie Felder für Uploads, Telefonnummern und Code.",
-      "invitation": "Mit dem Pilotprojekt Prioritäten setzen."
+      "aria": "Wiederverwendbare, barrierefreie Felder für Uploads, Telefonnummern und Code."
     }
   },
   "demo": {
@@ -252,12 +220,10 @@
       "translation": "Eigene Fehlermeldungen mit ngx-translate"
     },
     "skill": {
-      "lead": "Formular beschreiben und generierte Konfiguration prüfen.",
+      "lead": "Nutze deine KI, wie du willst",
       "promptTitle": "Dem Skill eine konkrete Aufgabe geben",
-      "prompt": "Implementiere mit dem ngx-formly-Skill ein Anmeldeformular für einen Teamtag direkt im Unterabschnitt 04.1 (#chapter-04-result). Ersetze den Platzhalter in src/components/skill-result.ts durch das funktionierende Formular. Verwende DemoFormState und unsere registrierten Typen input, select und textarea. Vollständiger Name und gültige E-Mail-Adresse sind Pflicht. Biete Teilnahme vor Ort oder online an. Zeige Ernährungswünsche nur bei Teilnahme vor Ort und lösche den Wert beim Ausblenden. Ergänze eine aufklappbare Modellvorschau. Halte die Konfiguration in Kapitel 05 bearbeitbar und exportierbar und unterstütze Englisch, Deutsch und Französisch. Ändere dieses Repository und prüfe das Formular und den Build.",
+      "prompt": "/ngx-formly Ergänze das bestehende Formular um Eingabefelder für Straße, Postleitzahl, Ort und Land.",
       "copy": "Prompt kopieren",
-      "resultTitle": "04.1 · Ergebnis des Agenten",
-      "continue": "Ergebnis des Agenten ansehen",
       "choose": "MCP, WebMCP und Skill kennenlernen",
       "readGuide": "Dokumentation lesen",
       "capabilities": {
@@ -266,14 +232,14 @@
         },
         "webmcp": {
           "summary": "Einen Browser-Agenten mit einem laufenden Formular arbeiten lassen.",
-          "fieldSetup": "webMcp: true setzen, um das Feld für Browser-Agenten freizugeben.",
-          "exampleLabel": "Feldkonfiguration mit aktiviertem WebMCP"
+          "exampleLabel": "Feldkonfiguration mit aktiviertem WebMCP",
+          "copyTestPrompt": "Test-Prompt kopieren",
+          "copyFailed": "Kopieren nicht verfügbar. Markieren und kopieren Sie den Prompt unten."
         },
         "skill": {
           "summary": "Dem Coding-Agenten einen Formly-Arbeitsablauf geben."
         }
-      },
-      "resultEmpty": "Prompt ausführen und das Formular hier testen."
+      }
     },
     "builder": {
       "lead": "Die Formularkonfiguration aus Kapitel 03 bearbeiten und prüfen.",
@@ -281,7 +247,6 @@
       "fields": "Felder als JSON",
       "format": "JSON formatieren",
       "diagnostics": "Diagnose",
-      "local": "Die Prüfung erfolgt im Browser. Nichts wird hochgeladen oder gespeichert.",
       "empty": "Zum Starten die Felder einfügen.",
       "errors": "Gefundene Fehler: {{count}}",
       "warnings": "Warnungen: {{count}}",

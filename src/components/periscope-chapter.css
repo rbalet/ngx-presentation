@@ -5,21 +5,13 @@ button, .demo-link a { min-height: 2.75rem; font: inherit; }
 button { cursor: pointer; color: var(--ink); }
 .product-areas button { padding: 0.5rem 1.125rem; border: 1px solid var(--rule); border-radius: 6px; background: transparent; font-weight: 700; }
 .product-areas button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.walkthrough { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.walkthrough { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 2rem; }
 h3 { margin: 0 0 0.5rem; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.2; }
 p { line-height: 1.5; }
-.journey > p { min-height: 4.5em; }
-.journey-steps { padding: 0; margin: 1rem 0 0; list-style: none; }
-.journey-steps li { border-top: 1px solid var(--rule); }
-.journey-steps li:last-child { border-bottom: 1px solid var(--rule); }
-.journey-steps button { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.7rem 0.25rem; background: none; border: 0; text-align: start; }
-.journey-steps button[aria-pressed="true"] { color: var(--red); font-weight: 700; }
-.step-number { width: 1.5rem; font-variant-numeric: tabular-nums; }
-.journey-steps svg { margin-left: auto; }
-.journey-detail { display: flex; align-items: center; padding: 1.25rem; background: var(--group); border-radius: 12px; }
-.form-flow { display: block; width: 100%; max-width: 22rem; height: auto; margin: 0 auto 1rem; color: var(--muted); }
-.detail-title { margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 700; }
-.implementation { margin-top: 1rem; font-size: 0.875rem; color: var(--muted); }
+.formly-capabilities { display: grid; gap: 1rem; margin: 1.5rem 0 0; padding-inline-start: 1.25rem; line-height: 1.5; }
+.formly-capabilities li { padding-inline-start: 0.25rem; }
+.formly-capabilities li::marker { color: var(--red); }
+.area-image { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; background: var(--group); border-radius: 12px; }
 .demo-link { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 1.5rem; }
 .demo-link a { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.625rem 1rem; background: var(--action); color: var(--paper); text-decoration: none; font-weight: 700; }
 .demo-link p { max-width: 33ch; color: var(--muted); font-size: 0.85rem; }
@@ -27,24 +19,11 @@ p { line-height: 1.5; }
   button:not([aria-pressed="true"]):hover { background: var(--highlight); }
   .demo-link a:hover { background: var(--red); }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .detail-enter { animation: detail-arrive 350ms cubic-bezier(0.16, 1, 0.3, 1); }
-  .detail-enter .flow-path { stroke-dasharray: 1; animation: flow-connect 650ms ease-out; }
-}
-@keyframes detail-arrive { from { transform: translateY(8px); } to { transform: none; } }
-@keyframes flow-connect { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @media (max-width: 700px) {
   .walkthrough { grid-template-columns: 1fr; gap: 1rem; }
-  .journey > p { min-height: 0; }
-  .journey-steps { display: flex; gap: 0.5rem; }
-  .journey-steps li { flex: 1; border-bottom: 1px solid var(--rule); }
-  .journey-steps button { height: 100%; flex-direction: column; gap: 0.25rem; text-align: center; font-size: 0.875rem; }
-  .journey-steps svg { display: none; }
-  .form-flow { max-width: 15rem; margin-bottom: 0.5rem; }
 }
 @media (max-height: 760px) and (min-width: 701px) {
   .intro { margin-block: 0.75rem; }
   .product-areas { margin-bottom: 1rem; }
-  .form-flow { max-width: 14rem; margin-bottom: 0.5rem; }
   .demo-link { margin-top: 1rem; }
 }

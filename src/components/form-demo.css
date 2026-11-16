@@ -47,15 +47,14 @@ summary { width: fit-content; min-height: 2.75rem; padding-block: .75rem; font-s
 .capability-detail { position: relative; grid-column: 1; grid-row: 1; min-width: 0; }
 .capability-detail:has(> .solution-exit) { overflow: clip; }
 .capability-page.solution-exit { position: absolute; inset: 0; overflow: clip; }
-.capability-heading { display: flex; align-items: center; gap: .5rem; margin-bottom: .875rem; }
+.capability-heading { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .875rem; }
 .capability-heading h3 { margin: 0; font-size: clamp(1.5rem, 2.5vw, 2rem); }
-.capability-page > p { max-width: 65ch; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.5; }
 .capability-example { white-space: pre-wrap; overflow-wrap: anywhere; }
 .mcp-tools { margin: 0 0 1rem; padding: 0; list-style: none; }
 .mcp-tools li { display: flex; align-items: center; gap: .75rem; padding-block: .75rem; border-bottom: 1px solid var(--rule); font-weight: 700; overflow-wrap: anywhere; }
 .mcp-tools svg { flex: none; color: var(--red); }
 .capability-detail:focus-visible { outline: 3px solid var(--red); outline-offset: 5px; }
-.capability-source { width: 2.75rem; padding: 0; }
+.capability-action { flex: none; width: 2.75rem; padding: 0; }
 .prompt-sheet { margin-top: 1rem; padding: 1.5rem; background: var(--group); border-radius: 12px; }
 .prompt-text { font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
 .demo-status { align-self: center; font-size: .9rem; line-height: 1.5; color: var(--success); }

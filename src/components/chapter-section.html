@@ -48,7 +48,6 @@
         @case ('maintainers') { <app-about-chapter part="maintainers" /> }
         @case ('custom') { <app-problem-chapter part="custom" /> }
         @case ('requirements') { <app-problem-requirements [(active)]="activeProblem" /> }
-        @case ('skill-result') { <app-skill-result /> }
       }
     </div>
     <nav class="chapter-controls" [attr.aria-label]="'nav.slide' | translate: { number: chapter().number, slide: index + 2 }">

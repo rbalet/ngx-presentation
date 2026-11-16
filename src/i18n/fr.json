@@ -80,7 +80,6 @@
       "title": "Des designs différents",
       "description": "Des designs propres à chaque projet compliquent la réutilisation des formulaires.",
       "answer": "Material · Bootstrap · PrimeNG",
-      "solution": "Utiliser Material, Bootstrap ou votre propre design.",
       "oblique": "Compatible avec Oblique"
     },
     "reuse": {
@@ -98,7 +97,7 @@
   },
   "future": {
     "framework": "Indépendant du framework",
-    "aria": "Bibliothèque commune de composants ARIA (envoi de fichiers, téléphone, code, …)"
+    "aria": "Composant ARIA commun"
   },
   "chapters": {
     "01": {
@@ -130,10 +129,6 @@
       "title": "Periscope",
       "summary": "Notre outil de gestion d’événements, de workflows et de sondages. Un vrai formulaire, de la configuration à l’envoi."
     },
-    "08": {
-      "title": "Une approche commune à l’OFIT",
-      "summary": "Choisir un formulaire, désigner qui maintient les composants partagés et tester leur réutilisation dans une seconde application."
-    },
     "11": {
       "title": "Questions-réponses",
       "summary": "Quels comportements de formulaire devrions-nous maintenir ensemble ?"
@@ -151,71 +146,44 @@
   "periscope": {
     "intro": "Mon projet actuel utilise des formulaires configurables pour les événements, workflows et sondages.",
     "chooseArea": "Explorer Periscope",
-    "chooseStep": "Explorer le parcours du formulaire",
     "events": {
       "name": "Événements",
       "title": "Inscrire les participants",
-      "description": "Configurer les phases et formulaires d’inscription pour les personnes et les délégations."
+      "capabilities": [
+        "Configurer les champs d’inscription pour chaque événement.",
+        "Afficher les champs adaptés aux personnes ou aux délégations.",
+        "Valider les informations obligatoires et les adresses e-mail."
+      ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Faire avancer une demande",
-      "description": "Définir les workflows, recueillir les demandes et suivre les tâches attribuées."
+      "capabilities": [
+        "Définir un formulaire pour chaque étape du workflow.",
+        "Afficher ou désactiver des champs selon le statut de la demande.",
+        "Réutiliser les types de champs et la validation entre workflows."
+      ]
     },
     "surveys": {
       "name": "Sondages",
       "title": "Recueillir et examiner les réponses",
-      "description": "Configurer les formulaires de sondage et la validation des réponses."
+      "capabilities": [
+        "Créer des questionnaires à partir de types de questions réutilisables.",
+        "Afficher des questions complémentaires selon les réponses précédentes.",
+        "Valider les réponses obligatoires et leur format."
+      ]
     },
-    "steps": {
-      "configure": "Configurer",
-      "preview": "Prévisualiser",
-      "use": "Utiliser"
-    },
-    "details": {
-      "configure": {
-        "title": "De la configuration aux champs",
-        "text": "Les admins règlent les libellés, les types, les champs obligatoires et leur ordre. Periscope convertit la définition enregistrée en champs Formly."
-      },
-      "preview": {
-        "title": "Tester avant de partager",
-        "text": "Tester la validation avec des réponses d’essai. L’aperçu n’envoie rien."
-      },
-      "use": {
-        "title": "Affichage et envoi",
-        "text": "Formly affiche le formulaire. Periscope gère le parcours, les accès, les réponses enregistrées et l’envoi."
-      }
-    },
-    "stack": "Angular · Formly · Material · Oblique · ngx-translate",
     "open": "Ouvrir Periscope en local",
-    "local": "Aperçu du produit. Pour une démo en direct, démarrer Periscope et son API."
+    "local": "Aperçu du produit. Pour une démo en direct, démarrer Periscope et son API.",
+    "capabilities": "Ce que permet ngx-formly"
   },
   "closing": {
-    "pilot": {
-      "title": "Essayons avec un vrai formulaire.",
-      "choose": {
-        "title": "Choisir un cas d’usage",
-        "text": "Trouver un formulaire utile aux deux équipes, avec validation et champs conditionnels."
-      },
-      "own": {
-        "title": "Définir qui le maintient",
-        "text": "Donner un emplacement et un responsable clairs au comportement des champs, à l’accessibilité et à la validation."
-      },
-      "reuse": {
-        "title": "L’utiliser dans une deuxième application",
-        "text": "Garder le design de la seconde application. Voir quoi réutiliser ou adapter."
-      },
-      "ask": "Qui a un bon candidat ?"
-    },
     "discussion": {
-      "title": "Et vous ?",
-      "question": "Est-ce qu’il manque quelque chose ?",
-      "replay": "Revoir le formulaire interactif"
+      "question": "Est-ce qu’il manque quelque chose ?"
     },
     "future": {
       "framework": "utilisable partout",
-      "aria": "Champs accessibles et réutilisables pour les fichiers, numéros de téléphone et codes.",
-      "invitation": "Fixer les priorités à partir du pilote."
+      "aria": "Champs accessibles et réutilisables pour les fichiers, numéros de téléphone et codes."
     }
   },
   "demo": {
@@ -252,12 +220,10 @@
       "translation": "Messages d’erreur personnalisés avec ngx-translate"
     },
     "skill": {
-      "lead": "Décrivez le formulaire, puis vérifiez la configuration générée.",
+      "lead": "Utilisez votre IA comme vous le souhaitez",
       "promptTitle": "Donner une vraie tâche au Skill",
-      "prompt": "Utilise le Skill ngx-formly pour implémenter un formulaire d’inscription à une journée d’équipe directement dans la sous-section 04.1 (#chapter-04-result). Remplace le contenu provisoire de src/components/skill-result.ts par le formulaire fonctionnel. Réutilise DemoFormState et nos types input, select et textarea. Exige un nom complet et un e-mail valide. Propose une participation sur place ou en ligne. Affiche les besoins alimentaires uniquement sur place et efface la valeur lorsque le champ est masqué. Ajoute un aperçu repliable du modèle. Garde la configuration modifiable et exportable au chapitre 05 et prends en charge l’anglais, l’allemand et le français. Modifie ce dépôt et vérifie le formulaire et la compilation.",
+      "prompt": "/ngx-formly Ajoute des champs pour la rue, le code postal, la ville et le pays au formulaire existant.",
       "copy": "Copier le prompt",
-      "resultTitle": "04.1 · Résultat de l’agent",
-      "continue": "Voir le résultat de l’agent",
       "choose": "Découvrir MCP, WebMCP et Skill",
       "readGuide": "Lire la documentation",
       "capabilities": {
@@ -266,14 +232,14 @@
         },
         "webmcp": {
           "summary": "Faire interagir un agent du navigateur avec un formulaire.",
-          "fieldSetup": "Définissez webMcp: true pour rendre le champ accessible à un agent du navigateur.",
-          "exampleLabel": "Configuration d’un champ avec WebMCP activé"
+          "exampleLabel": "Configuration d’un champ avec WebMCP activé",
+          "copyTestPrompt": "Copier le prompt de test",
+          "copyFailed": "Copie indisponible. Sélectionnez et copiez le prompt ci-dessous."
         },
         "skill": {
           "summary": "Donner une méthode Formly à l’agent de développement."
         }
-      },
-      "resultEmpty": "Lancez le prompt, puis revenez ici pour tester le formulaire."
+      }
     },
     "builder": {
       "lead": "Modifiez et validez la configuration du formulaire du chapitre 03.",
@@ -281,7 +247,6 @@
       "fields": "Champs JSON",
       "format": "Formater le JSON",
       "diagnostics": "Diagnostics",
-      "local": "Vérifié dans votre navigateur. Rien n’est envoyé ni enregistré.",
       "empty": "Collez vos champs pour commencer.",
       "errors": "Erreurs trouvées : {{count}}",
       "warnings": "Avertissements : {{count}}",

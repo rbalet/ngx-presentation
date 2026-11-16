@@ -87,10 +87,10 @@ test("the timer target follows the planned chapter end independently of elapsed 
 
   for (const [chapter, minutes] of [
     ["03", 14],
-    ["04-result", 18],
-    ["08", 38],
-    ["12", 41],
-    ["11", 56],
+    ["04", 18],
+    ["07", 36],
+    ["12", 39],
+    ["11", 54],
     ["01", 2],
   ] as const) {
     await page.locator(`#chapter-${chapter}`).evaluate(element => element.scrollIntoView());
@@ -221,7 +221,7 @@ test("the timer still runs when local storage is unavailable", async ({
   expect(errors).toEqual([]);
 });
 
-test("all numbered chapters are reachable and chapter 08 leads directly to the closing chapters", async ({
+test("all numbered chapters are reachable and chapter 07 leads directly to the closing chapters", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -235,25 +235,25 @@ test("all numbered chapters are reachable and chapter 08 leads directly to the c
     name: "Chapter index",
     exact: true,
   });
-  await expect(index.getByRole("link")).toHaveCount(10);
+  await expect(index.getByRole("link")).toHaveCount(9);
   await expect(index.getByRole("link").last()).toHaveAttribute("href", "#chapter-11");
-  await expect(page.locator("#chapter-09, #chapter-10")).toHaveCount(0);
-  await expect(page.locator('a[href="#chapter-09"]')).toHaveCount(0);
+  await expect(page.locator("#chapter-08, #chapter-09, #chapter-10")).toHaveCount(0);
+  await expect(page.locator('a[href="#chapter-08"], a[href="#chapter-09"], a[href="#chapter-10"]')).toHaveCount(0);
   await expect(
-    page.locator("#chapter-08").getByRole("link", { name: "Next: 12" }),
+    page.locator("#chapter-07").getByRole("link", { name: "Next: 12" }),
   ).toHaveAttribute("href", "#chapter-12");
   await expect(
-    page.locator("#chapter-12").getByRole("link", { name: "Previous: 08" }),
-  ).toHaveAttribute("href", "#chapter-08");
+    page.locator("#chapter-12").getByRole("link", { name: "Previous: 07" }),
+  ).toHaveAttribute("href", "#chapter-07");
   for (const href of await index
     .getByRole("link")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")))) {
     await expect(page.locator(href!)).toHaveCount(1);
   }
 
-  await index.getByRole("link", { name: /08 A shared approach/ }).click();
+  await index.getByRole("link", { name: /07 Periscope/ }).click();
   const chapter = page.getByRole("region", {
-    name: "08 A shared approach at BIT",
+    name: "07 Periscope",
   });
   await chapter.getByRole("link", { name: "Next: 12" }).click();
   await expect(page).toHaveURL(/#chapter-12$/);
@@ -261,7 +261,7 @@ test("all numbered chapters are reachable and chapter 08 leads directly to the c
   await expect(whatsNext.getByRole("heading", { level: 2 })).toBeInViewport();
   await expect(whatsNext.getByRole("heading", { level: 3 })).toHaveText([
     "Framework agnostic",
-    "Shared ARIA component library (file upload, telephone, code, …)",
+    "Shared ARIA component",
   ]);
   await whatsNext.getByRole("link", { name: "Next: 11" }).click();
   await expect(page).toHaveURL(/#chapter-11$/);

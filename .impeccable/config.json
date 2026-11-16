@@ -18,6 +18,15 @@
         ],
         "createdAt": "2026-11-10T13:39:28.338Z",
         "reason": "User confirmed the playful icon motion and requested a smaller overshoot with a snappier landing."
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/periscope-chapter.html"
+        ],
+        "createdAt": "2026-11-16T18:44:30.187Z",
+        "reason": "Codex: Angular binds src to the selected area; Playwright verified that all three bundled Periscope PNGs load on desktop and mobile."
       }
     ]
   }

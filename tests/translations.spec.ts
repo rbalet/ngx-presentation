@@ -22,7 +22,7 @@ test('language switching translates content and accessibility labels, preserves 
     await expect(page.locator('html')).toHaveAttribute('lang', language.code);
     await expect(page).toHaveTitle(`${language.title} | ngx-formly`);
     await expect(page.locator('h1')).toHaveText(language.title);
-    await expect(page.getByRole('navigation', { name: language.chapters, exact: true }).getByRole('link')).toHaveCount(10);
+    await expect(page.getByRole('navigation', { name: language.chapters, exact: true }).getByRole('link')).toHaveCount(9);
     await expect(page.locator('#title-01')).toContainText(language.about);
     await expect(page.locator('#title-12')).toContainText(language.next);
     await expect(page.getByRole('button', { name: language.theme })).toBeVisible();

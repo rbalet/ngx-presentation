@@ -3,10 +3,10 @@ import { expect, test } from '@playwright/test';
 test('scrolling updates chapter and continuation URLs without adding history entries', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/?source=slides');
-  await expect(page.locator('#chapter-04-result')).toBeAttached();
+  await expect(page.locator('#chapter-04')).toBeAttached();
   const historyLength = await page.evaluate(() => history.length);
 
-  for (const id of ['chapter-01', 'chapter-02', 'chapter-02-continued', 'chapter-03', 'chapter-04', 'chapter-04-result', 'chapter-05', 'chapter-04', 'overview']) {
+  for (const id of ['chapter-01', 'chapter-02', 'chapter-02-continued', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-04', 'overview']) {
     await page.locator(`#${id}`).evaluate(element => element.scrollIntoView({ behavior: 'instant' }));
     await expect(page).toHaveURL(`/?source=slides#${id}`);
   }
@@ -47,9 +47,9 @@ test('capability selections update the query and survive reloads and browser his
   expect(await page.evaluate(() => history.length)).toBe(historyLength);
 
   await cards.nth(1).click();
-  await chapter.getByRole('link', { name: 'See the agent result', exact: true }).click();
-  await expect(page.locator('#chapter-04-result h3')).toBeInViewport();
-  await expect(page).toHaveURL('/?source=slides&selected=webmcp#chapter-04-result');
+  await chapter.getByRole('link', { name: 'Next: 05', exact: true }).click();
+  await expect(page.locator('#chapter-05 h2')).toBeInViewport();
+  await expect(page).toHaveURL('/?source=slides&selected=webmcp#chapter-05');
   await chapter.evaluate(element => element.scrollIntoView({ behavior: 'instant' }));
   await expect(page).toHaveURL('/?source=slides&selected=webmcp#chapter-04');
   await cards.nth(2).click();

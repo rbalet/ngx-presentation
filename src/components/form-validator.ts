@@ -41,7 +41,6 @@ export class FormValidator {
         EditorView.lineWrapping,
         EditorView.contentAttributes.of({
           'aria-labelledby': 'builder-editor-title',
-          'aria-describedby': 'builder-editor-note',
           spellcheck: 'false',
         }),
         syntaxHighlighting(HighlightStyle.define([

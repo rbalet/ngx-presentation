@@ -51,13 +51,13 @@ The production build is a static application in `dist/ngx-presentation/browser`.
 - `PRESENTING.md` is the rehearsal checklist and speaker run of show.
 - `HANDOFF.md` records the agreed content, sources and implementation status.
 
-The title page is unnumbered. Chapters 09 and 10 were removed; remaining numbers stay stable. Chapter 03 demonstrates language switching beside the live form. Chapter 08 leads to chapter 12 for future plans, then chapter 11 for Q&A. Normal scrolling and browser anchor links remain available.
+The title page is unnumbered. Chapters 08, 09 and 10 were removed; remaining numbers stay stable. Chapter 03 demonstrates language switching beside the live form. Chapter 07 leads to chapter 12 for future plans, then chapter 11 for Q&A. Normal scrolling and browser anchor links remain available.
 
 ## Formly
 
 `src/app.config.ts` registers Formly once with the demo's native input, select and textarea field types. Chapters 03–05 share the same event-registration configuration. The chapter 02 examples remain illustrations.
 
-The skill chapter provides a prompt for your coding agent to implement a form in `src/components/skill-result.ts`. Subsection 04.1 (`#chapter-04-result`) displays that result in the deck and starts with a placeholder. The browser does not call an AI service. Chapter 05, **API & validation**, lets you edit and validate the Formly JSON from chapter 03. Chapter 06, **Make it yours**, is empty pending a headless component example. Running this deck does not require `@ngx-formly/builder` to be published on npm.
+The skill chapter provides a `/ngx-formly` prompt to add street, postal code, city and country inputs to the existing form, then leads directly to chapter 05, **API & validation**, to review, edit and validate the resulting Formly JSON. The browser does not call an AI service. The validator starts with the shared configuration from chapter 03. Chapter 06, **Make it yours**, is empty pending a headless component example. Running this deck does not require `@ngx-formly/builder` to be published on npm.
 
 Periscope's interactive walkthrough is based on the existing project documentation. Start its separate frontend and API for the actual live demonstration. See [PRESENTING.md](PRESENTING.md) for the exact boundaries and fallback flow.
 

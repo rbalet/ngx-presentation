@@ -4,12 +4,13 @@ import { FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/for
 import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DemoFormState, Registration } from '../demo/demo-form-state';
+import { PhoneWebMcp } from '../demo/phone-web-mcp';
 import { Languages } from '../languages';
 import { CodeEditor } from './code-editor';
 
 @Component({
   selector: 'app-form-demo',
-  imports: [FormlyForm, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe, CodeEditor],
+  imports: [FormlyForm, PhoneWebMcp, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe, CodeEditor],
   templateUrl: './form-demo.html',
   styleUrl: './form-demo.css',
   host: { '(window:popstate)': 'restoreCapability()' },
@@ -28,7 +29,8 @@ export class FormDemo {
     { name: 'formly_examples', icon: 'm8 6-6 6 6 6m8-12 6 6-6 6m-2-15-4 18' },
     { name: 'formly_validate_fields', icon: 'M9 4H6v16h12V4h-3M9 3h6v4H9Zm0 10 2 2 4-4' },
   ];
-  readonly webMcpExample = `fields: FormlyFieldConfig[] = [
+  readonly webMcpExample = `// Upcoming Formly API; this demo uses an Angular adapter.
+fields: FormlyFieldConfig[] = [
   {
     key: 'phoneNumber',
     type: 'input',
@@ -36,11 +38,11 @@ export class FormDemo {
     props: { label: 'Phone number', type: 'tel', required: true },
   },
 ];`;
+  readonly webMcpPrompt = 'Can you figure out why the demo isn’t exposing any WebMCP tools, fix it, and then use WebMCP to fill the phone field and show me a screenshot?';
   readonly state = inject(DemoFormState);
   readonly languages = inject(Languages);
   readonly translate = inject(TranslateService);
   readonly phoneModel = signal({ phoneNumber: '' });
-  // shortcut: Formly 11.2 has no WebMCP extension; enable it when a supporting release is installed.
   readonly phoneFields = computed<FormlyFieldConfig[]>(() => {
     this.translate.currentLang();
     return [{

@@ -24,16 +24,16 @@ test('focus view gives the slide space and restores the chapter index', async ({
   await expect(index).toBeVisible();
 });
 
-test('chapter 04 result supports direct links and keyboard navigation', async ({ page }) => {
+test('chapter 04 moves directly to API and validation with keyboard navigation', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/#chapter-04-result');
-  const result = page.locator('#chapter-04-result');
-  await expect(result.getByRole('heading', { name: '04.1 · Agent result' })).toBeInViewport();
-  await result.focus();
-  await page.keyboard.press('ArrowLeft');
-  await expect(page).toHaveURL(/#chapter-04$/);
-  await page.keyboard.press('ArrowRight');
-  await expect(page).toHaveURL(/#chapter-04-result$/);
+  await page.goto('/#chapter-04');
+  const skill = page.locator('#chapter-04');
+  await expect(skill.locator('.chapter-slide')).toHaveCount(1);
+  await expect(page.locator('#chapter-04-result')).toHaveCount(0);
+  await skill.focus();
   await page.keyboard.press('ArrowRight');
   await expect(page).toHaveURL(/#chapter-05$/);
+  await expect(page.locator('#chapter-05').getByRole('textbox', { name: 'Fields JSON', exact: true })).toBeInViewport();
+  await page.keyboard.press('ArrowLeft');
+  await expect(page).toHaveURL(/#chapter-04$/);
 });

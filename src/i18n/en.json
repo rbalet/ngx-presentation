@@ -80,7 +80,6 @@
       "title": "Different designs",
       "description": "Project-specific designs make forms harder to reuse.",
       "answer": "Material · Bootstrap · PrimeNG",
-      "solution": "Use Material, Bootstrap or your own design.",
       "oblique": "Oblique compatible"
     },
     "reuse": {
@@ -98,7 +97,7 @@
   },
   "future": {
     "framework": "Framework agnostic",
-    "aria": "Shared ARIA component library (file upload, telephone, code, …)"
+    "aria": "Shared ARIA component"
   },
   "chapters": {
     "01": {
@@ -130,10 +129,6 @@
       "title": "Periscope",
       "summary": "Our event, workflow and survey tool. One real form, from configuration to submission."
     },
-    "08": {
-      "title": "A shared approach at BIT",
-      "summary": "Pick one form, agree who maintains shared components and test reuse in a second app."
-    },
     "11": {
       "title": "Q&A",
       "summary": "Which form behavior should we maintain together?"
@@ -151,71 +146,44 @@
   "periscope": {
     "intro": "My current project uses configurable forms for events, workflows and surveys.",
     "chooseArea": "Explore Periscope",
-    "chooseStep": "Explore the form journey",
     "events": {
       "name": "Events",
       "title": "Register participants",
-      "description": "Set up registration phases and forms for individuals and delegations."
+      "capabilities": [
+        "Configure registration fields for each event.",
+        "Show relevant fields for individuals or delegations.",
+        "Validate required details and email addresses."
+      ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Move a request forward",
-      "description": "Define workflows, collect requests and track assigned tasks."
+      "capabilities": [
+        "Define a form for each workflow step.",
+        "Show or disable fields based on the request’s status.",
+        "Reuse field types and validation across workflows."
+      ]
     },
     "surveys": {
       "name": "Surveys",
       "title": "Collect and review responses",
-      "description": "Set up survey forms and response validation."
+      "capabilities": [
+        "Build questionnaires from reusable question types.",
+        "Reveal follow-up questions based on earlier answers.",
+        "Validate required answers and response formats."
+      ]
     },
-    "steps": {
-      "configure": "Configure",
-      "preview": "Preview",
-      "use": "Use"
-    },
-    "details": {
-      "configure": {
-        "title": "From configuration to fields",
-        "text": "Admins set labels, types, required fields and order. Periscope maps the saved definition to Formly fields."
-      },
-      "preview": {
-        "title": "Test before sharing",
-        "text": "Test validation with sample answers. The preview sends nothing."
-      },
-      "use": {
-        "title": "Rendering and submission",
-        "text": "Formly renders the form. Periscope handles the flow, access, saved answers and submission."
-      }
-    },
-    "stack": "Angular · Formly · Material · Oblique · ngx-translate",
     "open": "Open local Periscope",
-    "local": "Walkthrough. For a live demo, start Periscope and its API."
+    "local": "Walkthrough. For a live demo, start Periscope and its API.",
+    "capabilities": "What ngx-formly can do"
   },
   "closing": {
-    "pilot": {
-      "title": "Let’s try this on one real form.",
-      "choose": {
-        "title": "Choose a use case",
-        "text": "Find a form both teams need, with validation and conditional fields."
-      },
-      "own": {
-        "title": "Agree who maintains it",
-        "text": "Give shared field behavior, accessibility and validation a clear home and an owner."
-      },
-      "reuse": {
-        "title": "Use it in a second application",
-        "text": "Keep the second app’s design. See what carries over and what needs adapting."
-      },
-      "ask": "Who has a good candidate?"
-    },
     "discussion": {
-      "title": "And you?",
-      "question": "Is it missing something?",
-      "replay": "Revisit the live form"
+      "question": "Is it missing something?"
     },
     "future": {
       "framework": "run it everywhere",
-      "aria": "Reusable, accessible fields for uploads, phone numbers and code.",
-      "invitation": "Use the pilot to set priorities."
+      "aria": "Reusable, accessible fields for uploads, phone numbers and code."
     }
   },
   "demo": {
@@ -252,12 +220,10 @@
       "translation": "Custom error messages with ngx-translate"
     },
     "skill": {
-      "lead": "Describe the form. Review the generated configuration.",
+      "lead": "Use your AI the way you like",
       "promptTitle": "Give the skill a real task",
-      "prompt": "Use the ngx-formly skill to implement a team-day registration form directly in subsection 04.1 (#chapter-04-result). Replace the placeholder in src/components/skill-result.ts with the working form. Reuse DemoFormState and our registered input, select and textarea types. Require a full name and a valid email. Offer in-person or online attendance. Show dietary requirements only for in-person attendees and clear the value when hidden. Include a collapsible model preview. Keep the configuration editable and exportable in chapter 05, and support English, German and French. Make the changes in this repository and verify the form and build.",
+      "prompt": "/ngx-formly Add street, postal code, city and country inputs to the existing form.",
       "copy": "Copy prompt",
-      "resultTitle": "04.1 · Agent result",
-      "continue": "See the agent result",
       "choose": "Explore MCP, WebMCP and Skill",
       "readGuide": "Read the guide",
       "capabilities": {
@@ -266,14 +232,14 @@
         },
         "webmcp": {
           "summary": "Let a browser agent work with a live form.",
-          "fieldSetup": "Set webMcp: true to expose the field to a browser agent.",
-          "exampleLabel": "Field configuration with WebMCP enabled"
+          "exampleLabel": "Field configuration with WebMCP enabled",
+          "copyTestPrompt": "Copy test prompt",
+          "copyFailed": "Copy unavailable. Select and copy the prompt below."
         },
         "skill": {
           "summary": "Give your coding agent a Formly workflow."
         }
-      },
-      "resultEmpty": "Run the prompt, then return here to try the form."
+      }
     },
     "builder": {
       "lead": "Edit and validate the form configuration from chapter 03.",
@@ -281,7 +247,6 @@
       "fields": "Fields JSON",
       "format": "Format JSON",
       "diagnostics": "Diagnostics",
-      "local": "Checked in your browser. Nothing is uploaded or saved.",
       "empty": "Paste your fields to begin.",
       "errors": "Errors found: {{count}}",
       "warnings": "Warnings: {{count}}",

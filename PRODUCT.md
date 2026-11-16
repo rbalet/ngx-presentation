@@ -20,12 +20,12 @@ ngx-formly describes Angular forms as configuration. Teams can reuse field behav
 
 ## Operating Context
 
-The session has a 60-minute slot. The main talk takes 41 minutes and Q&A takes 15, leaving four minutes of buffer. The presenter scrolls through the deck, jumps via the chapter index, and closes with What's next followed by Q&A. Language switching is demonstrated beside the live form in chapter 03. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
+The session has a 60-minute slot. The main talk takes 39 minutes and Q&A takes 15, leaving six minutes of buffer. The presenter scrolls through the deck, jumps via the chapter index, and closes with What's next followed by Q&A. Language switching is demonstrated beside the live form in chapter 03. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
 
 ## Capabilities and Constraints
 
-- Keep the cover unnumbered and the chapter anchors stable: `#chapter-01` through `#chapter-08`, plus `#chapter-11` and `#chapter-12`. Chapters 09 and 10 were removed, chapter 11 is Q&A, and chapter 12 covers future plans.
-- The complete talk includes a shared event-registration example, a prompt for a coding agent to implement a form in subsection 04.1, live Formly interactions, configuration export to the hosted builder, and a sourced Periscope walkthrough. The agent result subsection starts with a placeholder.
+- Keep the cover unnumbered and the chapter anchors stable: `#chapter-01` through `#chapter-07`, plus `#chapter-11` and `#chapter-12`. Chapters 08, 09 and 10 were removed, chapter 11 is Q&A, and chapter 12 covers future plans.
+- The complete talk includes a shared event-registration example, a prompt for a coding agent to extend the form, live Formly interactions, configuration export to the hosted builder, and a sourced Periscope walkthrough. The agent result is reviewed directly in API & validation.
 - Distinguish skill instructions, MCP tooling and browser-side WebMCP. The API exercise is explicitly simulated. Periscope is shown as a documented walkthrough; a live environment is a separate presenter prerequisite.
 
 ## Evidence on Hand

@@ -60,13 +60,6 @@ export const chapters: Chapter[] = [
     summary: "chapters.07.summary",
   },
   {
-    number: "08",
-    title: "chapters.08.title",
-    minutes: 2,
-    kind: "main",
-    summary: "chapters.08.summary",
-  },
-  {
     number: "12",
     title: "chapters.12.title",
     minutes: 3,

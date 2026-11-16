@@ -209,11 +209,14 @@ test('the validator loads chapter 03 configuration and formats the edited JSON',
   await expect(builder.getByRole('status')).toHaveText('No structural errors found.');
   await expect(editor).toContainText('"label": "Full name"');
   await expect(editor).toContainText('"minLength": "demo.errors.nameMinLength"');
+  const footer = builder.locator('.editor-panel .validator-footer');
+  await expect(footer.getByRole('link', { name: 'formly.dev/tools/validator' })).toHaveAttribute('href', 'https://formly.dev/tools/validator');
+  await expect(builder.getByText('Checked in your browser. Nothing is uploaded or saved.')).toHaveCount(0);
   const draft = [{ key: 'name', props: { label: 'Participant name', required: false } }];
   await editor.fill(JSON.stringify(draft));
   await builder.getByRole('button', { name: 'Format JSON', exact: true }).click();
   await expect.poll(() => editor.innerText()).toBe(JSON.stringify(draft, null, 2));
-  await builder.getByRole('button', { name: 'Reset the demo' }).click();
+  await footer.getByRole('button', { name: 'Reset the demo' }).click();
   await expect(editor).toContainText('Full name');
   await expect(intro.getByRole('textbox', { name: 'Full name', exact: true })).toHaveValue('');
   await expect(intro.getByLabel('Dietary requirements')).toBeVisible();
@@ -340,8 +343,7 @@ test('capability cards explain each integration and finish with the skill prompt
     value: { writeText: async (text: string) => { sessionStorage.setItem('copied-prompt', text); } },
   }));
   const prompt = await skill.locator('.prompt-text').innerText();
-  expect(prompt).toContain('src/components/skill-result.ts');
-  expect(prompt).toContain('#chapter-04-result');
+  expect(prompt).toBe('/ngx-formly Add street, postal code, city and country inputs to the existing form.');
   await skill.getByRole('button', { name: 'Copy prompt', exact: true }).click();
   await expect(skill.locator('.demo-actions').getByRole('status')).toHaveText('Copied.');
   expect(await page.evaluate(() => sessionStorage.getItem('copied-prompt'))).toBe(prompt);
@@ -349,21 +351,16 @@ test('capability cards explain each integration and finish with the skill prompt
   await expect(skill.locator('.prompt-text')).toHaveCount(0);
   await cards.last().click();
   await expect(skill.getByRole('status')).toBeEmpty();
-  await skill.getByRole('link', { name: 'See the agent result', exact: true }).click();
-  await expect(page).toHaveURL(/#chapter-04-result$/);
-  const result = page.locator('#chapter-04-result');
-  await expect(result.getByRole('heading', { name: '04.1 · Agent result' })).toBeVisible();
-  await expect(result).toContainText('Run the prompt, then return here to try the form.');
-  for (const [language, heading] of [['fr', '04.1 · Résultat de l’agent'], ['de', '04.1 · Ergebnis des Agenten'], ['en', '04.1 · Agent result']]) {
+  for (const language of ['fr', 'de', 'en']) {
     await page.locator('header .language-select').selectOption(language);
-    await expect(result.getByRole('heading', { name: heading, exact: true })).toBeVisible();
-    await expect(skill.locator('.prompt-text')).toContainText('src/components/skill-result.ts');
+    await expect(skill.locator('.prompt-text')).toContainText('/ngx-formly');
     await expect(detail.getByRole('link')).toHaveAccessibleName(({ fr: 'Lire la documentation', de: 'Dokumentation lesen', en: 'Read the guide' } as Record<string, string>)[language]);
     await expect(detail.getByRole('link')).toHaveText('');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
-  await result.getByRole('link', { name: 'Next: 05', exact: true }).click();
+  await skill.getByRole('link', { name: 'Next: 05', exact: true }).click();
   await expect(page).toHaveURL(/#chapter-05$/);
+  await expect(page.locator('#chapter-05').getByRole('textbox', { name: 'Fields JSON', exact: true })).toBeVisible();
 });
 
 test('the phone example stays editable across capability and language changes', async ({ page }, testInfo) => {
