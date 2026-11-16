@@ -43,8 +43,10 @@
             } @else if (capability.id === 'webmcp') {
               <p>{{ 'demo.skill.capabilities.webmcp.fieldSetup' | translate }}</p>
               <pre class="code-window capability-example" tabindex="0" [attr.aria-label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate"><code>{{ webMcpExample }}</code></pre>
+              <formly-form [form]="form" [fields]="phoneFields()" [model]="phoneModel" />
             }
             @if (capability.id === 'skill') {
+              <pre class="code-window capability-example"><code>npx skills add ngx-formly/ngx-formly --skill ngx-formly</code></pre>
               <div class="prompt-sheet">
                 <h4>{{ 'demo.skill.promptTitle' | translate }}</h4>
                 <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>
@@ -64,27 +66,32 @@
     <div class="demo-explanation">
       @switch (mode()) {
         @case ('intro') {
-          <div class="code-window intro-code">
-            <pre><code>const form = new FormGroup(&#123;&#125;);</code></pre>
-            <code>const fields: FormlyFieldConfig[] = [</code>
-            <textarea class="configuration-editor" rows="16" spellcheck="false" [value]="introConfiguration()" (input)="updateIntroConfiguration($any($event.target).value)" [attr.aria-label]="'demo.intro.configuration' | translate" [attr.aria-invalid]="introConfigurationError()" [attr.aria-describedby]="introConfigurationError() ? 'intro-configuration-hint intro-configuration-error' : 'intro-configuration-hint'"></textarea>
-            <details class="code-example">
-              <summary>{{ 'demo.intro.additionalFields' | translate }}</summary>
-              <pre><code>{{ introAdditionalFields() }}</code></pre>
-            </details>
-            <code>];</code>
-            <p class="visually-hidden" id="intro-configuration-hint">{{ 'demo.intro.try' | translate }}</p>
-            <details class="code-example">
-              <summary>{{ 'demo.intro.template' | translate }}</summary>
-              <pre><code>{{ introTemplate }}</code></pre>
-            </details>
-            <details class="code-example translation-example">
-              <summary>{{ 'demo.intro.translation' | translate }}</summary>
-              <pre><code>{{ introErrorBinding }}</code></pre>
-              <p>src/i18n/{{ translate.currentLang() }}.json</p>
-              <pre><code>{{ introTranslationCatalogue() }}</code></pre>
-            </details>
-          </div>
+          @defer (on viewport) {
+            <div class="code-window intro-code">
+              <app-code-editor [value]="introSetup" language="typescript" label="TypeScript" />
+              <p class="code-label">{{ 'demo.intro.configuration' | translate }} <span>JSON</span></p>
+              <app-code-editor class="configuration-editor" [value]="introConfiguration()" (valueChange)="updateIntroConfiguration($event)" language="json" [editable]="true" [label]="'demo.intro.configuration' | translate" [invalid]="introConfigurationError()" [describedBy]="introConfigurationError() ? 'intro-configuration-hint intro-configuration-error' : 'intro-configuration-hint'" />
+              <details class="code-example">
+                <summary>{{ 'demo.intro.additionalFields' | translate }}</summary>
+                <app-code-editor [value]="',' + '\n' + introAdditionalFields()" language="json" [label]="'demo.intro.additionalFields' | translate" />
+              </details>
+              <app-code-editor value="];" language="typescript" label="TypeScript" />
+              <p class="visually-hidden" id="intro-configuration-hint">{{ 'demo.intro.try' | translate }}</p>
+              <details class="code-example">
+                <summary>{{ 'demo.intro.template' | translate }}</summary>
+                <app-code-editor [value]="introTemplate" language="angular" [label]="'demo.intro.template' | translate" />
+              </details>
+              <details class="code-example translation-example">
+                <summary>{{ 'demo.intro.translation' | translate }}</summary>
+                <app-code-editor [value]="introErrorBinding" language="typescript" label="TypeScript" />
+                <app-code-editor [value]="introErrorTemplate" language="angular" [label]="'demo.intro.template' | translate" />
+                <p class="code-label">src/i18n/{{ translate.currentLang() }}.json</p>
+                <app-code-editor [value]="introTranslationCatalogue()" language="json" [label]="'src/i18n/' + translate.currentLang() + '.json'" />
+              </details>
+            </div>
+          } @placeholder {
+            <pre class="code-window intro-code-placeholder">{{ introConfiguration() }}</pre>
+          }
           @if (introConfigurationError()) { <p class="configuration-error" id="intro-configuration-error" role="alert">{{ 'demo.intro.configurationError' | translate }}</p> }
         }
         @case ('validation') {

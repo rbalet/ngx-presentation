@@ -13,7 +13,7 @@ const presentationDuration = 60 * 60_000;
   selector: 'app-presentation',
   imports: [TranslatePipe, ChapterSection, ThemeToggle],
   templateUrl: './presentation.html',
-  host: { '(window:keydown)': 'navigate($event)' },
+  host: { '(window:keydown)': 'navigate($event)', '(click)': 'followLink($event)' },
 })
 export class Presentation {
   readonly languages = inject(Languages);
@@ -31,6 +31,7 @@ export class Presentation {
   readonly progress = computed(() => Math.min(this.elapsed() / presentationDuration * 100, 100));
   readonly indexList = viewChild.required<ElementRef<HTMLOListElement>>('indexList');
   private readonly played = new Set<string>();
+  private activeSlide?: string;
 
   constructor() {
     const destroyRef = inject(DestroyRef);
@@ -80,13 +81,29 @@ export class Presentation {
 
   private readonly updateNavigation = () => {
     const headerHeight = document.querySelector('header')?.offsetHeight ?? 0;
-    const readingLine = headerHeight + (window.innerHeight - headerHeight) / 3;
-    const current = chapters.filter(chapter => {
-      const section = document.getElementById(`chapter-${chapter.number}`);
-      return section && section.getBoundingClientRect().top <= readingLine;
-    }).length - 1;
-    this.activeChapter.set(chapters[current]?.number);
+    const slides = [...document.querySelectorAll<HTMLElement>('.overview, .chapter-slide')];
+    const current = slides.reverse().find(slide => slide.getBoundingClientRect().top <= headerHeight + 1);
+    const chapter = current?.closest<HTMLElement>('.chapter');
+    this.activeChapter.set(chapter?.id.slice('chapter-'.length));
+    const id = current?.id || chapter?.id;
+    if (!id || id === this.activeSlide) return;
+    this.activeSlide = id;
+    if (id === 'overview' && !location.hash.startsWith('#chapter-')) return;
+    const url = new URL(location.href);
+    url.hash = id;
+    if (url.href !== location.href) history.replaceState(history.state, '', url);
   };
+
+  followLink(event: MouseEvent) {
+    if (event.defaultPrevented || event.button !== 0 || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
+    const target = link && document.getElementById(link.hash.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    location.hash = link.hash;
+    target.scrollIntoView();
+    target.focus({ preventScroll: true });
+  }
 
   navigate(event: KeyboardEvent) {
     if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey

@@ -225,6 +225,7 @@
     "fields": {
       "name": "Nom complet",
       "email": "E-mail",
+      "phoneNumber": "Numéro de téléphone",
       "attendance": "Participation",
       "onsite": "Sur place",
       "remote": "En ligne",

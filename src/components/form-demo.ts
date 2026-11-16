@@ -1,16 +1,18 @@
 import { Component, computed, DestroyRef, effect, inject, input, linkedSignal, signal, untracked, viewChild } from '@angular/core';
 import { JsonPipe, KeyValuePipe } from '@angular/common';
 import { FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
-import { FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DemoFormState, Registration } from '../demo/demo-form-state';
 import { Languages } from '../languages';
+import { CodeEditor } from './code-editor';
 
 @Component({
   selector: 'app-form-demo',
-  imports: [FormlyForm, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe],
+  imports: [FormlyForm, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe, CodeEditor],
   templateUrl: './form-demo.html',
   styleUrl: './form-demo.css',
+  host: { '(window:popstate)': 'restoreCapability()' },
 })
 export class FormDemo {
   readonly mode = input<'intro' | 'skill' | 'validation'>('intro');
@@ -19,7 +21,7 @@ export class FormDemo {
     { id: 'webmcp', title: 'WebMCP', href: 'https://formly.dev/guide/web-mcp' },
     { id: 'skill', title: 'Skill', href: 'https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md' },
   ];
-  readonly capabilitySelection = signal<{ current: number; previous: number | null }>({ current: 0, previous: null });
+  readonly capabilitySelection = signal<{ current: number; previous: number | null }>({ current: this.capabilityFromUrl(), previous: null });
   readonly mcpTools = [
     { name: 'formly_search', icon: 'M20 20l-4.5-4.5M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z' },
     { name: 'formly_lookup', icon: 'M12 6v14M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Z' },
@@ -28,15 +30,24 @@ export class FormDemo {
   ];
   readonly webMcpExample = `fields: FormlyFieldConfig[] = [
   {
-    key: 'name',
+    key: 'phoneNumber',
     type: 'input',
     webMcp: true,
-    props: { label: 'Name', required: true },
+    props: { label: 'Phone number', type: 'tel', required: true },
   },
 ];`;
   readonly state = inject(DemoFormState);
   readonly languages = inject(Languages);
   readonly translate = inject(TranslateService);
+  readonly phoneModel = signal({ phoneNumber: '' });
+  // shortcut: Formly 11.2 has no WebMCP extension; enable it when a supporting release is installed.
+  readonly phoneFields = computed<FormlyFieldConfig[]>(() => {
+    this.translate.currentLang();
+    return [{
+      key: 'phoneNumber', id: 'webmcp-phone-number', type: 'input',
+      props: { label: this.translate.instant('demo.fields.phoneNumber'), type: 'tel', required: true },
+    }];
+  });
   readonly form = new FormGroup({});
   readonly options: FormlyFormOptions = {};
   readonly fields = computed(() => structuredClone(this.state.exportFields()));
@@ -55,15 +66,16 @@ export class FormDemo {
   [fields]="fields"
   [model]="model"
 />`;
+  readonly introSetup = `const form = new FormGroup({});
+
+const fields: FormlyFieldConfig[] = [`;
   readonly introErrorBinding = `import { AsyncPipe } from '@angular/common';
 import { FormlyValidationMessagesPipe } from '@ngx-formly/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 // Add to the custom field component's imports:
-imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
-
-// Inside the custom field component's template:
-@if (showError) {
+imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]`;
+  readonly introErrorTemplate = `@if (showError) {
   @if ((field | validationMessages | async)?.[0]; as error) {
     <p [id]="id + '-error'">
       {{ error.message | translate: formControl.getError(error.error) }}
@@ -98,6 +110,9 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
   }
 
   selectCapability(index: number) {
+    const url = new URL(location.href);
+    url.searchParams.set('selected', this.capabilities[index].id);
+    if (url.href !== location.href) history.replaceState(history.state, '', url);
     this.copied.set('idle');
     const { current } = this.capabilitySelection();
     if (index === current) return;
@@ -108,6 +123,16 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
     if (animate) {
       this.capabilityTransition = setTimeout(() => this.capabilitySelection.set({ current: index, previous: null }), 380);
     }
+  }
+
+  restoreCapability() {
+    clearTimeout(this.capabilityTransition);
+    this.capabilitySelection.set({ current: this.capabilityFromUrl(), previous: null });
+  }
+
+  private capabilityFromUrl() {
+    const selected = new URLSearchParams(location.search).get('selected');
+    return Math.max(0, this.capabilities.findIndex(capability => capability.id === selected));
   }
 
   updateIntroConfiguration(value: string) {

@@ -4,6 +4,55 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 });
 
+test('intro code supports highlighting, folding and keyboard editing without navigating slides', async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#chapter-03');
+  const intro = page.locator('#chapter-03');
+  const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
+  await expect(editor).toHaveAttribute('contenteditable', 'true');
+  await expect(editor).toHaveAccessibleDescription('Edit label, required, minLength or maxLength. Set the value in model.name.');
+  await expect(intro.locator('.configuration-editor .cm-lineNumbers')).toContainText('1');
+  const property = editor.locator('span').filter({ hasText: /^"key"$/ });
+  const string = editor.locator('span').filter({ hasText: /^"name"$/ });
+  await expect(property).toHaveCSS('color', 'rgb(156, 220, 254)');
+  await expect(string).toHaveCSS('color', 'rgb(233, 185, 152)');
+  await intro.locator('.demo-workbench').screenshot({ path: testInfo.outputPath('editor.png') });
+
+  const original = await editor.innerText();
+  await editor.fill('{');
+  await expect(editor).toHaveAttribute('aria-invalid', 'true');
+  await editor.press('ControlOrMeta+z');
+  await expect.poll(() => editor.innerText()).toBe(original);
+  await expect(editor).toHaveAttribute('aria-invalid', 'false');
+  for (const key of ['ArrowDown', 'ArrowRight', 'PageDown']) {
+    await editor.press(key);
+    await expect(page).toHaveURL(/#chapter-03$/);
+  }
+  await editor.press('Tab');
+  await expect(editor).not.toBeFocused();
+  await intro.locator('.configuration-editor .cm-foldGutter [title="Fold line"]').first().click();
+  await expect(intro.locator('.configuration-editor .cm-foldPlaceholder')).toBeVisible();
+  await intro.locator('.configuration-editor .cm-foldPlaceholder').click();
+  await expect.poll(() => editor.innerText()).toBe(original);
+
+  await intro.getByText('Bind the fields and model to Angular', { exact: true }).click();
+  const template = intro.getByRole('textbox', { name: 'Bind the fields and model to Angular', exact: true });
+  await expect(template).toHaveAttribute('aria-readonly', 'true');
+  const source = await template.innerText();
+  await template.press('x');
+  await expect.poll(() => template.innerText()).toBe(source);
+  await expect(template.locator('span').filter({ hasText: /^formly-form$/ })).toHaveCSS('color', 'rgb(131, 214, 197)');
+  await intro.getByText('Custom error messages with ngx-translate', { exact: true }).click();
+  for (const theme of ['dark', 'light']) {
+    await page.evaluate(theme => document.documentElement.dataset.theme = theme, theme);
+    await expect(property).toHaveCSS('color', 'rgb(156, 220, 254)');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await intro.locator('.demo-workbench').screenshot({ path: testInfo.outputPath(`editor-${theme}.png`) });
+  }
+  expect(errors).toEqual([]);
+});
+
 test('the intro edits the name configuration and keeps its model value in sync', async ({ page }) => {
   await page.goto('/#chapter-03');
   const intro = page.locator('#chapter-03');
@@ -12,7 +61,7 @@ test('the intro edits the name configuration and keeps its model value in sync',
   await expect(intro.locator('.preview-sheet').getByLabel('model.name', { exact: true })).toBeVisible();
   await expect(intro.locator('.demo-explanation .model-example')).toHaveCount(0);
   await expect(intro.locator('.model-details summary')).toHaveCount(0);
-  const field = JSON.parse(await editor.inputValue());
+  const field = JSON.parse(await editor.innerText());
   expect(field.key).toBe('name');
   await intro.getByRole('textbox', { name: /^Email/ }).fill('jamie@example.test');
   await value.fill('Jamie Example');
@@ -21,7 +70,7 @@ test('the intro edits the name configuration and keeps its model value in sync',
   field.props = { label: 'Participant name', required: false, minLength: 3, maxLength: 40 };
   const draft = JSON.stringify(field, null, 4);
   await editor.fill(draft);
-  await expect(editor).toHaveValue(draft);
+  await expect.poll(() => editor.innerText()).toBe(draft);
   const name = intro.getByRole('textbox', { name: 'Participant name', exact: true });
   await expect(name).toHaveValue('Jamie Example');
   await expect(name).not.toHaveAttribute('required');
@@ -41,7 +90,7 @@ test('the intro edits the name configuration and keeps its model value in sync',
   await editor.fill('{');
   await builder.getByRole('button', { name: 'Reset the demo' }).click();
   await expect(editor).toHaveAttribute('aria-invalid', 'false');
-  await expect(editor).toHaveValue(JSON.stringify({
+  await expect.poll(() => editor.innerText()).toBe(JSON.stringify({
     key: 'name', type: 'input',
     props: { label: 'Full name', required: true, minLength: 3, maxLength: 80 },
     validation: { messages: { minLength: 'demo.errors.nameMinLength' } },
@@ -56,12 +105,12 @@ test('invalid intro configuration preserves the draft and the last working field
   await page.goto('/#chapter-03');
   const intro = page.locator('#chapter-03');
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
-  const original = await editor.inputValue();
+  const original = await editor.innerText();
   const field = JSON.parse(original);
   const name = intro.getByRole('textbox', { name: 'Full name', exact: true });
   await name.fill('Keep this name');
   const invalidDrafts = [
-    '{', 'null', '[]',
+    '{ "key":', 'null', '[]',
     JSON.stringify({ ...field, key: 'email' }),
     JSON.stringify({ ...field, type: 'unknown' }),
     JSON.stringify({ ...field, props: { ...field.props, required: 'false' } }),
@@ -80,7 +129,7 @@ test('invalid intro configuration preserves the draft and the last working field
   ];
   for (const draft of invalidDrafts) {
     await editor.fill(draft);
-    await expect(editor).toHaveValue(draft);
+    await expect.poll(() => editor.innerText()).toBe(draft);
     await expect(editor).toHaveAttribute('aria-invalid', 'true');
     await expect(intro.getByRole('alert')).toContainText('Use valid JSON');
     await expect(name).toHaveValue('Keep this name');
@@ -107,7 +156,7 @@ test('custom length errors follow the edited rule and language without losing th
   await expect(name).toHaveAccessibleDescription('Your name needs at least 3 characters. You entered 2.');
 
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
-  const field = JSON.parse(await editor.inputValue());
+  const field = JSON.parse(await editor.innerText());
   field.props.minLength = 5;
   await editor.fill(JSON.stringify(field, null, 2));
   await expect(name).toHaveAttribute('minlength', '5');
@@ -272,7 +321,8 @@ test('capability cards explain each integration and finish with the skill prompt
   await expect(detail.locator('.capability-page:not([inert]) > p')).toHaveText([
     'Set webMcp: true to expose the field to a browser agent.',
   ]);
-  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("key: 'name'");
+  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("key: 'phoneNumber'");
+  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("label: 'Phone number'");
   await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText('webMcp: true');
   await expect(detail.getByRole('heading', { level: 4 })).toHaveCount(0);
   await expect(detail.getByRole('link', { name: 'Read the guide' })).toHaveAttribute('href', 'https://formly.dev/guide/web-mcp');
@@ -314,6 +364,34 @@ test('capability cards explain each integration and finish with the skill prompt
   }
   await result.getByRole('link', { name: 'Next: 05', exact: true }).click();
   await expect(page).toHaveURL(/#chapter-05$/);
+});
+
+test('the phone example stays editable across capability and language changes', async ({ page }, testInfo) => {
+  await page.goto('/#chapter-04');
+  const skill = page.locator('#chapter-04');
+  await skill.getByRole('button', { name: 'WebMCP', exact: true }).click();
+  const phone = skill.getByRole('textbox', { name: 'Phone number', exact: true });
+  await expect(phone).toHaveAttribute('type', 'tel');
+  await expect(phone).toHaveAttribute('required');
+  await phone.fill('+41 79 123 45 67');
+  await expect(phone).toHaveValue('+41 79 123 45 67');
+  await skill.locator('.skill-layout').screenshot({ path: testInfo.outputPath('phone-light.png') });
+  await skill.getByRole('button', { name: 'MCP', exact: true }).click();
+  await skill.getByRole('button', { name: 'WebMCP', exact: true }).click();
+  await expect(phone).toHaveValue('+41 79 123 45 67');
+  for (const [language, label] of [['fr', 'Numéro de téléphone'], ['de', 'Telefonnummer'], ['en', 'Phone number']]) {
+    await page.locator('header .language-select').selectOption(language);
+    await expect(skill.getByRole('textbox', { name: label, exact: true })).toHaveValue('+41 79 123 45 67');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await phone.fill('');
+  await phone.blur();
+  await expect(phone).toHaveAttribute('aria-invalid', 'true');
+  await expect(skill.getByText('Complete this required field.', { exact: true })).toBeVisible();
+  await phone.fill('+41 79 123 45 67');
+  await page.getByRole('button', { name: 'Dark mode' }).click();
+  await expect(phone).toHaveAttribute('aria-invalid', 'false');
+  await skill.locator('.skill-layout').screenshot({ path: testInfo.outputPath('phone-dark.png') });
 });
 
 for (const reducedMotion of ['reduce', 'no-preference'] as const) {

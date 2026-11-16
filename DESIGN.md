@@ -227,6 +227,10 @@ The live indicator combines a small green dot with text. Chapter 03 places the s
 
 Chapter 05 uses the Formly validator layout with a JSON editor on the left and diagnostics on the right. The editor provides line numbers and syntax highlighting and uses the existing surface, group, ink, muted, red and success tokens in both themes. The panels stack on mobile. Selecting a diagnostic moves keyboard focus to the relevant source. Structural checks leave the draft configuration unexecuted.
 
+Chapter 03 embeds CodeMirror for the editable name-field JSON and read-only TypeScript, Angular and translation examples. Keep line numbers, folding, undo, wrapping, and keyboard focus inside the existing dark code surface. Tab leaves the editor; navigation keys edit or scroll the code without changing chapters. Valid JSON updates the form immediately; invalid drafts preserve the last working configuration. Supporting examples remain selectable and read-only.
+
+The dark editor uses a local syntax palette: properties `#9cdcfe`, strings `#e9b998`, keywords `#c5a5e8`, numbers `#b5cea8`, types and tags `#83d6c5`, functions `#e4d69c`, and comments and line numbers `#a8b3c2`. These colors stay on `dark-surface` in both themes. Editor rules use `#465463`, selection uses `#3b5169`, and the active line uses translucent white `#ffffff0d`. Editor text is 14px with 1.6 line height; compact code labels use .8rem. These are code-reading roles, not new presentation accent colors.
+
 ### Chapter navigation and timer
 
 Each chapter link is a ruled row with a red number, a title, and a tabular duration. The active row adds a highlight and bold text. Completed chapters cross out their title and replace the duration with a labeled success tick. The timer uses a native progress element and a separate start/reset button; overdue state uses red plus accessible text.
