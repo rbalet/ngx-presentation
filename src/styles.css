@@ -540,10 +540,6 @@ h1 {
 .chapter-subtitle strong {
   color: var(--red);
 }
-.chapter-label {
-  margin-top: 1.5rem;
-  font-size: 1rem;
-}
 .chapter-summary {
   margin-top: 2rem;
   max-width: 45ch;
@@ -577,12 +573,6 @@ h1 {
 }
 .slide-connector svg {
   flex-shrink: 0;
-}
-.skip-extras {
-  color: var(--red);
-}
-.chapter--extra {
-  background: var(--extra);
 }
 .chapter--discussion {
   background: var(--dark-surface);

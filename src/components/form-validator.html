@@ -1,0 +1,42 @@
+<p class="validator-lead">{{ 'demo.builder.lead' | translate }}</p>
+<div class="validator-workspace">
+  <section class="editor-panel" aria-labelledby="builder-editor-title">
+    <div class="editor-toolbar">
+      <h3 id="builder-editor-title">{{ 'demo.builder.fields' | translate }}</h3>
+      <div class="editor-actions">
+        <button type="button" (click)="formatJson()" [disabled]="!result().syntaxValid">{{ 'demo.builder.format' | translate }}</button>
+      </div>
+    </div>
+    <div class="json-editor" #editorHost></div>
+    <p class="editor-note" id="builder-editor-note">{{ 'demo.builder.local' | translate }}</p>
+  </section>
+  <section class="diagnostics-panel" aria-labelledby="builder-diagnostics-title">
+    <h3 id="builder-diagnostics-title">{{ 'demo.builder.diagnostics' | translate }}</h3>
+    <div class="validation-status" [class.validation-success]="!result().empty && !errorCount()" [class.validation-error]="errorCount() > 0" role="status" aria-atomic="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        @if (result().empty || errorCount()) { <path d="M12 7v6m0 3v1" /> }
+        @else { <path d="m7 12 3 3 7-7" /> }
+      </svg>
+      <div>
+        <p>{{ ('demo.builder.' + (result().empty ? 'empty' : errorCount() ? 'errors' : 'success')) | translate: { count: errorCount() } }}</p>
+        @if (warningCount()) { <p class="warning-count">{{ 'demo.builder.warnings' | translate: { count: warningCount() } }}</p> }
+      </div>
+    </div>
+    <ol class="diagnostic-list">
+      @for (diagnostic of diagnostics(); track $index) {
+        <li>
+          <button type="button" class="diagnostic" (click)="selectDiagnostic(diagnostic)">
+            <span class="diagnostic-heading"><strong>{{ ('demo.builder.' + diagnostic.severity) | translate }}</strong><span>{{ 'demo.builder.location' | translate: diagnostic }}</span></span>
+            <code>{{ diagnostic.label }}</code>
+            <span>{{ diagnostic.message }}</span>
+          </button>
+        </li>
+      }
+    </ol>
+  </section>
+</div>
+<div class="validator-footer">
+  <p><a href="https://formly.dev/tools/validator" target="_blank" rel="noopener noreferrer">formly.dev/tools/validator</a></p>
+  <button type="button" class="reset-button" (click)="state.reset(); loadExample()">{{ 'demo.builder.reset' | translate }}</button>
+</div>

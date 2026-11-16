@@ -8,25 +8,6 @@
     </ol>
     <p class="closing-line">{{ 'closing.pilot.ask' | translate }}</p>
   }
-  @case ('09') {
-    <p class="big-question">{{ 'closing.language.title' | translate }}</p>
-    <div class="language-buttons" role="group" [attr.aria-label]="'app.language' | translate">
-      @for (language of ['en', 'de', 'fr']; track language) {
-        <button type="button" [attr.aria-pressed]="languages.translate.currentLang() === language" (click)="languages.select(language)">
-          {{ language === 'en' ? 'English' : language === 'de' ? 'Deutsch' : 'Français' }}
-        </button>
-      }
-    </div>
-    <div class="language-example">
-      <div>
-        <label for="translation-name">{{ 'closing.language.name' | translate }}</label>
-        <input id="translation-name" type="text" autocomplete="off" [value]="name()" (input)="name.set($any($event.target).value)" />
-        <p>{{ 'closing.language.hint' | translate }}</p>
-      </div>
-      <div><h3>{{ 'closing.language.model' | translate }}</h3><pre>{{ { fullName: name() } | json }}</pre></div>
-    </div>
-    <p class="closing-line">{{ 'closing.language.takeaway' | translate }}</p>
-  }
   @case ('11') {
     <p class="big-question">{{ 'closing.discussion.title' | translate }}</p>
     <p class="discussion-question">{{ 'closing.discussion.question' | translate }}</p>

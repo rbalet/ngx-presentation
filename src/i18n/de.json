@@ -19,7 +19,6 @@
   "nav": {
     "chapters": "Kapitel",
     "index": "Kapitelübersicht",
-    "optional": "Optionales Zusatzkapitel",
     "completed": "Abgeschlossen",
     "minutes": "{{minutes}} Min.",
     "chapter": "Navigation für Kapitel {{number}}",
@@ -27,7 +26,6 @@
     "previous": "Zurück: {{number}}",
     "next": "Weiter: {{number}}",
     "overview": "Zurück zur Übersicht",
-    "skipExtras": "Zusatzkapitel überspringen",
     "previousSlide": "Vorherige Folie",
     "maintainers": "Weiter zu Open Source",
     "custom": "Weiter zum individuellen Beispiel",
@@ -121,12 +119,12 @@
       "summary": "Mit dem ngx-formly-Skill ein Anmeldeformular erstellen, prüfen und im Builder öffnen."
     },
     "05": {
-      "title": "Jetzt seid ihr dran",
-      "summary": "Formular bearbeiten und die Konfiguration nach Formly Studio exportieren."
+      "title": "API & Validierung",
+      "summary": "Die Formularkonfiguration bearbeiten und prüfen."
     },
     "06": {
-      "title": "API & Validierung",
-      "summary": "API-Validierungsfehler an den betroffenen Feldern anzeigen."
+      "title": "Jetzt seid ihr dran",
+      "summary": ""
     },
     "07": {
       "title": "Periscope",
@@ -135,10 +133,6 @@
     "08": {
       "title": "Ein gemeinsamer Ansatz beim BIT",
       "summary": "Ein Formular wählen, die Wartung gemeinsamer Komponenten klären und die Wiederverwendung in einer zweiten App testen."
-    },
-    "09": {
-      "title": "Mehrsprachige Formulare",
-      "summary": "Beschriftungen und Fehler mit ngx-translate übersetzen. Das Formularmodell bleibt gleich."
     },
     "11": {
       "title": "Fragen & Antworten",
@@ -213,13 +207,6 @@
       },
       "ask": "Wer hat einen guten Kandidaten?"
     },
-    "language": {
-      "title": "Die Sprache wechseln. Die Antworten behalten.",
-      "name": "Vollständiger Name",
-      "hint": "Beispielnamen ändern, dann die Sprache wechseln.",
-      "model": "Das Formularmodell",
-      "takeaway": "Beschriftungen und Meldungen übersetzen. Feldschlüssel beibehalten."
-    },
     "discussion": {
       "title": "Und ihr?",
       "question": "Fehlt euch etwas?",
@@ -288,19 +275,19 @@
       "resultEmpty": "Prompt ausführen und das Formular hier testen."
     },
     "builder": {
-      "lead": "Dasselbe Formular hier bearbeiten und in Formly Studio öffnen.",
-      "editTitle": "Das Publikum wählt eine Änderung",
-      "challenge": "Ein Feld umbenennen oder als Pflichtfeld setzen. Die Vorschau reagiert sofort.",
-      "field": "Feld bearbeiten",
-      "label": "Feldbeschriftung",
-      "required": "Pflichtfeld",
-      "handoffTitle": "Im echten Builder weiterarbeiten",
-      "handoff": "JSON herunterladen. In Formly Studio Import Form → Choose File wählen. UI Library für Vanilla leer lassen. Ein Feld bearbeiten und Preview öffnen.",
-      "download": "JSON herunterladen",
-      "open": "Formly Studio öffnen",
-      "offline": "Studio braucht Internet und öffnet sich in einem neuen Tab. Die Vorschau funktioniert offline.",
-      "configuration": "Exportierte Konfiguration ansehen",
-      "copy": "JSON kopieren",
+      "lead": "Die Formularkonfiguration aus Kapitel 03 bearbeiten und prüfen.",
+      "loading": "Formularprüfung wird geladen…",
+      "fields": "Felder als JSON",
+      "format": "JSON formatieren",
+      "diagnostics": "Diagnose",
+      "local": "Die Prüfung erfolgt im Browser. Nichts wird hochgeladen oder gespeichert.",
+      "empty": "Zum Starten die Felder einfügen.",
+      "errors": "Gefundene Fehler: {{count}}",
+      "warnings": "Warnungen: {{count}}",
+      "success": "Keine Strukturfehler gefunden.",
+      "error": "Fehler",
+      "warning": "Warnung",
+      "location": "Zeile {{line}}, Spalte {{column}}",
       "reset": "Demo zurücksetzen"
     },
     "validation": {

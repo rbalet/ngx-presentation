@@ -223,7 +223,9 @@ The cover has scattered decorative form outlines, clipped to the hero behind its
 
 The preview is a raised-paper card with a group-rule border. Inputs, selects, and textareas use the shared surface/ink pair, a stronger muted border, the control radius, and a minimum height of 2.75rem. Editor controls use that same visible boundary. Labels are visibly associated with their controls; required markers are red. Error text appears beside the field's red border and is linked with `aria-describedby`; `aria-invalid` communicates the state. Textareas can grow vertically.
 
-The live indicator combines a small green dot with text. Model and configuration details use native disclosure controls. Copy and submission outcomes use status regions so feedback is available without relying on motion or color.
+The live indicator combines a small green dot with text. Chapter 03 places the shared language selector beside it in the form header; the title and controls wrap on narrow screens. Model and configuration details use native disclosure controls. Copy and submission outcomes use status regions so feedback is available without relying on motion or color.
+
+Chapter 05 uses the Formly validator layout with a JSON editor on the left and diagnostics on the right. The editor provides line numbers and syntax highlighting and uses the existing surface, group, ink, muted, red and success tokens in both themes. The panels stack on mobile. Selecting a diagnostic moves keyboard focus to the relevant source. Structural checks leave the draft configuration unexecuted.
 
 ### Chapter navigation and timer
 

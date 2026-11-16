@@ -19,7 +19,6 @@
   "nav": {
     "chapters": "Chapitres",
     "index": "Sommaire",
-    "optional": "Chapitre facultatif",
     "completed": "Terminé",
     "minutes": "{{minutes}} min",
     "chapter": "Navigation du chapitre {{number}}",
@@ -27,7 +26,6 @@
     "previous": "Précédent : {{number}}",
     "next": "Suivant : {{number}}",
     "overview": "Retour à la vue d’ensemble",
-    "skipExtras": "Passer les chapitres facultatifs",
     "previousSlide": "Diapositive précédente",
     "maintainers": "Continuer vers l’open source",
     "custom": "Continuer vers l’exemple personnalisé",
@@ -121,12 +119,12 @@
       "summary": "Générer un formulaire d’inscription avec le skill ngx-formly, le vérifier, puis l’ouvrir dans le builder."
     },
     "05": {
-      "title": "À vous de jouer",
-      "summary": "Modifier le formulaire et exporter sa configuration vers Formly Studio."
+      "title": "API et validation",
+      "summary": "Modifier et valider la configuration du formulaire."
     },
     "06": {
-      "title": "API et validation",
-      "summary": "Afficher les erreurs de validation de l’API sur les champs concernés."
+      "title": "À vous de jouer",
+      "summary": ""
     },
     "07": {
       "title": "Periscope",
@@ -135,10 +133,6 @@
     "08": {
       "title": "Une approche commune à l’OFIT",
       "summary": "Choisir un formulaire, désigner qui maintient les composants partagés et tester leur réutilisation dans une seconde application."
-    },
-    "09": {
-      "title": "Formulaires multilingues",
-      "summary": "Traduire les libellés et les erreurs avec ngx-translate. Le modèle reste le même."
     },
     "11": {
       "title": "Questions-réponses",
@@ -213,13 +207,6 @@
       },
       "ask": "Qui a un bon candidat ?"
     },
-    "language": {
-      "title": "Changer la langue. Garder les réponses.",
-      "name": "Nom complet",
-      "hint": "Modifier le nom d’exemple, puis changer de langue.",
-      "model": "Le modèle du formulaire",
-      "takeaway": "Traduire les libellés et messages. Garder les mêmes clés de champ."
-    },
     "discussion": {
       "title": "Et vous ?",
       "question": "Est-ce qu’il manque quelque chose ?",
@@ -288,19 +275,19 @@
       "resultEmpty": "Lancez le prompt, puis revenez ici pour tester le formulaire."
     },
     "builder": {
-      "lead": "Modifiez le même formulaire ici, puis ouvrez-le dans Formly Studio.",
-      "editTitle": "Laisser la salle choisir un changement",
-      "challenge": "Renommez un champ ou rendez-le obligatoire. L’aperçu se met à jour aussitôt.",
-      "field": "Champ à modifier",
-      "label": "Libellé du champ",
-      "required": "Champ obligatoire",
-      "handoffTitle": "Continuer dans le vrai builder",
-      "handoff": "Téléchargez le JSON. Dans Formly Studio, choisissez Import Form → Choose File. Laissez UI Library vide pour Vanilla. Modifiez un champ, puis ouvrez Preview.",
-      "download": "Télécharger le JSON",
-      "open": "Ouvrir Formly Studio",
-      "offline": "Studio requiert Internet et s’ouvre dans un nouvel onglet. L’aperçu fonctionne hors ligne.",
-      "configuration": "Voir la configuration exportée",
-      "copy": "Copier le JSON",
+      "lead": "Modifiez et validez la configuration du formulaire du chapitre 03.",
+      "loading": "Chargement du validateur…",
+      "fields": "Champs JSON",
+      "format": "Formater le JSON",
+      "diagnostics": "Diagnostics",
+      "local": "Vérifié dans votre navigateur. Rien n’est envoyé ni enregistré.",
+      "empty": "Collez vos champs pour commencer.",
+      "errors": "Erreurs trouvées : {{count}}",
+      "warnings": "Avertissements : {{count}}",
+      "success": "Aucune erreur de structure détectée.",
+      "error": "Erreur",
+      "warning": "Avertissement",
+      "location": "Ligne {{line}}, colonne {{column}}",
       "reset": "Réinitialiser la démo"
     },
     "validation": {

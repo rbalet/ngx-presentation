@@ -45,11 +45,6 @@ export class DemoFormState {
   });
   readonly json = computed(() => JSON.stringify(this.exportFields(), null, 2));
 
-  updateField(key: string, props: { label?: string; required?: boolean; maxLength?: number }) {
-    this.configuration.update(fields => fields.map(field => field.key === key
-      ? { ...field, props: { ...field.props, ...props } } : field));
-  }
-
   reset() {
     this.configuration.set(structuredClone(generatedFields));
     this.model.set({ attendance: 'onsite' });

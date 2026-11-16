@@ -4,6 +4,7 @@ import { FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/for
 import { FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DemoFormState, Registration } from '../demo/demo-form-state';
+import { Languages } from '../languages';
 
 @Component({
   selector: 'app-form-demo',
@@ -12,7 +13,7 @@ import { DemoFormState, Registration } from '../demo/demo-form-state';
   styleUrl: './form-demo.css',
 })
 export class FormDemo {
-  readonly mode = input<'intro' | 'skill' | 'builder' | 'validation'>('intro');
+  readonly mode = input<'intro' | 'skill' | 'validation'>('intro');
   readonly capabilities = [
     { id: 'mcp', title: 'MCP', href: 'https://formly.dev/guide/mcp' },
     { id: 'webmcp', title: 'WebMCP', href: 'https://formly.dev/guide/web-mcp' },
@@ -34,12 +35,11 @@ export class FormDemo {
   },
 ];`;
   readonly state = inject(DemoFormState);
+  readonly languages = inject(Languages);
   readonly translate = inject(TranslateService);
   readonly form = new FormGroup({});
   readonly options: FormlyFormOptions = {};
   readonly fields = computed(() => structuredClone(this.state.exportFields()));
-  readonly selectedKey = signal('name');
-  readonly selectedField = computed(() => this.state.exportFields().find(field => field.key === this.selectedKey())!);
   readonly introConfiguration = linkedSignal(() => {
     this.state.revision();
     return JSON.stringify(this.state.exportFields()[0], null, 2);
@@ -110,10 +110,6 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
     }
   }
 
-  updateLabel(value: string) {
-    if (value.trim()) this.state.updateField(this.selectedKey(), { label: value.slice(0, 80) });
-  }
-
   updateIntroConfiguration(value: string) {
     this.introConfiguration.set(value);
     let field;
@@ -152,15 +148,6 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]
     } catch {
       this.copied.set('failed');
     }
-  }
-
-  download() {
-    const url = URL.createObjectURL(new Blob([this.state.json()], { type: 'application/json' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'event-registration.formly.json';
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   useExample(duplicate: boolean) {

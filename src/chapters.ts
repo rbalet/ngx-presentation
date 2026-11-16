@@ -3,7 +3,7 @@ export type Chapter = {
   title: string;
   subtitle?: string;
   minutes: number;
-  kind: "main" | "extra" | "discussion";
+  kind: "main" | "discussion";
   summary: string;
 };
 
@@ -65,13 +65,6 @@ export const chapters: Chapter[] = [
     minutes: 2,
     kind: "main",
     summary: "chapters.08.summary",
-  },
-  {
-    number: "09",
-    title: "chapters.09.title",
-    minutes: 4,
-    kind: "extra",
-    summary: "chapters.09.summary",
   },
   {
     number: "12",

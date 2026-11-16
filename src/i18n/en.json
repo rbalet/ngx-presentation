@@ -19,7 +19,6 @@
   "nav": {
     "chapters": "Chapters",
     "index": "Chapter index",
-    "optional": "Optional extra",
     "completed": "Completed",
     "minutes": "{{minutes}} min",
     "chapter": "Chapter {{number}} navigation",
@@ -27,7 +26,6 @@
     "previous": "Previous: {{number}}",
     "next": "Next: {{number}}",
     "overview": "Back to overview",
-    "skipExtras": "Skip extras",
     "previousSlide": "Previous slide",
     "maintainers": "Continue to open source",
     "custom": "Continue to custom example",
@@ -121,12 +119,12 @@
       "summary": "Generate an event registration form with the ngx-formly skill. Review it, then open it in the builder."
     },
     "05": {
-      "title": "Make it yours",
-      "summary": "Edit the form and export its configuration to Formly Studio."
+      "title": "API & validation",
+      "summary": "Edit and validate the form configuration."
     },
     "06": {
-      "title": "API & validation",
-      "summary": "Show API validation errors on the relevant fields."
+      "title": "Make it yours",
+      "summary": ""
     },
     "07": {
       "title": "Periscope",
@@ -135,10 +133,6 @@
     "08": {
       "title": "A shared approach at BIT",
       "summary": "Pick one form, agree who maintains shared components and test reuse in a second app."
-    },
-    "09": {
-      "title": "Multilingual forms",
-      "summary": "Translate labels and errors with ngx-translate. Keep the same form model."
     },
     "11": {
       "title": "Q&A",
@@ -213,13 +207,6 @@
       },
       "ask": "Who has a good candidate?"
     },
-    "language": {
-      "title": "Change the language. Keep the answers.",
-      "name": "Full name",
-      "hint": "Edit the sample name, then switch languages.",
-      "model": "The form model",
-      "takeaway": "Translate labels and messages. Keep field keys stable."
-    },
     "discussion": {
       "title": "And you?",
       "question": "Is it missing something?",
@@ -288,19 +275,19 @@
       "resultEmpty": "Run the prompt, then return here to try the form."
     },
     "builder": {
-      "lead": "Edit the same form here, then continue in Formly Studio.",
-      "editTitle": "Let the room choose a change",
-      "challenge": "Rename a field or make it required. See the change live.",
-      "field": "Field to edit",
-      "label": "Field label",
-      "required": "Required field",
-      "handoffTitle": "Continue in the real builder",
-      "handoff": "Download JSON. In Formly Studio, select Import Form → Choose File. Leave UI Library blank for Vanilla. Edit a field, then open Preview.",
-      "download": "Download JSON",
-      "open": "Open Formly Studio",
-      "offline": "Studio needs internet and opens in a new tab. The preview works offline.",
-      "configuration": "Inspect the exported configuration",
-      "copy": "Copy JSON",
+      "lead": "Edit and validate the form configuration from chapter 03.",
+      "loading": "Loading the form validator…",
+      "fields": "Fields JSON",
+      "format": "Format JSON",
+      "diagnostics": "Diagnostics",
+      "local": "Checked in your browser. Nothing is uploaded or saved.",
+      "empty": "Paste your fields to begin.",
+      "errors": "Errors found: {{count}}",
+      "warnings": "Warnings: {{count}}",
+      "success": "No structural errors found.",
+      "error": "Error",
+      "warning": "Warning",
+      "location": "Line {{line}}, column {{column}}",
       "reset": "Reset the demo"
     },
     "validation": {

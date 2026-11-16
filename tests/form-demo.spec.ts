@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import { readFile } from 'node:fs/promises';
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -31,13 +30,14 @@ test('the intro edits the name configuration and keeps its model value in sync',
   await expect(value).toHaveValue('Taylor Example');
   await expect(intro.getByRole('textbox', { name: /^Email/ })).toHaveValue('jamie@example.test');
 
-  await page.locator('.language-select').selectOption('fr');
+  await page.locator('header .language-select').selectOption('fr');
   await expect(intro.getByRole('textbox', { name: 'Configuration du champ Nom complet', exact: true })).toBeVisible();
   await expect(value).toHaveValue('Taylor Example');
   await expect(name).toHaveValue('Taylor Example');
-  await page.locator('.language-select').selectOption('en');
+  await page.locator('header .language-select').selectOption('en');
   const builder = page.locator('#chapter-05');
-  await expect(builder.getByRole('textbox', { name: 'Participant name', exact: true })).toHaveValue('Taylor Example');
+  await builder.scrollIntoViewIfNeeded();
+  await expect(builder.getByRole('textbox', { name: 'Fields JSON', exact: true })).toContainText('Participant name');
   await editor.fill('{');
   await builder.getByRole('button', { name: 'Reset the demo' }).click();
   await expect(editor).toHaveAttribute('aria-invalid', 'false');
@@ -121,7 +121,8 @@ test('custom length errors follow the edited rule and language without losing th
     ['de', 'Vollständiger Name', 'Ihr Name muss mindestens 5 Zeichen lang sein. Sie haben 2 eingegeben.'],
     ['en', 'Full name', 'Your name needs at least 5 characters. You entered 2.'],
   ]) {
-    await page.locator('.language-select').selectOption(language);
+    await intro.locator('.preview-heading .language-select').selectOption(language);
+    await expect(page.locator('header .language-select')).toHaveValue(language);
     const translatedName = intro.getByRole('textbox', { name: label, exact: true });
     await expect(translatedName).toHaveValue('Al');
     await expect(translatedName).toHaveAccessibleDescription(message);
@@ -139,7 +140,7 @@ test('custom length errors follow the edited rule and language without losing th
   expect(errors).toEqual([]);
 });
 
-test('the shared form hides conditional data, edits fields and exports clean builder JSON', async ({ page }) => {
+test('the validator loads chapter 03 configuration and formats the edited JSON', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/#chapter-03');
@@ -154,45 +155,92 @@ test('the shared form hides conditional data, edits fields and exports clean bui
 
   await page.locator('#chapter-05').scrollIntoViewIfNeeded();
   const builder = page.locator('#chapter-05');
-  await expect(builder.getByLabel('Full name')).toHaveValue('Jamie Example');
-  await builder.getByLabel('Field label', { exact: true }).fill('Participant name');
-  await builder.getByLabel('Field label', { exact: true }).press('Tab');
-  await expect(builder.getByLabel('Participant name')).toHaveValue('Jamie Example');
-  await builder.getByLabel('Required field', { exact: true }).uncheck();
-  await expect(builder.getByLabel('Participant name')).not.toHaveAttribute('required');
-  const downloadEvent = page.waitForEvent('download');
-  await builder.getByRole('button', { name: 'Download JSON' }).click();
-  const download = await downloadEvent;
-  const fields = JSON.parse(await readFile((await download.path())!, 'utf8'));
-  expect(fields).toHaveLength(4);
-  expect(fields[0]).toMatchObject({ key: 'name', props: { label: 'Participant name', required: false } });
-  expect(fields[0].validation.messages.minLength).toBe('demo.errors.nameMinLength');
-  expect(fields[3].expressions.hide).toBe("model.attendance !== 'onsite'");
-  expect(fields.some((field: object) => 'formControl' in field || 'model' in field || 'id' in field)).toBe(false);
-  await expect(builder.getByRole('link', { name: 'Open Formly Studio' })).toHaveAttribute('href', 'https://builder.formly.dev/workspaces/forms');
+  const editor = builder.getByRole('textbox', { name: 'Fields JSON', exact: true });
+  await expect(builder.getByRole('button', { name: 'Load example', exact: true })).toHaveCount(0);
+  await expect(builder.getByRole('status')).toHaveText('No structural errors found.');
+  await expect(editor).toContainText('"label": "Full name"');
+  await expect(editor).toContainText('"minLength": "demo.errors.nameMinLength"');
+  const draft = [{ key: 'name', props: { label: 'Participant name', required: false } }];
+  await editor.fill(JSON.stringify(draft));
+  await builder.getByRole('button', { name: 'Format JSON', exact: true }).click();
+  await expect.poll(() => editor.innerText()).toBe(JSON.stringify(draft, null, 2));
   await builder.getByRole('button', { name: 'Reset the demo' }).click();
-  await expect(builder.getByLabel('Full name')).toHaveValue('');
-  await expect(builder.getByLabel('Dietary requirements')).toBeVisible();
+  await expect(editor).toContainText('Full name');
+  await expect(intro.getByRole('textbox', { name: 'Full name', exact: true })).toHaveValue('');
+  await expect(intro.getByLabel('Dietary requirements')).toBeVisible();
   expect(errors).toEqual([]);
 });
 
-test('the local API simulation blocks invalid data and recovers from a field error', async ({ page }) => {
+test('the validator reports syntax and nested configuration errors without running the draft', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/#chapter-05');
+  const builder = page.locator('#chapter-05');
+  const editor = builder.getByRole('textbox', { name: 'Fields JSON', exact: true });
+  await editor.fill('');
+  await expect(builder.getByRole('status')).toHaveText('Paste your fields to begin.');
+  for (const draft of ['{', '[{"key":"name",}]', '[/* comment */]', 'null']) {
+    await editor.fill(draft);
+    await expect(editor).toHaveAttribute('aria-invalid', 'true');
+  }
+  await editor.fill('[\n  {"fieldGroup": [{"props": {"required": "yes"}}]}\n]');
+  await expect(builder.getByRole('status')).toContainText('Errors found: 1');
+  const diagnostic = builder.getByRole('button', { name: /Expected boolean or null; received string/ });
+  await expect(diagnostic).toContainText('$[0].fieldGroup[0].props.required');
+  await expect(diagnostic).toContainText('Line 2');
+  await diagnostic.click();
+  await expect(editor).toBeFocused();
+  expect(await page.evaluate(() => getSelection()?.toString())).toBe('"yes"');
+  await editor.fill('[{"key":"name","props":{"requried":true},"expressions":{"hide":"throw new Error(123)"}}]');
+  await expect(builder.getByRole('status')).toContainText('Warnings: 1');
+  await expect(builder.getByRole('button', { name: /Did you mean "required"/ })).toBeVisible();
+  await editor.press('ArrowRight');
+  await expect(page).toHaveURL(/#chapter-05$/);
+  await builder.getByRole('button', { name: 'Reset the demo' }).click();
+  await expect(editor).toHaveAttribute('aria-invalid', 'false');
+  await expect(builder.getByRole('status')).toHaveText('No structural errors found.');
+  expect(errors).toEqual([]);
+});
+
+test('the validator adapts to translations, themes and narrow screens', async ({ page }) => {
+  await page.goto('/#chapter-05');
+  const builder = page.locator('#chapter-05');
+  const draft = '[{"key":"draft","props":{"label":"Keep my edits"}}]';
+  await builder.getByRole('textbox', { name: 'Fields JSON', exact: true }).fill(draft);
+  for (const language of [
+    { code: 'fr', editor: 'Champs JSON', download: 'Télécharger', open: 'Ouvrir l’éditeur' },
+    { code: 'de', editor: 'Felder als JSON', download: 'Herunterladen', open: 'Editor öffnen' },
+    { code: 'en', editor: 'Fields JSON', download: 'Download', open: 'Open Editor' },
+  ]) {
+    await page.locator('header .language-select').selectOption(language.code);
+    await expect(builder.getByRole('textbox', { name: language.editor, exact: true })).toBeVisible();
+    await expect(builder.getByRole('textbox', { name: language.editor, exact: true })).toHaveText(draft);
+    await expect(builder.getByRole('button', { name: language.download, exact: true })).toHaveCount(0);
+    await expect(builder.getByRole('link', { name: language.open })).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  const editor = builder.getByRole('textbox', { name: 'Fields JSON', exact: true });
+  const lightColor = await editor.evaluate(element => getComputedStyle(element).color);
+  await page.getByRole('button', { name: 'Dark mode' }).click();
+  await expect(editor).not.toHaveCSS('color', lightColor);
+});
+
+test('API and validation precedes the empty Make it yours chapter', async ({ page }) => {
   await page.goto('/#chapter-06');
-  const demo = page.locator('#chapter-06');
-  await demo.getByRole('button', { name: 'Submit demo registration' }).click();
-  await expect(demo.getByLabel('Full name')).toHaveAttribute('aria-invalid', 'true');
-  await expect(demo.locator('.api-result')).toContainText('highlighted fields');
-  await demo.getByRole('button', { name: 'Try a registered email' }).click();
-  await demo.getByRole('button', { name: 'Submit demo registration' }).click();
-  await expect(demo.getByRole('button', { name: 'Checking…', exact: true })).toBeDisabled();
-  await expect(demo.getByRole('button', { name: 'Try a new registration' })).toBeDisabled();
-  await expect(demo.locator('.api-result')).toContainText('409');
-  await expect(demo.getByRole('textbox', { name: /^Email/ })).toHaveAttribute('aria-invalid', 'true');
-  await expect(demo.getByLabel('Full name')).toHaveValue('Alex Example');
-  await demo.getByRole('textbox', { name: /^Email/ }).fill('new@example.test');
-  await demo.getByRole('button', { name: 'Submit demo registration' }).click();
-  await expect(demo.locator('.api-result')).toContainText('201');
-  await expect(demo.locator('.payload')).toContainText('new@example.test');
+  const custom = page.locator('#chapter-06');
+  const validation = page.locator('#chapter-05');
+  const index = page.getByRole('navigation', { name: 'Chapter index', exact: true });
+  await expect(index.locator('a[href="#chapter-05"] .index-title')).toHaveText('API & validation');
+  await expect(index.locator('a[href="#chapter-06"] .index-title')).toHaveText('Make it yours');
+  await expect(custom.locator('.chapter-content')).toHaveText(/^06\s*Make it yours\s*$/);
+  await custom.getByRole('link', { name: 'Previous: 05', exact: true }).click();
+  await expect(page).toHaveURL(/#chapter-05$/);
+  await expect(validation.getByRole('heading', { level: 2 })).toHaveText(/^05\s*API & validation\s*$/);
+  await expect(validation.getByRole('textbox', { name: 'Fields JSON', exact: true })).toBeVisible();
+  await validation.getByRole('link', { name: 'Next: 06', exact: true }).click();
+  await expect(page).toHaveURL(/#chapter-06$/);
+  await custom.getByRole('link', { name: 'Next: 07', exact: true }).click();
+  await expect(page).toHaveURL(/#chapter-07$/);
 });
 
 test('capability cards explain each integration and finish with the skill prompt', async ({ page, isMobile }) => {
@@ -257,7 +305,7 @@ test('capability cards explain each integration and finish with the skill prompt
   await expect(result.getByRole('heading', { name: '04.1 · Agent result' })).toBeVisible();
   await expect(result).toContainText('Run the prompt, then return here to try the form.');
   for (const [language, heading] of [['fr', '04.1 · Résultat de l’agent'], ['de', '04.1 · Ergebnis des Agenten'], ['en', '04.1 · Agent result']]) {
-    await page.locator('.language-select').selectOption(language);
+    await page.locator('header .language-select').selectOption(language);
     await expect(result.getByRole('heading', { name: heading, exact: true })).toBeVisible();
     await expect(skill.locator('.prompt-text')).toContainText('src/components/skill-result.ts');
     await expect(detail.getByRole('link')).toHaveAccessibleName(({ fr: 'Lire la documentation', de: 'Dokumentation lesen', en: 'Read the guide' } as Record<string, string>)[language]);
@@ -292,14 +340,23 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
   });
 }
 
-test('changing language retains shared model keys and values', async ({ page }) => {
-  await page.goto('/#chapter-05');
+test('the live form language switcher retains shared model keys and values', async ({ page }) => {
+  await page.goto('/#chapter-03');
+  const intro = page.locator('#chapter-03');
+  await intro.getByRole('textbox', { name: 'Full name', exact: true }).fill('Jamie Example');
   const builder = page.locator('#chapter-05');
-  await builder.getByLabel('Full name').fill('Jamie Example');
-  await page.getByRole('combobox', { name: 'Language', exact: true }).selectOption('fr');
-  await expect(builder.getByLabel('Nom complet')).toHaveValue('Jamie Example');
-  await builder.getByText('Voir la configuration exportée', { exact: true }).click();
-  await expect(builder.locator('.configuration-details pre')).toContainText('"key": "name"');
-  await expect(builder.locator('.configuration-details pre')).toContainText('Nom complet');
-  await expect(builder.locator('.configuration-details pre')).not.toContainText('Jamie Example');
+  await builder.scrollIntoViewIfNeeded();
+  await expect(builder.getByRole('textbox', { name: 'Fields JSON', exact: true })).toBeVisible();
+  await intro.getByRole('combobox', { name: 'Language', exact: true }).selectOption('fr');
+  await expect(page.locator('header .language-select')).toHaveValue('fr');
+  await expect(intro.getByRole('textbox', { name: 'Nom complet', exact: true })).toHaveValue('Jamie Example');
+  const editor = builder.getByRole('textbox', { name: 'Champs JSON', exact: true });
+  await expect(editor).toContainText('"key": "name"');
+  await expect(editor).toContainText('Nom complet');
+  await expect(editor).not.toContainText('Jamie Example');
+  await page.locator('header .language-select').selectOption('de');
+  await expect(intro.locator('.language-select')).toHaveValue('de');
+  await expect(intro.getByRole('textbox', { name: 'Vollständiger Name', exact: true })).toHaveValue('Jamie Example');
+  await page.reload();
+  await expect(intro.locator('.language-select')).toHaveValue('de');
 });

@@ -8,7 +8,7 @@ test('keyboard navigation includes continuation slides and leaves controls alone
   await expect(page).toHaveURL(/#chapter-02-(more-examples|continued)$/);
   await page.keyboard.press('ArrowLeft');
   await expect(page).toHaveURL(/#chapter-02$/);
-  await page.getByRole('combobox', { name: 'Language', exact: true }).focus();
+  await page.locator('header').getByRole('combobox', { name: 'Language', exact: true }).focus();
   await page.keyboard.press('ArrowRight');
   await expect(page).toHaveURL(/#chapter-02$/);
 });

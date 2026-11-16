@@ -2,7 +2,7 @@
 
 A scrolling presentation for **Why are we still rebuilding the same forms?**
 
-Angular 22 with standalone components and zoneless signals, ngx-translate 18, and ngx-formly 11. English is the default; the header language selector switches to German or French and remembers the choice. All three catalogues are bundled, so language changes work without network requests.
+Angular 22 with standalone components and zoneless signals, ngx-translate 18, and ngx-formly 11. English is the default; the header and chapter 03 live-form language selectors switch to German or French and remember the choice. All three catalogues are bundled, so language changes work without network requests.
 
 ## Local development
 
@@ -51,13 +51,13 @@ The production build is a static application in `dist/ngx-presentation/browser`.
 - `PRESENTING.md` is the rehearsal checklist and speaker run of show.
 - `HANDOFF.md` records the agreed content, sources and implementation status.
 
-The title page is unnumbered. Chapter 09 is an optional extra. Chapter 10 was removed; remaining numbers stay stable. Chapter 08 has a **Skip extras** link to chapter 11. Chapter 12 contains future plans. Normal scrolling and browser anchor links remain available.
+The title page is unnumbered. Chapters 09 and 10 were removed; remaining numbers stay stable. Chapter 03 demonstrates language switching beside the live form. Chapter 08 leads to chapter 12 for future plans, then chapter 11 for Q&A. Normal scrolling and browser anchor links remain available.
 
 ## Formly
 
-`src/app.config.ts` registers Formly once with the demo's native input, select and textarea field types. Chapters 03–06 use Angular Reactive Forms and the same event-registration configuration. The chapter 02 examples remain illustrations.
+`src/app.config.ts` registers Formly once with the demo's native input, select and textarea field types. Chapters 03–05 share the same event-registration configuration. The chapter 02 examples remain illustrations.
 
-The skill chapter provides a prompt for your coding agent to implement a form in `src/components/skill-result.ts`. Subsection 04.1 (`#chapter-04-result`) displays that result in the deck and starts with a placeholder. The browser does not call an AI service. The API exercise is a labeled simulation. Chapter 05 exports standard Formly JSON for the hosted [Formly Studio](https://builder.formly.dev/workspaces/forms) import flow. Running this deck does not require `@ngx-formly/builder` to be published on npm.
+The skill chapter provides a prompt for your coding agent to implement a form in `src/components/skill-result.ts`. Subsection 04.1 (`#chapter-04-result`) displays that result in the deck and starts with a placeholder. The browser does not call an AI service. Chapter 05, **API & validation**, lets you edit and validate the Formly JSON from chapter 03. Chapter 06, **Make it yours**, is empty pending a headless component example. Running this deck does not require `@ngx-formly/builder` to be published on npm.
 
 Periscope's interactive walkthrough is based on the existing project documentation. Start its separate frontend and API for the actual live demonstration. See [PRESENTING.md](PRESENTING.md) for the exact boundaries and fallback flow.
 

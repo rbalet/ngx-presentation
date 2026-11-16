@@ -3,7 +3,6 @@
 </ng-template>
 <ng-template #nextLinks>
   <div>
-    @if (next()?.kind === 'extra') { <a href="#chapter-12" class="skip-extras">{{ 'nav.skipExtras' | translate }}</a> }
     <a [href]="next() ? '#chapter-' + next()!.number : '#overview'">{{ (next() ? 'nav.next' : 'nav.overview') | translate: { number: next()?.number } }}</a>
   </div>
 </ng-template>
@@ -21,14 +20,16 @@
     @if (continuations().length) {
       @if (subtitle(); as text) { <p class="chapter-subtitle" [innerHTML]="text | translate"></p> }
     } @else { <ng-container [ngTemplateOutlet]="titleTemplate" /> }
-    @if (chapter().kind === 'extra') { <p class="chapter-label">{{ 'nav.optional' | translate }}</p> }
     @switch (chapter().number) {
       @case ('01') { <app-about-chapter [part]="compact() ? 'community' : undefined" /> }
       @case ('02') { <app-problem-chapter [part]="compact() ? 'comparison' : undefined" /> }
       @case ('03') { <app-form-demo mode="intro" /> }
       @case ('04') { <app-form-demo mode="skill" /> }
-      @case ('05') { <app-form-demo mode="builder" /> }
-      @case ('06') { <app-form-demo mode="validation" /> }
+      @case ('05') {
+        @defer (on viewport) { <app-form-validator /> }
+        @placeholder { <p class="chapter-subtitle">{{ 'demo.builder.loading' | translate }}</p> }
+      }
+      @case ('06') {}
       @case ('07') { <app-periscope-chapter /> }
       @default { <app-closing-chapter [chapter]="chapter().number" /> }
     }

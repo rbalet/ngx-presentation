@@ -11,11 +11,11 @@ Presenter-led experience for BIT colleagues. Extend the existing deck; the user 
 
 ## Direction contract
 
-THESIS: Let the audience change the same form as it travels from a skill-generated configuration to a rendered form, Formly Studio, and a grounded Periscope walkthrough.
+THESIS: Let the audience work with the same form as it travels from a skill-generated configuration to a rendered form, a JSON validator, and a Periscope walkthrough.
 
 OWN-WORLD: Preserve the existing warm paper, black typography, red chapter accents, ruled navigation, native controls and restrained motion. Code is evidence, not decoration.
 
-STORY: Understand shared form behavior, try conditional fields and validation, make a change, export the configuration, then connect it to Periscope. Local demos remain useful without a backend.
+STORY: Understand shared form behavior, try conditional fields and validation, edit and validate the configuration, then connect it to Periscope. Local demos remain useful without a backend.
 
 FIRST VIEWPORT: Preserve the cover and opening chapters. Demo chapters pair a readable live form with the prompt, configuration or editing controls. A focus control frees projection space.
 

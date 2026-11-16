@@ -87,28 +87,6 @@
           </div>
           @if (introConfigurationError()) { <p class="configuration-error" id="intro-configuration-error" role="alert">{{ 'demo.intro.configurationError' | translate }}</p> }
         }
-        @case ('builder') {
-          <h3>{{ 'demo.builder.editTitle' | translate }}</h3>
-          <p class="demo-note">{{ 'demo.builder.challenge' | translate }}</p>
-          <div class="editor-controls">
-            <label for="demo-edit-field">{{ 'demo.builder.field' | translate }}</label>
-            <select id="demo-edit-field" [value]="selectedKey()" (change)="selectedKey.set($any($event.target).value)">
-              @for (field of state.exportFields(); track field.key) { <option [value]="field.key">{{ field.key }}</option> }
-            </select>
-            <label for="demo-edit-label">{{ 'demo.builder.label' | translate }}</label>
-            <input id="demo-edit-label" maxlength="80" [value]="selectedField().props.label" (change)="updateLabel($any($event.target).value)" />
-            <label class="checkbox-label" for="demo-edit-required"><input id="demo-edit-required" type="checkbox" [checked]="selectedField().props.required" (change)="state.updateField(selectedKey(), { required: $any($event.target).checked })" />{{ 'demo.builder.required' | translate }}</label>
-          </div>
-          <div class="builder-handoff">
-            <h4>{{ 'demo.builder.handoffTitle' | translate }}</h4>
-            <p class="demo-note">{{ 'demo.builder.handoff' | translate }}</p>
-            <div class="demo-actions">
-              <button type="button" class="demo-secondary" (click)="download()">{{ 'demo.builder.download' | translate }}</button>
-              <a class="demo-primary" href="https://builder.formly.dev/workspaces/forms" target="_blank" rel="noopener noreferrer">{{ 'demo.builder.open' | translate }} <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 4h6v6m-1-5L9 15M10 4H4v16h16v-6" /></svg></a>
-            </div>
-            <p class="demo-note">{{ 'demo.builder.offline' | translate }}</p>
-          </div>
-        }
         @case ('validation') {
           <h3>{{ 'demo.validation.title' | translate }}</h3>
           <p class="demo-note">{{ 'demo.validation.mock' | translate }}</p>
@@ -127,7 +105,19 @@
       }
     </div>
     <div class="preview-sheet">
-      <div class="preview-heading"><h3>{{ 'demo.formTitle' | translate }}</h3><span class="live-indicator">{{ 'demo.live' | translate }}</span></div>
+      <div class="preview-heading">
+        <h3>{{ 'demo.formTitle' | translate }}</h3>
+        <div class="preview-controls">
+          @if (mode() === 'intro') {
+            <select #language class="language-select" [attr.aria-label]="'app.language' | translate" [value]="translate.currentLang()" (change)="languages.select(language.value)">
+              <option value="en" lang="en">English</option>
+              <option value="fr" lang="fr">Français</option>
+              <option value="de" lang="de">Deutsch</option>
+            </select>
+          }
+          <span class="live-indicator">{{ 'demo.live' | translate }}</span>
+        </div>
+      </div>
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <fieldset [disabled]="apiStatus() === 'pending'">
           <legend class="visually-hidden">{{ 'demo.formTitle' | translate }}</legend>
@@ -154,15 +144,7 @@
             <code>&#125;;</code>
           </div>
         </section>
-      } @else if (mode() === 'builder') {
-        <details class="model-details"><summary>{{ 'demo.model' | translate }}</summary><pre class="code-window"><code>{{ state.model() | json }}</code></pre></details>
       }
     </div>
   </div>
-  @if (mode() === 'builder') {
-    <div class="demo-footer">
-      <details class="configuration-details"><summary>{{ 'demo.builder.configuration' | translate }}</summary><pre class="code-window" tabindex="0"><code>{{ state.json() }}</code></pre><button type="button" class="demo-secondary" (click)="copy(state.json())">{{ 'demo.builder.copy' | translate }}</button><span role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</span></details>
-      <button type="button" class="reset-button" (click)="state.reset()">{{ 'demo.builder.reset' | translate }}</button>
-    </div>
-  }
 }

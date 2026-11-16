@@ -13,19 +13,6 @@ test('Periscope walkthrough changes area and explains preview without pretending
   await expect(chapter.getByText('Walkthrough. For a live demo, start Periscope and its API.')).toBeVisible();
 });
 
-test('changing the optional example language preserves the field key and answer', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/#chapter-09');
-  const chapter = page.locator('#chapter-09');
-  await chapter.getByLabel('Full name', { exact: true }).fill('Sam Example');
-  await chapter.getByRole('button', { name: 'Deutsch', exact: true }).click();
-  await expect(chapter.getByLabel('Vollständiger Name', { exact: true })).toHaveValue('Sam Example');
-  await expect(chapter.locator('pre')).toContainText('"fullName": "Sam Example"');
-  await chapter.getByRole('button', { name: 'Français', exact: true }).click();
-  await expect(chapter.getByLabel('Nom complet', { exact: true })).toHaveValue('Sam Example');
-  await expect(chapter.locator('pre')).toContainText('"fullName": "Sam Example"');
-});
-
 test('Q&A shows the audience prompts and resource links', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-11');

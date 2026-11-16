@@ -16,13 +16,13 @@ test('language switching translates content and accessibility labels, preserves 
   const started = await page.evaluate(() => localStorage.getItem('ngx-presentation-started-at'));
   await page.goto('/#chapter-02-continued');
   await page.getByRole('button', { name: 'Show solution: Repeated work' }).click();
-  const selector = page.locator('.language-select');
+  const selector = page.locator('header .language-select');
   for (const language of languages) {
     await selector.selectOption(language.code);
     await expect(page.locator('html')).toHaveAttribute('lang', language.code);
     await expect(page).toHaveTitle(`${language.title} | ngx-formly`);
     await expect(page.locator('h1')).toHaveText(language.title);
-    await expect(page.getByRole('navigation', { name: language.chapters, exact: true }).getByRole('link')).toHaveCount(11);
+    await expect(page.getByRole('navigation', { name: language.chapters, exact: true }).getByRole('link')).toHaveCount(10);
     await expect(page.locator('#title-01')).toContainText(language.about);
     await expect(page.locator('#title-12')).toContainText(language.next);
     await expect(page.getByRole('button', { name: language.theme })).toBeVisible();
@@ -51,7 +51,7 @@ test('English is the default regardless of browser locale or an unsupported save
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.evaluate(() => localStorage.setItem('ngx-presentation-language', 'es'));
   await page.reload();
-  await expect(page.locator('.language-select')).toHaveValue('en');
+  await expect(page.locator('header .language-select')).toHaveValue('en');
   await expect(page.locator('h1')).toHaveText(languages[2].title);
   await context.close();
 });
@@ -61,14 +61,14 @@ test('language switching works without local storage', async ({ page }) => {
     get() { throw new DOMException('Storage blocked', 'SecurityError'); },
   }));
   await page.goto('/');
-  await page.getByRole('combobox', { name: 'Language' }).selectOption('de');
-  await expect(page.getByRole('combobox', { name: 'Sprache' })).toHaveValue('de');
+  await page.locator('header').getByRole('combobox', { name: 'Language' }).selectOption('de');
+  await expect(page.locator('header').getByRole('combobox', { name: 'Sprache' })).toHaveValue('de');
   await expect(page.locator('h1')).toHaveText(languages[0].title);
 });
 
 test('unknown paths show the translated not-found page', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('combobox', { name: 'Language' }).selectOption('fr');
+  await page.locator('header').getByRole('combobox', { name: 'Language' }).selectOption('fr');
   await page.goto('/missing');
   await expect(page.getByRole('heading', { name: 'Page introuvable' })).toBeVisible();
   await page.getByRole('link', { name: 'Ouvrir la présentation' }).click();

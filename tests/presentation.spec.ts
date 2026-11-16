@@ -88,9 +88,9 @@ test("the timer target follows the planned chapter end independently of elapsed 
   for (const [chapter, minutes] of [
     ["03", 14],
     ["04-result", 18],
-    ["09", 42],
-    ["12", 45],
-    ["11", 60],
+    ["08", 38],
+    ["12", 41],
+    ["11", 56],
     ["01", 2],
   ] as const) {
     await page.locator(`#chapter-${chapter}`).evaluate(element => element.scrollIntoView());
@@ -221,7 +221,7 @@ test("the timer still runs when local storage is unavailable", async ({
   expect(errors).toEqual([]);
 });
 
-test("all numbered chapters are reachable and extras can be skipped", async ({
+test("all numbered chapters are reachable and chapter 08 leads directly to the closing chapters", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -235,15 +235,16 @@ test("all numbered chapters are reachable and extras can be skipped", async ({
     name: "Chapter index",
     exact: true,
   });
-  await expect(index.getByRole("link")).toHaveCount(11);
+  await expect(index.getByRole("link")).toHaveCount(10);
   await expect(index.getByRole("link").last()).toHaveAttribute("href", "#chapter-11");
-  await expect(page.locator("#chapter-10")).toHaveCount(0);
+  await expect(page.locator("#chapter-09, #chapter-10")).toHaveCount(0);
+  await expect(page.locator('a[href="#chapter-09"]')).toHaveCount(0);
   await expect(
-    page.locator("#chapter-09").getByRole("link", { name: "Next: 12" }),
+    page.locator("#chapter-08").getByRole("link", { name: "Next: 12" }),
   ).toHaveAttribute("href", "#chapter-12");
   await expect(
-    page.locator("#chapter-12").getByRole("link", { name: "Previous: 09" }),
-  ).toHaveAttribute("href", "#chapter-09");
+    page.locator("#chapter-12").getByRole("link", { name: "Previous: 08" }),
+  ).toHaveAttribute("href", "#chapter-08");
   for (const href of await index
     .getByRole("link")
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")))) {
@@ -254,7 +255,7 @@ test("all numbered chapters are reachable and extras can be skipped", async ({
   const chapter = page.getByRole("region", {
     name: "08 A shared approach at BIT",
   });
-  await chapter.getByRole("link", { name: "Skip extras" }).click();
+  await chapter.getByRole("link", { name: "Next: 12" }).click();
   await expect(page).toHaveURL(/#chapter-12$/);
   const whatsNext = page.getByRole("region", { name: "12 What's next" });
   await expect(whatsNext.getByRole("heading", { level: 2 })).toBeInViewport();
@@ -281,12 +282,11 @@ test("direct links work with reduced motion and without horizontal overflow", as
       hydrationErrors.push(message.text());
   });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/#chapter-09");
+  await page.goto("/#chapter-03");
   await expect(
-    page.getByRole("heading", { name: "09 Multilingual forms" }),
+    page.getByRole("heading", { name: "03 Meet ngx-formly" }),
   ).toBeInViewport();
-  await expect(page.locator("#chapter-09")).toContainText("Optional extra");
-  await expect(page.locator("#chapter-09 .chapter-content")).toHaveCSS(
+  await expect(page.locator("#chapter-03 .chapter-content")).toHaveCSS(
     "transform",
     "none",
   );
@@ -295,7 +295,7 @@ test("direct links work with reduced motion and without horizontal overflow", as
     page
       .getByRole("navigation", { name: "Chapter index", exact: true })
       .locator('[aria-current="location"]'),
-  ).toContainText("Multilingual forms");
+  ).toContainText("Meet ngx-formly");
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,

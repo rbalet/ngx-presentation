@@ -89,7 +89,6 @@
             <span class="index-number">{{ chapter.number }}</span>
             <span>
               <span class="index-title" [class.index-title--completed]="index < activeIndex()">{{ chapter.title | translate }}</span>
-              @if (chapter.kind === 'extra') { <small>{{ 'nav.optional' | translate }}</small> }
             </span>
             <span class="index-time">
               <span class="index-duration" [attr.aria-hidden]="index < activeIndex()">{{ 'nav.minutes' | translate: { minutes: chapter.minutes } }}</span>
