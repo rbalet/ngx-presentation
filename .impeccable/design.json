@@ -1,0 +1,612 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T21:23:36.680155+00:00",
+  "title": "Design System: ngx-formly presentation",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15.00% 0.00696 88.64)",
+          "oklch(26.43% 0.00696 88.64)",
+          "oklch(37.86% 0.00696 88.64)",
+          "oklch(49.29% 0.00696 88.64)",
+          "oklch(60.71% 0.00696 88.64)",
+          "oklch(72.14% 0.00696 88.64)",
+          "oklch(83.57% 0.00696 88.64)",
+          "oklch(95.00% 0.00696 88.64)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95.00% 0.00000 0.00)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Dark surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.03860 250.86)",
+          "oklch(26.43% 0.03860 250.86)",
+          "oklch(37.86% 0.03860 250.86)",
+          "oklch(49.29% 0.03860 250.86)",
+          "oklch(60.71% 0.03860 250.86)",
+          "oklch(72.14% 0.03860 250.86)",
+          "oklch(83.57% 0.03860 250.86)",
+          "oklch(95.00% 0.03860 250.86)"
+        ]
+      },
+      "on-dark": {
+        "role": "neutral",
+        "displayName": "On dark",
+        "tonalRamp": [
+          "oklch(15.00% 0.00696 88.64)",
+          "oklch(26.43% 0.00696 88.64)",
+          "oklch(37.86% 0.00696 88.64)",
+          "oklch(49.29% 0.00696 88.64)",
+          "oklch(60.71% 0.00696 88.64)",
+          "oklch(72.14% 0.00696 88.64)",
+          "oklch(83.57% 0.00696 88.64)",
+          "oklch(95.00% 0.00696 88.64)"
+        ]
+      },
+      "action": {
+        "role": "primary",
+        "displayName": "Action",
+        "tonalRamp": [
+          "oklch(15.00% 0.03860 250.86)",
+          "oklch(26.43% 0.03860 250.86)",
+          "oklch(37.86% 0.03860 250.86)",
+          "oklch(49.29% 0.03860 250.86)",
+          "oklch(60.71% 0.03860 250.86)",
+          "oklch(72.14% 0.03860 250.86)",
+          "oklch(83.57% 0.03860 250.86)",
+          "oklch(95.00% 0.03860 250.86)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.00450 78.30)",
+          "oklch(26.43% 0.00450 78.30)",
+          "oklch(37.86% 0.00450 78.30)",
+          "oklch(49.29% 0.00450 78.30)",
+          "oklch(60.71% 0.00450 78.30)",
+          "oklch(72.14% 0.00450 78.30)",
+          "oklch(83.57% 0.00450 78.30)",
+          "oklch(95.00% 0.00450 78.30)"
+        ]
+      },
+      "group": {
+        "role": "neutral",
+        "displayName": "Group",
+        "tonalRamp": [
+          "oklch(15.00% 0.00865 84.57)",
+          "oklch(26.43% 0.00865 84.57)",
+          "oklch(37.86% 0.00865 84.57)",
+          "oklch(49.29% 0.00865 84.57)",
+          "oklch(60.71% 0.00865 84.57)",
+          "oklch(72.14% 0.00865 84.57)",
+          "oklch(83.57% 0.00865 84.57)",
+          "oklch(95.00% 0.00865 84.57)"
+        ]
+      },
+      "group-rule": {
+        "role": "neutral",
+        "displayName": "Group rule",
+        "tonalRamp": [
+          "oklch(15.00% 0.01879 70.21)",
+          "oklch(26.43% 0.01879 70.21)",
+          "oklch(37.86% 0.01879 70.21)",
+          "oklch(49.29% 0.01879 70.21)",
+          "oklch(60.71% 0.01879 70.21)",
+          "oklch(72.14% 0.01879 70.21)",
+          "oklch(83.57% 0.01879 70.21)",
+          "oklch(95.00% 0.01879 70.21)"
+        ]
+      },
+      "highlight": {
+        "role": "neutral",
+        "displayName": "Highlight",
+        "tonalRamp": [
+          "oklch(15.00% 0.01030 81.79)",
+          "oklch(26.43% 0.01030 81.79)",
+          "oklch(37.86% 0.01030 81.79)",
+          "oklch(49.29% 0.01030 81.79)",
+          "oklch(60.71% 0.01030 81.79)",
+          "oklch(72.14% 0.01030 81.79)",
+          "oklch(83.57% 0.01030 81.79)",
+          "oklch(95.00% 0.01030 81.79)"
+        ]
+      },
+      "extra": {
+        "role": "neutral",
+        "displayName": "Extra",
+        "tonalRamp": [
+          "oklch(15.00% 0.00957 93.57)",
+          "oklch(26.43% 0.00957 93.57)",
+          "oklch(37.86% 0.00957 93.57)",
+          "oklch(49.29% 0.00957 93.57)",
+          "oklch(60.71% 0.00957 93.57)",
+          "oklch(72.14% 0.00957 93.57)",
+          "oklch(83.57% 0.00957 93.57)",
+          "oklch(95.00% 0.00957 93.57)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.03017 253.73)",
+          "oklch(26.43% 0.03017 253.73)",
+          "oklch(37.86% 0.03017 253.73)",
+          "oklch(49.29% 0.03017 253.73)",
+          "oklch(60.71% 0.03017 253.73)",
+          "oklch(72.14% 0.03017 253.73)",
+          "oklch(83.57% 0.03017 253.73)",
+          "oklch(95.00% 0.03017 253.73)"
+        ]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "Red",
+        "tonalRamp": [
+          "oklch(15.00% 0.17510 22.91)",
+          "oklch(26.43% 0.17510 22.91)",
+          "oklch(37.86% 0.17510 22.91)",
+          "oklch(49.29% 0.17510 22.91)",
+          "oklch(60.71% 0.17510 22.91)",
+          "oklch(72.14% 0.17510 22.91)",
+          "oklch(83.57% 0.17510 22.91)",
+          "oklch(95.00% 0.17510 22.91)"
+        ]
+      },
+      "success": {
+        "role": "secondary",
+        "displayName": "Success",
+        "tonalRamp": [
+          "oklch(15.00% 0.05135 147.57)",
+          "oklch(26.43% 0.05135 147.57)",
+          "oklch(37.86% 0.05135 147.57)",
+          "oklch(49.29% 0.05135 147.57)",
+          "oklch(60.71% 0.05135 147.57)",
+          "oklch(72.14% 0.05135 147.57)",
+          "oklch(83.57% 0.05135 147.57)",
+          "oklch(95.00% 0.05135 147.57)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "tonalRamp": [
+          "oklch(15.00% 0.00880 84.58)",
+          "oklch(26.43% 0.00880 84.58)",
+          "oklch(37.86% 0.00880 84.58)",
+          "oklch(49.29% 0.00880 84.58)",
+          "oklch(60.71% 0.00880 84.58)",
+          "oklch(72.14% 0.00880 84.58)",
+          "oklch(83.57% 0.00880 84.58)",
+          "oklch(95.00% 0.00880 84.58)"
+        ]
+      },
+      "dark-paper": {
+        "role": "neutral",
+        "displayName": "Dark paper",
+        "tonalRamp": [
+          "oklch(15.00% 0.00504 355.24)",
+          "oklch(26.43% 0.00504 355.24)",
+          "oklch(37.86% 0.00504 355.24)",
+          "oklch(49.29% 0.00504 355.24)",
+          "oklch(60.71% 0.00504 355.24)",
+          "oklch(72.14% 0.00504 355.24)",
+          "oklch(83.57% 0.00504 355.24)",
+          "oklch(95.00% 0.00504 355.24)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.00696 88.64)",
+          "oklch(26.43% 0.00696 88.64)",
+          "oklch(37.86% 0.00696 88.64)",
+          "oklch(49.29% 0.00696 88.64)",
+          "oklch(60.71% 0.00696 88.64)",
+          "oklch(72.14% 0.00696 88.64)",
+          "oklch(83.57% 0.00696 88.64)",
+          "oklch(95.00% 0.00696 88.64)"
+        ]
+      },
+      "dark-dark-surface": {
+        "role": "neutral",
+        "displayName": "Dark dark surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.01492 266.81)",
+          "oklch(26.43% 0.01492 266.81)",
+          "oklch(37.86% 0.01492 266.81)",
+          "oklch(49.29% 0.01492 266.81)",
+          "oklch(60.71% 0.01492 266.81)",
+          "oklch(72.14% 0.01492 266.81)",
+          "oklch(83.57% 0.01492 266.81)",
+          "oklch(95.00% 0.01492 266.81)"
+        ]
+      },
+      "dark-action": {
+        "role": "primary",
+        "displayName": "Dark action",
+        "tonalRamp": [
+          "oklch(15.00% 0.00696 88.64)",
+          "oklch(26.43% 0.00696 88.64)",
+          "oklch(37.86% 0.00696 88.64)",
+          "oklch(49.29% 0.00696 88.64)",
+          "oklch(60.71% 0.00696 88.64)",
+          "oklch(72.14% 0.00696 88.64)",
+          "oklch(83.57% 0.00696 88.64)",
+          "oklch(95.00% 0.00696 88.64)"
+        ]
+      },
+      "dark-surface-raised": {
+        "role": "neutral",
+        "displayName": "Dark surface raised",
+        "tonalRamp": [
+          "oklch(15.00% 0.00696 345.82)",
+          "oklch(26.43% 0.00696 345.82)",
+          "oklch(37.86% 0.00696 345.82)",
+          "oklch(49.29% 0.00696 345.82)",
+          "oklch(60.71% 0.00696 345.82)",
+          "oklch(72.14% 0.00696 345.82)",
+          "oklch(83.57% 0.00696 345.82)",
+          "oklch(95.00% 0.00696 345.82)"
+        ]
+      },
+      "dark-group": {
+        "role": "neutral",
+        "displayName": "Dark group",
+        "tonalRamp": [
+          "oklch(15.00% 0.00583 337.73)",
+          "oklch(26.43% 0.00583 337.73)",
+          "oklch(37.86% 0.00583 337.73)",
+          "oklch(49.29% 0.00583 337.73)",
+          "oklch(60.71% 0.00583 337.73)",
+          "oklch(72.14% 0.00583 337.73)",
+          "oklch(83.57% 0.00583 337.73)",
+          "oklch(95.00% 0.00583 337.73)"
+        ]
+      },
+      "dark-group-rule": {
+        "role": "neutral",
+        "displayName": "Dark group rule",
+        "tonalRamp": [
+          "oklch(15.00% 0.01448 343.18)",
+          "oklch(26.43% 0.01448 343.18)",
+          "oklch(37.86% 0.01448 343.18)",
+          "oklch(49.29% 0.01448 343.18)",
+          "oklch(60.71% 0.01448 343.18)",
+          "oklch(72.14% 0.01448 343.18)",
+          "oklch(83.57% 0.01448 343.18)",
+          "oklch(95.00% 0.01448 343.18)"
+        ]
+      },
+      "dark-highlight": {
+        "role": "neutral",
+        "displayName": "Dark highlight",
+        "tonalRamp": [
+          "oklch(15.00% 0.01279 353.27)",
+          "oklch(26.43% 0.01279 353.27)",
+          "oklch(37.86% 0.01279 353.27)",
+          "oklch(49.29% 0.01279 353.27)",
+          "oklch(60.71% 0.01279 353.27)",
+          "oklch(72.14% 0.01279 353.27)",
+          "oklch(83.57% 0.01279 353.27)",
+          "oklch(95.00% 0.01279 353.27)"
+        ]
+      },
+      "dark-extra": {
+        "role": "neutral",
+        "displayName": "Dark extra",
+        "tonalRamp": [
+          "oklch(15.00% 0.00813 334.41)",
+          "oklch(26.43% 0.00813 334.41)",
+          "oklch(37.86% 0.00813 334.41)",
+          "oklch(49.29% 0.00813 334.41)",
+          "oklch(60.71% 0.00813 334.41)",
+          "oklch(72.14% 0.00813 334.41)",
+          "oklch(83.57% 0.00813 334.41)",
+          "oklch(95.00% 0.00813 334.41)"
+        ]
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.01804 304.70)",
+          "oklch(26.43% 0.01804 304.70)",
+          "oklch(37.86% 0.01804 304.70)",
+          "oklch(49.29% 0.01804 304.70)",
+          "oklch(60.71% 0.01804 304.70)",
+          "oklch(72.14% 0.01804 304.70)",
+          "oklch(83.57% 0.01804 304.70)",
+          "oklch(95.00% 0.01804 304.70)"
+        ]
+      },
+      "dark-red": {
+        "role": "primary",
+        "displayName": "Dark red",
+        "tonalRamp": [
+          "oklch(15.00% 0.12109 17.63)",
+          "oklch(26.43% 0.12109 17.63)",
+          "oklch(37.86% 0.12109 17.63)",
+          "oklch(49.29% 0.12109 17.63)",
+          "oklch(60.71% 0.12109 17.63)",
+          "oklch(72.14% 0.12109 17.63)",
+          "oklch(83.57% 0.12109 17.63)",
+          "oklch(95.00% 0.12109 17.63)"
+        ]
+      },
+      "dark-success": {
+        "role": "secondary",
+        "displayName": "Dark success",
+        "tonalRamp": [
+          "oklch(15.00% 0.05548 148.31)",
+          "oklch(26.43% 0.05548 148.31)",
+          "oklch(37.86% 0.05548 148.31)",
+          "oklch(49.29% 0.05548 148.31)",
+          "oklch(60.71% 0.05548 148.31)",
+          "oklch(72.14% 0.05548 148.31)",
+          "oklch(83.57% 0.05548 148.31)",
+          "oklch(95.00% 0.05548 148.31)"
+        ]
+      },
+      "dark-rule": {
+        "role": "neutral",
+        "displayName": "Dark rule",
+        "tonalRamp": [
+          "oklch(15.00% 0.01243 345.90)",
+          "oklch(26.43% 0.01243 345.90)",
+          "oklch(37.86% 0.01243 345.90)",
+          "oklch(49.29% 0.01243 345.90)",
+          "oklch(60.71% 0.01243 345.90)",
+          "oklch(72.14% 0.01243 345.90)",
+          "oklch(83.57% 0.01243 345.90)",
+          "oklch(95.00% 0.01243 345.90)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Cover display",
+        "purpose": "The opening title."
+      },
+      "headline": {
+        "displayName": "Chapter headline",
+        "purpose": "Default chapter title."
+      },
+      "headline-compact": {
+        "displayName": "Compact chapter headline",
+        "purpose": "Titles with more content sharing the viewport."
+      },
+      "title": {
+        "displayName": "Demo title",
+        "purpose": "Headings inside the working example."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Readable supporting prose."
+      },
+      "label": {
+        "displayName": "Field label",
+        "purpose": "Bold labels beside native controls."
+      },
+      "code": {
+        "displayName": "Configuration",
+        "purpose": "Field definitions and model output."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "expressive-ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Shared answer, result, and diagram arrivals."
+      },
+      {
+        "name": "chapter-completion",
+        "value": "300ms ease-out; check 400ms ease-out after 300ms",
+        "purpose": "Strike the completed chapter title, then reveal its tick."
+      },
+      {
+        "name": "metric-reveal",
+        "value": "500ms cubic-bezier(0.2, 0, 0.6, 0.5); 400ms linear; 500ms cubic-bezier(0.4, 0.5, 0.8, 1)",
+        "purpose": "Reveal the three metric charts sequentially when visible."
+      },
+      {
+        "name": "problem-answer",
+        "value": "380ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Slide old and new answers vertically within their container."
+      },
+      {
+        "name": "problem-hover",
+        "value": "200ms ease-out",
+        "purpose": "Change the problem-card surface tone."
+      },
+      {
+        "name": "live-arrival",
+        "value": "600ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Scale the live dot into place once."
+      },
+      {
+        "name": "walkthrough-detail",
+        "value": "350ms cubic-bezier(0.16, 1, 0.3, 1); path 650ms ease-out",
+        "purpose": "Move detail by 8px and draw its connection path."
+      },
+      {
+        "name": "ecosystem-connect",
+        "value": "800ms cubic-bezier(0.16, 1, 0.3, 1); delays 400ms and 1s",
+        "purpose": "Connect shared form behavior to its applications."
+      },
+      {
+        "name": "compatibility-check",
+        "value": "600ms cubic-bezier(0.16, 1, 0.3, 1) after 150ms",
+        "purpose": "Draw the compatibility tick."
+      },
+      {
+        "name": "chapter-drift",
+        "value": "linear view timeline; translateY(32px) to 0 to -32px",
+        "purpose": "Progressive enhancement while a chapter passes through the viewport."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Use immediate states, automatic scrolling, and no chapter transform."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "small-phone-max",
+        "value": "375px"
+      },
+      {
+        "name": "stacked-layout-max",
+        "value": "700px"
+      },
+      {
+        "name": "demo-stack-max",
+        "value": "760px"
+      },
+      {
+        "name": "compact-navigation-max",
+        "value": "900px"
+      },
+      {
+        "name": "sidebar-min",
+        "value": "1200px"
+      },
+      {
+        "name": "compact-slide-max-height",
+        "value": "650px"
+      },
+      {
+        "name": "short-screen-max-height",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled demo action; switches to a light fill in the dark theme.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Copy prompt</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;min-height:2.75rem;padding:.65rem .85rem;border:1px solid var(--action, #172738);border-radius:6px;font-family: Arial, Helvetica, sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;background:var(--action, #172738);color:var(--paper, #f8f6f1)}.ds-primary:hover{background:var(--red, #b92e36);color:var(--paper, #f8f6f1);border-color:var(--red, #b92e36)}.ds-primary:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;}.ds-primary:disabled{cursor:wait;opacity:.6}"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "An outlined action beside the main next step.",
+      "html": "<button class=\"ds-secondary\" type=\"button\">Download JSON</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;min-height:2.75rem;padding:.65rem .85rem;border:1px solid var(--action, #172738);border-radius:6px;font-family: Arial, Helvetica, sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;background:transparent;color:var(--ink, #000);border-color:var(--group-rule, #d3c9be)}.ds-secondary:hover{background:var(--red, #b92e36);color:var(--paper, #f8f6f1);border-color:var(--red, #b92e36)}.ds-secondary:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;}.ds-secondary:disabled{cursor:wait;opacity:.6}"
+    },
+    {
+      "name": "Labeled field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "The native input used by the live Formly example.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-name\">Full name <span aria-hidden=\"true\">*</span></label><input id=\"ds-name\" name=\"name\" required autocomplete=\"name\" /></div>",
+      "css": ".ds-field{font-family: Arial, Helvetica, sans-serif;color:var(--ink, #000)}.ds-field label{display:block;margin-bottom:.35rem;font-size:.9rem;font-weight:700}.ds-field label span{color:var(--red, #b92e36)}.ds-field input{width:100%;min-height:2.75rem;padding:.55rem .65rem;border:1px solid var(--muted, #586575);border-radius:6px;background:var(--surface, #fffdfa);color:var(--ink, #000);font:inherit;caret-color:var(--red, #b92e36)}.ds-field input:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;}.ds-field input[aria-invalid=\"true\"]{border-color:var(--red, #b92e36)}"
+    },
+    {
+      "name": "Chapter navigation",
+      "kind": "nav",
+      "refersTo": "chapter-navigation",
+      "description": "Ruled chapter rows with a highlighted current location.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Chapters\"><a href=\"#chapter-04\"><span class=\"ds-number\">04</span><span>Build it with a skill</span><span class=\"ds-time\">5 min</span></a><a href=\"#chapter-05\" aria-current=\"location\"><span class=\"ds-number\">05</span><span>Make it yours</span><span class=\"ds-time\">7 min</span></a></nav>",
+      "css": ".ds-nav{font-family: Arial, Helvetica, sans-serif;background:var(--paper, #f8f6f1);color:var(--ink, #000)}.ds-nav a{display:grid;grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.75rem;align-items:baseline;padding:.85rem .5rem;border-top:1px solid var(--rule, #d9d6d0);color:inherit;text-decoration:none;line-height:1.35}.ds-nav a:last-child{border-bottom:1px solid var(--rule, #d9d6d0)}.ds-nav a:is(:hover,[aria-current=\"location\"]){background:var(--highlight, #f0ece5)}.ds-nav a[aria-current=\"location\"]{font-weight:700}.ds-nav a:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;outline-offset:-3px}.ds-number{color:var(--red, #b92e36);font-variant-numeric:tabular-nums}.ds-time{font-size:.8rem;white-space:nowrap;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Selected area",
+      "kind": "chip",
+      "refersTo": "selection-chip",
+      "description": "Pressed-state controls select a walkthrough area.",
+      "html": "<div class=\"ds-areas\"><button type=\"button\" aria-pressed=\"true\">Events</button><button type=\"button\" aria-pressed=\"false\">Workflows</button></div>",
+      "css": ".ds-areas{display:flex;flex-wrap:wrap;gap:.5rem}.ds-areas button{min-height:2.75rem;padding:.5rem 1.125rem;border:1px solid var(--rule, #d9d6d0);border-radius:6px;background:transparent;color:var(--ink, #000);font-family: Arial, Helvetica, sans-serif;font-size:1rem;font-weight:700;cursor:pointer}.ds-areas button[aria-pressed=\"true\"]{background:var(--ink, #000);border-color:var(--ink, #000);color:var(--paper, #f8f6f1)}.ds-areas button:not([aria-pressed=\"true\"]):hover{background:var(--highlight, #f0ece5)}.ds-areas button:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;}"
+    },
+    {
+      "name": "Form preview sheet",
+      "kind": "card",
+      "refersTo": "preview-sheet",
+      "description": "A bordered surface holds the working form and its live state.",
+      "html": "<section class=\"ds-preview\"><div class=\"ds-preview-heading\"><h3>Team day registration</h3><span class=\"ds-live\">Live form</span></div><p>Your configured fields appear here.</p></section>",
+      "css": ".ds-preview{padding:clamp(1rem,2vw,1.5rem);border:1px solid var(--group-rule, #d3c9be);border-radius:12px;background:var(--surface, #fffdfa);color:var(--ink, #000);font-family: Arial, Helvetica, sans-serif;}.ds-preview-heading{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;margin-bottom:.75rem}.ds-preview h3{margin:0;font-size:1.1rem;line-height:1.2}.ds-preview p{margin:0;line-height:1.5}.ds-live{display:inline-flex;align-items:center;gap:.4rem;color:var(--success, #4f6b52);font-size:.8rem;white-space:nowrap}.ds-live::before{width:.45rem;height:.45rem;border-radius:50%;background:currentColor;content:\"\"}"
+    },
+    {
+      "name": "Configuration window",
+      "kind": "custom",
+      "refersTo": "code-window",
+      "description": "Scrollable code exposes the field configuration.",
+      "html": "<pre class=\"ds-code\" tabindex=\"0\" aria-label=\"Field configuration\"><code>{\n  \"key\": \"name\",\n  \"type\": \"input\",\n  \"props\": { \"required\": true }\n}</code></pre>",
+      "css": ".ds-code{max-width:100%;margin:0;padding:1rem;overflow:auto;border-radius:8px;background:var(--dark-surface, #172738);color:var(--on-dark, #f8f6f1);font-size:clamp(.72rem,1vw,.9rem);line-height:1.6;tab-size:2;scrollbar-color:var(--muted, #586575) var(--dark-surface, #172738)}.ds-code code{font-family:\"SFMono-Regular\",Consolas,monospace}.ds-code:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;}"
+    },
+    {
+      "name": "Focus view control",
+      "kind": "button",
+      "refersTo": "focus-toggle",
+      "description": "The desktop header toggle makes more space for the presentation.",
+      "html": "<button class=\"ds-focus\" type=\"button\" aria-pressed=\"false\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5\" /></svg>Focus view</button>",
+      "css": ".ds-focus{display:inline-flex;align-items:center;gap:.5rem;min-height:2.75rem;padding:.35rem .75rem;border:1px solid var(--rule, #d9d6d0);border-radius:8px;background:var(--paper, #f8f6f1);color:var(--ink, #000);font-family: Arial, Helvetica, sans-serif;font-size:1rem;cursor:pointer}.ds-focus:hover,.ds-focus[aria-pressed=\"true\"]{background:var(--highlight, #f0ece5);border-color:var(--red, #b92e36)}.ds-focus:focus-visible{outline: 3px solid var(--red, #b92e36); outline-offset: 5px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Warm paper, working forms",
+    "overview": "A technical talk with the clarity of a printed chapter and the immediacy of a working example. Warm paper, black Arial headings, red chapter numbers, and fine rules establish the visual identity. The design is an extension of the existing presentation: the cover, chapter typography, sidebar, dark theme, and motion remain its foundation.\n\nLive forms, configuration, and walkthroughs use the same surfaces and controls as the surrounding talk. Large headings orient the room; compact supporting text and paired columns make changes visible without competing with the example. Depth comes from surface color and borders, not shadows.",
+    "keyCharacteristics": [
+      "Warm paper and a restrained red accent, with a complete dark theme.",
+      "Bold system sans typography and tabular chapter numbers.",
+      "Ruled navigation, generous chapter spacing, and practical native controls.",
+      "Small, purposeful reveals with a reduced-motion fallback."
+    ],
+    "rules": [
+      {
+        "name": "The Theme Pair Rule",
+        "body": "Carry background and foreground roles together; a dark surface always needs its on-dark foreground. Component states must stay readable in both themes.",
+        "section": "colors"
+      },
+      {
+        "name": "The System Type Rule",
+        "body": "Keep Arial for the presentation and monospace for code. Scale and weight carry hierarchy; a new chapter does not introduce a new font.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Separate content with a rule or an existing surface tone before introducing depth effects.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** extend the warm paper, Arial, red chapter accent, and ruled navigation already present.",
+      "**Do** use semantic color pairs in both light and dark themes.",
+      "**Do** keep visible focus, native controls, associated labels, and text feedback for state changes.",
+      "**Do** let columns stack and chapters grow when their content needs space.",
+      "**Do** retain reduced-motion fallbacks and keep animation tied to a visible change."
+    ],
+    "donts": [
+      "**Don't** introduce a new font or palette for an individual chapter.",
+      "**Don't** promote the illustrative form-library colors into shared theme roles.",
+      "**Don't** add shadows or blur to surfaces that the existing system separates with borders and tone.",
+      "**Don't** use color or animation as the only indication of a selected, invalid, or completed state.",
+      "**Don't** shrink working controls to force a dense demo into one fixed-height viewport."
+    ]
+  }
+}

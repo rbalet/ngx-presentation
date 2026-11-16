@@ -1,0 +1,47 @@
+@switch (chapter()) {
+  @case ('08') {
+    <p class="big-question">{{ 'closing.pilot.title' | translate }}</p>
+    <ol class="pilot-steps">
+      @for (item of ['choose', 'own', 'reuse']; track item; let index = $index) {
+        <li><span aria-hidden="true">{{ index + 1 }}</span><div><h3>{{ 'closing.pilot.' + item + '.title' | translate }}</h3><p>{{ 'closing.pilot.' + item + '.text' | translate }}</p></div></li>
+      }
+    </ol>
+    <p class="closing-line">{{ 'closing.pilot.ask' | translate }}</p>
+  }
+  @case ('09') {
+    <p class="big-question">{{ 'closing.language.title' | translate }}</p>
+    <div class="language-buttons" role="group" [attr.aria-label]="'app.language' | translate">
+      @for (language of ['en', 'de', 'fr']; track language) {
+        <button type="button" [attr.aria-pressed]="languages.translate.currentLang() === language" (click)="languages.select(language)">
+          {{ language === 'en' ? 'English' : language === 'de' ? 'Deutsch' : 'Français' }}
+        </button>
+      }
+    </div>
+    <div class="language-example">
+      <div>
+        <label for="translation-name">{{ 'closing.language.name' | translate }}</label>
+        <input id="translation-name" type="text" autocomplete="off" [value]="name()" (input)="name.set($any($event.target).value)" />
+        <p>{{ 'closing.language.hint' | translate }}</p>
+      </div>
+      <div><h3>{{ 'closing.language.model' | translate }}</h3><pre>{{ { fullName: name() } | json }}</pre></div>
+    </div>
+    <p class="closing-line">{{ 'closing.language.takeaway' | translate }}</p>
+  }
+  @case ('11') {
+    <p class="big-question">{{ 'closing.discussion.title' | translate }}</p>
+    <div class="discussion-topics" role="group" [attr.aria-label]="'closing.discussion.choose' | translate">
+      @for (item of topics; track item) {
+        <button type="button" [attr.aria-pressed]="topic() === item" (click)="topic.set(item)">{{ 'closing.discussion.' + item + '.title' | translate }}</button>
+      }
+    </div>
+    <p class="discussion-question" aria-live="polite">{{ 'closing.discussion.' + topic() + '.question' | translate }}</p>
+    <div class="resources"><a href="https://formly.dev/" target="_blank" rel="noopener noreferrer">formly.dev</a><a href="#chapter-05">{{ 'closing.discussion.replay' | translate }}</a><a href="#chapter-07">Periscope</a></div>
+  }
+  @case ('12') {
+    <ul class="future-directions">
+      <li><h3>{{ 'future.framework' | translate }}</h3><p>{{ 'closing.future.framework' | translate }}</p></li>
+      <li><h3>{{ 'future.aria' | translate }}</h3><p>{{ 'closing.future.aria' | translate }}</p></li>
+    </ul>
+    <p class="closing-line">{{ 'closing.future.invitation' | translate }}</p>
+  }
+}

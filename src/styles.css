@@ -338,9 +338,25 @@ h1 {
   span:last-child {
   color: var(--red);
 }
+.timer-track {
+  position: relative;
+  grid-column: 1;
+}
+.timer-target-marker {
+  position: absolute;
+  top: -0.25rem;
+  bottom: -0.25rem;
+  border-left: 2px solid var(--ink);
+  transform: translateX(-1px);
+}
+.timer-target {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
 .presentation-timer {
   --timer-fill: var(--rule);
-  grid-column: 1;
   display: block;
   appearance: none;
   width: 100%;
@@ -420,6 +436,9 @@ h1 {
 }
 .chapter-running-title + .chapter-slide .chapter-content {
   margin-top: 0;
+}
+#chapter-02 .chapter-content {
+  margin-top: auto;
 }
 .chapter-running-title {
   position: sticky;
@@ -1431,6 +1450,43 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.focus-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.focus-toggle:hover,
+.focus-toggle[aria-pressed="true"] {
+  background: var(--highlight);
+  border-color: var(--red);
+}
+.keyboard-hint {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+@media (min-width: 1200px) {
+  .presentation--focused {
+    display: block;
+    max-width: 94rem;
+    margin-inline: auto;
+  }
+  .presentation--focused .chapter-index-slot { display: none; }
+  .presentation--focused .chapter-slide,
+  .presentation--focused .chapter-running-title { padding-inline: var(--gutter); }
+}
+@media (max-width: 1199px) {
+  .focus-toggle { display: none; }
 }
 .language-select {
   min-height: 2.75rem;

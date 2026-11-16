@@ -1,10 +1,11 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
-import { provideFormlyCore } from '@ngx-formly/core';
+import { provideFormlyCore, withFormlyFieldExpression } from '@ngx-formly/core';
 import { NotFound } from './app';
 import { CatalogueLoader } from './languages';
 import { Presentation } from './presentation';
+import { demoFormlyConfig } from './demo/demo-field';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
       lang: 'en',
       loader: provideTranslateLoader(CatalogueLoader),
     }),
-    provideFormlyCore(),
+    provideFormlyCore([demoFormlyConfig, withFormlyFieldExpression()]),
   ],
 };

@@ -8,7 +8,7 @@ Title: **Why are we still rebuilding the same forms?**
 
 Subtitle: \*_Extensive form manipulation with ngx-formly, a unified approach._
 
-The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. Work through one chapter at a time. Chapters 01 and 02 have their first full content. Chapter 12 lists future plans. The remaining chapters contain short topic summaries.
+The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. The full talk now has interactive chapters. See [PRESENTING.md](PRESENTING.md) for the rehearsal checklist, run of show, demo boundaries and offline fallbacks. The historical notes below retain the earlier content decisions and sources.
 
 ## Chapter numbers
 
@@ -17,22 +17,22 @@ The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. 
 | 01      | About me                               | 2       | Main, first slide implemented   |
 | 02      | Repeated form implementation           | 5       | Main, first content implemented |
 | 03      | Introduction to ngx-formly             | 7       | Main                            |
-| 04      | MCP and WebMCP                         | 4       | Main                            |
-| 05      | Playground                             | 6       | Main                            |
+| 04      | From prompt to form                    | 4       | Main, agent result in 04.1      |
+| 05      | Make it yours                          | 6       | Main, editing and Studio export |
 | 06      | API integration and validation service | 4       | Main                            |
 | 07      | Periscope                              | 8       | Main                            |
 | 08      | A shared form approach at BIT          | 2       | Main                            |
 | 09      | Multilingual forms with ngx-translate  | 4       | Optional extra                  |
-| 11      | Q&A                                    | 15      | Discussion                      |
 | 12      | What's next                            | 3       | Main, future plans              |
+| 11      | Q&A                                    | 15      | Discussion                      |
 
 The main content totals 41 minutes. The optional multilingual forms chapter adds 4 minutes and may be skipped. Keep the numbers stable when developing each chapter.
 
 ## Content decisions
 
 - Treat MCP/WebMCP as implemented for the presentation, as the user requested. The scaffold does not implement an MCP server or WebMCP integration itself.
-- Periscope is the user's event, workflow and survey tool. Its actual screens and demo flow are still needed.
-- The exact validation service and intended playground still need clarification. The earlier slide draft used ngx-formly Builder as the proposed playground.
+- Periscope is the user's event, workflow and survey tool. Chapter 07 now has an interactive walkthrough verified against its local documentation. Actual production screens are not included; start its separate environment for a live product demo.
+- Validation is a deterministic, explicitly labeled local simulation. The playground is a live Formly preview with JSON export to the verified hosted Formly Studio import flow.
 - Keep translation optional. It supports the main presentation but must not displace it.
 - Do not invent adoption statistics, time savings or Periscope implementation details.
 
@@ -44,9 +44,9 @@ The main content totals 41 minutes. The optional multilingual forms chapter adds
 - Native CSS applies a small scroll-linked vertical transition where supported. Reduced-motion mode disables animations and smooth anchor scrolling.
 - Navigation uses normal links, with a skip-extras link before the optional chapters.
 - ngx-translate loads bundled catalogues from `src/i18n/{en,de,fr}.json`; English is the default and fallback. Language changes update document metadata and accessibility labels and persist when storage is available.
-- ngx-formly core is registered in `src/app.config.ts`. No UI adapter or live demo form is selected.
+- ngx-formly core is registered in `src/app.config.ts` with native demo field types and the CSP-safe expression evaluator. Chapters 03–06 share event-registration state.
 - Official Angular, ngx-translate and ngx-formly skills live in `.agents/skills`. Run `pnpm check:i18n` after editing translations.
-- No hosting, authentication, backend or demo integration is configured.
+- No presentation hosting, authentication or backend is configured. Local interactive examples work offline; the real Studio handoff needs a connection.
 
 ## Chapter 01
 
@@ -102,4 +102,16 @@ Suggested speaker notes:
 
 ## Next work
 
-Ask which chapter the user wants to develop. Start there and leave the other chapter summaries intact. The final visual treatment and demo content can be developed with each chapter.
+Rehearse the complete flow in PRESENTING.md. Confirm the real Periscope environment before the talk and complete the builder repository release separately. The presentation itself uses the hosted Studio import flow and does not depend on an npm publication.
+
+## Completed interactive presentation
+
+- Work is on `codex/interactive-presentation`, uncommitted. No dependencies added.
+- Chapter 03 renders real Formly fields and shows their configuration. Chapter 04 presents the installed skill prompt; it directs the coding agent to replace `src/components/skill-result.ts`, displayed in subsection 04.1 at `#chapter-04-result`. That subsection starts with a placeholder. Chapter 05 edits the shared configuration and downloads portable JSON; import it into the hosted Studio using the on-slide instructions.
+- Chapter 06 demonstrates invalid input, a registered-email rejection and successful submission against a labeled local simulation. It sends no real registration.
+- Chapter 07 shows documented Periscope areas and configure/preview/use stages. Chapters 08, 09, 11 and 12 now contain the pilot proposal, a working language example, selectable discussion prompts and future plans.
+- All new copy is translated into English, German and French. Desktop focus view and keyboard navigation support live presenting; fields retain their normal keyboard behavior.
+- [PRESENTING.md](PRESENTING.md) contains the full run of show and rehearsal steps.
+- [Builder release handoff](docs/builder-release.md) records the tested npm candidate, durable version patch and genuine publication prerequisites. Nothing has been published.
+
+Before the talk, rehearse the agent prompt and real Studio import, then start/sign into Periscope. The agent result placeholder and local simulations are clearly identified in the deck.

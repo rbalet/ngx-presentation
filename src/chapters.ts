@@ -74,17 +74,17 @@ export const chapters: Chapter[] = [
     summary: "chapters.09.summary",
   },
   {
-    number: "11",
-    title: "chapters.11.title",
-    minutes: 15,
-    kind: "discussion",
-    summary: "chapters.11.summary",
-  },
-  {
     number: "12",
     title: "chapters.12.title",
     minutes: 3,
     kind: "main",
     summary: "chapters.12.summary",
+  },
+  {
+    number: "11",
+    title: "chapters.11.title",
+    minutes: 15,
+    kind: "discussion",
+    summary: "chapters.11.summary",
   },
 ];

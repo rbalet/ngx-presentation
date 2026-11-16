@@ -29,7 +29,7 @@ pnpm exec playwright install chromium
 pnpm test
 ```
 
-Install the browser once. Playwright covers desktop and mobile chapter navigation, the timer, themes, direct links, reduced motion, solution cards, language switching and persistence, and layout overflow. It starts Angular directly at http://127.0.0.1:4310. `check:i18n` uses the official ngx-translate skill's checker to compare keys, value types and interpolation parameters against English.
+Install the browser once. Playwright covers desktop and mobile chapter navigation, presenter shortcuts, focus view, the timer, themes, direct links, reduced motion, the form demo, export, validation, Periscope walkthrough, language switching and persistence, and layout overflow. It starts Angular directly at http://127.0.0.1:4310. `check:i18n` uses the official ngx-translate skill's checker to compare keys, value types and interpolation parameters against English.
 
 Angular’s optional OXC WASM fallback currently reports upstream `@emnapi` peer-version warnings during dependency resolution. The native macOS build and browser tests pass; the WASM fallback has not been exercised.
 
@@ -46,13 +46,20 @@ The production build is a static application in `dist/ngx-presentation/browser`.
 - `src/i18n/{en,de,fr}.json` contains visible copy and accessibility labels. Update all three catalogues together.
 - `src/languages.ts` loads the bundled catalogues, validates saved language choices, and synchronizes document language and metadata.
 - `src/styles.css` contains presentation styles and native animations, including reduced-motion fallbacks.
-- `HANDOFF.md` records the agreed content and the next work.
+- `src/components/form-demo.*` and `src/demo/` contain the shared live Formly demo and serializable fixture.
+- `src/components/periscope-chapter.*` and `closing-chapter.*` finish the product story and discussion.
+- `PRESENTING.md` is the rehearsal checklist and speaker run of show.
+- `HANDOFF.md` records the agreed content, sources and implementation status.
 
 The title page is unnumbered. Chapter 09 is an optional extra. Chapter 10 was removed; remaining numbers stay stable. Chapter 08 has a **Skip extras** link to chapter 11. Chapter 12 contains future plans. Normal scrolling and browser anchor links remain available.
 
 ## Formly
 
-`src/app.config.ts` registers `provideFormlyCore()` once at the application root, and `@angular/forms` is installed. No UI adapter or live form has been chosen yet; the chapter 02 examples remain illustrations. When building the first live form, use `FormGroup` and `ReactiveFormsModule` with `FormlyForm`, then register the chosen UI adapter or custom field types. Formly uses Angular Reactive Forms.
+`src/app.config.ts` registers Formly once with the demo's native input, select and textarea field types. Chapters 03–06 use Angular Reactive Forms and the same event-registration configuration. The chapter 02 examples remain illustrations.
+
+The skill chapter provides a prompt for your coding agent to implement a form in `src/components/skill-result.ts`. Subsection 04.1 (`#chapter-04-result`) displays that result in the deck and starts with a placeholder. The browser does not call an AI service. The API exercise is a labeled simulation. Chapter 05 exports standard Formly JSON for the hosted [Formly Studio](https://builder.formly.dev/workspaces/forms) import flow. Running this deck does not require `@ngx-formly/builder` to be published on npm.
+
+Periscope's interactive walkthrough is based on the existing project documentation. Start its separate frontend and API for the actual live demonstration. See [PRESENTING.md](PRESENTING.md) for the exact boundaries and fallback flow.
 
 ## Repository skills
 

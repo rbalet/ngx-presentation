@@ -6,10 +6,14 @@ import { AboutChapter } from './about-chapter';
 import { ChapterTitle } from './chapter-title';
 import { ProblemChapter } from './problem-chapter';
 import { ProblemRequirements } from './problem-requirements';
+import { FormDemo } from './form-demo';
+import { SkillResult } from './skill-result';
+import { PeriscopeChapter } from './periscope-chapter';
+import { ClosingChapter } from './closing-chapter';
 
 @Component({
   selector: 'section[appChapterSection]',
-  imports: [NgTemplateOutlet, TranslatePipe, AboutChapter, ChapterTitle, ProblemChapter, ProblemRequirements],
+  imports: [NgTemplateOutlet, TranslatePipe, AboutChapter, ChapterTitle, ProblemChapter, ProblemRequirements, FormDemo, SkillResult, PeriscopeChapter, ClosingChapter],
   templateUrl: './chapter-section.html',
   host: {
     '[id]': "'chapter-' + chapter().number",
@@ -32,5 +36,7 @@ export class ChapterSection {
     : this.chapter().number === '02' ? [
       ...(this.compact() ? [{ id: 'chapter-02-more-examples', label: 'nav.custom', content: 'custom' }] : []),
       { id: 'chapter-02-continued', label: 'nav.requirements', content: 'requirements' },
-    ] : []);
+    ] : this.chapter().number === '04'
+      ? [{ id: 'chapter-04-result', label: 'demo.skill.continue', content: 'skill-result' }]
+      : []);
 }

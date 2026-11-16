@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 
 const languages = [
-  { code: 'de', title: 'Warum bauen wir immer wieder dieselben Formulare?', chapters: 'Kapitelübersicht', about: 'Über mich', next: 'Wie geht es weiter?', theme: 'Dunkler Modus', timer: 'Präsentationszeit' },
-  { code: 'fr', title: 'Pourquoi recréons-nous toujours les mêmes formulaires ?', chapters: 'Sommaire', about: 'À propos de moi', next: 'Et ensuite ?', theme: 'Mode sombre', timer: 'Durée de la présentation' },
-  { code: 'en', title: 'Why are we still rebuilding the same forms?', chapters: 'Chapter index', about: 'About me', next: "What's next", theme: 'Dark mode', timer: 'Presentation time' },
+  { code: 'de', title: 'Warum bauen wir immer wieder dieselben Formulare?', chapters: 'Kapitelübersicht', about: 'Über mich', next: 'Wie geht es weiter?', theme: 'Dunkler Modus', timer: 'Präsentationszeit', target: 'Geplantes Kapitelende: 7 Min.' },
+  { code: 'fr', title: 'Pourquoi recréons-nous toujours les mêmes formulaires ?', chapters: 'Sommaire', about: 'À propos de moi', next: 'Et ensuite ?', theme: 'Mode sombre', timer: 'Durée de la présentation', target: 'Fin du chapitre prévue à 7 min' },
+  { code: 'en', title: 'Why are we still rebuilding the same forms?', chapters: 'Chapter index', about: 'About me', next: "What's next", theme: 'Dark mode', timer: 'Presentation time', target: 'Planned chapter end: 7 min' },
 ];
 
 test('language switching translates content and accessibility labels, preserves state and survives reloads', async ({ page }) => {
@@ -27,6 +27,7 @@ test('language switching translates content and accessibility labels, preserves 
     await expect(page.locator('#title-12')).toContainText(language.next);
     await expect(page.getByRole('button', { name: language.theme })).toBeVisible();
     await expect(page.getByRole('progressbar', { name: language.timer })).toHaveCount(1);
+    await expect(page.getByRole('progressbar', { name: language.timer })).toHaveAccessibleDescription(language.target);
     await expect(page.locator('.problem-solution .problem-answer')).toHaveText('Core · MCP · Builder');
     await expect(page).toHaveURL(/#chapter-02-continued$/);
     expect(await page.evaluate(() => localStorage.getItem('ngx-presentation-started-at'))).toBe(started);

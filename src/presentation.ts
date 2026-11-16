@@ -13,6 +13,7 @@ const presentationDuration = 60 * 60_000;
   selector: 'app-presentation',
   imports: [TranslatePipe, ChapterSection, ThemeToggle],
   templateUrl: './presentation.html',
+  host: { '(window:keydown)': 'navigate($event)' },
 })
 export class Presentation {
   readonly languages = inject(Languages);
@@ -20,7 +21,9 @@ export class Presentation {
   readonly compact = signal(matchMedia('(max-width: 700px), (max-height: 650px)').matches);
   readonly activeChapter = signal<string | undefined>(undefined);
   readonly activeIndex = computed(() => chapters.findIndex(chapter => chapter.number === this.activeChapter()));
+  readonly targetMinutes = computed(() => chapters.slice(0, this.activeIndex() + 1).reduce((total, chapter) => total + chapter.minutes, 0));
   readonly activeProblem = signal<number | null>(null);
+  readonly focused = signal(false);
   readonly startedAt = signal<number | null>(null);
   readonly elapsed = signal(0);
   readonly elapsedMinutes = computed(() => Math.floor(this.elapsed() / 60_000));
@@ -84,6 +87,23 @@ export class Presentation {
     }).length - 1;
     this.activeChapter.set(chapters[current]?.number);
   };
+
+  navigate(event: KeyboardEvent) {
+    if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey
+      || (event.target instanceof HTMLElement && event.target.closest('input, textarea, select, button, [contenteditable], [role="textbox"]'))) return;
+    const direction = ['ArrowRight', 'PageDown'].includes(event.key) ? 1
+      : ['ArrowLeft', 'PageUp'].includes(event.key) ? -1 : 0;
+    if (!direction) return;
+    const slides = [...document.querySelectorAll<HTMLElement>('.overview, .chapter-slide')];
+    const readingLine = (document.querySelector('header')?.offsetHeight ?? 0) + 40;
+    const current = slides.filter(slide => slide.getBoundingClientRect().top <= readingLine).length - 1;
+    const slide = slides[Math.max(0, Math.min(slides.length - 1, current + direction))];
+    if (!slide) return;
+    event.preventDefault();
+    const target = slide.id ? slide : slide.closest<HTMLElement>('section')!;
+    location.hash = target.id;
+    target.focus({ preventScroll: true });
+  }
 
   start() {
     if (this.startedAt() !== null) return;

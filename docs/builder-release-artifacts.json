@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "770af6acfe49759637c840ccd65cca1313121c29",
+  "candidateDirectory": "/private/tmp/ngx-builder-version-candidate",
+  "changedPaths": [
+    ".changeset/async-engine-stores.md",
+    ".changeset/custom-field-label.md",
+    ".changeset/directional-field-drops.md",
+    ".changeset/field-menu-hover.md",
+    ".changeset/friendly-builder-settings.md",
+    ".changeset/independent-peer-ranges.md",
+    ".changeset/preset-tab-navigation.md",
+    ".changeset/readonly-field-indicator.md",
+    ".changeset/remove-panel-animations.md",
+    ".changeset/validation-message-layout.md",
+    ".changeset/workspace-bulk-delete.md",
+    ".changeset/workspace-panel-navigation.md",
+    ".changeset/workspace-validations.md",
+    "libs/core/CHANGELOG.md",
+    "libs/core/package.json",
+    "libs/state/CHANGELOG.md",
+    "libs/state/package.json",
+    "libs/ui/builder-material/CHANGELOG.md",
+    "libs/ui/builder-material/package.json",
+    "pnpm-lock.yaml"
+  ],
+  "artifacts": [
+    {
+      "file": "ngx-formly-builder-0.1.0.tgz",
+      "sha256": "e72d182067c04699433ae8e567636ee174e1741b826113d07c22c91cc4c2a5d9",
+      "bytes": 245229
+    },
+    {
+      "file": "ngx-formly-builder-material-0.0.2.tgz",
+      "sha256": "49307711a116547e0c88bfe3d1e2b7f9cc2f02aaf3c6ee1a31095b8745f823ae",
+      "bytes": 4305
+    },
+    {
+      "file": "ngx-formly-builder-material-fields-0.0.1.tgz",
+      "sha256": "c83d7c4cd26cce9e8d0d5c1ab1b362928d5a28083fa165cb4603dba11df4b353",
+      "bytes": 18917
+    },
+    {
+      "file": "ngx-formly-builder-state-0.1.0.tgz",
+      "sha256": "507bbde1583633d810d8ae66652184551c2674a3160eba74675e540836dff810",
+      "bytes": 48095
+    }
+  ],
+  "published": false
+}

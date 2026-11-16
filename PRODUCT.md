@@ -20,13 +20,13 @@ ngx-formly describes Angular forms as configuration. Teams can reuse field behav
 
 ## Operating Context
 
-The session has a 60-minute slot. The main talk takes 41 minutes, the optional multilingual forms chapter adds four, and Q&A takes 15. The presenter scrolls through the deck, jumps via the chapter index, and can skip the extras to go directly to Q&A. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
+The session has a 60-minute slot. The main talk takes 41 minutes, the optional multilingual forms chapter adds four, and Q&A takes 15. The presenter scrolls through the deck, jumps via the chapter index, and can skip the extras to go directly to What's next, followed by Q&A. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
 
 ## Capabilities and Constraints
 
 - Keep the cover unnumbered and the chapter anchors stable: `#chapter-01` through `#chapter-09`, plus `#chapter-11` and `#chapter-12`. Chapter 09 is optional, chapter 10 was removed, chapter 11 is Q&A, and chapter 12 covers future plans.
-- Develop the talk one chapter at a time. The introduction and problem chapters have full content. Later chapters currently have summaries.
-- The talk covers MCP and WebMCP as implemented capabilities. The playground choice, validation service, and Periscope screens and demo flow are open.
+- The complete talk includes a shared event-registration example, a prompt for a coding agent to implement a form in subsection 04.1, live Formly interactions, configuration export to the hosted builder, and a sourced Periscope walkthrough. The agent result subsection starts with a placeholder.
+- Distinguish skill instructions, MCP tooling and browser-side WebMCP. The API exercise is explicitly simulated. Periscope is shown as a documented walkthrough; a live environment is a separate presenter prerequisite.
 
 ## Evidence on Hand
 

@@ -1,0 +1,124 @@
+<p class="demo-lead">{{ ('demo.' + mode() + '.lead') | translate }}</p>
+@if (mode() === 'skill') {
+  <div class="skill-layout">
+    <div class="prompt-sheet">
+      <h3>{{ 'demo.skill.promptTitle' | translate }}</h3>
+      <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>
+      <div class="demo-actions">
+        <button class="demo-primary" type="button" (click)="copy(translate.instant('demo.skill.prompt'))">{{ 'demo.skill.copy' | translate }}</button>
+      </div>
+      <p class="demo-note">{{ 'demo.skill.instructions' | translate }}</p>
+      <p class="demo-status" role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</p>
+    </div>
+    <div class="skill-result">
+      <h3>{{ 'demo.skill.reviewTitle' | translate }}</h3>
+      <ul class="review-list">
+        <li>{{ 'demo.skill.check1' | translate }}</li>
+        <li>{{ 'demo.skill.check2' | translate }}</li>
+        <li>{{ 'demo.skill.check3' | translate }}</li>
+      </ul>
+      <div class="capability-note">
+        <p><a href="https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md" target="_blank" rel="noopener noreferrer"><strong>Skill</strong></a> · {{ 'demo.skill.skillRole' | translate }}</p>
+        <p><a href="https://formly.dev/guide/mcp" target="_blank" rel="noopener noreferrer"><strong>MCP</strong></a> · {{ 'demo.skill.mcpRole' | translate }}</p>
+        <p><a href="https://formly.dev/guide/web-mcp" target="_blank" rel="noopener noreferrer"><strong>WebMCP</strong></a> · {{ 'demo.skill.webmcpRole' | translate }}</p>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="demo-workbench" [class.demo-workbench--validation]="mode() === 'validation'">
+    <div class="demo-explanation">
+      @switch (mode()) {
+        @case ('intro') {
+          <div class="code-window intro-code">
+            <pre><code>const form = new FormGroup(&#123;&#125;);</code></pre>
+            <code>const fields: FormlyFieldConfig[] = [</code>
+            <textarea class="configuration-editor" rows="16" spellcheck="false" [value]="introConfiguration()" (input)="updateIntroConfiguration($any($event.target).value)" [attr.aria-label]="'demo.intro.configuration' | translate" [attr.aria-invalid]="introConfigurationError()" [attr.aria-describedby]="introConfigurationError() ? 'intro-configuration-hint intro-configuration-error' : 'intro-configuration-hint'"></textarea>
+            <details class="code-example">
+              <summary>{{ 'demo.intro.additionalFields' | translate }}</summary>
+              <pre><code>{{ introAdditionalFields() }}</code></pre>
+            </details>
+            <code>];</code>
+            <p class="visually-hidden" id="intro-configuration-hint">{{ 'demo.intro.try' | translate }}</p>
+            <div class="model-example">
+              <code>const model = &#123;</code>
+              <div class="model-property">
+                <label for="intro-name-value">name:</label>
+                <span aria-hidden="true">"</span>
+                <input id="intro-name-value" aria-label="model.name" type="text" spellcheck="false" [maxLength]="state.exportFields()[0].props.maxLength" [value]="state.model().name ?? ''" (input)="updateName($any($event.target).value)" />
+                <span aria-hidden="true">"</span>
+              </div>
+              <code>&#125;;</code>
+            </div>
+            <details class="code-example">
+              <summary>{{ 'demo.intro.template' | translate }}</summary>
+              <pre><code>{{ introTemplate }}</code></pre>
+            </details>
+            <details class="code-example translation-example">
+              <summary>{{ 'demo.intro.translation' | translate }}</summary>
+              <pre><code>{{ introErrorBinding }}</code></pre>
+              <p>src/i18n/{{ translate.currentLang() }}.json</p>
+              <pre><code>{{ introTranslationCatalogue() }}</code></pre>
+            </details>
+          </div>
+          @if (introConfigurationError()) { <p class="configuration-error" id="intro-configuration-error" role="alert">{{ 'demo.intro.configurationError' | translate }}</p> }
+        }
+        @case ('builder') {
+          <h3>{{ 'demo.builder.editTitle' | translate }}</h3>
+          <p class="demo-note">{{ 'demo.builder.challenge' | translate }}</p>
+          <div class="editor-controls">
+            <label for="demo-edit-field">{{ 'demo.builder.field' | translate }}</label>
+            <select id="demo-edit-field" [value]="selectedKey()" (change)="selectedKey.set($any($event.target).value)">
+              @for (field of state.exportFields(); track field.key) { <option [value]="field.key">{{ field.key }}</option> }
+            </select>
+            <label for="demo-edit-label">{{ 'demo.builder.label' | translate }}</label>
+            <input id="demo-edit-label" maxlength="80" [value]="selectedField().props.label" (change)="updateLabel($any($event.target).value)" />
+            <label class="checkbox-label" for="demo-edit-required"><input id="demo-edit-required" type="checkbox" [checked]="selectedField().props.required" (change)="state.updateField(selectedKey(), { required: $any($event.target).checked })" />{{ 'demo.builder.required' | translate }}</label>
+          </div>
+          <div class="builder-handoff">
+            <h4>{{ 'demo.builder.handoffTitle' | translate }}</h4>
+            <p class="demo-note">{{ 'demo.builder.handoff' | translate }}</p>
+            <div class="demo-actions">
+              <button type="button" class="demo-secondary" (click)="download()">{{ 'demo.builder.download' | translate }}</button>
+              <a class="demo-primary" href="https://builder.formly.dev/workspaces/forms" target="_blank" rel="noopener noreferrer">{{ 'demo.builder.open' | translate }} <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 4h6v6m-1-5L9 15M10 4H4v16h16v-6" /></svg></a>
+            </div>
+            <p class="demo-note">{{ 'demo.builder.offline' | translate }}</p>
+          </div>
+        }
+        @case ('validation') {
+          <h3>{{ 'demo.validation.title' | translate }}</h3>
+          <p class="demo-note">{{ 'demo.validation.mock' | translate }}</p>
+          <ol class="validation-flow">
+            <li>{{ 'demo.validation.client' | translate }}</li>
+            <li>{{ 'demo.validation.server' | translate }}</li>
+            <li>{{ 'demo.validation.feedback' | translate }}</li>
+          </ol>
+          <div class="demo-actions">
+            <button type="button" class="demo-secondary" [disabled]="apiStatus() === 'pending'" (click)="useExample(true)">{{ 'demo.validation.duplicate' | translate }}</button>
+            <button type="button" class="demo-secondary" [disabled]="apiStatus() === 'pending'" (click)="useExample(false)">{{ 'demo.validation.valid' | translate }}</button>
+          </div>
+          <p class="api-result" role="status" [class.api-result--error]="apiStatus() === 'rejected' || apiStatus() === 'invalid'">{{ ('demo.validation.' + apiStatus()) | translate }}</p>
+          @if (submitted(); as payload) { <pre class="code-window payload" tabindex="0" [attr.aria-label]="'demo.validation.payload' | translate"><code>{{ payload | json }}</code></pre> }
+        }
+      }
+    </div>
+    <div class="preview-sheet">
+      <div class="preview-heading"><h3>{{ 'demo.formTitle' | translate }}</h3><span class="live-indicator">{{ 'demo.live' | translate }}</span></div>
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <fieldset [disabled]="apiStatus() === 'pending'">
+          <legend class="visually-hidden">{{ 'demo.formTitle' | translate }}</legend>
+          <formly-form [form]="form" [fields]="fields()" [model]="state.model" [options]="options" />
+          @if (mode() === 'validation') { <button type="submit" class="demo-primary" [disabled]="apiStatus() === 'pending'">{{ (apiStatus() === 'pending' ? 'demo.validation.sending' : 'demo.validation.submit') | translate }}</button> }
+        </fieldset>
+      </form>
+      @if (mode() !== 'validation') {
+        <details class="model-details"><summary>{{ 'demo.model' | translate }}</summary><pre class="code-window"><code>{{ state.model() | json }}</code></pre></details>
+      }
+    </div>
+  </div>
+  @if (mode() === 'builder') {
+    <div class="demo-footer">
+      <details class="configuration-details"><summary>{{ 'demo.builder.configuration' | translate }}</summary><pre class="code-window" tabindex="0"><code>{{ state.json() }}</code></pre><button type="button" class="demo-secondary" (click)="copy(state.json())">{{ 'demo.builder.copy' | translate }}</button><span role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</span></details>
+      <button type="button" class="reset-button" (click)="state.reset()">{{ 'demo.builder.reset' | translate }}</button>
+    </div>
+  }
+}

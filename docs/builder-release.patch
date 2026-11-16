@@ -1,0 +1,324 @@
+diff --git a/.changeset/async-engine-stores.md b/.changeset/async-engine-stores.md
+--- a/.changeset/async-engine-stores.md
++++ /dev/null
+@@ -1,14 +0,0 @@
+----
+-'@ngx-formly/builder-state': patch
+-'@ngx-formly/builder': patch
+----
+-
+-Complete asynchronous-store support for the new headless engine. Order saves and workspace
+-mutations, preserve newer edits, cancel superseded loads, and report partial deletion failures.
+-The shell displays load errors with a retry action and shares the engine's error state.
+-
+-Headless autosave now defaults to true, matching the shell provider. Hosts testing the headless
+-branch that require manual saves must pass `autoSave: false`. Custom stores must emit one result
+-per ordinary operation; only recovery notifications are live. Hosts must save and await success
+-before unloading or destroying an editor when unsaved edits should be preserved. See `docs/asynchronous-stores.md` for the
+-store and lifecycle contract. Release the shell with the updated state package.
+diff --git a/.changeset/custom-field-label.md b/.changeset/custom-field-label.md
+--- a/.changeset/custom-field-label.md
++++ /dev/null
+@@ -1,6 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+-'@ngx-formly/builder-state': patch
+----
+-
+-Rename Generic to Unknown Field and explain its purpose in a tooltip available on hover and keyboard focus.
+diff --git a/.changeset/directional-field-drops.md b/.changeset/directional-field-drops.md
+--- a/.changeset/directional-field-drops.md
++++ /dev/null
+@@ -1,8 +0,0 @@
+----
+-'@ngx-formly/builder-state': minor
+-'@ngx-formly/builder': minor
+----
+-
+-Add directional field drops: left/right creates or joins an evenly spaced row; top/bottom reorders fields outside the target row. Rows use unkeyed Formly groups and responsive Tailwind utilities, preserving field keys, values, validation, and exported configuration.
+-
+-The builder now displays edge insertion lines and provides keyboard-accessible row movement in field menus. Dragging across keyed model scopes or onto an occupied repeater template is rejected to preserve data. Existing programmatic `moveField` calls remain supported. No saved-form migration is required.
+diff --git a/.changeset/field-menu-hover.md b/.changeset/field-menu-hover.md
+--- a/.changeset/field-menu-hover.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+----
+-
+-Open field menu submenus on hover without requiring an initial category click.
+diff --git a/.changeset/friendly-builder-settings.md b/.changeset/friendly-builder-settings.md
+--- a/.changeset/friendly-builder-settings.md
++++ /dev/null
+@@ -1,7 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+----
+-
+-Configure styling catalogues and display labels through `provideFormlyBuilder`, and inspect the
+-active initialization settings in the new read-only Builder settings panel. Hosts can hide the
+-panel with `showSettings: false`. Existing class values and saved forms remain unchanged.
+diff --git a/.changeset/independent-peer-ranges.md b/.changeset/independent-peer-ranges.md
+--- a/.changeset/independent-peer-ranges.md
++++ /dev/null
+@@ -1,6 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+-'@ngx-formly/builder-material': patch
+----
+-
+-Allow compatible 0.0.x internal peer releases without requiring matching package versions.
+diff --git a/.changeset/preset-tab-navigation.md b/.changeset/preset-tab-navigation.md
+--- a/.changeset/preset-tab-navigation.md
++++ /dev/null
+@@ -1,7 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+----
+-
+-Share the Add Field tab selection through `PanelService.activeAddFieldTab` so hosts can synchronize Field and Preset tabs with navigation. No migration is required.
+-
+-Activate desktop navigation panels when their highlighted item is clicked again, allowing hosts to track the active side of the editor.
+diff --git a/.changeset/readonly-field-indicator.md b/.changeset/readonly-field-indicator.md
+--- a/.changeset/readonly-field-indicator.md
++++ /dev/null
+@@ -1,6 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+----
+-
+-Dim readonly fields in the builder and preview to make their state visible.
+-Resolve preview styles against the application base URL when opened from a workspace route.
+diff --git a/.changeset/remove-panel-animations.md b/.changeset/remove-panel-animations.md
+--- a/.changeset/remove-panel-animations.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+----
+-
+-Remove the pop animation from all editor panels on desktop, tablet, and mobile.
+diff --git a/.changeset/validation-message-layout.md b/.changeset/validation-message-layout.md
+--- a/.changeset/validation-message-layout.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+----
+-
+-Place validation rules beside their messages in a one-third/two-thirds layout and let users expand message textareas from a single line.
+diff --git a/.changeset/workspace-bulk-delete.md b/.changeset/workspace-bulk-delete.md
+--- a/.changeset/workspace-bulk-delete.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@ngx-formly/builder': minor
+----
+-
+-Select workspace forms and folders with hover controls and delete selected items from the workspace toolbar.
+diff --git a/.changeset/workspace-panel-navigation.md b/.changeset/workspace-panel-navigation.md
+--- a/.changeset/workspace-panel-navigation.md
++++ /dev/null
+@@ -1,5 +0,0 @@
+----
+-'@ngx-formly/builder': minor
+----
+-
+-Export PanelService so hosts can synchronize editor panels with navigation, and open Fields when selecting the active form again.
+diff --git a/.changeset/workspace-validations.md b/.changeset/workspace-validations.md
+--- a/.changeset/workspace-validations.md
++++ /dev/null
+@@ -1,10 +0,0 @@
+----
+-'@ngx-formly/builder': patch
+-'@ngx-formly/builder-state': patch
+----
+-
+-Add Forms and Validations tabs to Workspace, with saved expression rules that can be copied into fields from Custom Validation. Rules can be created and edited in dialogs without changing the active form.
+-
+-Add the WorkspaceValidation type, catalog operations on BuilderEngineService, and optional getValidations$/saveValidations$ store methods. Existing custom stores remain compatible and show the catalog as unavailable until both methods are implemented. Local validation storage is isolated by editor namespace and supports backup and scoped recovery. Existing form documents require no migration.
+-
+-Expose PanelService.activeWorkspaceTab for host navigation. Studio now uses /workspaces/forms and /workspaces/validations, with form editor routes under /workspaces/forms/:formId. Existing Studio links redirect while retaining query parameters and fragments.
+diff --git a/libs/core/CHANGELOG.md b/libs/core/CHANGELOG.md
+--- /dev/null
++++ b/libs/core/CHANGELOG.md
+@@ -0,0 +1,50 @@
++# @ngx-formly/builder
++
++## 0.1.0
++
++### Minor Changes
++
++- Add directional field drops: left/right creates or joins an evenly spaced row; top/bottom reorders fields outside the target row. Rows use unkeyed Formly groups and responsive Tailwind utilities, preserving field keys, values, validation, and exported configuration.
++
++  The builder now displays edge insertion lines and provides keyboard-accessible row movement in field menus. Dragging across keyed model scopes or onto an occupied repeater template is rejected to preserve data. Existing programmatic `moveField` calls remain supported. No saved-form migration is required.
++
++- Select workspace forms and folders with hover controls and delete selected items from the workspace toolbar.
++- Export PanelService so hosts can synchronize editor panels with navigation, and open Fields when selecting the active form again.
++
++### Patch Changes
++
++- Complete asynchronous-store support for the new headless engine. Order saves and workspace
++  mutations, preserve newer edits, cancel superseded loads, and report partial deletion failures.
++  The shell displays load errors with a retry action and shares the engine's error state.
++
++  Headless autosave now defaults to true, matching the shell provider. Hosts testing the headless
++  branch that require manual saves must pass `autoSave: false`. Custom stores must emit one result
++  per ordinary operation; only recovery notifications are live. Hosts must save and await success
++  before unloading or destroying an editor when unsaved edits should be preserved. See `docs/asynchronous-stores.md` for the
++  store and lifecycle contract. Release the shell with the updated state package.
++
++- Rename Generic to Unknown Field and explain its purpose in a tooltip available on hover and keyboard focus.
++- Open field menu submenus on hover without requiring an initial category click.
++- Configure styling catalogues and display labels through `provideFormlyBuilder`, and inspect the
++  active initialization settings in the new read-only Builder settings panel. Hosts can hide the
++  panel with `showSettings: false`. Existing class values and saved forms remain unchanged.
++- Allow compatible 0.0.x internal peer releases without requiring matching package versions.
++- Share the Add Field tab selection through `PanelService.activeAddFieldTab` so hosts can synchronize Field and Preset tabs with navigation. No migration is required.
++
++  Activate desktop navigation panels when their highlighted item is clicked again, allowing hosts to track the active side of the editor.
++
++- Dim readonly fields in the builder and preview to make their state visible.
++  Resolve preview styles against the application base URL when opened from a workspace route.
++- Remove the pop animation from all editor panels on desktop, tablet, and mobile.
++- Place validation rules beside their messages in a one-third/two-thirds layout and let users expand message textareas from a single line.
++- Add Forms and Validations tabs to Workspace, with saved expression rules that can be copied into fields from Custom Validation. Rules can be created and edited in dialogs without changing the active form.
++
++  Add the WorkspaceValidation type, catalog operations on BuilderEngineService, and optional getValidations$/saveValidations$ store methods. Existing custom stores remain compatible and show the catalog as unavailable until both methods are implemented. Local validation storage is isolated by editor namespace and supports backup and scoped recovery. Existing form documents require no migration.
++
++  Expose PanelService.activeWorkspaceTab for host navigation. Studio now uses /workspaces/forms and /workspaces/validations, with form editor routes under /workspaces/forms/:formId. Existing Studio links redirect while retaining query parameters and fragments.
++
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++  - @ngx-formly/builder-state@0.1.0
+diff --git a/libs/core/package.json b/libs/core/package.json
+--- a/libs/core/package.json
++++ b/libs/core/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@ngx-formly/builder",
+-  "version": "0.0.1",
++  "version": "0.1.0",
+   "license": "MIT",
+   "repository": {
+     "type": "git",
+@@ -24,7 +24,7 @@
+     "@codemirror/lang-markdown": "^6.5.2",
+     "@codemirror/state": "^6.7.6",
+     "@codemirror/view": "^6.43.15",
+-    "@ngx-formly/builder-state": ">=0.0.1 <0.1.0",
++    "@ngx-formly/builder-state": ">=0.1.0 <0.2.0",
+     "@ngx-formly/core": "^11.0.0",
+     "@primeuix/themes": "^2.0.3",
+     "@uiw/codemirror-theme-vscode": "^4.25.11",
+diff --git a/libs/state/CHANGELOG.md b/libs/state/CHANGELOG.md
+--- /dev/null
++++ b/libs/state/CHANGELOG.md
+@@ -0,0 +1,28 @@
++# @ngx-formly/builder-state
++
++## 0.1.0
++
++### Minor Changes
++
++- Add directional field drops: left/right creates or joins an evenly spaced row; top/bottom reorders fields outside the target row. Rows use unkeyed Formly groups and responsive Tailwind utilities, preserving field keys, values, validation, and exported configuration.
++
++  The builder now displays edge insertion lines and provides keyboard-accessible row movement in field menus. Dragging across keyed model scopes or onto an occupied repeater template is rejected to preserve data. Existing programmatic `moveField` calls remain supported. No saved-form migration is required.
++
++### Patch Changes
++
++- Complete asynchronous-store support for the new headless engine. Order saves and workspace
++  mutations, preserve newer edits, cancel superseded loads, and report partial deletion failures.
++  The shell displays load errors with a retry action and shares the engine's error state.
++
++  Headless autosave now defaults to true, matching the shell provider. Hosts testing the headless
++  branch that require manual saves must pass `autoSave: false`. Custom stores must emit one result
++  per ordinary operation; only recovery notifications are live. Hosts must save and await success
++  before unloading or destroying an editor when unsaved edits should be preserved. See `docs/asynchronous-stores.md` for the
++  store and lifecycle contract. Release the shell with the updated state package.
++
++- Rename Generic to Unknown Field and explain its purpose in a tooltip available on hover and keyboard focus.
++- Add Forms and Validations tabs to Workspace, with saved expression rules that can be copied into fields from Custom Validation. Rules can be created and edited in dialogs without changing the active form.
++
++  Add the WorkspaceValidation type, catalog operations on BuilderEngineService, and optional getValidations$/saveValidations$ store methods. Existing custom stores remain compatible and show the catalog as unavailable until both methods are implemented. Local validation storage is isolated by editor namespace and supports backup and scoped recovery. Existing form documents require no migration.
++
++  Expose PanelService.activeWorkspaceTab for host navigation. Studio now uses /workspaces/forms and /workspaces/validations, with form editor routes under /workspaces/forms/:formId. Existing Studio links redirect while retaining query parameters and fragments.
+diff --git a/libs/state/package.json b/libs/state/package.json
+--- a/libs/state/package.json
++++ b/libs/state/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@ngx-formly/builder-state",
+-  "version": "0.0.1",
++  "version": "0.1.0",
+   "license": "MIT",
+   "repository": {
+     "type": "git",
+diff --git a/libs/ui/builder-material/CHANGELOG.md b/libs/ui/builder-material/CHANGELOG.md
+--- /dev/null
++++ b/libs/ui/builder-material/CHANGELOG.md
+@@ -0,0 +1,21 @@
++# @ngx-formly/builder-material
++
++## 0.0.2
++
++### Patch Changes
++
++- Allow compatible 0.0.x internal peer releases without requiring matching package versions.
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++- Updated dependencies
++  - @ngx-formly/builder@0.1.0
+diff --git a/libs/ui/builder-material/package.json b/libs/ui/builder-material/package.json
+--- a/libs/ui/builder-material/package.json
++++ b/libs/ui/builder-material/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@ngx-formly/builder-material",
+-  "version": "0.0.1",
++  "version": "0.0.2",
+   "license": "MIT",
+   "repository": {
+     "type": "git",
+@@ -11,7 +11,7 @@
+   "peerDependencies": {
+     "@angular/common": "^22.0.0",
+     "@angular/core": "^22.0.0",
+-    "@ngx-formly/builder": ">=0.0.1 <0.1.0",
++    "@ngx-formly/builder": ">=0.1.0 <0.2.0",
+     "@ngx-formly/builder-material-fields": ">=0.0.1 <0.1.0",
+     "@ngx-formly/core": "^11.0.0"
+   },
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -288,7 +288,7 @@
+         specifier: ^6.43.15
+         version: 6.43.15
+       '@ngx-formly/builder-state':
+-        specifier: '>=0.0.1 <0.1.0'
++        specifier: '>=0.1.0 <0.2.0'
+         version: link:../../dist/state
+       '@ngx-formly/core':
+         specifier: ^11.0.0
+@@ -380,7 +380,7 @@
+         specifier: ^22.0.0
+         version: 22.2.3(@angular/compiler@22.2.3)(rxjs@7.8.2)(zone.js@0.16.3)
+       '@ngx-formly/builder':
+-        specifier: '>=0.0.1 <0.1.0'
++        specifier: '>=0.1.0 <0.2.0'
+         version: link:../../../dist/core
+       '@ngx-formly/builder-material-fields':
+         specifier: '>=0.0.1 <0.1.0'

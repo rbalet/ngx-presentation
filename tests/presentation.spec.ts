@@ -77,6 +77,38 @@ test("the presentation timer starts empty, survives reloads and turns primary on
   );
 });
 
+test("the timer target follows the planned chapter end independently of elapsed time", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const timer = page.getByRole("progressbar", { name: "Presentation time" });
+  const marker = page.locator(".timer-target-marker");
+  await expect(marker).toHaveCount(0);
+  await expect(page.locator("#timer-target")).toBeHidden();
+
+  for (const [chapter, minutes] of [
+    ["03", 14],
+    ["04-result", 18],
+    ["09", 42],
+    ["12", 45],
+    ["11", 60],
+    ["01", 2],
+  ] as const) {
+    await page.locator(`#chapter-${chapter}`).evaluate(element => element.scrollIntoView());
+    await expect(page.locator("#timer-target")).toHaveText(`Planned chapter end: ${minutes} min`);
+    await expect(timer).toHaveAccessibleDescription(`Planned chapter end: ${minutes} min`);
+    await expect(timer).toHaveAttribute("value", "0");
+    await expect(marker).toBeVisible();
+    const trackBounds = (await page.locator(".timer-track").boundingBox())!;
+    const markerBounds = (await marker.boundingBox())!;
+    expect((markerBounds.x + markerBounds.width / 2 - trackBounds.x) / trackBounds.width).toBeCloseTo(minutes / 60, 2);
+  }
+
+  await page.locator(".brand").click();
+  await expect(marker).toHaveCount(0);
+  await expect(page.locator("#timer-target")).toBeHidden();
+  await expect(timer).not.toHaveAttribute("aria-describedby");
+});
+
 test("the timer button clears the saved start and starts a fresh presentation", async ({
   page,
 }) => {
@@ -204,13 +236,13 @@ test("all numbered chapters are reachable and extras can be skipped", async ({
     exact: true,
   });
   await expect(index.getByRole("link")).toHaveCount(11);
-  await expect(index.getByRole("link").last()).toHaveAttribute("href", "#chapter-12");
+  await expect(index.getByRole("link").last()).toHaveAttribute("href", "#chapter-11");
   await expect(page.locator("#chapter-10")).toHaveCount(0);
   await expect(
-    page.locator("#chapter-09").getByRole("link", { name: "Next: 11" }),
-  ).toHaveAttribute("href", "#chapter-11");
+    page.locator("#chapter-09").getByRole("link", { name: "Next: 12" }),
+  ).toHaveAttribute("href", "#chapter-12");
   await expect(
-    page.locator("#chapter-11").getByRole("link", { name: "Previous: 09" }),
+    page.locator("#chapter-12").getByRole("link", { name: "Previous: 09" }),
   ).toHaveAttribute("href", "#chapter-09");
   for (const href of await index
     .getByRole("link")
@@ -223,21 +255,19 @@ test("all numbered chapters are reachable and extras can be skipped", async ({
     name: "08 A shared approach at BIT",
   });
   await chapter.getByRole("link", { name: "Skip extras" }).click();
-  await expect(page).toHaveURL(/#chapter-11$/);
-  await expect(page.getByRole("heading", { name: "11 Q&A" })).toBeInViewport();
-  await page
-    .getByRole("region", { name: "11 Q&A" })
-    .getByRole("link", { name: "Next: 12" })
-    .click();
   await expect(page).toHaveURL(/#chapter-12$/);
   const whatsNext = page.getByRole("region", { name: "12 What's next" });
-  await expect(whatsNext.getByRole("heading")).toBeInViewport();
-  await expect(whatsNext.getByRole("listitem")).toHaveText([
-    "Framework agnostic (run it everywhere)",
+  await expect(whatsNext.getByRole("heading", { level: 2 })).toBeInViewport();
+  await expect(whatsNext.getByRole("heading", { level: 3 })).toHaveText([
+    "Framework agnostic",
     "Shared ARIA component library (file upload, telephone, code, …)",
   ]);
-  await expect(whatsNext.getByRole("link", { name: "Previous: 11" })).toHaveAttribute("href", "#chapter-11");
-  await whatsNext.getByRole("link", { name: "Back to overview" }).click();
+  await whatsNext.getByRole("link", { name: "Next: 11" }).click();
+  await expect(page).toHaveURL(/#chapter-11$/);
+  const discussion = page.getByRole("region", { name: "11 Q&A" });
+  await expect(discussion.getByRole("heading", { level: 2 })).toBeInViewport();
+  await expect(discussion.getByRole("link", { name: "Previous: 12" })).toHaveAttribute("href", "#chapter-12");
+  await discussion.getByRole("link", { name: "Back to overview" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
   expect(errors).toEqual([]);
 });
