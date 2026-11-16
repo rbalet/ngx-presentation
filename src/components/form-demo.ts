@@ -4,13 +4,12 @@ import { FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/for
 import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DemoFormState, Registration } from '../demo/demo-form-state';
-import { PhoneWebMcp } from '../demo/phone-web-mcp';
 import { Languages } from '../languages';
 import { CodeEditor } from './code-editor';
 
 @Component({
   selector: 'app-form-demo',
-  imports: [FormlyForm, PhoneWebMcp, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe, CodeEditor],
+  imports: [FormlyForm, ReactiveFormsModule, JsonPipe, KeyValuePipe, TranslatePipe, CodeEditor],
   templateUrl: './form-demo.html',
   styleUrl: './form-demo.css',
   host: { '(window:popstate)': 'restoreCapability()' },
@@ -29,8 +28,7 @@ export class FormDemo {
     { name: 'formly_examples', icon: 'm8 6-6 6 6 6m8-12 6 6-6 6m-2-15-4 18' },
     { name: 'formly_validate_fields', icon: 'M9 4H6v16h12V4h-3M9 3h6v4H9Zm0 10 2 2 4-4' },
   ];
-  readonly webMcpExample = `// Upcoming Formly API; this demo uses an Angular adapter.
-fields: FormlyFieldConfig[] = [
+  readonly webMcpExample = `fields: FormlyFieldConfig[] = [
   {
     key: 'phoneNumber',
     type: 'input',
@@ -38,15 +36,21 @@ fields: FormlyFieldConfig[] = [
     props: { label: 'Phone number', type: 'tel', required: true },
   },
 ];`;
-  readonly webMcpPrompt = 'Can you figure out why the demo isn’t exposing any WebMCP tools, fix it, and then use WebMCP to fill the phone field and show me a screenshot?';
+  readonly webMcpPrompt = 'Use WebMCP to fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot.';
   readonly state = inject(DemoFormState);
   readonly languages = inject(Languages);
   readonly translate = inject(TranslateService);
   readonly phoneModel = signal({ phoneNumber: '' });
+  readonly phoneOptions: FormlyFormOptions = {
+    webMcp: { name: 'phone_number', description: 'Fill the phone number in the WebMCP demo' },
+    // WebMCP writes mark controls dirty without a blur event.
+    showValidation: ({ formControl }) => formControl.dirty || formControl.touched,
+  };
   readonly phoneFields = computed<FormlyFieldConfig[]>(() => {
     this.translate.currentLang();
     return [{
       key: 'phoneNumber', id: 'webmcp-phone-number', type: 'input',
+      webMcp: true,
       props: { label: this.translate.instant('demo.fields.phoneNumber'), type: 'tel', required: true },
     }];
   });

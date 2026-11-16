@@ -239,13 +239,13 @@ Keep the skip link, direct chapter links, and previous/next links. Arrow keys an
 
 ### Cards, walkthroughs, and code
 
-Metric cards, the form preview, prompt sheet, and Periscope illustrations reuse the same rounded surface vocabulary. The Periscope walkthrough pairs three Formly capabilities on the left with the selected area's supplied illustration on the right. The images are bundled in `public/periscope/`, preserve their aspect ratios inside a consistent 3:2 frame, and stack below the text on mobile. Code windows use the dark-surface/on-dark pair and a distinct monospace face. Their role is to expose the real configuration and submitted model.
+Metric cards, the form preview, prompt sheet, and Periscope illustrations reuse the same rounded surface vocabulary. Metric logos are flat gray marks on transparent backgrounds: simplify the library symbols to match Stack Overflow, with no colored shield or shading. The Periscope walkthrough pairs three Formly capabilities on the left with the selected area's supplied illustration on the right. The images are bundled in `public/periscope/`, preserve their aspect ratios inside a consistent 3:2 frame, and stack below the text on mobile. Illustrations start in grayscale; hovering, focusing, or tapping a capability reveals the original color of its related objects. The active bullet uses red and an underline, with the shared keyboard focus ring. Color fades over 180ms when reduced motion is not requested. Code windows use the dark-surface/on-dark pair and a distinct monospace face. Their role is to expose the real configuration and submitted model.
 
 ### Focus and motion
 
 Keyboard focus uses a three-pixel red outline with a five-pixel offset. Tight scrolling containers move the offset inward to avoid clipping it. The Q&A chapter uses the light red focus color. Preserve native control semantics, visible labels, and usable hit areas.
 
-Motion explains sequence: chapter completion draws a strike and tick; metric charts reveal sequentially; problem answers slide vertically. The common expressive easing is `cubic-bezier(0.16, 1, 0.3, 1)`. View-timeline chapter drift is progressive enhancement and ranges only 32px around the settled state.
+Motion explains sequence: chapter completion draws a strike and tick; metric logos take a small backward dip and tilt, then move from the center to the top right with a brief settling wiggle on first hover, focus or tap; the 620ms logo motion starts together with the chart and a 1.8-second count-up that slows gently toward the final value; problem answers slide vertically. The common expressive easing is `cubic-bezier(0.16, 1, 0.3, 1)`. View-timeline chapter drift is progressive enhancement and ranges only 32px around the settled state.
 
 Animations run only when reduced motion is not requested. Reduced motion restores immediate state changes, disables smooth scrolling, and removes chapter transforms. Chapter completion also keeps a plain-text-decoration fallback for forced colors. Full timings and breakpoints are recorded in `.impeccable/design.json`.
 

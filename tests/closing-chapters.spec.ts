@@ -36,6 +36,48 @@ test('Periscope pairs each area with three Formly capabilities and a bundled ill
   }
 });
 
+test('Periscope reveals only the illustration region for the hovered, focused, or tapped capability', async ({ page, isMobile }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/#chapter-07');
+  const chapter = page.locator('#chapter-07');
+  const colors = chapter.locator('.area-color');
+
+  for (const area of ['Events', 'Workflows', 'Surveys']) {
+    await chapter.getByRole('button', { name: area, exact: true }).click();
+    await expect(chapter.locator('.area-image')).toHaveCSS('filter', 'grayscale(1)');
+    for (const color of await colors.all()) await expect(color).toHaveCSS('opacity', '0');
+
+    const capabilities = chapter.getByRole('list', { name: 'What ngx-formly can do' }).getByRole('button');
+    for (let index = 0; index < 3; index++) {
+      const capability = capabilities.nth(index);
+      if (isMobile) await capability.tap();
+      else await capability.hover();
+      for (let region = 0; region < 3; region++) {
+        await expect(colors.nth(region)).toHaveCSS('opacity', region === index ? '1' : '0');
+      }
+    }
+
+    if (!isMobile) {
+      await chapter.getByRole('heading', { level: 3 }).hover();
+      for (const color of await colors.all()) await expect(color).toHaveCSS('opacity', '0');
+      await capabilities.first().focus();
+      await expect(colors.first()).toHaveCSS('opacity', '1');
+      await page.keyboard.press('Tab');
+      await expect(capabilities.nth(1)).toBeFocused();
+      await expect(colors.first()).toHaveCSS('opacity', '0');
+      await expect(colors.nth(1)).toHaveCSS('opacity', '1');
+      await capabilities.last().hover();
+      await expect(colors.nth(1)).toHaveCSS('opacity', '0');
+      await expect(colors.last()).toHaveCSS('opacity', '1');
+      await chapter.getByRole('heading', { level: 3 }).hover();
+      await expect(colors.nth(1)).toHaveCSS('opacity', '1');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      for (const color of await colors.all()) await expect(color).toHaveCSS('opacity', '0');
+    }
+  }
+});
+
 test('Q&A shows the audience question and resource links', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-11');

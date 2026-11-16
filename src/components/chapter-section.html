@@ -29,7 +29,11 @@
         @defer (on viewport) { <app-form-validator /> }
         @placeholder { <p class="chapter-subtitle">{{ 'demo.builder.loading' | translate }}</p> }
       }
-      @case ('06') {}
+      @case ('06') {
+        @defer (on viewport) { <app-form-builder /> }
+        @placeholder { <p class="chapter-subtitle">{{ 'demo.visualBuilder.loading' | translate }}</p> }
+        @error { <p role="alert">{{ 'demo.visualBuilder.error' | translate }}</p> }
+      }
       @case ('07') { <app-periscope-chapter /> }
       @default { <app-closing-chapter [chapter]="chapter().number" /> }
     }

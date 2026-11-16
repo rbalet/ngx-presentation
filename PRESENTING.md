@@ -19,7 +19,7 @@ Use **Focus view** on desktop to hide the chapter index. Left/right arrows or Pa
 | 03 · Meet ngx-formly | 7 min | Connect field configuration, native controls, validation, and the model. Change attendance to show conditional behavior. Use the form’s language selector to translate labels and errors without clearing answers. |
 | 04 · Agentic Workflow | 4 min | Copy the prompt into your coding agent to update the shared form configuration. |
 | 05 · API & validation | 6 min | Review the agent’s result in the Formly validator. Try a wrong property type, select its diagnostic, then correct the value. |
-| 06 · Make it yours | 4 min reserved | Empty for now; a headless component example will be added later. |
+| 06 · Make it yours | 4 min | Add a text field, rename it, make it required, move it, and check validation in the preview. Download JSON saves the result; Open Builder opens the hosted builder in a new tab. Reset builder restores chapter 03’s current example. |
 | 07 · Periscope | 8 min | Walk through events, workflows and surveys, then switch to the actual application if it is running. Reuse the same registration story. |
 | 12 · What's next | 3 min | Discuss the framework-independent and shared accessible-component ambitions as future work. |
 | 11 · Q&A | 15 min | Invite the audience to share what they think is missing. |

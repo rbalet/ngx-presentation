@@ -37,14 +37,14 @@
     "elapsed": "{{elapsed}} of {{total}} minutes elapsed",
     "overdue": ", over time",
     "readout": "{{elapsed}} / {{total}} min",
-    "target": "Planned chapter end: {{minutes}} min",
+    "target": "Planned chapter start: {{minutes}} min",
     "startLabel": "Start presentation timer",
     "resetLabel": "Reset presentation timer",
     "start": "Start",
     "reset": "Reset"
   },
   "about": {
-    "visits": "100 consecutive days of visits",
+    "visits": "consecutive days of visits",
     "remember": "For those who remember.",
     "openSource": "Open-source",
     "downloads": "npm downloads / week",
@@ -144,7 +144,7 @@
     "keys": "Left / right arrow keys move between slides."
   },
   "periscope": {
-    "intro": "My current project uses configurable forms for events, workflows and surveys.",
+    "intro": "Our current project, and our ngx-formly use",
     "chooseArea": "Explore Periscope",
     "events": {
       "name": "Events",
@@ -240,6 +240,41 @@
           "summary": "Give your coding agent a Formly workflow."
         }
       }
+    },
+    "visualBuilder": {
+      "lead": "Build on the registration form. Pick a field, change it, and try the result.",
+      "add": "Add a field",
+      "addType": {
+        "input": "Add text",
+        "textarea": "Add long text",
+        "select": "Add choice"
+      },
+      "new": {
+        "input": "New text field",
+        "textarea": "New long text field",
+        "select": "New choice"
+      },
+      "firstOption": "First option",
+      "secondOption": "Second option",
+      "reset": "Reset builder",
+      "fields": "Fields",
+      "settings": "Edit field",
+      "label": "Label",
+      "required": "Required",
+      "key": "Model key:",
+      "up": "Move up",
+      "down": "Move down",
+      "remove": "Remove",
+      "preview": "Live preview",
+      "validate": "Check validation",
+      "empty": "Add a field to start building.",
+      "select": "Select a field to edit it.",
+      "poweredBy": "Powered by",
+      "session": "Edits last until you reload.",
+      "download": "Download JSON",
+      "open": "Open Builder",
+      "loading": "Loading the builder…",
+      "error": "The builder could not load. Reload the page to try again."
     },
     "builder": {
       "lead": "Edit and validate the form configuration from chapter 03.",

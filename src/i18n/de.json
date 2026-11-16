@@ -37,14 +37,14 @@
     "elapsed": "{{elapsed}} von {{total}} Minuten verstrichen",
     "overdue": ", Zeit überschritten",
     "readout": "{{elapsed}} / {{total}} Min.",
-    "target": "Geplantes Kapitelende: {{minutes}} Min.",
+    "target": "Geplanter Kapitelbeginn: {{minutes}} Min.",
     "startLabel": "Präsentations-Timer starten",
     "resetLabel": "Präsentations-Timer zurücksetzen",
     "start": "Starten",
     "reset": "Zurücksetzen"
   },
   "about": {
-    "visits": "100 Tage in Folge besucht",
+    "visits": "Tage in Folge besucht",
     "remember": "Für alle, die sich erinnern.",
     "openSource": "Open Source",
     "downloads": "npm-Downloads / Woche",
@@ -240,6 +240,41 @@
           "summary": "Dem Coding-Agenten einen Formly-Arbeitsablauf geben."
         }
       }
+    },
+    "visualBuilder": {
+      "lead": "Passe das Anmeldeformular an. Wähle ein Feld, ändere es und probiere das Ergebnis aus.",
+      "add": "Feld hinzufügen",
+      "addType": {
+        "input": "Text hinzufügen",
+        "textarea": "Langtext hinzufügen",
+        "select": "Auswahl hinzufügen"
+      },
+      "new": {
+        "input": "Neues Textfeld",
+        "textarea": "Neues Langtextfeld",
+        "select": "Neue Auswahl"
+      },
+      "firstOption": "Erste Option",
+      "secondOption": "Zweite Option",
+      "reset": "Builder zurücksetzen",
+      "fields": "Felder",
+      "settings": "Feld bearbeiten",
+      "label": "Beschriftung",
+      "required": "Pflichtfeld",
+      "key": "Modellschlüssel:",
+      "up": "Nach oben",
+      "down": "Nach unten",
+      "remove": "Entfernen",
+      "preview": "Live-Vorschau",
+      "validate": "Validierung prüfen",
+      "empty": "Füge ein Feld hinzu, um loszulegen.",
+      "select": "Wähle ein Feld zum Bearbeiten.",
+      "poweredBy": "Erstellt mit",
+      "session": "Änderungen bleiben bis zum Neuladen erhalten.",
+      "download": "JSON herunterladen",
+      "open": "Builder öffnen",
+      "loading": "Builder wird geladen…",
+      "error": "Der Builder konnte nicht geladen werden. Lade die Seite erneut."
     },
     "builder": {
       "lead": "Die Formularkonfiguration aus Kapitel 03 bearbeiten und prüfen.",

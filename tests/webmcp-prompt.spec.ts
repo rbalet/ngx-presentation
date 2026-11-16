@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const prompt = 'Can you figure out why the demo isn’t exposing any WebMCP tools, fix it, and then use WebMCP to fill the phone field and show me a screenshot?';
+const prompt = 'Use WebMCP to fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot.';
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });

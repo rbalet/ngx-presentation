@@ -3,6 +3,7 @@
         @if (part() !== 'maintainers') { <article
           class="metric-card community-card"
           aria-labelledby="stackoverflow-title"
+          tabindex="0"
         >
           <img
             class="metric-logo"
@@ -28,7 +29,11 @@
             </a>
           </h3>
           <p class="metric-value fanatic-badge">Fanatic</p>
-          <p class="metric-label">{{ 'about.visits' | translate }}</p>
+          <p class="metric-label">
+            <span data-count-to="100" aria-hidden="true">100</span>
+            <span class="visually-hidden">100</span>
+            {{ 'about.visits' | translate }}
+          </p>
           <a
             class="metric-caption"
             href="https://stackoverflow.com/help/badges/83/fanatic"
@@ -44,10 +49,10 @@
           aria-labelledby="maintainer-title"
         >
           <h3 id="maintainer-title">{{ 'about.openSource' | translate }}</h3>
-          <article class="metric-card" aria-labelledby="translate-title">
+          <article class="metric-card" aria-labelledby="translate-title" tabindex="0">
             <img
               class="metric-logo"
-              src="/metrics/npm.svg"
+              src="/metrics/ngx-translate.svg"
               width="28"
               height="28"
               alt=""
@@ -68,7 +73,10 @@
                 ngx-translate
               </a>
             </h4>
-            <p class="metric-value">1,912,458</p>
+            <p class="metric-value">
+              <span data-count-to="1912458" aria-hidden="true">1,912,458</span>
+              <span class="visually-hidden">1,912,458</span>
+            </p>
             <a
               class="metric-label"
               href="https://api.npmjs.org/downloads/point/2026-11-02:2026-11-08/%40ngx-translate%2Fcore"
@@ -82,10 +90,10 @@
               {{ 'about.popular' | translate }}
             </p>
           </article>
-          <article class="metric-card" aria-labelledby="formly-title">
+          <article class="metric-card" aria-labelledby="formly-title" tabindex="0">
             <img
               class="metric-logo"
-              src="/metrics/npm.svg"
+              src="/metrics/ngx-formly.svg"
               width="28"
               height="28"
               alt=""
@@ -102,7 +110,10 @@
                 ngx-formly
               </a>
             </h4>
-            <p class="metric-value">311,233</p>
+            <p class="metric-value">
+              <span data-count-to="311233" aria-hidden="true">311,233</span>
+              <span class="visually-hidden">311,233</span>
+            </p>
             <a
               class="metric-label"
               href="https://api.npmjs.org/downloads/point/2026-11-02:2026-11-08/%40ngx-formly%2Fcore"

@@ -32,7 +32,7 @@ const FIELD_SHAPE = {
   focus: 'boolean',
   hooks: 'object',
   parsers: 'array',
-} satisfies Partial<Record<keyof FormlyFieldConfig | 'webMcp', Node['type']>>;
+} satisfies Partial<Record<keyof FormlyFieldConfig, Node['type']>>;
 
 const PROP_SHAPE = {
   type: 'string',

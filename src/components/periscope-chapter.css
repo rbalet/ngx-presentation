@@ -8,16 +8,26 @@ button { cursor: pointer; color: var(--ink); }
 .walkthrough { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 2rem; }
 h3 { margin: 0 0 0.5rem; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.2; }
 p { line-height: 1.5; }
-.formly-capabilities { display: grid; gap: 1rem; margin: 1.5rem 0 0; padding-inline-start: 1.25rem; line-height: 1.5; }
+.formly-capabilities { display: grid; gap: 0.25rem; margin: 1.125rem 0 0; padding-inline-start: 1.25rem; line-height: 1.5; }
 .formly-capabilities li { padding-inline-start: 0.25rem; }
 .formly-capabilities li::marker { color: var(--red); }
-.area-image { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; background: var(--group); border-radius: 12px; }
+.capability { display: block; width: 100%; padding: 0.375rem 0; border: 0; background: transparent; text-align: start; line-height: inherit; text-underline-offset: 0.2em; -webkit-tap-highlight-color: transparent; }
+.capability.is-active { color: var(--red); text-decoration: underline; }
+.area-illustration { display: grid; align-items: center; aspect-ratio: 3 / 2; overflow: hidden; background: var(--group); border-radius: 12px; }
+.area-picture { position: relative; }
+.area-image { display: block; width: 100%; height: auto; filter: grayscale(1); }
+.area-colors { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.area-color { opacity: 0; }
+.area-color.is-active { opacity: 1; }
 .demo-link { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 1.5rem; }
 .demo-link a { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.625rem 1rem; background: var(--action); color: var(--paper); text-decoration: none; font-weight: 700; }
 .demo-link p { max-width: 33ch; color: var(--muted); font-size: 0.85rem; }
 @media (hover: hover) {
-  button:not([aria-pressed="true"]):hover { background: var(--highlight); }
+  .product-areas button:not([aria-pressed="true"]):hover { background: var(--highlight); }
   .demo-link a:hover { background: var(--red); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .area-color { transition: opacity 180ms ease-out; }
 }
 @media (max-width: 700px) {
   .walkthrough { grid-template-columns: 1fr; gap: 1rem; }

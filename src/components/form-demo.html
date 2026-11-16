@@ -56,7 +56,7 @@
               </ul>
             } @else if (capability.id === 'webmcp') {
               <pre class="code-window capability-example" tabindex="0" [attr.aria-label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate"><code>{{ webMcpExample }}</code></pre>
-              <formly-form appPhoneWebMcp [form]="form" [fields]="phoneFields()" [model]="phoneModel" />
+              <formly-form [form]="form" [fields]="phoneFields()" [model]="phoneModel" [options]="phoneOptions" />
             }
             @if (capability.id === 'skill') {
               <pre class="code-window capability-example"><code>npx skills add ngx-formly/ngx-formly --skill ngx-formly</code></pre>

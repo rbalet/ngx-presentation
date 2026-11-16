@@ -37,14 +37,14 @@
     "elapsed": "{{elapsed}} minutes écoulées sur {{total}}",
     "overdue": ", temps dépassé",
     "readout": "{{elapsed}} / {{total}} min",
-    "target": "Fin du chapitre prévue à {{minutes}} min",
+    "target": "Début du chapitre prévu à {{minutes}} min",
     "startLabel": "Démarrer le chronomètre",
     "resetLabel": "Réinitialiser le chronomètre",
     "start": "Démarrer",
     "reset": "Réinitialiser"
   },
   "about": {
-    "visits": "100 jours de visite consécutifs",
+    "visits": "jours de visite consécutifs",
     "remember": "Pour celles et ceux qui s’en souviennent.",
     "openSource": "Open source",
     "downloads": "Téléchargements npm / semaine",
@@ -240,6 +240,41 @@
           "summary": "Donner une méthode Formly à l’agent de développement."
         }
       }
+    },
+    "visualBuilder": {
+      "lead": "Adapte le formulaire d’inscription. Choisis un champ, modifie-le et essaie le résultat.",
+      "add": "Ajouter un champ",
+      "addType": {
+        "input": "Ajouter un texte",
+        "textarea": "Ajouter un texte long",
+        "select": "Ajouter un choix"
+      },
+      "new": {
+        "input": "Nouveau champ texte",
+        "textarea": "Nouveau champ texte long",
+        "select": "Nouveau choix"
+      },
+      "firstOption": "Première option",
+      "secondOption": "Deuxième option",
+      "reset": "Réinitialiser le builder",
+      "fields": "Champs",
+      "settings": "Modifier le champ",
+      "label": "Libellé",
+      "required": "Obligatoire",
+      "key": "Clé du modèle :",
+      "up": "Monter",
+      "down": "Descendre",
+      "remove": "Supprimer",
+      "preview": "Aperçu en direct",
+      "validate": "Vérifier la validation",
+      "empty": "Ajoute un champ pour commencer.",
+      "select": "Choisis un champ à modifier.",
+      "poweredBy": "Propulsé par",
+      "session": "Les modifications durent jusqu’au rechargement.",
+      "download": "Télécharger le JSON",
+      "open": "Ouvrir le builder",
+      "loading": "Chargement du builder…",
+      "error": "Le builder n’a pas pu être chargé. Recharge la page pour réessayer."
     },
     "builder": {
       "lead": "Modifiez et validez la configuration du formulaire du chapitre 03.",

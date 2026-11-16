@@ -1,0 +1,65 @@
+<p class="builder-lead">{{ 'demo.visualBuilder.lead' | translate }}</p>
+<div class="builder-toolbar">
+  <div class="add-fields" role="group" [attr.aria-label]="'demo.visualBuilder.add' | translate">
+    @for (type of types; track type) {
+      <button type="button" (click)="add(type)">{{ ('demo.visualBuilder.addType.' + type) | translate }}</button>
+    }
+  </div>
+  <button type="button" (click)="reset()">{{ 'demo.visualBuilder.reset' | translate }}</button>
+</div>
+@if (error() || engine.formLoadError()) {
+  <p role="alert">{{ 'demo.visualBuilder.error' | translate }}</p>
+} @else {
+  <div class="builder-workspace">
+    <section class="field-list" aria-labelledby="visual-fields-title">
+      <h3 id="visual-fields-title">{{ 'demo.visualBuilder.fields' | translate }} <span>{{ engine.activeRootFieldIds().length }}</span></h3>
+      <ol>
+        @for (id of engine.activeRootFieldIds(); track id; let index = $index) {
+          <li>
+            <button type="button" [attr.aria-pressed]="engine.activeFieldId() === id" (click)="engine.setActiveField(id)">
+              <span class="field-number" aria-hidden="true">{{ index + 1 }}</span>
+              <span>{{ engine.activeFieldMap()[id].props?.label || engine.activeFieldMap()[id].key }}</span>
+            </button>
+          </li>
+        } @empty {
+          <li class="empty-state">{{ 'demo.visualBuilder.empty' | translate }}</li>
+        }
+      </ol>
+    </section>
+    <section class="field-settings" aria-labelledby="visual-settings-title">
+      <h3 id="visual-settings-title">{{ 'demo.visualBuilder.settings' | translate }}</h3>
+      @if (engine.activeField(); as field) {
+        <label for="visual-field-label">{{ 'demo.visualBuilder.label' | translate }}</label>
+        <input id="visual-field-label" type="text" required maxlength="80" [value]="field.props?.label || ''" (input)="setLabel($event.target.value)" />
+        <label class="required-toggle"><input type="checkbox" [checked]="field.props?.required || false" (change)="setProperty('required', $event.target.checked)" /> {{ 'demo.visualBuilder.required' | translate }}</label>
+        <p class="field-key">{{ 'demo.visualBuilder.key' | translate }} <code>{{ field.key }}</code></p>
+        <div class="field-actions">
+          <button type="button" (click)="move(-1)" [disabled]="selectedIndex() <= 0">{{ 'demo.visualBuilder.up' | translate }}</button>
+          <button type="button" (click)="move(1)" [disabled]="selectedIndex() >= engine.activeRootFieldIds().length - 1">{{ 'demo.visualBuilder.down' | translate }}</button>
+          <button type="button" class="remove-field" (click)="remove()">{{ 'demo.visualBuilder.remove' | translate }}</button>
+        </div>
+      } @else {
+        <p class="empty-state">{{ 'demo.visualBuilder.select' | translate }}</p>
+      }
+    </section>
+    <section class="builder-preview" aria-labelledby="visual-preview-title">
+      <h3 id="visual-preview-title">{{ 'demo.visualBuilder.preview' | translate }}</h3>
+      <form [formGroup]="form" (ngSubmit)="form.markAllAsTouched()">
+        <formly-form [form]="form" [fields]="fields()" [model]="model" />
+        @if (engine.activeRootFieldIds().length) {
+          <button type="submit">{{ 'demo.visualBuilder.validate' | translate }}</button>
+        } @else { <p class="empty-state">{{ 'demo.visualBuilder.empty' | translate }}</p> }
+      </form>
+    </section>
+  </div>
+}
+<div class="builder-footer">
+  <p>{{ 'demo.visualBuilder.poweredBy' | translate }} <code>@ngx-formly/builder</code> · <a href="https://builder.formly.dev/" target="_blank" rel="noopener noreferrer">builder.formly.dev</a></p>
+  <div class="builder-actions">
+    <button type="button" (click)="download()">{{ 'demo.visualBuilder.download' | translate }}</button>
+    <a href="https://builder.formly.dev/" target="_blank" rel="noopener noreferrer">
+      {{ 'demo.visualBuilder.open' | translate }}
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 4h6v6m-1-5L9 15M10 4H4v16h16v-6" /></svg>
+    </a>
+  </div>
+</div>

@@ -104,14 +104,14 @@
         @let description = startedAt() === null ? ('timer.idle' | translate) : ('timer.elapsed' | translate: { elapsed: elapsedMinutes(), total: 60 }) + (overdue() ? ('timer.overdue' | translate) : '');
         <div class="timer-track">
           <progress class="presentation-timer" [class.presentation-timer--overdue]="overdue()" [value]="progress()" max="100"
-            [attr.aria-label]="'timer.title' | translate" [attr.aria-valuetext]="description" [attr.aria-describedby]="targetMinutes() > 0 ? 'timer-target' : null" [title]="description"></progress>
-          @if (targetMinutes() > 0) {
+            [attr.aria-label]="'timer.title' | translate" [attr.aria-valuetext]="description" [attr.aria-describedby]="activeIndex() >= 0 ? 'timer-target' : null" [title]="description"></progress>
+          @if (activeIndex() >= 0) {
             <span class="timer-target-marker" [style.left.%]="targetMinutes() / 60 * 100" aria-hidden="true"></span>
           }
         </div>
         <button type="button" class="timer-button" (click)="startedAt() === null ? start() : reset()"
           [attr.aria-label]="(startedAt() === null ? 'timer.startLabel' : 'timer.resetLabel') | translate">{{ (startedAt() === null ? 'timer.start' : 'timer.reset') | translate }}</button>
-        <p id="timer-target" class="timer-target" [style.visibility]="targetMinutes() > 0 ? null : 'hidden'">{{ 'timer.target' | translate: { minutes: targetMinutes() } }}</p>
+        <p id="timer-target" class="timer-target" [style.visibility]="activeIndex() >= 0 ? null : 'hidden'">{{ 'timer.target' | translate: { minutes: targetMinutes() } }}</p>
       </div>
       <p class="keyboard-hint">{{ 'presenter.keys' | translate }}</p>
     </nav>

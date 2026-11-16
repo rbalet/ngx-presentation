@@ -8,12 +8,13 @@ import { ProblemChapter } from './problem-chapter';
 import { ProblemRequirements } from './problem-requirements';
 import { FormDemo } from './form-demo';
 import { FormValidator } from './form-validator';
+import { FormBuilder } from './form-builder';
 import { PeriscopeChapter } from './periscope-chapter';
 import { ClosingChapter } from './closing-chapter';
 
 @Component({
   selector: 'section[appChapterSection]',
-  imports: [NgTemplateOutlet, TranslatePipe, AboutChapter, ChapterTitle, ProblemChapter, ProblemRequirements, FormDemo, FormValidator, PeriscopeChapter, ClosingChapter],
+  imports: [NgTemplateOutlet, TranslatePipe, AboutChapter, ChapterTitle, ProblemChapter, ProblemRequirements, FormDemo, FormValidator, FormBuilder, PeriscopeChapter, ClosingChapter],
   templateUrl: './chapter-section.html',
   host: {
     '[id]': "'chapter-' + chapter().number",

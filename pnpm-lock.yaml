@@ -205,9 +205,12 @@ importers:
       '@lezer/highlight':
         specifier: ^1.2.5
         version: 1.2.5
+      '@ngx-formly/builder':
+        specifier: file:vendor/ngx-formly-builder-0.0.1-headless.tgz
+        version: file:vendor/ngx-formly-builder-0.0.1-headless.tgz(0883896d92bee4b054c830ec81a5b6cd)
       '@ngx-formly/core':
-        specifier: ^11.2.0
-        version: 11.2.0(@angular/forms@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
+        specifier: ^11.3.0
+        version: 11.3.0(@angular/forms@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
       '@ngx-translate/core':
         specifier: ^18.1.0
         version: 18.1.0(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2)
@@ -1054,8 +1057,67 @@ packages:
       '@emnapi/core': ^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3
       '@emnapi/runtime': ^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3
 
-  '@ngx-formly/core@11.2.0':
-    resolution: {integrity: sha512-Yj3P4UdSaS9AzpXR343GUN3s1BOPCGW/NugIbsvRT0w/JwAYD8SyNXxnzswKHqo3fQAFA6qDV5FUm25L0tVHeA==}
+  '@ngx-formly/builder@file:vendor/ngx-formly-builder-0.0.1-headless.tgz':
+    resolution: {integrity: sha512-7eUqxGDTIk0Ft/p5hotFL+OIhqikh1Gx1MU7iEi1h4+aTsYgN2J9VbqWn8JCQsldjTHgv4NFj5p9M9XXRKjtrg==, tarball: file:vendor/ngx-formly-builder-0.0.1-headless.tgz}
+    version: 0.0.1
+    peerDependencies:
+      '@angular/cdk': ^22.0.0
+      '@angular/common': ^22.0.0
+      '@angular/core': ^22.0.0
+      '@angular/forms': ^22.0.0
+      '@angular/material': ^22.0.0
+      '@codemirror/lang-javascript': ^6.2.4
+      '@codemirror/lang-json': ^6.0.2
+      '@codemirror/lang-markdown': ^6.5.2
+      '@codemirror/state': ^6.7.6
+      '@codemirror/view': ^6.43.15
+      '@ngx-formly/core': ^11.0.0
+      '@uiw/codemirror-theme-vscode': ^4.25.11
+      codemirror: ^6.0.2
+      date-fns: ^4.1.0
+      file-saver: ^2.0.5
+      js-beautify: ^1.15.4
+      ngx-drag-drop: ^22.1.0
+      rxjs: ~7.8.0
+      tailwindcss: ^4.1.17
+      terser: ^5.51.2
+      zod: ^4.6.7
+    peerDependenciesMeta:
+      '@angular/cdk':
+        optional: true
+      '@angular/material':
+        optional: true
+      '@codemirror/lang-javascript':
+        optional: true
+      '@codemirror/lang-json':
+        optional: true
+      '@codemirror/lang-markdown':
+        optional: true
+      '@codemirror/state':
+        optional: true
+      '@codemirror/view':
+        optional: true
+      '@uiw/codemirror-theme-vscode':
+        optional: true
+      codemirror:
+        optional: true
+      date-fns:
+        optional: true
+      file-saver:
+        optional: true
+      js-beautify:
+        optional: true
+      ngx-drag-drop:
+        optional: true
+      tailwindcss:
+        optional: true
+      terser:
+        optional: true
+      zod:
+        optional: true
+
+  '@ngx-formly/core@11.3.0':
+    resolution: {integrity: sha512-bO/QMfz12S9flTCU2Q/ppdCT3CGt2p8cY1juZQTpVIaPs/32NVSg7/eivzqWMpbs3vRcffNxRV/j0OeRN2C1yw==}
     peerDependencies:
       '@angular/forms': '>=22.0.0'
       rxjs: ^6.5.3 || ^7.0.0
@@ -1772,6 +1834,9 @@ packages:
     resolution: {integrity: sha512-j3uE8ReKNyUWDjhfEFSJqE/1DLtfTR5Z8yFzVHvBjAk37wNg7HdScjcv8ttPHRvrdgPQMPWxFFI0SsdBzI5lBw==}
     hasBin: true
 
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
+
   log-symbols@7.0.1:
     resolution: {integrity: sha512-ja1E3yCr9i/0hmBVaM0bfwDjnGy8I/s6PP4DFp+yP+a+mrHO4Rm7DtmnqROTUkHIkqffC84YY7AeqX6oFk0WFg==}
     engines: {node: '>=18'}
@@ -1804,6 +1869,10 @@ packages:
 
   msgpackr@1.12.1:
     resolution: {integrity: sha512-4EUH9tQHnMmEgzW/MdAP0KIfa1T9AF+htl0ffe2n5vb2EKn9y2co8ccpgWko6S52Jy1PQZKwRnx5/KkYjtd9MQ==}
+
+  mutative@1.3.0:
+    resolution: {integrity: sha512-8MJj6URmOZAV70dpFe1YnSppRTKC4DsMkXQiBDFayLcDI4ljGokHxmpqaBQuDWa4iAxWaJJ1PS8vAmbntjjKmQ==}
+    engines: {node: '>=14.0'}
 
   mute-stream@4.0.0:
     resolution: {integrity: sha512-gSrprq0fJ3EiOErzjdIZrjysVVmJ4uu1QWfCDss5LypA5OXvrMje5Ym5z6V6RLyJ2eF87lasX7t6a0AnFvZblg==}
@@ -2157,6 +2226,10 @@ packages:
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
+
+  uuid@13.0.2:
+    resolution: {integrity: sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==}
+    hasBin: true
 
   validate-npm-package-name@8.0.0:
     resolution: {integrity: sha512-SCv6OOV6Xj2/3cXy3dGmADluJTNcL3o7hZAglNPTe+WYuEuvxgJzxPrSDLZhF+CwyQOubqgecjMmTJGMVLWjYQ==}
@@ -3032,7 +3105,26 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
-  '@ngx-formly/core@11.2.0(@angular/forms@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)':
+  '@ngx-formly/builder@file:vendor/ngx-formly-builder-0.0.1-headless.tgz(0883896d92bee4b054c830ec81a5b6cd)':
+    dependencies:
+      '@angular/common': 22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2)
+      '@angular/core': 22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)
+      '@angular/forms': 22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@ngx-formly/core': 11.3.0(@angular/forms@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
+      lodash-es: 4.18.1
+      mutative: 1.3.0
+      rxjs: 7.8.2
+      tslib: 2.9.1
+      uuid: 13.0.2
+    optionalDependencies:
+      '@codemirror/lang-javascript': 6.2.5
+      '@codemirror/lang-json': 6.0.2
+      '@codemirror/state': 6.7.6
+      '@codemirror/view': 6.43.15
+      codemirror: 6.0.2
+      zod: 4.6.7
+
+  '@ngx-formly/core@11.3.0(@angular/forms@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)':
     dependencies:
       '@angular/forms': 22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2)
       rxjs: 7.8.2
@@ -3581,6 +3673,8 @@ snapshots:
       '@lmdb/lmdb-win32-x64': 3.5.6
     optional: true
 
+  lodash-es@4.18.1: {}
+
   log-symbols@7.0.1:
     dependencies:
       is-unicode-supported: 2.1.0
@@ -3623,6 +3717,8 @@ snapshots:
     optionalDependencies:
       msgpackr-extract: 3.0.7
     optional: true
+
+  mutative@1.3.0: {}
 
   mute-stream@4.0.0: {}
 
@@ -3948,6 +4044,8 @@ snapshots:
       browserslist: 4.29.5
       escalade: 3.2.0
       picocolors: 1.1.1
+
+  uuid@13.0.2: {}
 
   validate-npm-package-name@8.0.0: {}
 

@@ -1,66 +1,75 @@
-// The outer curves meet the middle chart at its linear reveal speed.
-const revealTimings = [
-  { duration: 500, easing: 'cubic-bezier(0.2, 0, 0.6, 0.5)' },
-  { duration: 400, easing: 'linear' },
-  { duration: 500, easing: 'cubic-bezier(0.4, 0.5, 0.8, 1)' },
-];
-
 export function observeMetricReveal(played: Set<string>) {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const charts = Array.from(
-    document.querySelectorAll<HTMLImageElement>('#chapter-01 .metric-history'),
-    (chart, index) => ({ chart, card: chart.parentElement!, timing: revealTimings[index] }),
-  ).filter(({ chart }) => !played.has(chart.src));
-  const visible = new Set<Element>();
-  let animation: Animation | undefined;
+  const controller = new AbortController();
+  const cleanups = Array.from(document.querySelectorAll<HTMLElement>('#chapter-01 .metric-card'), card => {
+    const logo = card.querySelector<HTMLImageElement>('.metric-logo')!;
+    const chart = card.querySelector<HTMLImageElement>('.metric-history')!;
+    const counter = card.querySelector<HTMLElement>('[data-count-to]')!;
+    const total = Number(counter.dataset.countTo);
+    const formattedTotal = counter.textContent!;
+    const animations: Animation[] = [];
+    let frame = 0;
 
-  function revealNext() {
-    if (animation) return;
-    const next = charts.find(({ card }) => visible.has(card));
-    if (!next) return;
+    if (!played.has(chart.src)) card.dataset.revealPending = '';
 
-    const { chart, card, timing } = next;
-    visible.delete(card);
-    observer.unobserve(card);
-    played.add(chart.src);
-    delete chart.dataset.revealPending;
-    if (reducedMotion.matches) {
-      revealNext();
-      return;
+    function finish() {
+      cancelAnimationFrame(frame);
+      counter.textContent = formattedTotal;
+      for (const animation of animations) animation.finish();
     }
 
-    animation = chart.animate(
-      [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)' }],
-      timing,
-    );
-    animation.onfinish = () => {
-      animation = undefined;
-      revealNext();
+    function reveal() {
+      if (played.has(chart.src)) return;
+      played.add(chart.src);
+      const from = logo.getBoundingClientRect();
+      delete card.dataset.revealPending;
+      if (reducedMotion.matches) return;
+
+      const to = logo.getBoundingClientRect();
+      const x = from.x - to.x;
+      const y = from.y - to.y;
+      const scale = from.width / to.width;
+      animations.push(logo.animate([
+        { transform: `translate(${x}px, ${y}px) rotate(0deg) scale(${scale})`, offset: 0, easing: 'ease-out' },
+        { transform: `translate(${x - 12}px, ${y + 10}px) rotate(-8deg) scale(${scale * 1.04})`, offset: 0.24, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' },
+        { transform: 'translate(3px, -2px) rotate(4deg) scale(0.96)', offset: 0.8, easing: 'ease-in-out' },
+        { transform: 'translate(0px, 0px) rotate(0deg) scale(1)', offset: 1 },
+      ], { duration: 620 }));
+      for (const content of card.children) {
+        if (content === logo || content === chart) continue;
+        animations.push(content.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 180,
+        }));
+      }
+      animations.push(chart.animate([
+        { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)' },
+      ], { duration: 900, easing: 'ease-out' }));
+
+      counter.textContent = '0';
+      const start = performance.now();
+      function count(now: number) {
+        const progress = Math.max(0, Math.min((now - start) / 1800, 1));
+        counter.textContent = Math.floor(total * (1 - (1 - progress) ** 4)).toLocaleString('en-US');
+        if (progress < 1) frame = requestAnimationFrame(count);
+      }
+      frame = requestAnimationFrame(count);
+    }
+
+    for (const event of ['pointerenter', 'focusin', 'click']) {
+      card.addEventListener(event, reveal, { signal: controller.signal });
+    }
+    reducedMotion.addEventListener('change', () => {
+      if (reducedMotion.matches) finish();
+    }, { signal: controller.signal });
+    return () => {
+      finish();
+      for (const animation of animations) animation.cancel();
+      delete card.dataset.revealPending;
     };
-  }
+  });
 
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.intersectionRatio >= 0.5) visible.add(entry.target);
-      else visible.delete(entry.target);
-    }
-    revealNext();
-  }, { threshold: 0.5 });
-
-  for (const { chart, card } of charts) {
-    chart.dataset.revealPending = '';
-    observer.observe(card);
-  }
-
-  function respectMotionPreference() {
-    if (reducedMotion.matches) animation?.finish();
-  }
-
-  reducedMotion.addEventListener('change', respectMotionPreference);
   return () => {
-    reducedMotion.removeEventListener('change', respectMotionPreference);
-    observer.disconnect();
-    animation?.cancel();
-    for (const { chart } of charts) delete chart.dataset.revealPending;
+    controller.abort();
+    for (const cleanup of cleanups) cleanup();
   };
 }

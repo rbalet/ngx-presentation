@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 
 const languages = [
-  { code: 'de', title: 'Warum bauen wir immer wieder dieselben Formulare?', chapters: 'Kapitelübersicht', about: 'Über mich', next: 'Wie geht es weiter?', theme: 'Dunkler Modus', timer: 'Präsentationszeit', target: 'Geplantes Kapitelende: 7 Min.' },
-  { code: 'fr', title: 'Pourquoi recréons-nous toujours les mêmes formulaires ?', chapters: 'Sommaire', about: 'À propos de moi', next: 'Et ensuite ?', theme: 'Mode sombre', timer: 'Durée de la présentation', target: 'Fin du chapitre prévue à 7 min' },
-  { code: 'en', title: 'Why are we still rebuilding the same forms?', chapters: 'Chapter index', about: 'About me', next: "What's next", theme: 'Dark mode', timer: 'Presentation time', target: 'Planned chapter end: 7 min' },
+  { code: 'de', title: 'Warum bauen wir immer wieder dieselben Formulare?', chapters: 'Kapitelübersicht', about: 'Über mich', next: 'Wie geht es weiter?', theme: 'Dunkler Modus', timer: 'Präsentationszeit', target: 'Geplanter Kapitelbeginn: 2 Min.' },
+  { code: 'fr', title: 'Pourquoi recréons-nous toujours les mêmes formulaires ?', chapters: 'Sommaire', about: 'À propos de moi', next: 'Et ensuite ?', theme: 'Mode sombre', timer: 'Durée de la présentation', target: 'Début du chapitre prévu à 2 min' },
+  { code: 'en', title: 'Why are we still rebuilding the same forms?', chapters: 'Chapter index', about: 'About me', next: "What's next", theme: 'Dark mode', timer: 'Presentation time', target: 'Planned chapter start: 2 min' },
 ];
 
 test('language switching translates content and accessibility labels, preserves state and survives reloads', async ({ page }) => {

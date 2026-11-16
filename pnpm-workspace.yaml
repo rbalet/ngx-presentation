@@ -5,3 +5,5 @@ allowBuilds:
   '@parcel/watcher': false
   lmdb: false
   msgpackr-extract: false
+minimumReleaseAgeExclude:
+  - '@ngx-formly/core@11.3.0'

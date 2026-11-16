@@ -277,14 +277,14 @@ test('the validator adapts to translations, themes and narrow screens', async ({
   await expect(editor).not.toHaveCSS('color', lightColor);
 });
 
-test('API and validation precedes the empty Make it yours chapter', async ({ page }) => {
+test('API and validation precedes the Make it yours builder', async ({ page }) => {
   await page.goto('/#chapter-06');
   const custom = page.locator('#chapter-06');
   const validation = page.locator('#chapter-05');
   const index = page.getByRole('navigation', { name: 'Chapter index', exact: true });
   await expect(index.locator('a[href="#chapter-05"] .index-title')).toHaveText('API & validation');
   await expect(index.locator('a[href="#chapter-06"] .index-title')).toHaveText('Make it yours');
-  await expect(custom.locator('.chapter-content')).toHaveText(/^06\s*Make it yours\s*$/);
+  await expect(custom.getByRole('heading', { name: 'Live preview', exact: true })).toBeVisible();
   await custom.getByRole('link', { name: 'Previous: 05', exact: true }).click();
   await expect(page).toHaveURL(/#chapter-05$/);
   await expect(validation.getByRole('heading', { level: 2 })).toHaveText(/^05\s*API & validation\s*$/);
@@ -321,9 +321,7 @@ test('capability cards explain each integration and finish with the skill prompt
   await cards.nth(1).click();
   await expect(cards.first()).toHaveAttribute('aria-pressed', 'false');
   await expect(detail.getByRole('heading', { name: 'WebMCP', exact: true })).toBeVisible();
-  await expect(detail.locator('.capability-page:not([inert]) > p')).toHaveText([
-    'Set webMcp: true to expose the field to a browser agent.',
-  ]);
+  await expect(detail.getByRole('textbox', { name: 'Phone number', exact: true })).toBeVisible();
   await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("key: 'phoneNumber'");
   await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("label: 'Phone number'");
   await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText('webMcp: true');

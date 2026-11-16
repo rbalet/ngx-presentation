@@ -1,7 +1,7 @@
 <p class="intro">{{ 'periscope.intro' | translate }}</p>
 <div class="product-areas" role="group" [attr.aria-label]="'periscope.chooseArea' | translate">
   @for (item of areas; track item) {
-    <button type="button" [attr.aria-pressed]="area() === item" (click)="area.set(item)">
+    <button type="button" [attr.aria-pressed]="area() === item" (click)="area.set(item); hoveredCapability.set(null); focusedCapability.set(null)">
       {{ 'periscope.' + item + '.name' | translate }}
     </button>
   }
@@ -11,11 +11,36 @@
     <h3>{{ 'periscope.' + area() + '.title' | translate }}</h3>
     <ul class="formly-capabilities" [attr.aria-label]="'periscope.capabilities' | translate">
       @for (capability of ('periscope.' + area() + '.capabilities' | translate); track $index) {
-        <li>{{ capability }}</li>
+        <li>
+          <button #capabilityButton type="button" class="capability" [class.is-active]="activeCapability() === $index"
+            (mouseenter)="hoveredCapability.set($index)" (mouseleave)="hoveredCapability.set(null)"
+            (focus)="focusedCapability.set($index)" (blur)="focusedCapability.set(null)"
+            (click)="capabilityButton.focus()">
+            {{ capability }}
+          </button>
+        </li>
       }
     </ul>
   </div>
-  <img class="area-image" [src]="'periscope/' + area() + '.png'" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
+  <div class="area-illustration" aria-hidden="true">
+    <div class="area-picture">
+      <img class="area-image" [src]="'periscope/' + area() + '.png'" alt="" [width]="area() === 'surveys' ? 1678 : 1536" [height]="area() === 'surveys' ? 937 : 1024" loading="lazy" decoding="async" />
+      <svg class="area-colors" viewBox="0 0 1 1" preserveAspectRatio="none">
+        <defs>
+          @for (region of regions[area()]; track $index) {
+            <clipPath [attr.id]="'periscope-region-' + $index" clipPathUnits="objectBoundingBox">
+              <path [attr.d]="region" />
+            </clipPath>
+          }
+        </defs>
+        @for (region of regions[area()]; track $index) {
+          <image class="area-color" [class.is-active]="activeCapability() === $index"
+            [attr.href]="'periscope/' + area() + '.png'" width="1" height="1" preserveAspectRatio="none"
+            [attr.clip-path]="'url(#periscope-region-' + $index + ')'" />
+        }
+      </svg>
+    </div>
+  </div>
 </div>
 <div class="demo-link">
   <a href="https://periscope.localhost/error/login" target="_blank" rel="noopener noreferrer">

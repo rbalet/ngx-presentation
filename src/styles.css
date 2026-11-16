@@ -678,7 +678,19 @@ h1 {
   right: clamp(1.25rem, 2vw, 2rem);
   width: 1.65rem;
   height: 1.65rem;
+  object-fit: contain;
+  transform-origin: top left;
   pointer-events: none;
+}
+.metric-card[data-reveal-pending] > :not(.metric-logo) {
+  visibility: hidden;
+}
+.metric-card[data-reveal-pending] .metric-logo {
+  top: 50%;
+  right: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  transform: translate(50%, -50%);
 }
 .metric-history {
   position: absolute;
@@ -690,11 +702,6 @@ h1 {
 }
 [data-theme="dark"] :is(.metric-logo, .metric-history) {
   filter: brightness(1.8);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .metric-history[data-reveal-pending] {
-    clip-path: inset(0 100% 0 0);
-  }
 }
 .metric-card h3,
 .metric-card h4 {
@@ -735,6 +742,14 @@ h1 {
   height: 0.22em;
   border-radius: 50%;
   background: #b58a12;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 .metric-label {
   margin-top: 0.6rem;

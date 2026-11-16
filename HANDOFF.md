@@ -19,7 +19,7 @@ The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. 
 | 03      | Introduction to ngx-formly             | 7       | Main                            |
 | 04      | Agentic Workflow                       | 4       | Main, result reviewed in 05     |
 | 05      | API & validation                       | 6       | Main, editing and Studio export |
-| 06      | Make it yours                          | 4       | Reserved, content empty         |
+| 06      | Make it yours                          | 4       | Headless builder and live preview |
 | 07      | Periscope                              | 8       | Main                            |
 | 12      | What's next                            | 3       | Main, future plans              |
 | 11      | Q&A                                    | 15      | Discussion                      |
@@ -28,9 +28,9 @@ The main content totals 39 minutes. With 15 minutes of Q&A, six minutes remain a
 
 ## Content decisions
 
-- Treat MCP/WebMCP as implemented for the presentation, as the user requested. The scaffold does not implement an MCP server or WebMCP integration itself.
+- Chapter 04 uses Formly 11.3's built-in WebMCP integration for its opted-in phone field. The `fill_phone_number` tool requires a browser with WebMCP enabled; ordinary browsers still support manual input. The MCP card links to Formly's hosted server.
 - Periscope is the user's event, workflow and survey tool. Chapter 07 pairs each area with three proposed Formly capabilities and the supplied product illustration. The illustrations are bundled locally; start Periscope's separate environment for a live product demo.
-- Chapter 05 reuses Formly’s JSON validator and starts with chapter 03’s configuration. Chapter 06 is empty pending a headless component example.
+- Chapter 05 reuses Formly’s JSON validator and starts with chapter 03’s configuration. Chapter 06 uses the packed `@ngx-formly/builder` headless engine with native controls, a live preview and JSON export; see `vendor/README.md` for release findings.
 - Keep translation optional. It supports the main presentation but must not displace it.
 - Do not invent adoption statistics, time savings or Periscope implementation details.
 
@@ -50,11 +50,11 @@ The main content totals 39 minutes. With 15 minutes of Q&A, six minutes remain a
 
 Use "About me" as the title and "And my vanity metrics" as a smaller subtitle beneath it. Hide the duration on this slide; retain its two-minute allocation in the agenda.
 
-The user requested a playful introduction inspired by simple three-card presentation slides. Keep Stack Overflow, ngx-translate and ngx-formly in that order, on one row on desktop. The two libraries share an **Open-source maintainer** container. The cards stack on small screens. Keep the scroll animation and reduced-motion support.
+The user requested a playful introduction inspired by simple three-card presentation slides. Keep Stack Overflow, ngx-translate and ngx-formly in that order, on one row on desktop. The two libraries share an **Open-source maintainer** container. The cards stack on small screens. Reveal each card only on its first hover, keyboard focus or tap; retain reduced-motion support.
 
 All three cards are neutral by default. Hovering a card turns its border and main metric the primary red; the highlight follows the pointer. Apply this only on devices that support hover to avoid a sticky highlight on touch screens.
 
-Match the user's portfolio reference with a small source logo at the top right and a subtle graph behind the foreground content. Show exact npm counts, not abbreviated figures. Keep Fanatic as the Stack Overflow headline. The graph behind it shows public reputation gains, not visits or progress toward the badge.
+Start each card with only its project logo centered. On the first hover, keyboard focus or tap, give the logo a small backward dip and tilt before moving it to the top right with a brief settling wiggle (620ms total), while immediately revealing the content and graph and counting up over 1.8 seconds with a gradual slowdown near the end. Keep the revealed state across pointer exits, scrolling and responsive layout changes. Reduced motion reveals the final state immediately. Stack Overflow keeps the gold-dot Fanatic headline and counts to 100 consecutive days of visits in the smaller line below it; the library cards count to their exact weekly npm downloads. The Stack Overflow graph shows public reputation gains, not visits or progress toward the badge.
 
 Content lives in `src/components/about-chapter.ts`. The slide introduces Raphaël Balet as an Expert Developer at BIT. It uses the Fanatic badge as the joke and ends the Formly card with "The reason we're here."
 
@@ -70,7 +70,7 @@ Graph assets in `public/metrics/` are static SVGs generated from these sources:
 - [ngx-translate daily source](https://api.npmjs.org/downloads/range/2025-11-10:2026-11-08/%40ngx-translate%2Fcore) and [ngx-formly daily source](https://api.npmjs.org/downloads/range/2025-11-10:2026-11-08/%40ngx-formly%2Fcore), 10 November 2025 to 8 November 2026. Aggregate the 364 daily values into **52 complete Monday-to-Sunday weekly totals**. Plot one point per week with a zero baseline. The last points equal the displayed 1,912,458 and 311,233. Do not plot daily counts beneath a weekly headline. Reject missing dates or incomplete weeks instead of inventing zero downloads. Keep actual zero values returned by npm. Each SVG preserves its weekly totals in metadata. Generation checks cover weekday/weekend aggregation, date continuity, partial weeks, and agreement with the headline counts.
 - [Stack Overflow public reputation events](https://api.stackexchange.com/2.3/users/11135174/reputation-history?site=stackoverflow&pagesize=100), checked 9 November 2026. The latest 100 events span 9 March 2025 to 20 August 2026. Group the changes by UTC date and plot their cumulative sum across 66 dates. This follows the portfolio implementation and is not total reputation. The horizontal axis uses elapsed time.
 
-Each graph includes its source and date range in its SVG description. The SVGs load locally, so the slide works without runtime API requests. Logos come from Simple Icons. The reference implementation is the user's portfolio at `/Users/raphael.balet/Documents/the-corner-factory/forge/websites/raphael-balet/src/components/portfolio/project-stats.tsx`.
+Each graph includes its source and date range in its SVG description. The SVGs load locally, so the slide works without runtime API requests. The Stack Overflow logo comes from Simple Icons; the metric logos for ngx-translate and Formly simplify the speech bubbles from the [official ngx-translate favicon](https://ngx-translate.org/images/favicon.svg) and the form rows from `public/formly.svg` into flat gray marks. All three use the same muted gray, transparent backgrounds and dark-theme brightness. The reference implementation is the user's portfolio at `/Users/raphael.balet/Documents/the-corner-factory/forge/websites/raphael-balet/src/components/portfolio/project-stats.tsx`.
 
 These are static, dated snapshots of the core packages. Do not add the HTTP loader's downloads to the ngx-translate figure or describe downloads as unique people or applications. Refresh both figures and the displayed date together if needed before the talk. Source links open in a new tab so the presentation stays in place.
 
@@ -106,7 +106,7 @@ Rehearse the complete flow in PRESENTING.md. Confirm the real Periscope environm
 
 - Chapter 05 uses CodeMirror and jsonc-parser, matching the upstream Formly validator. Its editor loads when the chapter enters the viewport. Validation source and its MIT license are in `src/demo/formly-validator/`.
 - Chapter 03 renders real Formly fields and shows their configuration. Chapter 04 presents the installed skill prompt to update the shared form configuration, then leads directly to chapter 05 to review the agent’s result. Chapter 05 starts with chapter 03’s configuration and checks an independent JSON draft without executing it.
-- Chapter 06 retains its heading and navigation; its content is empty until the headless component example is added.
+- Chapter 06 edits an in-memory copy of chapter 03’s current form through `provideBuilderEngine` and `BuilderEngineService`. It supports three field types, labels, required flags, ordering, removal, preview validation and JSON download. Reset reloads the current shared example; chapter 05’s JSON drafts remain separate.
 - Chapter 07 switches between events, workflows and surveys, showing three Formly capabilities and a matching illustration for each area. Chapters 11 and 12 contain two audience prompts and future plans. Chapter 03 demonstrates language switching beside the live form while retaining model keys and answers.
 - Presentation controls and summaries are translated into English, German and French; validator diagnostic details retain the upstream English wording. Desktop focus view and keyboard navigation support live presenting; fields retain their normal keyboard behavior.
 - [PRESENTING.md](PRESENTING.md) contains the full run of show and rehearsal steps.

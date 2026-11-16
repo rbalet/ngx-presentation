@@ -77,7 +77,7 @@ test("the presentation timer starts empty, survives reloads and turns primary on
   );
 });
 
-test("the timer target follows the planned chapter end independently of elapsed time", async ({ page }) => {
+test("the timer target advances only after each chapter independently of elapsed time", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const timer = page.getByRole("progressbar", { name: "Presentation time" });
@@ -86,16 +86,19 @@ test("the timer target follows the planned chapter end independently of elapsed 
   await expect(page.locator("#timer-target")).toBeHidden();
 
   for (const [chapter, minutes] of [
-    ["03", 14],
-    ["04", 18],
-    ["07", 36],
-    ["12", 39],
-    ["11", 54],
-    ["01", 2],
+    ["01", 0],
+    ["02", 2],
+    ["02-continued", 2],
+    ["03", 7],
+    ["04", 14],
+    ["07", 28],
+    ["12", 36],
+    ["11", 39],
+    ["01", 0],
   ] as const) {
     await page.locator(`#chapter-${chapter}`).evaluate(element => element.scrollIntoView());
-    await expect(page.locator("#timer-target")).toHaveText(`Planned chapter end: ${minutes} min`);
-    await expect(timer).toHaveAccessibleDescription(`Planned chapter end: ${minutes} min`);
+    await expect(page.locator("#timer-target")).toHaveText(`Planned chapter start: ${minutes} min`);
+    await expect(timer).toHaveAccessibleDescription(`Planned chapter start: ${minutes} min`);
     await expect(timer).toHaveAttribute("value", "0");
     await expect(marker).toBeVisible();
     const trackBounds = (await page.locator(".timer-track").boundingBox())!;
@@ -490,8 +493,15 @@ test("the introduction keeps three cards aligned and groups the maintainers", as
   await expect(chapter.locator(".chapter-slide")).toHaveCount(isMobile ? 2 : 1);
   const cards = chapter.getByRole("article");
   await expect(cards).toHaveCount(3);
-  for (const chart of await chapter.locator(".metric-history").all()) {
-    await expect(chart).toHaveCSS("clip-path", "none");
+  await expect(cards.first().locator(".fanatic-badge")).toHaveText("Fanatic");
+  await expect(cards.first().locator(".metric-label [data-count-to]")).toHaveAttribute("data-count-to", "100");
+  for (const card of await cards.all()) {
+    await expect(card.locator(".metric-history")).toBeHidden();
+    await expect(card.locator(".metric-value")).toBeHidden();
+    const bounds = (await card.boundingBox())!;
+    const logo = (await card.locator(".metric-logo").boundingBox())!;
+    expect(logo.x + logo.width / 2).toBeCloseTo(bounds.x + bounds.width / 2, 0);
+    expect(logo.y + logo.height / 2).toBeCloseTo(bounds.y + bounds.height / 2, 0);
   }
   const maintainers = chapter.getByRole("region", {
     name: "Open-source",
@@ -527,70 +537,76 @@ test("the introduction keeps three cards aligned and groups the maintainers", as
   ).toBeInViewport();
 });
 
-test("the metric charts reveal in order on first entry only", async ({
-  page,
-  isMobile,
-}) => {
+test("metrics reveal and count up once per card on hover or tap", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   const events: string[] = [];
-  await page.exposeFunction("recordMetricReveal", (event: string) =>
-    events.push(event),
-  );
+  await page.exposeFunction("recordMetricReveal", (event: string) => events.push(event));
   await page.addInitScript(() => {
-    const record = (
-      window as unknown as { recordMetricReveal(event: string): void }
-    ).recordMetricReveal;
     const animate = Element.prototype.animate;
     Element.prototype.animate = function (...args) {
       const animation = animate.apply(this, args);
-      if (this instanceof HTMLImageElement && this.matches(".metric-history")) {
-        const chart = this.closest("article")!.getAttribute("aria-labelledby");
-        record(`start ${chart}`);
-        animation.addEventListener("finish", () => record(`finish ${chart}`));
+      if (this.matches(".metric-history")) {
+        const record = (window as unknown as { recordMetricReveal(event: string): void }).recordMetricReveal;
+        record(this.closest("article")!.getAttribute("aria-labelledby")!);
       }
       return animation;
     };
   });
-  await page.goto("/");
-  const charts = page.locator("#chapter-01 .metric-history");
-  await expect(charts.last()).toHaveCSS("clip-path", "inset(0px 100% 0px 0px)");
+  await page.goto("/#chapter-01");
+  const cards = page.locator("#chapter-01 .metric-card");
+  await expect(page.locator(".metric-card[data-reveal-pending]")).toHaveCount(3);
   expect(events).toEqual([]);
+  const totals = ["100", "1,912,458", "311,233"];
+  const sources = ["/metrics/stackoverflow.svg", "/metrics/ngx-translate.svg", "/metrics/ngx-formly.svg"];
 
-  await page
-    .locator("#chapter-01")
-    .evaluate((slide) => slide.scrollIntoView({ behavior: "instant" }));
-  await expect
-    .poll(() => events.slice(0, 2))
-    .toEqual(["start stackoverflow-title", "finish stackoverflow-title"]);
-  if (isMobile) {
-    await expect(charts.last()).toHaveCSS(
-      "clip-path",
-      "inset(0px 100% 0px 0px)",
-    );
-    await page
-      .locator("#chapter-01-continued")
-      .evaluate((slide) => slide.scrollIntoView({ behavior: "instant" }));
+  for (const index of [2, 0, 1]) {
+    const card = cards.nth(index);
+    const logo = card.locator(".metric-logo");
+    const counter = card.locator("[data-count-to]");
+    await expect(logo).toHaveAttribute("src", sources[index]);
+    await card.scrollIntoViewIfNeeded();
+    await expect(card.locator(".metric-value")).toBeHidden();
+    if (isMobile) await card.tap();
+    else await card.hover();
+    await expect.poll(() => card.evaluate(element => {
+      const count = Number(element.querySelector("[data-count-to]")!.textContent!.replaceAll(",", ""));
+      return count > 0 && element.querySelector(".metric-logo")!.getAnimations().some(animation => animation.playState === "running");
+    }), { intervals: [16, 32, 50] }).toBe(true);
+    await expect(counter).toHaveText(totals[index]);
+    await expect(card.locator(".metric-history")).toHaveCSS("clip-path", "none");
+    const bounds = (await card.boundingBox())!;
+    const logoBounds = (await logo.boundingBox())!;
+    expect(logoBounds.x).toBeGreaterThan(bounds.x + bounds.width / 2);
+    expect(logoBounds.y).toBeLessThan(bounds.y + bounds.height / 2);
+    await page.mouse.move(0, 0);
+    if (isMobile) await card.tap();
+    else await card.hover();
+    await expect(counter).toHaveText(totals[index]);
   }
 
-  const sequence = [
-    "stackoverflow-title",
-    "translate-title",
-    "formly-title",
-  ].flatMap((chart) => [`start ${chart}`, `finish ${chart}`]);
-  await expect.poll(() => events).toEqual(sequence);
-  for (const id of [
-    "chapter-02",
-    "chapter-01",
-    ...(isMobile ? ["chapter-01-continued"] : []),
-  ]) {
-    await page
-      .locator(`#${id}`)
-      .evaluate((slide) => slide.scrollIntoView({ behavior: "instant" }));
-    await expect(page.locator(`#${id}`)).toBeInViewport();
+  await page.locator("#chapter-02").evaluate(element => element.scrollIntoView({ behavior: "instant" }));
+  await page.locator("#chapter-01").evaluate(element => element.scrollIntoView({ behavior: "instant" }));
+  await page.setViewportSize(isMobile ? { width: 1280, height: 800 } : { width: 600, height: 800 });
+  await expect(page.locator(".metric-card[data-reveal-pending]")).toHaveCount(0);
+  await expect(cards.locator("[data-count-to]")).toHaveText(totals);
+  expect(events).toEqual(["formly-title", "stackoverflow-title", "translate-title"]);
+});
+
+test("keyboard focus reveals metrics immediately with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/#chapter-01");
+  const cards = page.locator("#chapter-01 .metric-card");
+  for (const card of await cards.all()) {
+    await expect(card.locator(".metric-value")).toBeHidden();
+    await card.focus();
+    await expect(card.locator(".metric-value")).toBeVisible();
+    await expect(card.locator(".metric-history")).toBeVisible();
+    expect(await card.evaluate(element => element.getAnimations({ subtree: true }).length)).toBe(0);
+    const counter = card.locator("[data-count-to]");
+    await expect(counter).toHaveText(Number(await counter.getAttribute("data-count-to")).toLocaleString("en-US"));
+    await card.press("Tab");
+    await expect(card.locator("h3 a, h4 a")).toBeFocused();
   }
-  for (const chart of await charts.all())
-    await expect(chart).toHaveCSS("clip-path", "none");
-  expect(events).toEqual(sequence);
 });
 
 test("the problem chapter stays active from the form examples through the shared requirements", async ({
