@@ -1,15 +1,17 @@
 # Builder consumer trial
 
-Chapter 06 consumes the headless root of `@ngx-formly/builder` as an ordinary Angular package. The tarball was built on 16 November 2026 from the sibling repository's working tree, based on commit `0d67fdc43ab863ca072b2170c9693b994223bad0`, **including the uncommitted headless-root changes**. It retains version `0.0.1` for this local trial; a pending minor changeset records the breaking migration before publication. There are no source aliases, deep imports or copied engine implementations in the presentation.
+Chapter 06 consumes the headless root of `@ngx-formly/builder` as an ordinary Angular package. The tarball was rebuilt on 17 November 2026 from the sibling repository's working tree, based on commit `0d67fdc43ab863ca072b2170c9693b994223bad0`, **including the uncommitted headless-root, export-isolation and unchanged-edit fixes**. It retains version `0.0.1` for this local trial; pending changesets record the breaking migration and fixes before publication. There are no source aliases, deep imports or copied engine implementations in the presentation.
 
 - Source: https://github.com/ngx-formly/ngx-formly-builder
-- Artifact: `ngx-formly-builder-0.0.1-headless.tgz`
-- SHA-256: `4ed4ed112ca04ed2566fb814d19f7d6f345287b4a673c7321fb3499e476e79ed`
+- Artifact: `ngx-formly-builder-0.0.1-headless-fixes.tgz`
+- SHA-256: `5028328d46cd270da4cb3cae83c0eacfaac0b77f7632484a7ff06e7b54d05a30`
 - Package license: MIT; LICENSE is included in the tarball.
 
 ## What the demo reuses
 
 `provideBuilderEngine` creates a chapter-local environment injector. `BuilderEngineService` owns field identity, configuration edits, ordering, removal and clean Formly JSON export. The host provides an in-memory implementation of `FormStoreService` and renders the exported preview configuration using the presentation's registered Formly types.
+
+The refreshed engine exports JSON from document state, independently of Formly's mutable preview fields. The presentation now binds the preview signal directly, without an extra clone. Unchanged field values and clearing absent properties no longer invalidate previews or trigger autosave. Storage remains configurable through `formStore`, with `LocalFormStoreService` as the library default.
 
 The UI supports input, textarea and select fields; labels and required flags; move up/down; remove; reset; validation preview; and JSON download. It deliberately leaves nested groups, repeaters, arbitrary JSON import, choice-option editing, drag and drop and persistent workspaces to the full editor. Controls translate with the presentation; field labels are editable document content and keep their values when the UI language changes. Reset takes a fresh, localized snapshot from chapter 03. Unvalidated chapter 05 drafts are not imported.
 
@@ -41,6 +43,8 @@ The new production graph contains no builder UI entry point, Material/CDK, Terse
 
 ## Verification and release assessment
 
+The 17 November refresh passed the presentation production build, Angular/TypeScript checks and all six builder browser tests. The export assertion now rejects extra runtime properties after rendering and editing the preview. The installed engine was checked against the vendored tarball. The upstream fixes passed all 494 core tests, core lint/build, package contracts and the API report check. The sandboxed presentation build aborted with exit code 134; the same build passed outside the sandbox.
+
 Passed after the headless split:
 
 - Presentation production build, Angular/TypeScript checks and EN/DE/FR catalogue audit.
@@ -64,10 +68,10 @@ pnpm --dir libs/core pack --pack-destination ../../packages
 pnpm run check:packages:e2e
 ```
 
-Copy `packages/ngx-formly-builder-0.0.1.tgz` into this directory as `ngx-formly-builder-0.0.1-headless.tgz`, then from the presentation root:
+Copy `packages/ngx-formly-builder-0.0.1.tgz` into this directory as `ngx-formly-builder-0.0.1-headless-fixes.tgz`, then from the presentation root:
 
 ```sh
-pnpm add ./vendor/ngx-formly-builder-0.0.1-headless.tgz
+pnpm add ./vendor/ngx-formly-builder-0.0.1-headless-fixes.tgz
 pnpm typecheck
 pnpm check:i18n
 pnpm build --stats-json

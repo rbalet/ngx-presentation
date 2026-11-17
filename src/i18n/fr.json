@@ -173,8 +173,7 @@
         "Valider les réponses obligatoires et leur format."
       ]
     },
-    "open": "Ouvrir Periscope en local",
-    "local": "Aperçu du produit. Pour une démo en direct, démarrer Periscope et son API.",
+    "open": "Ouvrir Periscope",
     "capabilities": "Ce que permet ngx-formly"
   },
   "closing": {

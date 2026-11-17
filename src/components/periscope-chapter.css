@@ -21,7 +21,6 @@ p { line-height: 1.5; }
 .area-color.is-active { opacity: 1; }
 .demo-link { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 1.5rem; }
 .demo-link a { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.625rem 1rem; background: var(--action); color: var(--paper); text-decoration: none; font-weight: 700; }
-.demo-link p { max-width: 33ch; color: var(--muted); font-size: 0.85rem; }
 @media (hover: hover) {
   .product-areas button:not([aria-pressed="true"]):hover { background: var(--highlight); }
   .demo-link a:hover { background: var(--red); }

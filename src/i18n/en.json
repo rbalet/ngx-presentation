@@ -173,8 +173,7 @@
         "Validate required answers and response formats."
       ]
     },
-    "open": "Open local Periscope",
-    "local": "Walkthrough. For a live demo, start Periscope and its API.",
+    "open": "Open Periscope",
     "capabilities": "What ngx-formly can do"
   },
   "closing": {

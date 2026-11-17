@@ -431,9 +431,19 @@
         "purpose": "Reveal the three metric charts sequentially when visible."
       },
       {
+        "name": "problem-press-and-reveal",
+        "value": "180ms ease-in-out to scaleX(0.98) and back; 280ms cubic-bezier(0.16, 1, 0.3, 1) reveal after 180ms",
+        "purpose": "Keep the selected card’s left edge fixed as it compresses and releases before its first solution emerges from a 12px horizontal offset and 98% scale; mobile uses a 10px vertical offset."
+      },
+      {
+        "name": "control-feedback",
+        "value": "160ms ease-out for colors; 120ms ease-out to scale(0.98) while pressed",
+        "purpose": "Acknowledge pointer and keyboard interactions across shared controls, with immediate reduced-motion states."
+      },
+      {
         "name": "problem-answer",
         "value": "380ms cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Slide old and new answers vertically within their container."
+        "purpose": "Extend the panel downward to 102% from its fixed top edge, close upward, then reveal the next answer; each page gets 190ms of the 380ms sequence."
       },
       {
         "name": "problem-hover",

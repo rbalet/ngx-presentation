@@ -905,6 +905,7 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
     const originalSize = (await firstCard.boundingBox())!;
     await first.click();
     await expect(heading).toHaveAccessibleName("02 The Solutions");
+    await expect(firstCard).toHaveCSS("transform", "none");
     const selectedSize = (await firstCard.boundingBox())!;
     expect(selectedSize.width).toBeCloseTo(originalSize.width);
     expect(selectedSize.height).toBeCloseTo(originalSize.height);
@@ -939,6 +940,7 @@ for (const reducedMotion of ["reduce", "no-preference"] as const) {
       solution.getByRole("link", { name: "107 contributors" }),
     ).toBeVisible();
 
+    await expect(solution).toHaveCSS("transform", "none");
     const cards = (await problems.locator(".problem-pillars").boundingBox())!;
     const panel = (await solution.boundingBox())!;
     if (isMobile) {

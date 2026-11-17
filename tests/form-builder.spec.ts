@@ -44,7 +44,7 @@ test('the packed builder edits, reorders, removes and exports real Formly fields
   const source = await readFile((await download.path())!, 'utf8');
   const exported = JSON.parse(source);
   expect(exported).toHaveLength(5);
-  expect(exported[4]).toMatchObject({ type: 'input', props: { label: 'Company', required: true } });
+  expect(exported[4]).toEqual({ key: expect.any(String), type: 'input', props: { label: 'Company', required: true } });
   expect(exported[4].key).toBeTruthy();
   expect(source).not.toContain('_info');
   expect(source).not.toContain('formControl');

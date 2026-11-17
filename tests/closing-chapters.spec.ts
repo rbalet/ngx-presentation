@@ -23,8 +23,7 @@ test('Periscope pairs each area with three Formly capabilities and a bundled ill
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
-  await expect(chapter.getByRole('link', { name: 'Open local Periscope' })).toHaveAttribute('href', 'https://periscope.localhost/error/login');
-  await expect(chapter.getByText('Walkthrough. For a live demo, start Periscope and its API.')).toBeVisible();
+  await expect(chapter.getByRole('link', { name: 'Open Periscope' })).toHaveAttribute('href', 'https://int.periscope.bit.admin.ch');
   for (const language of [
     { code: 'de', label: 'Was ngx-formly ermöglicht', first: 'Fragebögen aus wiederverwendbaren Fragetypen erstellen.' },
     { code: 'fr', label: 'Ce que permet ngx-formly', first: 'Créer des questionnaires à partir de types de questions réutilisables.' },

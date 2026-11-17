@@ -206,8 +206,8 @@ importers:
         specifier: ^1.2.5
         version: 1.2.5
       '@ngx-formly/builder':
-        specifier: file:vendor/ngx-formly-builder-0.0.1-headless.tgz
-        version: file:vendor/ngx-formly-builder-0.0.1-headless.tgz(0883896d92bee4b054c830ec81a5b6cd)
+        specifier: file:vendor/ngx-formly-builder-0.0.1-headless-fixes.tgz
+        version: file:vendor/ngx-formly-builder-0.0.1-headless-fixes.tgz(0883896d92bee4b054c830ec81a5b6cd)
       '@ngx-formly/core':
         specifier: ^11.3.0
         version: 11.3.0(@angular/forms@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(@angular/platform-browser@22.2.6(@angular/common@22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
@@ -1057,8 +1057,8 @@ packages:
       '@emnapi/core': ^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3
       '@emnapi/runtime': ^1.7.1 || 2.0.0-beta.2 || 2.0.0-beta.3
 
-  '@ngx-formly/builder@file:vendor/ngx-formly-builder-0.0.1-headless.tgz':
-    resolution: {integrity: sha512-7eUqxGDTIk0Ft/p5hotFL+OIhqikh1Gx1MU7iEi1h4+aTsYgN2J9VbqWn8JCQsldjTHgv4NFj5p9M9XXRKjtrg==, tarball: file:vendor/ngx-formly-builder-0.0.1-headless.tgz}
+  '@ngx-formly/builder@file:vendor/ngx-formly-builder-0.0.1-headless-fixes.tgz':
+    resolution: {integrity: sha512-MyHZqUTqJqQCT3MnHdYOc14LCfXdnXFoJ9Uh/6uSv97g0PG++b6BxmIYYupX3Job3vRj8juBZt/PDfNsAgj5xA==, tarball: file:vendor/ngx-formly-builder-0.0.1-headless-fixes.tgz}
     version: 0.0.1
     peerDependencies:
       '@angular/cdk': ^22.0.0
@@ -3105,7 +3105,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
-  '@ngx-formly/builder@file:vendor/ngx-formly-builder-0.0.1-headless.tgz(0883896d92bee4b054c830ec81a5b6cd)':
+  '@ngx-formly/builder@file:vendor/ngx-formly-builder-0.0.1-headless-fixes.tgz(0883896d92bee4b054c830ec81a5b6cd)':
     dependencies:
       '@angular/common': 22.2.6(@angular/core@22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2))(rxjs@7.8.2)
       '@angular/core': 22.2.6(@angular/compiler@22.2.6)(rxjs@7.8.2)

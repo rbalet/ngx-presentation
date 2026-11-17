@@ -20,7 +20,7 @@ class FormBuilderEditor {
   private readonly state = inject(DemoFormState);
   private readonly translate = inject(TranslateService);
   readonly types = ['input', 'textarea', 'select'] as const;
-  readonly fields = computed(() => structuredClone(this.engine.activePreviewFormFields()));
+  readonly fields = this.engine.activePreviewFormFields;
   readonly selectedIndex = computed(() => this.engine.activeRootFieldIds().indexOf(this.engine.activeFieldId() ?? ''));
   readonly error = signal(false);
   form = new FormGroup({});

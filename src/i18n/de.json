@@ -173,8 +173,7 @@
         "Pflichtantworten und Antwortformate validieren."
       ]
     },
-    "open": "Periscope lokal öffnen",
-    "local": "Produktrundgang. Für eine Live-Demo Periscope und seine API starten.",
+    "open": "Periscope öffnen",
     "capabilities": "Was ngx-formly ermöglicht"
   },
   "closing": {
