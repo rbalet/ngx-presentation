@@ -28,8 +28,7 @@
     "overview": "Zurück zur Übersicht",
     "previousSlide": "Vorherige Folie",
     "maintainers": "Weiter zu Open Source",
-    "custom": "Weiter zum individuellen Beispiel",
-    "requirements": "Weiter zu den Anforderungen"
+    "ssfForms": "Weiter zu SSF-Forms"
   },
   "timer": {
     "title": "Präsentationszeit",
@@ -53,47 +52,20 @@
     "reason": "Der Grund, warum wir hier sind."
   },
   "problem": {
-    "subtitle": "Vertrautes Formular, <strong>anderer Tech-Stack.</strong>",
-    "solutions": "Die Lösungen",
     "gallery": "Gleiche Felder, andere Designs",
-    "customExample": "Individuelles Formularbeispiel",
-    "contact": "Kontaktdaten",
-    "access": "Zugriffsanfrage",
-    "event": "Veranstaltungsanmeldung",
-    "material": "Von Material inspiriert",
-    "bootstrap": "Von Bootstrap inspiriert",
-    "custom": "Individuelles Design",
-    "name": "Name",
+    "ssfFormsExample": "Beispiel für SSF-Forms",
+    "contact": "Oblique",
+    "access": "SSF-Forms",
+    "event": "PeriScope",
+    "material": "Angular Material",
+    "bootstrap": "Form.io",
+    "custom": "ngx-formly",
+    "name": "Vollständiger Name",
     "email": "E-Mail",
     "required": "erforderlich",
-    "repetition": "Das Design ändert sich. <strong>Die Arbeit wiederholt sich.</strong>",
-    "maintenance": "Pflichtfelder, Validierung, bedingte Logik, API-Integration – und laufende Wartung.",
-    "also": "Aber auch …",
-    "show": "Lösung anzeigen: {{title}}",
-    "history": "Bereits gezeigte Lösungen",
-    "cost": {
-      "title": "Laufende Kosten",
-      "description": "Jedes Team wartet seine Formulare nach dem Start, teils mit laufenden Gebühren.",
-      "answer": "Open Source & gemeinsame Wartung"
-    },
-    "design": {
-      "title": "Unterschiedliche Designs",
-      "description": "Eigene Designs erschweren die Wiederverwendung von Formularen.",
-      "answer": "Material · Bootstrap · PrimeNG",
-      "oblique": "Mit Oblique kompatibel"
-    },
-    "reuse": {
-      "title": "Wiederholte Arbeit",
-      "description": "Dieselbe Logik, von Projekt zu Projekt neu gebaut",
-      "answer": "Core · MCP · Builder",
-      "solution": "Formularlogik in mehreren Tools und Projekten nutzen.",
-      "diagram": "Core-Formulare, MCP und Builder teilen dieselbe Formularlogik."
-    }
-  },
-  "contributors": {
-    "core": "Kernteam",
-    "community": "Mitwirkende aus der Community",
-    "total": "{{count}} Mitwirkende"
+    "complexity": "Komplexität",
+    "integration": "Integration",
+    "maintenance": "Laufende Wartung"
   },
   "future": {
     "framework": "Framework-unabhängig",
@@ -149,27 +121,27 @@
       "name": "Veranstaltungen",
       "title": "Teilnehmende anmelden",
       "capabilities": [
-        "<strong>Anmeldefelder</strong> für jede Veranstaltung konfigurieren.",
-        "Passende Felder für <strong>Einzelpersonen oder Delegationen</strong> anzeigen.",
-        "<strong>Pflichtangaben</strong> und <strong>E-Mail-Adressen</strong> validieren."
+        "<strong>Anmeldefelder</strong> für jede Veranstaltung <strong>konfigurieren</strong>.",
+        "<strong>Passende Felder</strong> für Einzelpersonen oder Delegationen <strong>anzeigen</strong>.",
+        "<strong>Pflichtangaben</strong> und <strong>E-Mail</strong>-Adressen <strong>validieren</strong>."
       ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Einen Antrag weiterführen",
       "capabilities": [
-        "Für jeden <strong>Workflow-Schritt</strong> ein Formular definieren.",
+        "Für <strong>jeden</strong> Workflow-<strong>Schritt</strong> ein Formular <strong>definieren</strong>.",
         "<strong>Felder</strong> je nach Status des Antrags <strong>anzeigen oder deaktivieren</strong>.",
-        "<strong>Feldtypen und Validierung</strong> in mehreren Workflows wiederverwenden."
+        "<strong>Feldtypen und Validierung wiederverwenden</strong>, auch in anderen Workflows."
       ]
     },
     "surveys": {
       "name": "Umfragen",
       "title": "Antworten sammeln und prüfen",
       "capabilities": [
-        "Fragebögen aus <strong>wiederverwendbaren Fragetypen</strong> erstellen.",
-        "<strong>Folgefragen</strong> abhängig von bisherigen Antworten einblenden.",
-        "<strong>Pflichtantworten</strong> und <strong>Antwortformate</strong> validieren."
+        "Fragebögen mit <strong>benutzerdefinierten Komponenten</strong> <strong>erstellen</strong>.",
+        "Folgefragen <strong>abhängig von bisherigen Antworten</strong> <strong>einblenden</strong>.",
+        "<strong>Vereinheitlichte Daten aggregieren</strong> und die Ergebnisse anzeigen."
       ]
     },
     "open": "PeriScope öffnen",
@@ -209,6 +181,8 @@
       "failed": "Kopieren nicht verfügbar. Text markieren oder JSON herunterladen."
     },
     "intro": {
+      "resolveMaintenance": "Laufende Wartung als geklärt markieren",
+      "resolveComplexity": "Komplexität als geklärt markieren",
       "lead": "Felder und Regeln konfigurieren. Angular rendert das Formular.",
       "configuration": "Konfiguration des Feldes Vollständiger Name",
       "try": "label, required, minLength oder maxLength ändern. Den Wert in model.name setzen.",

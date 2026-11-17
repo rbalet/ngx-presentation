@@ -8,12 +8,32 @@ h4 { margin: 0 0 .65rem; font-size: 1.05rem; }
 .code-window code { font-family: 'SFMono-Regular', Consolas, monospace; }
 app-code-editor.code-window { padding: 0; }
 .intro-code { padding: 0; overflow: hidden; border: 1px solid var(--muted); font-family: 'SFMono-Regular', Consolas, monospace; }
-.intro-code-placeholder { min-height: 38rem; white-space: pre-wrap; }
+.code-example-with-toggle { position: relative; }
+.challenge-toggle {
+  position: absolute;
+  inset: .25rem .5rem auto auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--muted);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.challenge-toggle:hover { border-color: currentColor; }
+.challenge-toggle[aria-pressed="true"] { color: var(--on-dark-success); border: 2px solid currentColor; }
 .code-label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; margin: 0; padding: .65rem 1rem; border-block: 1px solid #465463; color: var(--on-dark); font-size: .8rem; line-height: 1.5; }
-.code-label span { color: #a8b3c2; }
 .code-example { margin: 0; border-top: 1px solid #465463; }
 .code-example summary { font-family: Arial, Helvetica, sans-serif; }
 .code-example > summary { padding-inline: 1rem; }
+.code-example-with-toggle summary {
+  width: auto;
+  min-height: 3.25rem;
+  padding-inline-end: 3.75rem;
+}
 .model-example { font-family: 'SFMono-Regular', Consolas, monospace; }
 .model-example pre { margin: 0; padding-left: 1rem; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
 .model-property { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: .25rem; padding-left: 1rem; }

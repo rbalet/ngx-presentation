@@ -20,7 +20,7 @@ ngx-formly describes Angular forms as configuration. Teams can reuse field behav
 
 ## Operating Context
 
-The session has a 60-minute slot. The main talk takes 39 minutes and Q&A takes 15, leaving six minutes of buffer. The presenter scrolls through the deck, jumps via the chapter index, and closes with What's next followed by Q&A. Language switching is demonstrated beside the live form in chapter 03. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
+The session has a 60-minute slot. The main talk takes 40 minutes and Q&A takes 15, leaving five minutes of buffer. The presenter scrolls through the deck, jumps via the chapter index, and closes with What's next followed by Q&A. Language switching is demonstrated beside the live form in chapter 03. A start and reset timer tracks the full slot and survives a reload in the same browser when local storage is available.
 
 ## Capabilities and Constraints
 

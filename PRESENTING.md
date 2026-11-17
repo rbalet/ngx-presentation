@@ -14,7 +14,7 @@ Use **Focus view** on desktop to hide the chapter index. Left/right arrows or Pa
 
 | Chapter | Time | Demonstration / speaker cue |
 | --- | ---: | --- |
-| 01 · About me | 2 min | Introduce the maintainer perspective. Download metrics are dated snapshots, not unique users. |
+| 01 · About me | 3 min | Introduce the maintainer perspective. Download metrics are dated snapshots, not unique users. |
 | 02 · The Problems | 5 min | Ask who has rebuilt the same validation in a second project. Reveal the three solutions. |
 | 03 · Meet ngx-formly | 7 min | Connect field configuration, native controls, validation, and the model. Change attendance to show conditional behavior. Use the form’s language selector to translate labels and errors without clearing answers. |
 | 04 · Agentic Workflow | 4 min | Copy the prompt into your coding agent to update the shared form configuration. |
@@ -24,7 +24,7 @@ Use **Focus view** on desktop to hide the chapter index. Left/right arrows or Pa
 | 12 · What's next | 3 min | Discuss the framework-independent and shared accessible-component ambitions as future work. |
 | 11 · Q&A | 15 min | Invite the audience to share what they think is missing. |
 
-The remaining chapter IDs stay stable: 39 minutes of main content and 15 minutes of discussion leave six minutes of buffer in the 60-minute slot. Chapter 12 comes before Q&A so discussion closes the session.
+The 60-minute slot includes 40 minutes of main content, 15 minutes of discussion, and five minutes of buffer. Chapter IDs stay stable. Chapter 12 comes before Q&A so discussion closes the session.
 
 ## The skill demonstration
 

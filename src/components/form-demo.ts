@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, effect, inject, input, linkedSignal, signal, untracked, viewChild } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, input, linkedSignal, model, signal, untracked, viewChild } from '@angular/core';
 import { JsonPipe, KeyValuePipe } from '@angular/common';
 import { FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
@@ -16,6 +16,8 @@ import { CodeEditor } from './code-editor';
 })
 export class FormDemo {
   readonly mode = input<'intro' | 'skill' | 'validation'>('intro');
+  readonly maintenanceResolved = model(false);
+  readonly complexityResolved = model(false);
   readonly capabilities = [
     { id: 'skill', title: 'Skill', href: 'https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md' },
     { id: 'mcp', title: 'MCP', href: 'https://formly.dev/guide/mcp' },

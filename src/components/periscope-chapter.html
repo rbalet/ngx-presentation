@@ -6,7 +6,7 @@
     </button>
   }
 </div>
-<div class="walkthrough">
+<div class="walkthrough" [attr.data-area]="area()">
   <div class="journey" aria-live="polite" aria-atomic="true">
     <h3>{{ 'periscope.' + area() + '.title' | translate }}</h3>
     <ul class="formly-capabilities" [attr.aria-label]="'periscope.capabilities' | translate">

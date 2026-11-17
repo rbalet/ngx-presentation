@@ -14,7 +14,7 @@ The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. 
 
 | Chapter | Topic                                  | Minutes | Status                          |
 | ------- | -------------------------------------- | ------- | ------------------------------- |
-| 01      | About me                               | 2       | Main, first slide implemented   |
+| 01      | About me                               | 3       | Main, first slide implemented   |
 | 02      | Repeated form implementation           | 5       | Main, first content implemented |
 | 03      | Introduction to ngx-formly             | 7       | Main                            |
 | 04      | Agentic Workflow                       | 4       | Main, result reviewed in 05     |
@@ -24,7 +24,7 @@ The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. 
 | 12      | What's next                            | 3       | Main, future plans              |
 | 11      | Q&A                                    | 15      | Discussion                      |
 
-The main content totals 39 minutes. With 15 minutes of Q&A, six minutes remain as buffer. Chapter 03 includes the language demonstration; chapters 08, 09 and 10 were removed. Keep the remaining numbers stable when developing each chapter.
+The main content totals 40 minutes. With 15 minutes of Q&A, five minutes remain as buffer. Chapter 03 includes the language demonstration; chapters 08, 09 and 10 were removed. Keep the remaining numbers stable when developing each chapter.
 
 ## Content decisions
 
@@ -48,7 +48,7 @@ The main content totals 39 minutes. With 15 minutes of Q&A, six minutes remain a
 
 ## Chapter 01
 
-Use "About me" as the title and "And my vanity metrics" as a smaller subtitle beneath it. Hide the duration on this slide; retain its two-minute allocation in the agenda.
+Use "About me" as the title and "And my vanity metrics" as a smaller subtitle beneath it. Hide the duration on this slide and retain its three-minute allocation in the agenda.
 
 The user requested a playful introduction inspired by simple three-card presentation slides. Keep Stack Overflow, ngx-translate and ngx-formly in that order, on one row on desktop. The two libraries share an **Open-source maintainer** container. The cards stack on small screens. Reveal each card only on its first hover, keyboard focus or tap; retain reduced-motion support.
 
@@ -80,19 +80,7 @@ Suggested opening speaker notes:
 
 ## Chapter 02
 
-Developed from the user's handwritten "Problems" notes. The title starts as "The Problems" and changes to "The Solutions" once a problem is selected. Selecting the current problem keeps its solution open. Previously shown solutions keep their original top-to-bottom order when revisited, with summaries above and below the selected solution. Each summary keeps its solution icon; clicking the summary or icon reopens that solution. Keep the five-minute allocation and the stable `chapter-02` anchor.
-
-The story follows joining one project and building a form, then joining another project with familiar form requirements and a different stack. Six static form illustrations repeat the same name and email fields across six distinct designs: Material-inspired, Bootstrap-inspired, custom, rounded fields, a compact layout and a high-contrast design. The user approved illustrative examples for now; the caption labels the fictional data. These are presentation illustrations, not live forms or screenshots of BIT applications.
-
-The three requirements follow the sketch:
-
-1. **Price:** include ongoing maintenance; open source and maintenance shared with colleagues. No cost or savings estimates.
-2. **Extensible:** core, builder and MCP; shared form logic across projects and tools.
-3. **Adaptive:** choose components (PrimeNG, Material, Angular Aria) and preserve the project's visual design (Material, Bootstrap or custom).
-
-"aria" is interpreted as [Angular Aria](https://angular.dev/guide/aria/overview), the headless accessible directives, rather than a visual theme. The requirements describe the desired shared approach; they do not claim a shipped Formly adapter for Angular Aria. [Formly's setup guide](https://formly.dev/docs/guide/getting-started/) documents its Material, Bootstrap and PrimeNG themes.
-
-Content lives in `src/components/problem-chapter.ts` and `src/components/problem-requirements.ts`. It uses the chapter scroll motion and navigation. Examples and requirements stack on mobile. Navigation must keep chapter 02 active while scrolling through its longer content.
+The story follows building similar forms on projects with different stacks. Three static examples show the same name and email fields in Material-inspired, Bootstrap-inspired and custom designs. On compact screens, the custom example has its own slide. The examples live in `src/components/problem-chapter.ts`. Keep the five-minute allocation and stable `chapter-02` anchor.
 
 Suggested speaker notes:
 

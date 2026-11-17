@@ -42,7 +42,7 @@ The production build is a static application in `dist/ngx-presentation/browser`.
 - `src/components/chapter-section.ts` renders numbered sections and continuation slides.
 - `src/components/chapter-title.ts` renders the shared heading and optional subtitle.
 - `src/components/about-chapter.ts` contains chapter 01 and its dated metric sources.
-- `src/components/problem-chapter.ts` contains the illustrative forms; `problem-requirements.ts` contains the interactive solutions.
+- `src/components/problem-chapter.ts` contains the illustrative forms.
 - `src/i18n/{en,de,fr}.json` contains visible copy and accessibility labels. Update all three catalogues together.
 - `src/languages.ts` loads the bundled catalogues, validates saved language choices, and synchronizes document language and metadata.
 - `src/styles.css` contains presentation styles and native animations, including reduced-motion fallbacks.

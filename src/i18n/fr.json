@@ -28,8 +28,7 @@
     "overview": "Retour à la vue d’ensemble",
     "previousSlide": "Diapositive précédente",
     "maintainers": "Continuer vers l’open source",
-    "custom": "Continuer vers l’exemple personnalisé",
-    "requirements": "Continuer vers les exigences"
+    "ssfForms": "Voir SSF-Forms"
   },
   "timer": {
     "title": "Durée de la présentation",
@@ -53,47 +52,20 @@
     "reason": "La raison de notre présence."
   },
   "problem": {
-    "subtitle": "Un formulaire familier, <strong>une autre stack.</strong>",
-    "solutions": "Les solutions",
     "gallery": "Mêmes champs, designs différents",
-    "customExample": "Exemple de formulaire personnalisé",
-    "contact": "Coordonnées",
-    "access": "Demande d’accès",
-    "event": "Inscription à un événement",
-    "material": "Inspiré de Material",
-    "bootstrap": "Inspiré de Bootstrap",
-    "custom": "Design personnalisé",
-    "name": "Nom",
+    "ssfFormsExample": "Exemple SSF-Forms",
+    "contact": "Oblique",
+    "access": "SSF-Forms",
+    "event": "PeriScope",
+    "material": "Angular Material",
+    "bootstrap": "Form.io",
+    "custom": "ngx-formly",
+    "name": "Nom complet",
     "email": "E-mail",
     "required": "obligatoire",
-    "repetition": "Le design change. <strong>Le travail se répète.</strong>",
-    "maintenance": "Champs obligatoires, validation, logique conditionnelle, intégration API et maintenance continue.",
-    "also": "Mais aussi…",
-    "show": "Afficher la solution : {{title}}",
-    "history": "Solutions déjà présentées",
-    "cost": {
-      "title": "Coûts récurrents",
-      "description": "Chaque équipe maintient ses formulaires après le lancement, parfois avec des frais récurrents.",
-      "answer": "Open source et maintenance partagée"
-    },
-    "design": {
-      "title": "Des designs différents",
-      "description": "Des designs propres à chaque projet compliquent la réutilisation des formulaires.",
-      "answer": "Material · Bootstrap · PrimeNG",
-      "oblique": "Compatible avec Oblique"
-    },
-    "reuse": {
-      "title": "Un travail répétitif",
-      "description": "La même logique, recréée d’un projet à l’autre",
-      "answer": "Core · MCP · Builder",
-      "solution": "Partager la logique des formulaires entre outils et projets.",
-      "diagram": "Les formulaires Core, MCP et Builder partagent la même logique."
-    }
-  },
-  "contributors": {
-    "core": "Équipe principale",
-    "community": "Contributions de la communauté",
-    "total": "{{count}} contributeurs"
+    "complexity": "Complexité",
+    "integration": "Intégration",
+    "maintenance": "Maintenance continue"
   },
   "future": {
     "framework": "Indépendant du framework",
@@ -149,27 +121,27 @@
       "name": "Événements",
       "title": "Inscrire les participants",
       "capabilities": [
-        "Configurer les <strong>champs d’inscription</strong> pour chaque événement.",
-        "Afficher les champs adaptés aux <strong>personnes ou aux délégations</strong>.",
-        "Valider les <strong>informations obligatoires</strong> et les <strong>adresses e-mail</strong>."
+        "<strong>Configurer</strong> les <strong>champs</strong> d’inscription pour chaque événement.",
+        "<strong>Afficher les champs adaptés</strong> aux personnes ou aux délégations.",
+        "<strong>Valider</strong> les informations <strong>obligatoires</strong> et les adresses <strong>e-mail</strong>."
       ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Faire avancer une demande",
       "capabilities": [
-        "Définir un formulaire pour chaque <strong>étape du workflow</strong>.",
+        "<strong>Définir</strong> un formulaire pour <strong>chaque étape</strong> du workflow.",
         "<strong>Afficher ou désactiver des champs</strong> selon le statut de la demande.",
-        "Réutiliser les <strong>types de champs et la validation</strong> entre workflows."
+        "<strong>Réutiliser les types de champs et la validation</strong> entre workflows."
       ]
     },
     "surveys": {
       "name": "Sondages",
       "title": "Recueillir et examiner les réponses",
       "capabilities": [
-        "Créer des questionnaires à partir de <strong>types de questions réutilisables</strong>.",
-        "Afficher des <strong>questions complémentaires</strong> selon les réponses précédentes.",
-        "Valider les <strong>réponses obligatoires</strong> et leur <strong>format</strong>."
+        "<strong>Créer</strong> des questionnaires avec des <strong>composants personnalisés</strong>.",
+        "<strong>Afficher</strong> des questions complémentaires <strong>selon les réponses précédentes</strong>.",
+        "<strong>Agréger les données unifiées</strong> et afficher les résultats."
       ]
     },
     "open": "Ouvrir PeriScope",
@@ -209,6 +181,8 @@
       "failed": "Copie indisponible. Sélectionnez le texte ou téléchargez le JSON."
     },
     "intro": {
+      "resolveMaintenance": "Marquer la maintenance continue comme traitée",
+      "resolveComplexity": "Marquer la complexité comme traitée",
       "lead": "Configurer les champs et les règles. Angular affiche le formulaire.",
       "configuration": "Configuration du champ Nom complet",
       "try": "Modifiez label, required, minLength ou maxLength. Définissez la valeur dans model.name.",

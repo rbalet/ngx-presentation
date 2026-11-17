@@ -88,6 +88,9 @@ test('the phone field remains usable without a browser WebMCP API', async ({ pag
     Object.defineProperty(navigator, 'modelContext', { value: undefined });
   });
   await page.goto('/?selected=webmcp#chapter-04');
+  const phone = page.getByRole('textbox', { name: 'Phone number', exact: true });
+  await phone.fill('079 123 45 67');
+  await expect(phone).toHaveValue('+41 79 123 45 67');
   await page.getByRole('button', { name: 'Select country', exact: true }).click();
   const countries = page.getByRole('dialog', { name: 'Select country' });
   await countries.getByRole('textbox').fill('Switzerland');
@@ -95,9 +98,6 @@ test('the phone field remains usable without a browser WebMCP API', async ({ pag
   await switzerland.focus();
   await switzerland.press('Enter');
   await expect(countries).toBeHidden();
-  const phone = page.getByRole('textbox', { name: 'Phone number', exact: true });
-  await phone.fill('079 123 45 67');
-  await expect(phone).toHaveValue('+41 79 123 45 67');
   await phone.fill('+1 202-555-0173');
   await expect(phone).toHaveValue('+1 202 555 0173');
   expect(errors).toEqual([]);

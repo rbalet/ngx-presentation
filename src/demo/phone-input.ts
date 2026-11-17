@@ -7,7 +7,7 @@ import { NgxMatInputTelComponent } from 'ngx-mat-input-tel';
   imports: [NgxMatInputTelComponent],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: PhoneInput, multi: true }],
   template: `
-    <ngx-mat-input-tel autocomplete="tel" format="international" enableSearch
+    <ngx-mat-input-tel autocomplete="tel" format="international" defaultCountry="CH" enableSearch
       [maxLength]="undefined" [disabled]="disabled()" [required]="required()"
       [class.invalid]="invalid()" />
   `,

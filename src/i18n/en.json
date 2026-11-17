@@ -28,8 +28,7 @@
     "overview": "Back to overview",
     "previousSlide": "Previous slide",
     "maintainers": "Continue to open source",
-    "custom": "Continue to custom example",
-    "requirements": "Continue to requirements"
+    "ssfForms": "Continue to SSF-Forms"
   },
   "timer": {
     "title": "Presentation time",
@@ -53,47 +52,20 @@
     "reason": "The reason we're here."
   },
   "problem": {
-    "subtitle": "Familiar form, <strong>Different stack.</strong>",
-    "solutions": "The Solutions",
     "gallery": "Same fields, different designs",
-    "customExample": "Custom form example",
-    "contact": "Contact details",
-    "access": "Access request",
-    "event": "Event registration",
-    "material": "Material-inspired",
-    "bootstrap": "Bootstrap-inspired",
-    "custom": "Custom design",
-    "name": "Name",
+    "ssfFormsExample": "SSF-Forms example",
+    "contact": "Oblique",
+    "access": "SSF-Forms",
+    "event": "PeriScope",
+    "material": "Angular Material",
+    "bootstrap": "Form.io",
+    "custom": "ngx-formly",
+    "name": "Full name",
     "email": "Email",
     "required": "required",
-    "repetition": "The design changes. <strong>The work repeats.</strong>",
-    "maintenance": "Required fields, validation, conditional logic, API integration and ongoing maintenance.",
-    "also": "But also...",
-    "show": "Show solution: {{title}}",
-    "history": "Previously shown solutions",
-    "cost": {
-      "title": "Ongoing cost",
-      "description": "Each team maintains its forms after launch, sometimes with recurring fees.",
-      "answer": "Open source & shared maintenance"
-    },
-    "design": {
-      "title": "Different designs",
-      "description": "Project-specific designs make forms harder to reuse.",
-      "answer": "Material · Bootstrap · PrimeNG",
-      "oblique": "Oblique compatible"
-    },
-    "reuse": {
-      "title": "Repeated work",
-      "description": "Same logic, rebuilt across projects",
-      "answer": "Core · MCP · Builder",
-      "solution": "Share form logic across tools and projects.",
-      "diagram": "Core forms, MCP and Builder share the same form logic."
-    }
-  },
-  "contributors": {
-    "core": "Core team",
-    "community": "Community contributors",
-    "total": "{{count}} contributors"
+    "complexity": "Complexity",
+    "integration": "integration",
+    "maintenance": "Ongoing maintenance"
   },
   "future": {
     "framework": "Framework agnostic",
@@ -149,27 +121,27 @@
       "name": "Events",
       "title": "Register participants",
       "capabilities": [
-        "Configure <strong>registration fields</strong> for each event.",
-        "Show relevant fields for <strong>individuals or delegations</strong>.",
-        "Validate <strong>required details</strong> and <strong>email addresses</strong>."
+        "<strong>Configure</strong> registration <strong>fields</strong> for each event.",
+        "<strong>Show relevant fields</strong> for individuals or delegations.",
+        "<strong>Validate required</strong> details and <strong>email</strong> addresses."
       ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Move a request forward",
       "capabilities": [
-        "Define a form for each <strong>workflow step</strong>.",
+        "<strong>Define</strong> a form for <strong>each</strong> workflow <strong>step</strong>.",
         "<strong>Show or disable fields</strong> based on the request’s status.",
-        "Reuse <strong>field types and validation</strong> across workflows."
+        "<strong>Reuse field types and validation</strong> across workflows."
       ]
     },
     "surveys": {
       "name": "Surveys",
       "title": "Collect and review responses",
       "capabilities": [
-        "Build questionnaires from <strong>reusable question types</strong>.",
-        "Reveal <strong>follow-up questions</strong> based on earlier answers.",
-        "Validate <strong>required answers</strong> and <strong>response formats</strong>."
+        "<strong>Build</strong> questionnaires with <strong>custom components</strong>.",
+        "<strong>Reveal</strong> follow-up questions <strong>based on earlier answers</strong>.",
+        "<strong>Aggregate unified data</strong> and display their results."
       ]
     },
     "open": "Open PeriScope",
@@ -209,6 +181,8 @@
       "failed": "Copy unavailable. Select the text or download the JSON."
     },
     "intro": {
+      "resolveMaintenance": "Mark ongoing maintenance as addressed",
+      "resolveComplexity": "Mark complexity as addressed",
       "lead": "Configure fields and rules. Angular renders the form.",
       "configuration": "Full name field configuration",
       "try": "Edit label, required, minLength or maxLength. Set the value in model.name.",

@@ -77,7 +77,7 @@ test("the presentation timer starts empty, survives reloads and turns primary on
   );
 });
 
-test("the timer target advances only after each chapter independently of elapsed time", async ({ page }) => {
+test("the timer target advances only after each chapter independently of elapsed time", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const timer = page.getByRole("progressbar", { name: "Presentation time" });
@@ -87,13 +87,13 @@ test("the timer target advances only after each chapter independently of elapsed
 
   for (const [chapter, minutes] of [
     ["01", 0],
-    ["02", 2],
-    ["02-continued", 2],
-    ["03", 7],
-    ["04", 14],
-    ["07", 28],
-    ["12", 36],
-    ["11", 39],
+    ["02", 3],
+    ...(isMobile ? [["02-more-examples", 3]] as const : []),
+    ["03", 8],
+    ["04", 15],
+    ["07", 29],
+    ["12", 37],
+    ["11", 40],
     ["01", 0],
   ] as const) {
     await page.locator(`#chapter-${chapter}`).evaluate(element => element.scrollIntoView());
@@ -307,6 +307,25 @@ test("direct links work with reduced motion and without horizontal overflow", as
   expect(hydrationErrors).toEqual([]);
 });
 
+test("the problem labels stay below the header while Meet ngx-formly scrolls", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/#chapter-03");
+  const row = page.locator("#chapter-03 .chapter-challenges");
+  await expect(row.locator(".form-example-challenge")).toHaveText([
+    "Ongoing maintenance", "Complexity", "integration",
+  ]);
+  await expect(row).toBeInViewport();
+  const headerBottom = (await page.locator(".site-header").boundingBox())!.height;
+  await page.evaluate(() => {
+    // A full-height slide can snap past its intermediate scroll positions.
+    document.documentElement.style.scrollSnapType = "none";
+    window.scrollBy(0, 160);
+  });
+  await expect.poll(async () => (await row.boundingBox())?.y).toBe(headerBottom);
+  await page.locator("#chapter-04").evaluate(chapter => chapter.scrollIntoView());
+  await expect(row).not.toBeInViewport();
+});
+
 test("the same chapter index sticks without jumping and highlights the chapter while scrolling", async ({
   page,
   isMobile,
@@ -442,7 +461,7 @@ test("completed chapters show checkmarks and restore their durations when scroll
     .evaluate((element) => element.scrollIntoView());
   await expect(first).toHaveAttribute("aria-current", "location");
   await expect(index.getByRole("img", { name: "Completed" })).toHaveCount(0);
-  await expect(first.locator(".index-time")).toHaveText("2 min");
+  await expect(first.locator(".index-time")).toHaveText("3 min");
   await expect(first.locator(".index-duration")).toBeVisible();
   await expect(first.locator(".index-title")).toHaveCSS(
     "text-decoration-line",
@@ -618,7 +637,7 @@ test("keyboard focus reveals metrics immediately with reduced motion", async ({ 
   }
 });
 
-test("the problem chapter stays active from the form examples through the shared requirements", async ({
+test("the problem chapter shows the form examples and leads to chapter 03", async ({
   page,
   isMobile,
 }) => {
@@ -629,7 +648,7 @@ test("the problem chapter stays active from the form examples through the shared
   const runningTitle = chapter.locator(".chapter-running-title");
   const heading = chapter.getByRole("heading", {
     level: 2,
-    name: "02 The Problems",
+    name: /^02 The Problems/,
   });
   const current = page
     .getByRole("navigation", { name: "Chapter index", exact: true })
@@ -640,42 +659,44 @@ test("the problem chapter stays active from the form examples through the shared
   const gallery = chapter.getByRole("figure", {
     name: "Same fields, different designs",
   });
-  await expect(gallery.getByRole("heading", { level: 3 })).toHaveCount(
-    isMobile ? 2 : 3,
+  await expect(gallery.getByRole("heading", { level: 3 })).toHaveText(
+    isMobile ? ["Oblique", "PeriScope"] : ["Oblique", "PeriScope", "SSF-Forms"],
   );
-  expect((await slide.boundingBox())!.height).toBeCloseTo(
-    page.viewportSize()!.height,
-  );
+  const challenges = chapter.locator(".form-example + .form-example-challenge");
+  await expect(challenges).toHaveText([
+    "Ongoing maintenance", "Complexity", "integration",
+  ]);
+  await expect(challenges.locator("svg path[d]")).toHaveCount(3);
+  if (!isMobile) {
+    const tops = await challenges.evaluateAll(cards =>
+      cards.map(card => card.getBoundingClientRect().top)
+    );
+    expect(new Set(tops).size).toBe(1);
+  }
+  const slideHeight = (await slide.boundingBox())!.height;
+  const viewportHeight = page.viewportSize()!.height;
   if (isMobile) {
+    expect(slideHeight).toBeGreaterThanOrEqual(viewportHeight);
     await chapter
-      .getByRole("link", { name: "Continue to custom example" })
+      .getByRole("link", { name: "Continue to SSF-Forms" })
       .click();
     await expect(page).toHaveURL(/#chapter-02-more-examples$/);
-    await expect(
-      chapter.getByRole("figure", { name: "Custom form example" }),
-    ).toBeInViewport();
+    const ssfForms = chapter.getByRole("figure", { name: "SSF-Forms example" });
+    await expect(ssfForms).toBeInViewport();
+    await expect(ssfForms.getByRole("heading", { level: 3 })).toHaveText("SSF-Forms");
+    await expect(heading).toBeInViewport();
+    expect(await heading.boundingBox()).toEqual(titleBounds);
+    expect((await runningTitle.boundingBox())!.y).toBe(
+      (await page.locator(".site-header").boundingBox())!.height,
+    );
+  } else {
+    expect(slideHeight).toBeCloseTo(viewportHeight);
   }
-  await chapter.getByRole("link", { name: "Continue to requirements" }).click();
-  await expect(page).toHaveURL(/#chapter-02-continued$/);
-  await expect(heading).toBeInViewport();
-  expect(await heading.boundingBox()).toEqual(titleBounds);
-  expect((await runningTitle.boundingBox())!.y).toBe(
-    (await page.locator(".site-header").boundingBox())!.height,
-  );
-  const requirements = chapter.getByRole("region", {
-    name: "But also...",
-  });
-  await requirements.scrollIntoViewIfNeeded();
-  await expect(
-    requirements.getByRole("button", {
-      name: "Show solution: Different designs",
-      exact: true,
-    }),
-  ).toBeInViewport();
+  await expect(chapter.locator(".chapter-slide")).toHaveCount(isMobile ? 2 : 1);
   await expect(current).toHaveAttribute("href", "#chapter-02");
   expect(
     await chapter
-      .locator(".form-example, .problem-card")
+      .locator(".form-example")
       .evaluateAll((elements) =>
         elements.every((element) => {
           const { left, right } = element.getBoundingClientRect();
@@ -693,10 +714,6 @@ test("the problem chapter stays active from the form examples through the shared
     ),
   ).toBe(true);
 
-  await page
-    .locator("#chapter-02-continued")
-    .getByRole("link", { name: "Previous slide" })
-    .click();
   if (isMobile)
     await page
       .locator("#chapter-02-more-examples")
@@ -712,382 +729,28 @@ test("the problem chapter stays active from the form examples through the shared
     .getByRole("link", { name: "Next: 02" })
     .click();
   await expect(chapter.getByRole("heading", { level: 2 })).toBeInViewport();
-  await page.goto("/?slide=requirements#chapter-02-continued");
-  await expect(heading).toBeInViewport();
-  await expect
-    .poll(async () =>
-      Math.abs((await page.locator("#chapter-02-continued").boundingBox())!.y),
-    )
-    .toBeLessThanOrEqual(1);
+  if (isMobile) {
+    await page.goto("/?slide=custom#chapter-02-more-examples");
+    await expect(heading).toBeInViewport();
+    await expect
+      .poll(async () =>
+        Math.abs((await page.locator("#chapter-02-more-examples").boundingBox())!.y),
+      )
+      .toBeLessThanOrEqual(1);
+  }
   await chapter.getByRole("link", { name: "Next: 03" }).click();
   await expect(page.locator("#title-03")).toBeInViewport();
   await expect(current).toHaveAttribute("href", "#chapter-03");
 });
 
-for (const reducedMotion of ["reduce", "no-preference"] as const) {
-  test(`revisiting solutions keeps their order and the current panel open with ${reducedMotion} motion`, async ({
-    page,
-  }) => {
-    await page.emulateMedia({ reducedMotion });
-    await page.goto("/#chapter-02-continued");
-    await expect(
-      page.getByRole("button", { name: "Start presentation timer" }),
-    ).toBeEnabled();
-    const problems = page.getByRole("region", { name: "But also..." });
-    const toggles = problems.locator(".problem-pillars").getByRole("button");
-    const solution = problems.locator(".problem-solution");
-
-    for (const index of [2, 0, 1]) {
-      await toggles.nth(index).click();
-      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
-    }
-
-    const answers = [
-      "Open source & shared maintenance",
-      "Material · Bootstrap · PrimeNG",
-      "Core · MCP · Builder",
-    ];
-    for (const index of [0, 1, 2]) {
-      const history = problems.locator(".problem-solution-history");
-      await expect(history.locator(".problem-icon")).toHaveCount(2);
-      const button = history.getByRole("button", {
-        name: answers[index],
-        exact: true,
-      });
-      const icon = button.locator(".problem-icon");
-      await expect(icon).toBeVisible();
-      await expect(button).toHaveAttribute("aria-expanded", "false");
-      const iconPath = await icon.locator("path").getAttribute("d");
-      if (index === 0) {
-        await button.scrollIntoViewIfNeeded();
-        const bounds = (await icon.boundingBox())!;
-        await page.mouse.click(
-          bounds.x + bounds.width / 2,
-          bounds.y + bounds.height / 2,
-        );
-      } else {
-        await button.press(index === 1 ? "Enter" : "Space");
-      }
-      await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-        answers[index],
-      );
-      await expect(solution.locator(".problem-solution-page")).toHaveCount(1);
-      await expect(solution.locator(".problem-icon path")).toHaveAttribute(
-        "d",
-        iconPath!,
-      );
-      await expect(problems.locator(".problem-result")).toBeFocused();
-      const positions = await problems
-        .locator(".problem-solution-history li, .problem-solution")
-        .evaluateAll((elements) =>
-          elements
-            .sort(
-              (a, b) =>
-                a.getBoundingClientRect().top - b.getBoundingClientRect().top,
-            )
-            .map(
-              (element) =>
-                element.querySelector("h4")?.textContent ?? element.textContent,
-            ),
-        );
-      expect(positions).toEqual(answers);
-      await toggles.nth(index).press("Enter");
-      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
-      await expect(solution).toHaveCount(1);
-    }
-  });
-
-  test(`solution pages slide within the card with ${reducedMotion} motion`, async ({
-    page,
-  }) => {
-    await page.clock.install();
-    await page.emulateMedia({ reducedMotion });
-    await page.goto("/#chapter-02-continued");
-    await expect(
-      page.getByRole("button", { name: "Start presentation timer" }),
-    ).toBeEnabled();
-    const problems = page.getByRole("region", { name: "But also..." });
-    const toggles = problems.locator(".problem-pillars").getByRole("button");
-    const solution = problems.locator(".problem-solution");
-    const pages = solution.locator(".problem-solution-page");
-    await toggles.first().click();
-    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Open source & shared maintenance",
-    );
-    await expect(solution).toHaveCSS("overflow", "hidden");
-    await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000));
-
-    for (const index of [1, 0]) {
-      await toggles
-        .nth(index)
-        .evaluate((button: HTMLButtonElement) => button.click());
-      // Angular schedules rendering; CSS animations use the browser timeline.
-      await page.clock.runFor(100);
-      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
-      await pages.evaluateAll(elements => {
-        for (const element of elements) {
-          for (const animation of element.getAnimations()) {
-            animation.pause();
-            animation.currentTime = 100;
-          }
-        }
-      });
-      const current = solution.locator(
-        ".problem-solution-page[aria-hidden='false']",
-      );
-      const outgoing = solution.locator(
-        ".problem-solution-page[aria-hidden='true']",
-      );
-      if (reducedMotion === "reduce") {
-        await expect(pages).toHaveCount(1);
-        await expect(current).toHaveCSS("transform", "none");
-      } else {
-        await expect(pages).toHaveCount(2);
-        await expect(outgoing).toHaveAttribute("inert", "");
-        const incomingY = await current.evaluate(
-          (element) =>
-            new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
-        );
-        const outgoingY = await outgoing.evaluate(
-          (element) =>
-            new DOMMatrixReadOnly(getComputedStyle(element).transform).m42,
-        );
-        expect(incomingY * (index === 1 ? 1 : -1)).toBeGreaterThan(0);
-        expect(outgoingY * (index === 1 ? 1 : -1)).toBeLessThan(0);
-        await expect(solution.getByRole("heading", { level: 4 })).toHaveCount(
-          1,
-        );
-      }
-      await page.clock.runFor(500);
-      await expect(pages).toHaveCount(1);
-      await expect(pages).toHaveCSS("transform", "none");
-    }
-
-    for (const index of [2, 1, 0]) {
-      await toggles
-        .nth(index)
-        .evaluate((button: HTMLButtonElement) => button.click());
-      await page.clock.runFor(50);
-      await expect(toggles.nth(index)).toHaveAttribute("aria-expanded", "true");
-    }
-    await page.clock.runFor(500);
-    await expect(pages).toHaveCount(1);
-    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Open source & shared maintenance",
-    );
-    await expect(pages).toHaveCSS("transform", "none");
-  });
-
-  test(`problem cards share one solution panel with ${reducedMotion} motion`, async ({
-    page,
-    isMobile,
-  }) => {
-    await page.emulateMedia({ reducedMotion });
-    await page.goto("/#chapter-02-continued");
-    await expect(
-      page.getByRole("button", { name: "Start presentation timer" }),
-    ).toBeEnabled();
-    const problems = page.getByRole("region", { name: "But also..." });
-    const toggles = problems.locator(".problem-pillars").getByRole("button");
-    const solution = problems.locator(".problem-solution");
-    const heading = page
-      .locator("#chapter-02")
-      .getByRole("heading", { level: 2 });
-    const history = problems.getByRole("list", {
-      name: "Previously shown solutions",
-    });
-    const titles = history.getByRole("listitem");
-    await expect(heading).toHaveAccessibleName("02 The Problems");
-    await expect(toggles).toHaveText([
-      "Ongoing cost",
-      "Different designs",
-      "Repeated work",
-    ]);
-    await expect(solution).toHaveCount(0);
-    await expect(history).toHaveCount(0);
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(
-      3,
-    );
-
-    const first = toggles.first();
-    const firstCard = problems.locator(".problem-card").first();
-    const originalSize = (await firstCard.boundingBox())!;
-    await first.click();
-    await expect(heading).toHaveAccessibleName("02 The Solutions");
-    await expect(firstCard).toHaveCSS("transform", "none");
-    const selectedSize = (await firstCard.boundingBox())!;
-    expect(selectedSize.width).toBeCloseTo(originalSize.width);
-    expect(selectedSize.height).toBeCloseTo(originalSize.height);
-    await expect(firstCard.locator(".problem-icon path")).toHaveAttribute(
-      "d",
-      "M4 12h15m-6-6 6 6-6 6",
-    );
-    await expect(firstCard).toHaveCSS("outline-width", "2px");
-    await expect(firstCard).toHaveCSS("outline-color", "rgb(79, 107, 82)");
-    await expect(first).toHaveAccessibleName("Show solution: Ongoing cost");
-    await expect(first).toHaveAttribute("aria-expanded", "true");
-    await expect(firstCard).toHaveCSS("background-color", "rgb(238, 235, 229)");
-    await expect(history).toHaveCount(0);
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(
-      3,
-    );
-    await expect(solution).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(solution).toHaveCSS("border-top-color", "rgb(79, 107, 82)");
-    await expect(solution).toHaveCSS("border-top-width", "2px");
-    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Open source & shared maintenance",
-    );
-    await expect(
-      solution.getByRole("list", { name: "Core team" }).getByRole("listitem"),
-    ).toHaveCount(7);
-    await expect(
-      solution
-        .getByRole("list", { name: "Community contributors" })
-        .getByRole("listitem"),
-    ).toHaveCount(100);
-    await expect(
-      solution.getByRole("link", { name: "107 contributors" }),
-    ).toBeVisible();
-
-    await expect(solution).toHaveCSS("transform", "none");
-    const cards = (await problems.locator(".problem-pillars").boundingBox())!;
-    const panel = (await solution.boundingBox())!;
-    if (isMobile) {
-      expect(panel.x).toBeCloseTo(cards.x);
-      expect(panel.y).toBeGreaterThan(cards.y + cards.height);
-    } else {
-      expect(panel.x).toBeGreaterThan(cards.x + cards.width);
-      expect(panel.y).toBeCloseTo(cards.y);
-      expect(panel.height).toBeCloseTo(cards.height);
-      const content = solution.getByRole("region", {
-        name: "Open source & shared maintenance",
-      });
-      expect(
-        await content.evaluate((element) => element.scrollHeight),
-      ).toBeGreaterThan(
-        await content.evaluate((element) => element.clientHeight),
-      );
-      await content.press("End");
-      await expect
-        .poll(() => content.evaluate((element) => element.scrollTop))
-        .toBeGreaterThan(0);
-    }
-    const solutionIcon = solution.locator(".problem-icon");
-    await expect
-      .poll(async () => {
-        const icon = (await solutionIcon.boundingBox())!;
-        const panel = (await solution.boundingBox())!;
-        return panel.x + panel.width - (icon.x + icon.width);
-      })
-      .toBeCloseTo((isMobile ? 12 : 20) + 2, 0);
-    if (reducedMotion === "reduce") {
-      await expect(solution).toHaveCSS("animation-name", "none");
-    }
-
-    await toggles.last().press("Enter");
-    await expect(heading).toHaveAccessibleName("02 The Solutions");
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(
-      3,
-    );
-    await expect(first).toHaveAttribute("aria-expanded", "false");
-    await expect(firstCard).toHaveCSS("outline-style", "none");
-    await expect(problems.locator(".problem-card").last()).toHaveCSS(
-      "outline-width",
-      "2px",
-    );
-    await expect(firstCard).toHaveCSS("background-color", "rgb(238, 235, 229)");
-    await expect(titles).toHaveText(["Open source & shared maintenance"]);
-    const historyBounds = (await history.boundingBox())!;
-    expect(historyBounds.y + historyBounds.height).toBeLessThan(
-      (await solution.boundingBox())!.y,
-    );
-    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Core · MCP · Builder",
-    );
-    await toggles.nth(1).click();
-    await expect(heading).toHaveAccessibleName("02 The Solutions");
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(
-      3,
-    );
-    await expect(problems.getByRole("button", { expanded: true })).toHaveCount(
-      1,
-    );
-    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Material · Bootstrap · PrimeNG",
-    );
-    await expect(titles).toHaveText([
-      "Open source & shared maintenance",
-      "Core · MCP · Builder",
-    ]);
-    for (const card of await problems.locator(".problem-card").all()) {
-      await expect(card).toHaveCSS("background-color", "rgb(238, 235, 229)");
-    }
-    const oblique = solution.getByRole("link", { name: "Oblique compatible" });
-    await expect(oblique).toHaveAttribute(
-      "href",
-      "https://oblique.bit.admin.ch/introductions/welcome",
-    );
-    await expect(oblique.locator("img")).toBeVisible();
-    expect(
-      await oblique
-        .locator("img")
-        .evaluate(
-          (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
-        ),
-    ).toBe(true);
-    const checkmark = oblique.locator(".oblique-checkmark");
-    await expect(checkmark.locator("path")).toHaveCSS(
-      "animation-name",
-      reducedMotion === "reduce" ? "none" : "checkmark-draw",
-    );
-    await expect(checkmark.locator("path")).toHaveCSS(
-      "stroke-dashoffset",
-      "0px",
-    );
-    const logoBounds = (await oblique.locator("img").boundingBox())!;
-    const checkBounds = (await checkmark.boundingBox())!;
-    expect(checkBounds.x).toBeGreaterThan(logoBounds.x + logoBounds.width / 2);
-    expect(checkBounds.y).toBeLessThan(logoBounds.y);
-    await oblique.focus();
-    await expect(oblique).toBeFocused();
-    await toggles.nth(1).press("Space");
-    await expect(heading).toHaveAccessibleName("02 The Solutions");
-    await expect(solution).toHaveCount(1);
-    await expect(toggles.nth(1)).toHaveAttribute("aria-expanded", "true");
-    await expect(problems.locator(".problem-description:visible")).toHaveCount(
-      3,
-    );
-    await toggles.nth(1).click();
-    await expect(checkmark.locator("path")).toHaveCSS(
-      "stroke-dashoffset",
-      "0px",
-    );
-    await expect(titles).toHaveText([
-      "Open source & shared maintenance",
-      "Core · MCP · Builder",
-    ]);
-    await first.click();
-    await expect(solution.getByRole("heading", { level: 4 })).toHaveText(
-      "Open source & shared maintenance",
-    );
-    await expect(titles).toHaveText([
-      "Material · Bootstrap · PrimeNG",
-      "Core · MCP · Builder",
-    ]);
-    expect(
-      await page.evaluate(() => document.documentElement.scrollWidth),
-    ).toBeLessThanOrEqual(page.viewportSize()!.width);
-  });
-}
-
 test("scrolling settles on the nearest slide within a chapter", async ({
   page,
-  isMobile,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/#chapter-02");
   const slides = page.locator("#chapter-02 .chapter-slide");
-  await expect(slides).toHaveCount(isMobile ? 3 : 2);
+  await expect(slides).toHaveCount(2);
   const [start, next] = await slides.evaluateAll((elements) =>
     elements.map(
       (element) => element.getBoundingClientRect().top + window.scrollY,

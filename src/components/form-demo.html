@@ -100,24 +100,40 @@
   </div>
 } @else {
   <div class="demo-workbench" [class.demo-workbench--validation]="mode() === 'validation'">
-    <div class="demo-explanation">
+    <div class="demo-explanation" #demoExplanation>
       @switch (mode()) {
         @case ('intro') {
-          @defer (on viewport) {
+          @defer (on viewport(demoExplanation)) {
             <div class="code-window intro-code">
-              <app-code-editor [value]="introSetup" language="typescript" label="TypeScript" />
-              <p class="code-label">{{ 'demo.intro.configuration' | translate }} <span>JSON</span></p>
-              <app-code-editor class="configuration-editor" [value]="introConfiguration()" (valueChange)="updateIntroConfiguration($event)" language="json" [editable]="true" [label]="'demo.intro.configuration' | translate" [invalid]="introConfigurationError()" [describedBy]="introConfigurationError() ? 'intro-configuration-hint intro-configuration-error' : 'intro-configuration-hint'" />
+              <div class="code-example-with-toggle">
+                @let maintenanceLabel = 'demo.intro.resolveMaintenance' | translate;
+                <button type="button" class="challenge-toggle" [attr.aria-label]="maintenanceLabel" [title]="maintenanceLabel"
+                  [attr.aria-pressed]="maintenanceResolved()" (click)="maintenanceResolved.set(!maintenanceResolved())">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+                </button>
+                <details class="code-example" open>
+                  <summary>{{ 'demo.intro.template' | translate }}</summary>
+                  <app-code-editor [value]="introTemplate" language="angular" [label]="'demo.intro.template' | translate" />
+                </details>
+              </div>
+              <div class="code-example-with-toggle">
+                @let complexityLabel = 'demo.intro.resolveComplexity' | translate;
+                <button type="button" class="challenge-toggle" [attr.aria-label]="complexityLabel" [title]="complexityLabel"
+                  [attr.aria-pressed]="complexityResolved()" (click)="complexityResolved.set(!complexityResolved())">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+                </button>
+                <details class="code-example">
+                  <summary>{{ 'demo.intro.configuration' | translate }}</summary>
+                  <app-code-editor [value]="introSetup" language="typescript" label="TypeScript" />
+                  <app-code-editor class="configuration-editor" [value]="introConfiguration()" (valueChange)="updateIntroConfiguration($event)" language="json" [editable]="true" [label]="'demo.intro.configuration' | translate" [invalid]="introConfigurationError()" [describedBy]="introConfigurationError() ? 'intro-configuration-hint intro-configuration-error' : 'intro-configuration-hint'" />
+                  <app-code-editor value="];" language="typescript" label="TypeScript" />
+                </details>
+              </div>
               <details class="code-example">
                 <summary>{{ 'demo.intro.additionalFields' | translate }}</summary>
                 <app-code-editor [value]="',' + '\n' + introAdditionalFields()" language="json" [label]="'demo.intro.additionalFields' | translate" />
               </details>
-              <app-code-editor value="];" language="typescript" label="TypeScript" />
               <p class="visually-hidden" id="intro-configuration-hint">{{ 'demo.intro.try' | translate }}</p>
-              <details class="code-example">
-                <summary>{{ 'demo.intro.template' | translate }}</summary>
-                <app-code-editor [value]="introTemplate" language="angular" [label]="'demo.intro.template' | translate" />
-              </details>
               <details class="code-example translation-example">
                 <summary>{{ 'demo.intro.translation' | translate }}</summary>
                 <app-code-editor [value]="introErrorBinding" language="typescript" label="TypeScript" />
@@ -126,8 +142,6 @@
                 <app-code-editor [value]="introTranslationCatalogue()" language="json" [label]="'src/i18n/' + translate.currentLang() + '.json'" />
               </details>
             </div>
-          } @placeholder {
-            <pre class="code-window intro-code-placeholder">{{ introConfiguration() }}</pre>
           }
           @if (introConfigurationError()) { <p class="configuration-error" id="intro-configuration-error" role="alert">{{ 'demo.intro.configurationError' | translate }}</p> }
         }

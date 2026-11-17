@@ -23,7 +23,6 @@ export class Presentation {
   readonly activeChapter = signal<string | undefined>(undefined);
   readonly activeIndex = computed(() => chapters.findIndex(chapter => chapter.number === this.activeChapter()));
   readonly targetMinutes = computed(() => chapters.slice(0, Math.max(0, this.activeIndex())).reduce((total, chapter) => total + chapter.minutes, 0));
-  readonly activeProblem = signal<number | null>(null);
   readonly focused = signal(false);
   readonly startedAt = signal<number | null>(null);
   readonly elapsed = signal(0);

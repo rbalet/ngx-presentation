@@ -1,27 +1,59 @@
-<div class="problem-chapter">
-  <figure class="problem-gallery" [class.problem-gallery--partial]="part()"
-    [attr.aria-label]="(part() === 'custom' ? 'problem.customExample' : 'problem.gallery') | translate">
-    <div class="form-examples">
-      @for (example of examples(); track example.theme) {
-        <div [class]="'form-example form-example--' + example.theme">
-          <div class="form-example-header">
-            <h3>{{ example.title | translate }}</h3><p>{{ example.design | translate }}</p>
+<ng-template #challenge let-example>
+  <p class="form-example-challenge" [class.form-example-challenge--resolved]="
+    (example.challenge === 'problem.maintenance' && maintenanceResolved()) ||
+    (example.challenge === 'problem.complexity' && complexityResolved())">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path [attr.d]="example.icon" />
+    </svg>
+    <span>{{ example.challenge | translate }}</span>
+  </p>
+</ng-template>
+@if (part() === 'challenges') {
+  <div class="form-examples form-challenges">
+    @for (example of examples(); track example.theme) {
+      <ng-container [ngTemplateOutlet]="challenge" [ngTemplateOutletContext]="{ $implicit: example }" />
+    }
+  </div>
+} @else {
+  <div class="problem-chapter">
+    <figure class="problem-gallery" [class.problem-gallery--partial]="part()"
+      [attr.aria-label]="(part() === 'ssf-forms' ? 'problem.ssfFormsExample' : 'problem.gallery') | translate">
+      <div class="form-examples">
+        @for (example of examples(); track example.theme) {
+          <div class="form-example-pair">
+            <div [class]="'form-example form-example--' + example.theme">
+              <div class="form-example-header">
+                <h3>{{ example.title | translate }}</h3><p>{{ example.design | translate }}</p>
+              </div>
+              @if (example.theme === 'material' || example.theme === 'custom') {
+                <div class="form-example-fields">
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <mat-label>{{ 'problem.name' | translate }}</mat-label>
+                    <input matInput value="John Doe" readonly required />
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <mat-label>{{ 'problem.email' | translate }}</mat-label>
+                    <input matInput type="email" value="john.doe@example.org" readonly required />
+                  </mat-form-field>
+                </div>
+              } @else {
+                <div class="form-example-fields">
+                  <label>
+                    {{ 'problem.name' | translate }}
+                    <input type="text" autocomplete="name" />
+                  </label>
+                  <label>
+                    {{ 'problem.email' | translate }}
+                    <input type="email" autocomplete="email" />
+                  </label>
+                </div>
+              }
+            </div>
+            <ng-container [ngTemplateOutlet]="challenge" [ngTemplateOutletContext]="{ $implicit: example }" />
           </div>
-          <dl class="form-example-fields">
-            <div>
-              <dt>{{ 'problem.name' | translate }} <span [attr.aria-label]="'problem.required' | translate">*</span></dt>
-              <dd>John Doe</dd>
-            </div>
-            <div>
-              <dt>{{ 'problem.email' | translate }} <span [attr.aria-label]="'problem.required' | translate">*</span></dt>
-              <dd>john.doe&#64;example.org</dd>
-            </div>
-          </dl>
-        </div>
-      }
-    </div>
-  </figure>
-  @if (part() !== 'comparison') {
-    <p class="problem-repetition" [innerHTML]="('problem.repetition' | translate) + '<span>' + ('problem.maintenance' | translate) + '</span>'"></p>
-  }
-</div>
+        }
+      </div>
+    </figure>
+  </div>
+}

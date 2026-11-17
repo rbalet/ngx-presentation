@@ -1,5 +1,5 @@
 <ng-template #titleTemplate>
-  <h2 appChapterTitle [number]="chapter().number" [title]="title()" [subtitle]="continuations().length ? undefined : subtitle()"></h2>
+  <h2 appChapterTitle [number]="chapter().number" [title]="chapter().title" [subtitle]="continuations().length ? undefined : chapter().subtitle"></h2>
 </ng-template>
 <ng-template #nextLinks>
   <div>
@@ -19,14 +19,17 @@
   <app-form-background />
 }
 <div class="chapter-slide">
+  @if (chapter().number === '03') {
+    <app-problem-chapter class="chapter-challenges" part="challenges" [maintenanceResolved]="maintenanceResolved()" [complexityResolved]="complexityResolved()" />
+  }
   <div class="chapter-content chapter-content--motion">
     @if (continuations().length) {
-      @if (subtitle(); as text) { <p class="chapter-subtitle" [innerHTML]="text | translate"></p> }
+      @if (chapter().subtitle; as text) { <p class="chapter-subtitle" [innerHTML]="text | translate"></p> }
     } @else { <ng-container [ngTemplateOutlet]="titleTemplate" /> }
     @switch (chapter().number) {
       @case ('01') { <app-about-chapter [part]="compact() ? 'community' : undefined" /> }
       @case ('02') { <app-problem-chapter [part]="compact() ? 'comparison' : undefined" /> }
-      @case ('03') { <app-form-demo mode="intro" /> }
+      @case ('03') { <app-form-demo mode="intro" [(maintenanceResolved)]="maintenanceResolved" [(complexityResolved)]="complexityResolved" /> }
       @case ('04') { <app-form-demo mode="skill" /> }
       @case ('05') {
         @defer (on viewport) { <app-form-validator /> }
@@ -53,8 +56,7 @@
     <div class="chapter-content">
       @switch (slide.content) {
         @case ('maintainers') { <app-about-chapter part="maintainers" /> }
-        @case ('custom') { <app-problem-chapter part="custom" /> }
-        @case ('requirements') { <app-problem-requirements [(active)]="activeProblem" /> }
+        @case ('ssf-forms') { <app-problem-chapter part="ssf-forms" /> }
       }
     </div>
     <nav class="chapter-controls" [attr.aria-label]="'nav.slide' | translate: { number: chapter().number, slide: index + 2 }">

@@ -7,7 +7,7 @@ test('PeriScope pairs each area with three Formly capabilities and a bundled ill
   const areas = [
     { name: 'Events', image: 'events', title: 'Register participants', first: 'Configure registration fields for each event.' },
     { name: 'Workflows', image: 'workflows', title: 'Move a request forward', first: 'Define a form for each workflow step.' },
-    { name: 'Surveys', image: 'surveys', title: 'Collect and review responses', first: 'Build questionnaires from reusable question types.' },
+    { name: 'Surveys', image: 'surveys', title: 'Collect and review responses', first: 'Build questionnaires with custom components.' },
   ];
   for (const area of areas) {
     const button = chapter.getByRole('button', { name: area.name, exact: true });
@@ -25,8 +25,8 @@ test('PeriScope pairs each area with three Formly capabilities and a bundled ill
   }
   await expect(chapter.getByRole('link', { name: 'Open PeriScope' })).toHaveAttribute('href', 'https://int.periscope.bit.admin.ch');
   for (const language of [
-    { code: 'de', label: 'Was ngx-formly ermöglicht', first: 'Fragebögen aus wiederverwendbaren Fragetypen erstellen.' },
-    { code: 'fr', label: 'Ce que permet ngx-formly', first: 'Créer des questionnaires à partir de types de questions réutilisables.' },
+    { code: 'de', label: 'Was ngx-formly ermöglicht', first: 'Fragebögen mit benutzerdefinierten Komponenten erstellen.' },
+    { code: 'fr', label: 'Ce que permet ngx-formly', first: 'Créer des questionnaires avec des composants personnalisés.' },
   ]) {
     await page.locator('header .language-select').selectOption(language.code);
     const capabilities = chapter.getByRole('list', { name: language.label }).getByRole('listitem');
@@ -41,7 +41,11 @@ test('PeriScope reveals only the illustration region for the hovered, focused, o
   const chapter = page.locator('#chapter-07');
   const colors = chapter.locator('.area-color');
 
-  for (const area of ['Events', 'Workflows', 'Surveys']) {
+  for (const { area, accent } of [
+    { area: 'Events', accent: 'rgb(185, 46, 54)' },
+    { area: 'Workflows', accent: 'rgb(36, 93, 166)' },
+    { area: 'Surveys', accent: 'rgb(79, 107, 82)' },
+  ]) {
     await chapter.getByRole('button', { name: area, exact: true }).click();
     await expect(chapter.locator('.area-image')).toHaveCSS('filter', 'grayscale(1)');
     for (const color of await colors.all()) await expect(color).toHaveCSS('opacity', '0');
@@ -50,9 +54,10 @@ test('PeriScope reveals only the illustration region for the hovered, focused, o
     for (let index = 0; index < 3; index++) {
       const capability = capabilities.nth(index);
       const keyword = capability.locator('strong').first();
-      await expect(keyword).toHaveCSS('font-weight', '400');
+      await expect(keyword).toHaveCSS('font-weight', '700');
       if (isMobile) await capability.tap();
       else await capability.hover();
+      await expect(capability).toHaveCSS('color', accent);
       await expect(keyword).toHaveCSS('font-weight', '700');
       await expect(capability).toHaveCSS('font-weight', '400');
       for (let region = 0; region < 3; region++) {

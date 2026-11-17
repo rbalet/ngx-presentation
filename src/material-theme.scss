@@ -37,6 +37,28 @@
   ));
 }
 
+.form-example--material,
+.form-example--custom {
+  --example-active-outline: light-dark(#2f4256, var(--action));
+
+  @include mat.form-field-overrides((
+    container-height: 40px,
+    container-vertical-padding: 8px,
+    outlined-outline-color: light-dark(#949494, #a1a1a1),
+    outlined-label-text-color: var(--action),
+    outlined-hover-outline-color: var(--example-active-outline),
+    outlined-hover-label-text-color: var(--example-active-outline),
+    outlined-focus-outline-color: var(--example-active-outline),
+    outlined-focus-label-text-color: var(--example-active-outline),
+  ));
+
+  @media (hover: hover) {
+    mat-form-field:hover {
+      @include mat.form-field-overrides((outlined-outline-width: 2px));
+    }
+  }
+}
+
 app-phone-input .main-flag .country-selector-code {
   display: none;
 }

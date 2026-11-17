@@ -9,6 +9,10 @@ test('intro code supports highlighting, folding and keyboard editing without nav
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/#chapter-03');
   const intro = page.locator('#chapter-03');
+  await expect(intro.locator('.intro-code summary')).toHaveCount(4);
+  await expect(intro.locator('.intro-code details[open] > summary')).toHaveText('Bind the fields and model to Angular');
+  await expect(intro.locator('.intro-code app-code-editor:visible')).toHaveCount(1);
+  await intro.getByText('Full name field configuration', { exact: true }).press('Enter');
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
   await expect(editor).toHaveAttribute('contenteditable', 'true');
   await expect(editor).toHaveAccessibleDescription('Edit label, required, minLength or maxLength. Set the value in model.name.');
@@ -36,7 +40,6 @@ test('intro code supports highlighting, folding and keyboard editing without nav
   await intro.locator('.configuration-editor .cm-foldPlaceholder').click();
   await expect.poll(() => editor.innerText()).toBe(original);
 
-  await intro.getByText('Bind the fields and model to Angular', { exact: true }).click();
   const template = intro.getByRole('textbox', { name: 'Bind the fields and model to Angular', exact: true });
   await expect(template).toHaveAttribute('aria-readonly', 'true');
   const source = await template.innerText();
@@ -53,9 +56,54 @@ test('intro code supports highlighting, folding and keyboard editing without nav
   expect(errors).toEqual([]);
 });
 
+test('the first code example checkmark toggles the maintenance status', async ({ page }) => {
+  await page.goto('/#chapter-03');
+  const intro = page.locator('#chapter-03');
+  const checkmark = intro.getByRole('button', { name: 'Mark ongoing maintenance as addressed' });
+  const maintenance = intro.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Ongoing maintenance' });
+  const wrench = maintenance.locator('svg');
+  await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  await expect(wrench).toHaveCSS('rotate', 'none');
+
+  await checkmark.press('Space');
+  await expect(checkmark).toHaveAttribute('aria-pressed', 'true');
+  await expect(checkmark).toHaveCSS('color', 'rgb(167, 201, 171)');
+  await expect(maintenance).toHaveCSS('border-top-color', 'rgb(79, 107, 82)');
+  await expect(wrench).toHaveCSS('color', 'rgb(79, 107, 82)');
+  await expect(wrench).toHaveCSS('rotate', '8deg');
+  await expect(intro.locator('.intro-code details[open]')).toHaveCount(1);
+
+  await checkmark.click();
+  await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  await expect(wrench).toHaveCSS('rotate', 'none');
+});
+
+test('the name configuration checkmark toggles the Complexity card independently', async ({ page }) => {
+  await page.goto('/#chapter-03');
+  const intro = page.locator('#chapter-03');
+  const checkmark = intro.getByRole('button', { name: 'Mark complexity as addressed' });
+  const maintenance = intro.getByRole('button', { name: 'Mark ongoing maintenance as addressed' });
+  const complexity = intro.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Complexity' });
+  const example = intro.locator('details').filter({ hasText: 'Full name field configuration' });
+
+  await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  await checkmark.press('Space');
+  await expect(checkmark).toHaveAttribute('aria-pressed', 'true');
+  await expect(complexity).toHaveClass(/form-example-challenge--resolved/);
+  await expect(maintenance).toHaveAttribute('aria-pressed', 'false');
+  await expect(example).toHaveJSProperty('open', false);
+
+  await example.locator('summary').click();
+  await checkmark.click();
+  await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  await expect(complexity).not.toHaveClass(/form-example-challenge--resolved/);
+  await expect(example).toHaveJSProperty('open', true);
+});
+
 test('the intro edits the name configuration and keeps its model value in sync', async ({ page }) => {
   await page.goto('/#chapter-03');
   const intro = page.locator('#chapter-03');
+  await intro.getByText('Full name field configuration', { exact: true }).click();
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
   const value = intro.getByLabel('model.name', { exact: true });
   await expect(intro.locator('.preview-sheet').getByLabel('model.name', { exact: true })).toBeVisible();
@@ -104,6 +152,7 @@ test('invalid intro configuration preserves the draft and the last working field
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/#chapter-03');
   const intro = page.locator('#chapter-03');
+  await intro.getByText('Full name field configuration', { exact: true }).click();
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
   const original = await editor.innerText();
   const field = JSON.parse(original);
@@ -155,6 +204,7 @@ test('custom length errors follow the edited rule and language without losing th
   await name.press('Tab');
   await expect(name).toHaveAccessibleDescription('Your name needs at least 3 characters. You entered 2.');
 
+  await intro.getByText('Full name field configuration', { exact: true }).click();
   const editor = intro.getByRole('textbox', { name: 'Full name field configuration', exact: true });
   const field = JSON.parse(await editor.innerText());
   field.props.minLength = 5;
