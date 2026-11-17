@@ -80,7 +80,11 @@ test('focus view keeps a minimal running timer at the bottom of the viewport', a
   expect(bounds.x).toBe(0);
   expect(bounds.width).toBe(page.viewportSize()!.width);
   expect(bounds.y + bounds.height).toBe(page.viewportSize()!.height);
-  expect((await footer.locator('span').boundingBox())!.x).toBe(16);
+  const track = (await timer.boundingBox())!;
+  const readout = (await footer.locator('.focus-timer-readout').boundingBox())!;
+  expect(track.x).toBe(16);
+  expect(track.x + track.width).toBeLessThan(readout.x);
+  expect(readout.x + readout.width).toBe(bounds.width - 16);
   await expect(footer.getByRole('button')).toHaveCount(0);
 
   await page.locator('#chapter-01').focus();

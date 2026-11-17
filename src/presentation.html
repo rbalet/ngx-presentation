@@ -72,8 +72,8 @@
 </main>
 @if (focused()) {
   <div class="focus-timer">
-    <span class="focus-timer-readout" aria-hidden="true">{{ 'timer.readout' | translate: { elapsed: elapsedMinutes(), total: 60 } }}</span>
     <progress class="presentation-timer" [class.presentation-timer--overdue]="overdue()" [value]="progress()" max="100"
       [attr.aria-label]="'timer.title' | translate" [attr.aria-valuetext]="description" [title]="description"></progress>
+    <span class="focus-timer-readout" aria-hidden="true">{{ 'timer.readout' | translate: { elapsed: elapsedMinutes(), total: 60 } }}</span>
   </div>
 }
