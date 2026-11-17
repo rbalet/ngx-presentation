@@ -60,7 +60,7 @@ test('the first code example checkmark toggles the maintenance status', async ({
   await page.goto('/#chapter-03');
   const intro = page.locator('#chapter-03');
   const checkmark = intro.getByRole('button', { name: 'Mark ongoing maintenance as addressed' });
-  const maintenance = intro.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Ongoing maintenance' });
+  const maintenance = page.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Ongoing maintenance' });
   const wrench = maintenance.locator('svg');
   await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
   await expect(wrench).toHaveCSS('rotate', 'none');
@@ -83,13 +83,16 @@ test('the name configuration checkmark toggles the Complexity card independently
   const intro = page.locator('#chapter-03');
   const checkmark = intro.getByRole('button', { name: 'Mark complexity as addressed' });
   const maintenance = intro.getByRole('button', { name: 'Mark ongoing maintenance as addressed' });
-  const complexity = intro.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Complexity' });
+  const complexity = page.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Complexity' });
+  const icon = complexity.locator('svg path');
   const example = intro.locator('details').filter({ hasText: 'Full name field configuration' });
 
   await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  const unresolvedIcon = (await icon.getAttribute('d'))!;
   await checkmark.press('Space');
   await expect(checkmark).toHaveAttribute('aria-pressed', 'true');
   await expect(complexity).toHaveClass(/form-example-challenge--resolved/);
+  await expect(icon).not.toHaveAttribute('d', unresolvedIcon);
   await expect(maintenance).toHaveAttribute('aria-pressed', 'false');
   await expect(example).toHaveJSProperty('open', false);
 
@@ -97,6 +100,7 @@ test('the name configuration checkmark toggles the Complexity card independently
   await checkmark.click();
   await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
   await expect(complexity).not.toHaveClass(/form-example-challenge--resolved/);
+  await expect(icon).toHaveAttribute('d', unresolvedIcon);
   await expect(example).toHaveJSProperty('open', true);
 });
 
@@ -270,6 +274,10 @@ test('the validator loads chapter 03 configuration and formats the edited JSON',
   await expect(editor).toContainText('Full name');
   await expect(intro.getByRole('textbox', { name: 'Full name', exact: true })).toHaveValue('');
   await expect(intro.getByLabel('Dietary requirements')).toBeVisible();
+  await expect(intro.locator('formly-form').getByRole('textbox')).toHaveCount(3);
+  expect(JSON.parse(await editor.innerText()).map((field: { key: string }) => field.key)).toEqual([
+    'name', 'email', 'attendance', 'dietary',
+  ]);
   expect(errors).toEqual([]);
 });
 
@@ -396,7 +404,7 @@ test('capability cards start with Skill and explain each integration', async ({ 
     value: { writeText: async (text: string) => { sessionStorage.setItem('copied-prompt', text); } },
   }));
   const prompt = await skill.locator('.prompt-text').innerText();
-  expect(prompt).toBe('/ngx-formly Add street, postal code, city and country inputs to the existing form.');
+  expect(prompt).toBe("add a new input, named AI model, and add the model we're using as model default value");
   await skill.getByRole('button', { name: 'Copy prompt', exact: true }).click();
   await expect(skill.locator('.demo-actions').getByRole('status')).toHaveText('Copied.');
   expect(await page.evaluate(() => sessionStorage.getItem('copied-prompt'))).toBe(prompt);
@@ -406,7 +414,7 @@ test('capability cards start with Skill and explain each integration', async ({ 
   await expect(skill.locator('.demo-actions').getByRole('status')).toBeEmpty();
   for (const language of ['fr', 'de', 'en']) {
     await page.locator('header .language-select').selectOption(language);
-    await expect(skill.locator('.prompt-text')).toContainText('/ngx-formly');
+    await expect(skill.locator('.prompt-text')).toContainText('AI model');
     await expect(detail.getByRole('link')).toHaveAccessibleName(({ fr: 'Lire la documentation', de: 'Dokumentation lesen', en: 'Read the guide' } as Record<string, string>)[language]);
     await expect(detail.getByRole('link')).toHaveText('');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -476,19 +484,14 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
     const cards = page.getByRole('group', { name: 'Explore Skill, MCP and WebMCP' });
     const detail = page.locator('#capability-detail');
     const panels = detail.locator('.capability-page');
+    await expect(panels).toHaveCSS('animation-name', 'none');
 
-    for (const [title, previous, direction] of [['MCP', 'Skill', '1'], ['Skill', 'MCP', '-1']]) {
+    for (const [title, direction] of [['MCP', '1'], ['Skill', '-1'], ['MCP', '1']]) {
       await cards.getByRole('button', { name: title, exact: true }).press('Enter');
-      if (reducedMotion === 'no-preference') {
-        await expect(detail).toHaveCSS('--slide-direction', direction);
-        await expect(detail.locator('[inert]')).toContainText(previous);
-        await expect(detail.locator('.solution-enter')).toHaveCSS('animation-name', 'solution-enter');
-      } else {
-        await expect(panels).toHaveCSS('animation-name', 'none');
-      }
+      expect(await panels.count()).toBe(1);
       await expect(detail).toHaveAccessibleName(title);
-      await expect(detail.getByRole('heading', { name: previous, exact: true })).toHaveCount(0);
-      await expect(panels).toHaveCount(1);
+      await expect(detail).toHaveCSS('--slide-direction', direction);
+      await expect(panels).toHaveCSS('animation-name', reducedMotion === 'no-preference' ? /capability-enter$/ : 'none');
     }
   });
 }

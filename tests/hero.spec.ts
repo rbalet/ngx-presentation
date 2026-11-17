@@ -44,6 +44,10 @@ for (const { sectionId, linkName, nextId } of [
     await expect(link).toBeFocused();
     await link.click();
     await expect(page).toHaveURL(new RegExp(`#${nextId}$`));
-    await expect(background).not.toBeInViewport();
+    // The browser rounds the scroll offset to a whole pixel.
+    await expect.poll(async () => {
+      const { y, height } = (await background.boundingBox())!;
+      return y + height;
+    }).toBeLessThanOrEqual(1);
   });
 }

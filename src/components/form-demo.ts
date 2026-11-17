@@ -23,7 +23,7 @@ export class FormDemo {
     { id: 'mcp', title: 'MCP', href: 'https://formly.dev/guide/mcp' },
     { id: 'webmcp', title: 'WebMCP', href: 'https://formly.dev/guide/web-mcp' },
   ];
-  readonly capabilitySelection = signal<{ current: number; previous: number | null }>({ current: this.capabilityFromUrl(), previous: null });
+  readonly capabilitySelection = signal({ current: this.capabilityFromUrl(), direction: 0 });
   readonly mcpTools = [
     { name: 'formly_search', icon: 'M20 20l-4.5-4.5M17 10.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z' },
     { name: 'formly_lookup', icon: 'M12 6v14M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Z' },
@@ -99,13 +99,9 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]`;
   readonly submitted = signal<Registration | null>(null);
   readonly formDirective = viewChild(FormGroupDirective);
   private pendingRequest?: ReturnType<typeof setTimeout>;
-  private capabilityTransition?: ReturnType<typeof setTimeout>;
 
   constructor() {
-    inject(DestroyRef).onDestroy(() => {
-      clearTimeout(this.pendingRequest);
-      clearTimeout(this.capabilityTransition);
-    });
+    inject(DestroyRef).onDestroy(() => clearTimeout(this.pendingRequest));
     effect(() => {
       this.state.revision();
       const directive = this.formDirective();
@@ -127,17 +123,11 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]`;
     const { current } = this.capabilitySelection();
     if (index === current) return;
 
-    clearTimeout(this.capabilityTransition);
-    const animate = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this.capabilitySelection.set({ current: index, previous: animate ? current : null });
-    if (animate) {
-      this.capabilityTransition = setTimeout(() => this.capabilitySelection.set({ current: index, previous: null }), 380);
-    }
+    this.capabilitySelection.set({ current: index, direction: index < current ? -1 : 1 });
   }
 
   restoreCapability() {
-    clearTimeout(this.capabilityTransition);
-    this.capabilitySelection.set({ current: this.capabilityFromUrl(), previous: null });
+    this.capabilitySelection.set({ current: this.capabilityFromUrl(), direction: 0 });
   }
 
   private capabilityFromUrl() {

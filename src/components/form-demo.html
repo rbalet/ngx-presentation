@@ -1,4 +1,3 @@
-<p class="demo-lead">{{ ('demo.' + mode() + '.lead') | translate }}</p>
 @if (mode() === 'skill') {
   @let selection = capabilitySelection();
   @let guideLabel = 'demo.skill.readGuide' | translate;
@@ -13,92 +12,90 @@
       }
     </div>
     <section class="capability-detail" id="capability-detail" tabindex="0"
-      [attr.aria-labelledby]="'capability-title-' + selection.current"
-      [style.--slide-direction]="selection.previous !== null && selection.current < selection.previous ? -1 : 1">
-      @for (index of [selection.previous, selection.current]; track index) {
-        @if (index !== null) {
-          @let capability = capabilities[index];
-          @let outgoing = index === selection.previous;
-          <div class="capability-page" [class.solution-enter]="selection.previous !== null && !outgoing"
-            [class.solution-exit]="outgoing" [attr.inert]="outgoing ? '' : null">
-            <div class="capability-heading">
-              <h3 [id]="'capability-title-' + index">{{ capability.title }}</h3>
-              <a class="demo-secondary capability-action" [href]="capability.href" target="_blank" rel="noopener noreferrer"
-                [attr.aria-label]="guideLabel" [title]="guideLabel">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 4h6v6m-1-5L9 15M10 4H4v16h16v-6" /></svg>
-              </a>
-              @if (capability.id === 'webmcp') {
-                @let testLabel = 'demo.skill.capabilities.webmcp.copyTestPrompt' | translate;
-                <button class="demo-secondary capability-action" type="button" (click)="copy(webMcpPrompt)"
-                  [attr.aria-label]="testLabel" [title]="testLabel">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6m-5 0v7L4 19a1.3 1.3 0 0 0 1 2h14a1.3 1.3 0 0 0 1-2l-6-9V3M7 15h10" /></svg>
-                </button>
-                <div class="demo-status" role="status">
-                  @if (copied() === 'done') { {{ 'demo.copy.done' | translate }} }
-                  @else if (copied() === 'failed') {
-                    <span class="configuration-error">{{ 'demo.skill.capabilities.webmcp.copyFailed' | translate }}</span>
-                    <p class="prompt-text">{{ webMcpPrompt }}</p>
-                  }
-                </div>
-              }
-            </div>
-            @if (capability.id === 'mcp') {
-              <pre class="code-window capability-example"><code>https://formly.dev/mcp</code></pre>
-              <ul class="mcp-tools" role="list">
-                @for (tool of mcpTools; track tool.name) {
-                  <li>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path [attr.d]="tool.icon" />
-                    </svg>
-                    <code>{{ tool.name }}</code>
-                  </li>
+      [attr.aria-labelledby]="'capability-title-' + capabilities[selection.current].id"
+      [style.--slide-direction]="selection.direction">
+      @for (capability of [capabilities[selection.current]]; track capability.id) {
+        <div class="capability-page" [class.capability-page--enter]="selection.direction !== 0">
+          <div class="capability-heading">
+            <h3 [id]="'capability-title-' + capability.id">{{ capability.title }}</h3>
+            <a class="demo-secondary capability-action" [href]="capability.href" target="_blank" rel="noopener noreferrer"
+              [attr.aria-label]="guideLabel" [title]="guideLabel">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 4h6v6m-1-5L9 15M10 4H4v16h16v-6" /></svg>
+            </a>
+            @if (capability.id === 'webmcp') {
+              @let testLabel = 'demo.skill.capabilities.webmcp.copyTestPrompt' | translate;
+              <button class="demo-secondary capability-action" type="button" (click)="copy(webMcpPrompt)"
+                [attr.aria-label]="testLabel" [title]="testLabel">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6m-5 0v7L4 19a1.3 1.3 0 0 0 1 2h14a1.3 1.3 0 0 0 1-2l-6-9V3M7 15h10" /></svg>
+              </button>
+              <div class="demo-status" role="status">
+                @if (copied() === 'done') { {{ 'demo.copy.done' | translate }} }
+                @else if (copied() === 'failed') {
+                  <span class="configuration-error">{{ 'demo.skill.capabilities.webmcp.copyFailed' | translate }}</span>
+                  <p class="prompt-text">{{ webMcpPrompt }}</p>
                 }
-              </ul>
-            } @else if (capability.id === 'webmcp') {
-              @defer (on immediate) {
-                <app-code-editor class="code-window" [value]="webMcpExample" language="typescript" [label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate" />
-              } @placeholder {
-                <pre class="code-window capability-example"><code>{{ webMcpExample }}</code></pre>
-              }
-              <formly-form [form]="form" [fields]="phoneFields()" [model]="phoneModel" [options]="phoneOptions" />
-            }
-            @if (capability.id === 'skill') {
-              @let installCommand = 'npx skills add ngx-formly/ngx-formly --skill ngx-formly';
-              @let copyLabel = 'demo.skill.copyCommand' | translate;
-              <div class="code-window install-command">
-                <code>{{ installCommand }}</code>
-                <button class="demo-secondary capability-action" type="button" (click)="copy(installCommand, commandCopied)"
-                  [attr.aria-label]="copyLabel" [title]="copyLabel">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    @if (commandCopied() === 'done') {
-                      <path d="m5 12 4 4L19 6" />
-                    } @else {
-                      <rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V4H4v12h4" />
-                    }
-                  </svg>
-                </button>
-              </div>
-              <div class="demo-status install-status" role="status">
-                @if (commandCopied() === 'done') { {{ 'demo.copy.done' | translate }} }
-                @else if (commandCopied() === 'failed') {
-                  <span class="configuration-error">{{ 'demo.skill.copyCommandFailed' | translate }}</span>
-                }
-              </div>
-              <div class="prompt-sheet">
-                <h4>{{ 'demo.skill.promptTitle' | translate }}</h4>
-                <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>
-                <div class="demo-actions">
-                  <button class="demo-primary" type="button" (click)="copy(translate.instant('demo.skill.prompt'))">{{ 'demo.skill.copy' | translate }}</button>
-                  <span class="demo-status" role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</span>
-                </div>
               </div>
             }
           </div>
-        }
+          @if (capability.id === 'mcp') {
+            <pre class="code-window capability-example"><code>https://formly.dev/mcp</code></pre>
+            <ul class="mcp-tools" role="list">
+              @for (tool of mcpTools; track tool.name) {
+                <li>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path [attr.d]="tool.icon" />
+                  </svg>
+                  <code>{{ tool.name }}</code>
+                </li>
+              }
+            </ul>
+          } @else if (capability.id === 'webmcp') {
+            @defer (on immediate) {
+              <app-code-editor class="code-window" [value]="webMcpExample" language="typescript" [label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate" />
+            } @placeholder {
+              <pre class="code-window capability-example"><code>{{ webMcpExample }}</code></pre>
+            }
+            <formly-form [form]="form" [fields]="phoneFields()" [model]="phoneModel" [options]="phoneOptions" />
+          }
+          @if (capability.id === 'skill') {
+            @let installCommand = 'npx skills add ngx-formly/ngx-formly --skill ngx-formly';
+            @let copyLabel = 'demo.skill.copyCommand' | translate;
+            <div class="code-window install-command">
+              <code>{{ installCommand }}</code>
+              <button class="demo-secondary capability-action" type="button" (click)="copy(installCommand, commandCopied)"
+                [attr.aria-label]="copyLabel" [title]="copyLabel">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  @if (commandCopied() === 'done') {
+                    <path d="m5 12 4 4L19 6" />
+                  } @else {
+                    <rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V4H4v12h4" />
+                  }
+                </svg>
+              </button>
+            </div>
+            <div class="demo-status install-status" role="status">
+              @if (commandCopied() === 'done') { {{ 'demo.copy.done' | translate }} }
+              @else if (commandCopied() === 'failed') {
+                <span class="configuration-error">{{ 'demo.skill.copyCommandFailed' | translate }}</span>
+              }
+            </div>
+            <div class="prompt-sheet">
+              <h4>{{ 'demo.skill.promptTitle' | translate }}</h4>
+              <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>
+              <div class="demo-actions">
+                <button class="demo-primary" type="button" (click)="copy(translate.instant('demo.skill.prompt'))">{{ 'demo.skill.copy' | translate }}</button>
+                <span class="demo-status" role="status">@if (copied() !== 'idle') { {{ ('demo.copy.' + copied()) | translate }} }</span>
+              </div>
+            </div>
+          }
+        </div>
       }
     </section>
   </div>
 } @else {
+  @if (mode() === 'validation') {
+    <p class="demo-lead">{{ 'demo.validation.lead' | translate }}</p>
+  }
   <div class="demo-workbench" [class.demo-workbench--validation]="mode() === 'validation'">
     <div class="demo-explanation" #demoExplanation>
       @switch (mode()) {

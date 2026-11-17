@@ -1,11 +1,15 @@
-<p class="builder-lead">{{ 'demo.visualBuilder.lead' | translate }}</p>
+@let resolved = integrationResolved();
 <div class="builder-toolbar">
   <div class="add-fields" role="group" [attr.aria-label]="'demo.visualBuilder.add' | translate">
     @for (type of types; track type) {
       <button type="button" (click)="add(type)">{{ ('demo.visualBuilder.addType.' + type) | translate }}</button>
     }
   </div>
-  <button type="button" (click)="reset()">{{ 'demo.visualBuilder.reset' | translate }}</button>
+  <div class="builder-actions">
+    <button type="button" (click)="reset()">{{ 'demo.visualBuilder.reset' | translate }}</button>
+    <button type="button" [attr.aria-label]="'demo.visualBuilder.resolveIntegration' | translate"
+      [attr.aria-pressed]="resolved()" (click)="resolved.set(!resolved())">OK</button>
+  </div>
 </div>
 @if (error() || engine.formLoadError()) {
   <p role="alert">{{ 'demo.visualBuilder.error' | translate }}</p>

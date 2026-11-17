@@ -1,11 +1,12 @@
 :host { display: block; }
-.builder-lead { max-width: 65ch; margin: 0 0 1.5rem; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.5; }
 .builder-toolbar, .add-fields, .field-actions, .builder-footer, .builder-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
 .builder-toolbar, .builder-footer { justify-content: space-between; gap: 1rem; }
 .builder-toolbar { margin-bottom: 1.5rem; }
+.builder-toolbar > .builder-actions { margin-inline-start: auto; }
 button, .builder-actions a { min-height: 2.75rem; padding: .55rem .75rem; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
 button:hover:not(:disabled), .builder-actions a:hover { background: var(--highlight); }
 button:disabled { opacity: .45; cursor: default; }
+.builder-toolbar [aria-pressed="true"] { border-color: var(--success); color: var(--success); }
 .builder-workspace { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1fr) minmax(0, 1.3fr); gap: 1.5rem; align-items: start; }
 section { min-width: 0; }
 h3 { margin: 0 0 1rem; font-size: 1.15rem; }

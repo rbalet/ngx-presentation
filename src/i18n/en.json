@@ -74,7 +74,6 @@
   "chapters": {
     "01": {
       "title": "About me",
-      "subtitle": "And my vanity metrics",
       "summary": "Raphaël Balet. Expert Developer at BIT, Stack Overflow contributor and open-source maintainer."
     },
     "02": {
@@ -115,7 +114,6 @@
     "showIndex": "Show chapters"
   },
   "periscope": {
-    "intro": "Our current project, and our ngx-formly use",
     "chooseArea": "Explore PeriScope",
     "events": {
       "name": "Events",
@@ -140,7 +138,7 @@
       "title": "Collect and review responses",
       "capabilities": [
         "<strong>Build</strong> questionnaires with <strong>custom components</strong>.",
-        "<strong>Reveal</strong> follow-up questions <strong>based on earlier answers</strong>.",
+        "<strong>Customize layout</strong> through Drag & Drop",
         "<strong>Aggregate unified data</strong> and display their results."
       ]
     },
@@ -149,7 +147,7 @@
   },
   "closing": {
     "discussion": {
-      "question": "Is it missing something?"
+      "question": "Will you use it, or are we missing something?"
     },
     "future": {
       "framework": "run it everywhere",
@@ -183,7 +181,6 @@
     "intro": {
       "resolveMaintenance": "Mark ongoing maintenance as addressed",
       "resolveComplexity": "Mark complexity as addressed",
-      "lead": "Configure fields and rules. Angular renders the form.",
       "configuration": "Full name field configuration",
       "try": "Edit label, required, minLength or maxLength. Set the value in model.name.",
       "configurationError": "Use valid JSON with key \"name\", type \"input\", props (label, required, positive minLength and maxLength with minLength ≤ maxLength), and validation.messages.minLength (a message or translation key, 1–200 characters).",
@@ -192,9 +189,8 @@
       "translation": "Custom error messages with ngx-translate"
     },
     "skill": {
-      "lead": "Use your AI the way you like",
       "promptTitle": "Give the skill a real task",
-      "prompt": "/ngx-formly Add street, postal code, city and country inputs to the existing form.",
+      "prompt": "add a new input, named AI model, and add the model we're using as model default value",
       "copy": "Copy prompt",
       "copyCommand": "Copy install command",
       "copyCommandFailed": "Copy unavailable. Select and copy the command above.",
@@ -216,7 +212,6 @@
       }
     },
     "visualBuilder": {
-      "lead": "Build on the registration form. Pick a field, change it, and try the result.",
       "add": "Add a field",
       "addType": {
         "input": "Add text",
@@ -231,6 +226,7 @@
       "firstOption": "First option",
       "secondOption": "Second option",
       "reset": "Reset builder",
+      "resolveIntegration": "OK, mark integration as addressed",
       "fields": "Fields",
       "settings": "Edit field",
       "label": "Label",
@@ -251,7 +247,6 @@
       "error": "The builder could not load. Reload the page to try again."
     },
     "builder": {
-      "lead": "Edit and validate the form configuration from chapter 03.",
       "loading": "Loading the form validator…",
       "fields": "Fields JSON",
       "format": "Format JSON",

@@ -307,14 +307,20 @@ test("direct links work with reduced motion and without horizontal overflow", as
   expect(hydrationErrors).toEqual([]);
 });
 
-test("the problem labels stay below the header while Meet ngx-formly scrolls", async ({ page }) => {
+test("Integration stays pinned through Make it yours and OK toggles its status", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/#chapter-03");
-  const row = page.locator("#chapter-03 .chapter-challenges");
-  await expect(row.locator(".form-example-challenge")).toHaveText([
+  await page.goto("/#chapter-02");
+  const row = page.locator(".chapter-challenges");
+  const cards = row.locator(".form-example-challenge");
+  const integration = cards.last();
+  const visibleCards = cards.filter({ visible: true });
+  const allChallenges = [
     "Ongoing maintenance", "Complexity", "integration",
-  ]);
-  await expect(row).toBeInViewport();
+  ];
+  await expect(visibleCards).toHaveText(allChallenges);
+  await page.locator("#chapter-03").evaluate(chapter => chapter.scrollIntoView());
+  await expect(integration).toBeInViewport();
+  const integrationLeft = (await integration.boundingBox())!.x;
   const headerBottom = (await page.locator(".site-header").boundingBox())!.height;
   await page.evaluate(() => {
     // A full-height slide can snap past its intermediate scroll positions.
@@ -322,8 +328,23 @@ test("the problem labels stay below the header while Meet ngx-formly scrolls", a
     window.scrollBy(0, 160);
   });
   await expect.poll(async () => (await row.boundingBox())?.y).toBe(headerBottom);
-  await page.locator("#chapter-04").evaluate(chapter => chapter.scrollIntoView());
-  await expect(row).not.toBeInViewport();
+  for (const chapter of ["04", "05", "06"]) {
+    await page.locator(`#chapter-${chapter}`).evaluate(section => section.scrollIntoView());
+    await expect(visibleCards).toHaveText(["integration"]);
+    await expect.poll(async () => (await row.boundingBox())?.y).toBe(headerBottom);
+    expect((await integration.boundingBox())?.x).toBe(integrationLeft);
+  }
+  const ok = page.getByRole("button", { name: "OK, mark integration as addressed" });
+  await expect(ok).toHaveAttribute("aria-pressed", "false");
+  await ok.press("Space");
+  await expect(ok).toHaveAttribute("aria-pressed", "true");
+  await expect(integration).toHaveClass(/form-example-challenge--resolved/);
+  await ok.click();
+  await expect(integration).not.toHaveClass(/form-example-challenge--resolved/);
+  await page.locator("#chapter-07").evaluate(chapter => chapter.scrollIntoView());
+  await expect(integration).not.toBeInViewport();
+  await page.locator("#chapter-03").evaluate(chapter => chapter.scrollIntoView());
+  await expect(visibleCards).toHaveText(allChallenges);
 });
 
 test("the same chapter index sticks without jumping and highlights the chapter while scrolling", async ({

@@ -421,9 +421,10 @@ h1 {
 .chapter {
   --chapter-title-size: clamp(2.5rem, 5vw, 5rem);
   --chapter-title-leading: 1.1;
-  --running-title-height: max(
-    var(--running-title-min-height),
-    calc(var(--chapter-title-size) * var(--chapter-title-leading))
+  --chapter-title-gap: 1rem;
+  --running-title-height: calc(
+    max(var(--running-title-min-height), var(--chapter-title-size) * var(--chapter-title-leading)) +
+    var(--chapter-title-gap)
   );
   isolation: isolate;
   background: var(--paper);
@@ -479,6 +480,7 @@ h1 {
   display: flex;
   align-items: baseline;
   gap: clamp(1rem, 3vw, 3rem);
+  margin-bottom: var(--chapter-title-gap);
   font-size: var(--chapter-title-size);
   line-height: var(--chapter-title-leading);
   letter-spacing: -0.025em;
@@ -755,7 +757,7 @@ app-periscope-chapter .capability-label strong {
 .problem-gallery--partial .form-examples {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.form-examples:has(> :only-child) {
+.problem-gallery .form-examples:has(> :only-child) {
   grid-template-columns: minmax(0, 1fr);
   max-width: 30rem;
 }
@@ -785,25 +787,84 @@ app-periscope-chapter .capability-label strong {
 .form-example-challenge--resolved { border-color: var(--success); }
 .form-example-challenge--resolved svg { color: var(--success); rotate: 8deg; }
 @media (prefers-reduced-motion: no-preference) {
-  .form-challenges .form-example-challenge { transition: border-color 160ms ease-out; }
+  .form-challenges .form-example-challenge {
+    position: relative;
+    transition: border-color 160ms ease-out, opacity 200ms ease-out,
+      translate 200ms cubic-bezier(0.16, 1, 0.3, 1), visibility 200ms;
+  }
   .form-challenges .form-example-challenge svg { transition: color 160ms ease-out, rotate 180ms ease-out; }
+  .form-challenges .form-example-challenge--resolved::after {
+    content: "";
+    position: absolute;
+    inset: -0.5rem -0.375rem -1rem;
+    pointer-events: none;
+    color: var(--success);
+    background:
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 9% 0 / 6px 6px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 42% 0 / 4px 4px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 85% 0 / 7px 7px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 0 65% / 5px 5px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 100% 48% / 5px 5px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 18% 92% / 7px 7px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 55% 100% / 5px 5px,
+      radial-gradient(circle closest-side, currentColor 80%, transparent) 92% 93% / 6px 6px;
+    background-repeat: no-repeat;
+    transform-origin: center calc(50% - 0.25rem);
+    animation:
+      challenge-sparks 4s ease-in-out both,
+      challenge-spark-drift 3s ease-in-out 0.5s;
+  }
+  .form-challenges--integration-only .form-example-challenge:not(:last-child) {
+    translate: 0 -4px;
+  }
 }
-.chapter-slide:has(> .chapter-challenges) {
-  padding-top: var(--header-height);
+@keyframes challenge-sparks {
+  0%, 100% { transform: scale(0); }
+  12.5%, 87.5% { transform: scale(1); }
 }
-.chapter-slide > .chapter-challenges {
+@keyframes challenge-spark-drift {
+  33% {
+    background-position:
+      calc(9% + 4px) 2px, calc(42% - 2px) 4px, calc(85% + 3px) 0,
+      3px calc(65% - 4px), calc(100% - 4px) calc(48% + 2px),
+      calc(18% - 4px) calc(92% + 2px), calc(55% + 2px) calc(100% - 4px), calc(92% + 3px) 93%;
+  }
+  67% {
+    background-position:
+      calc(9% - 3px) 4px, calc(42% + 4px) 1px, calc(85% - 4px) 3px,
+      1px calc(65% + 4px), calc(100% - 1px) calc(48% - 4px),
+      calc(18% + 3px) calc(92% - 4px), calc(55% - 4px) calc(100% - 1px), calc(92% - 2px) calc(93% - 4px);
+  }
+}
+.challenge-chapters {
+  --challenge-row-height: 3.625rem;
+}
+.challenge-chapters > .chapter-challenges {
   display: block;
   position: sticky;
   top: var(--header-height);
   z-index: 1;
-  width: 100%;
+  height: var(--challenge-row-height);
+  padding-inline: var(--gutter);
+}
+.chapter-challenges + .chapter {
+  margin-top: calc(-1 * var(--challenge-row-height));
+}
+.form-challenges {
   max-width: 80rem;
-  margin: 0 auto var(--slide-inset);
+  margin-inline: auto;
   padding-block: 0.5rem;
   background: var(--paper);
 }
-.chapter-challenges ~ * :focus-visible {
-  scroll-margin-top: 7rem;
+.form-challenges--integration-only .form-example-challenge:not(:last-child) {
+  opacity: 0;
+  visibility: hidden;
+}
+.challenge-chapters .chapter-slide {
+  padding-top: calc(var(--header-height) + var(--challenge-row-height) + var(--slide-inset));
+}
+.challenge-chapters .chapter-slide :focus-visible {
+  scroll-margin-top: var(--challenge-row-height);
 }
 .form-example {
   min-width: 0;
@@ -1099,6 +1160,9 @@ app-periscope-chapter .capability-label strong {
   .form-challenges {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.5rem;
+  }
+  .challenge-chapters {
+    --challenge-row-height: 6.25rem;
   }
   .form-challenges .form-example-challenge {
     flex-direction: column;

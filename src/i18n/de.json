@@ -74,7 +74,6 @@
   "chapters": {
     "01": {
       "title": "Über mich",
-      "subtitle": "Und meine Eitelkeitsstatistiken",
       "summary": "Raphaël Balet. Expert Developer beim BIT, Mitwirkender bei Stack Overflow und Open-Source-Maintainer."
     },
     "02": {
@@ -115,7 +114,6 @@
     "showIndex": "Kapitel anzeigen"
   },
   "periscope": {
-    "intro": "Mein aktuelles Projekt nutzt konfigurierbare Formulare für Events, Workflows und Umfragen.",
     "chooseArea": "PeriScope erkunden",
     "events": {
       "name": "Veranstaltungen",
@@ -140,7 +138,7 @@
       "title": "Antworten sammeln und prüfen",
       "capabilities": [
         "Fragebögen mit <strong>benutzerdefinierten Komponenten</strong> <strong>erstellen</strong>.",
-        "Folgefragen <strong>abhängig von bisherigen Antworten</strong> <strong>einblenden</strong>.",
+        "<strong>Layout anpassen</strong> per Drag & Drop",
         "<strong>Vereinheitlichte Daten aggregieren</strong> und die Ergebnisse anzeigen."
       ]
     },
@@ -149,7 +147,7 @@
   },
   "closing": {
     "discussion": {
-      "question": "Fehlt euch etwas?"
+      "question": "Würdet ihr es nutzen, oder fehlt euch etwas?"
     },
     "future": {
       "framework": "überall einsetzbar",
@@ -183,7 +181,6 @@
     "intro": {
       "resolveMaintenance": "Laufende Wartung als geklärt markieren",
       "resolveComplexity": "Komplexität als geklärt markieren",
-      "lead": "Felder und Regeln konfigurieren. Angular rendert das Formular.",
       "configuration": "Konfiguration des Feldes Vollständiger Name",
       "try": "label, required, minLength oder maxLength ändern. Den Wert in model.name setzen.",
       "configurationError": "Gültiges JSON mit key \"name\", type \"input\", props (label, required, positive minLength und maxLength mit minLength ≤ maxLength) und validation.messages.minLength (Meldung oder Übersetzungsschlüssel, 1–200 Zeichen) verwenden.",
@@ -192,9 +189,8 @@
       "translation": "Eigene Fehlermeldungen mit ngx-translate"
     },
     "skill": {
-      "lead": "Nutze deine KI, wie du willst",
       "promptTitle": "Dem Skill eine konkrete Aufgabe geben",
-      "prompt": "/ngx-formly Ergänze das bestehende Formular um Eingabefelder für Straße, Postleitzahl, Ort und Land.",
+      "prompt": "Füge ein neues Eingabefeld namens „AI model“ hinzu und setze das verwendete Modell als Standardwert.",
       "copy": "Prompt kopieren",
       "copyCommand": "Installationsbefehl kopieren",
       "copyCommandFailed": "Kopieren nicht verfügbar. Markieren und kopieren Sie den Befehl oben.",
@@ -216,7 +212,6 @@
       }
     },
     "visualBuilder": {
-      "lead": "Passe das Anmeldeformular an. Wähle ein Feld, ändere es und probiere das Ergebnis aus.",
       "add": "Feld hinzufügen",
       "addType": {
         "input": "Text hinzufügen",
@@ -231,6 +226,7 @@
       "firstOption": "Erste Option",
       "secondOption": "Zweite Option",
       "reset": "Builder zurücksetzen",
+      "resolveIntegration": "OK, Integration als erledigt markieren",
       "fields": "Felder",
       "settings": "Feld bearbeiten",
       "label": "Beschriftung",
@@ -251,7 +247,6 @@
       "error": "Der Builder konnte nicht geladen werden. Lade die Seite erneut."
     },
     "builder": {
-      "lead": "Die Formularkonfiguration aus Kapitel 03 bearbeiten und prüfen.",
       "loading": "Formularprüfung wird geladen…",
       "fields": "Felder als JSON",
       "format": "JSON formatieren",

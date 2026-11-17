@@ -64,9 +64,26 @@
     </nav>
   </div>
   <div class="chapter-sections">
-    @for (chapter of chapters; track chapter.number; let index = $index) {
+    <ng-template #chapterSection let-chapter>
+      @let index = chapters.indexOf(chapter);
       <section appChapterSection [chapter]="chapter" [previous]="chapters[index - 1]" [next]="chapters[index + 1]"
-        [compact]="compact()"></section>
+        [compact]="compact()" [(maintenanceResolved)]="maintenanceResolved" [(complexityResolved)]="complexityResolved"
+        [integrationResolved]="integrationResolved"></section>
+    </ng-template>
+    @for (chapter of openingChapters; track chapter.number) {
+      <ng-container [ngTemplateOutlet]="chapterSection" [ngTemplateOutletContext]="{ $implicit: chapter }" />
+    }
+    <div class="challenge-chapters">
+      <app-problem-chapter class="chapter-challenges" part="challenges"
+        [integrationOnly]="(activeChapter() ?? '') > '03'"
+        [maintenanceResolved]="maintenanceResolved()" [complexityResolved]="complexityResolved()"
+        [integrationResolved]="integrationResolved()" />
+      @for (chapter of challengeChapters; track chapter.number) {
+        <ng-container [ngTemplateOutlet]="chapterSection" [ngTemplateOutletContext]="{ $implicit: chapter }" />
+      }
+    </div>
+    @for (chapter of closingChapters; track chapter.number) {
+      <ng-container [ngTemplateOutlet]="chapterSection" [ngTemplateOutletContext]="{ $implicit: chapter }" />
     }
   </div>
 </main>

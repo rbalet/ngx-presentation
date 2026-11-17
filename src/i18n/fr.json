@@ -74,7 +74,6 @@
   "chapters": {
     "01": {
       "title": "À propos de moi",
-      "subtitle": "Et mes statistiques flatteuses",
       "summary": "Raphaël Balet. Expert Developer à l’OFIT, contributeur Stack Overflow et mainteneur open source."
     },
     "02": {
@@ -115,7 +114,6 @@
     "showIndex": "Afficher les chapitres"
   },
   "periscope": {
-    "intro": "Mon projet actuel utilise des formulaires configurables pour les événements, workflows et sondages.",
     "chooseArea": "Explorer PeriScope",
     "events": {
       "name": "Événements",
@@ -140,7 +138,7 @@
       "title": "Recueillir et examiner les réponses",
       "capabilities": [
         "<strong>Créer</strong> des questionnaires avec des <strong>composants personnalisés</strong>.",
-        "<strong>Afficher</strong> des questions complémentaires <strong>selon les réponses précédentes</strong>.",
+        "<strong>Personnaliser la mise en page</strong> par glisser-déposer",
         "<strong>Agréger les données unifiées</strong> et afficher les résultats."
       ]
     },
@@ -149,7 +147,7 @@
   },
   "closing": {
     "discussion": {
-      "question": "Est-ce qu’il manque quelque chose ?"
+      "question": "Est-ce que vous l’utiliseriez, ou est-ce qu’il manque quelque chose ?"
     },
     "future": {
       "framework": "utilisable partout",
@@ -183,7 +181,6 @@
     "intro": {
       "resolveMaintenance": "Marquer la maintenance continue comme traitée",
       "resolveComplexity": "Marquer la complexité comme traitée",
-      "lead": "Configurer les champs et les règles. Angular affiche le formulaire.",
       "configuration": "Configuration du champ Nom complet",
       "try": "Modifiez label, required, minLength ou maxLength. Définissez la valeur dans model.name.",
       "configurationError": "Utilisez un JSON valide avec key \"name\", type \"input\", props (label, required, minLength et maxLength positifs avec minLength ≤ maxLength) et validation.messages.minLength (message ou clé de traduction, 1 à 200 caractères).",
@@ -192,9 +189,8 @@
       "translation": "Messages d’erreur personnalisés avec ngx-translate"
     },
     "skill": {
-      "lead": "Utilisez votre IA comme vous le souhaitez",
       "promptTitle": "Donner une vraie tâche au Skill",
-      "prompt": "/ngx-formly Ajoute des champs pour la rue, le code postal, la ville et le pays au formulaire existant.",
+      "prompt": "Ajoute un champ de saisie nommé « AI model » et définis le modèle utilisé comme valeur par défaut.",
       "copy": "Copier le prompt",
       "copyCommand": "Copier la commande d’installation",
       "copyCommandFailed": "Copie indisponible. Sélectionnez et copiez la commande ci-dessus.",
@@ -216,7 +212,6 @@
       }
     },
     "visualBuilder": {
-      "lead": "Adapte le formulaire d’inscription. Choisis un champ, modifie-le et essaie le résultat.",
       "add": "Ajouter un champ",
       "addType": {
         "input": "Ajouter un texte",
@@ -231,6 +226,7 @@
       "firstOption": "Première option",
       "secondOption": "Deuxième option",
       "reset": "Réinitialiser le builder",
+      "resolveIntegration": "OK, marquer l’intégration comme traitée",
       "fields": "Champs",
       "settings": "Modifier le champ",
       "label": "Libellé",
@@ -251,7 +247,6 @@
       "error": "Le builder n’a pas pu être chargé. Recharge la page pour réessayer."
     },
     "builder": {
-      "lead": "Modifiez et validez la configuration du formulaire du chapitre 03.",
       "loading": "Chargement du validateur…",
       "fields": "Champs JSON",
       "format": "Formater le JSON",

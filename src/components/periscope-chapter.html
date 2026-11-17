@@ -1,4 +1,3 @@
-<p class="intro">{{ 'periscope.intro' | translate }}</p>
 <div class="product-areas" role="group" [attr.aria-label]="'periscope.chooseArea' | translate">
   @for (item of areas; track item) {
     <button type="button" [attr.aria-pressed]="area() === item" (click)="area.set(item); hoveredCapability.set(null); focusedCapability.set(null)">

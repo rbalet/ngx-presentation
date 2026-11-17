@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, model, WritableSignal } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Chapter } from '../chapters';
@@ -28,8 +28,9 @@ export class ChapterSection {
   readonly previous = input<Chapter>();
   readonly next = input<Chapter>();
   readonly compact = input(false);
-  protected readonly maintenanceResolved = signal(false);
-  protected readonly complexityResolved = signal(false);
+  readonly maintenanceResolved = model(false);
+  readonly complexityResolved = model(false);
+  readonly integrationResolved = input.required<WritableSignal<boolean>>();
   readonly continuations = computed(() => this.chapter().number === '01' && this.compact()
     ? [{ id: 'chapter-01-continued', label: 'nav.maintainers', content: 'maintainers' }]
     : this.chapter().number === '02' && this.compact()

@@ -1,16 +1,18 @@
 <ng-template #challenge let-example>
-  <p class="form-example-challenge" [class.form-example-challenge--resolved]="
+  @let resolved =
     (example.challenge === 'problem.maintenance' && maintenanceResolved()) ||
-    (example.challenge === 'problem.complexity' && complexityResolved())">
+    (example.challenge === 'problem.complexity' && complexityResolved()) ||
+    (example.challenge === 'problem.integration' && integrationResolved());
+  <p class="form-example-challenge" [class.form-example-challenge--resolved]="resolved">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-      <path [attr.d]="example.icon" />
+      <path [attr.d]="resolved ? (example.resolvedIcon ?? example.icon) : example.icon" />
     </svg>
     <span>{{ example.challenge | translate }}</span>
   </p>
 </ng-template>
 @if (part() === 'challenges') {
-  <div class="form-examples form-challenges">
+  <div class="form-examples form-challenges" [class.form-challenges--integration-only]="integrationOnly()">
     @for (example of examples(); track example.theme) {
       <ng-container [ngTemplateOutlet]="challenge" [ngTemplateOutletContext]="{ $implicit: example }" />
     }

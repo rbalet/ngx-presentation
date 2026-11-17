@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, EnvironmentInjector, computed, createEnvironmentInjector, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EnvironmentInjector, WritableSignal, computed, createEnvironmentInjector, inject, input, signal } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyForm } from '@ngx-formly/core';
@@ -15,6 +15,7 @@ import { DemoFormState } from '../demo/demo-form-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class FormBuilderEditor {
+  readonly integrationResolved = input.required<WritableSignal<boolean>>();
   readonly engine = inject(BuilderEngineService);
   private readonly store = inject(CORE_FORM_STORE);
   private readonly state = inject(DemoFormState);
@@ -97,10 +98,11 @@ class FormBuilderEditor {
 @Component({
   selector: 'app-form-builder',
   imports: [NgComponentOutlet],
-  template: '<ng-container *ngComponentOutlet="editor; environmentInjector: environment" />',
+  template: '<ng-container *ngComponentOutlet="editor; inputs: { integrationResolved: integrationResolved() }; environmentInjector: environment" />',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormBuilder {
+  readonly integrationResolved = input.required<WritableSignal<boolean>>();
   readonly editor = FormBuilderEditor;
   readonly environment = createEnvironmentInjector([
     provideBuilderEngine({

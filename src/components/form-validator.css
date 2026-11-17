@@ -1,5 +1,4 @@
 :host { display: block; min-width: 0; }
-.validator-lead { max-width: 65ch; margin: 1.25rem 0 1.5rem; font-size: clamp(1.1rem, 1.6vw, 1.35rem); line-height: 1.5; }
 h3 { margin: 0; font-size: 1.1rem; line-height: 1.5; }
 button { font: inherit; cursor: pointer; }
 button:disabled { opacity: .5; cursor: not-allowed; }

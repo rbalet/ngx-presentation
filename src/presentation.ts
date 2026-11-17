@@ -1,8 +1,10 @@
 import { afterNextRender, afterRenderEffect, Component, computed, DestroyRef, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { chapters } from './chapters';
 import { ChapterSection } from './components/chapter-section';
 import { FormBackground } from './components/form-background';
+import { ProblemChapter } from './components/problem-chapter';
 import { observeMetricReveal } from './components/metric-reveal';
 import { ThemeToggle } from './components/theme-toggle';
 import { Languages } from './languages';
@@ -12,13 +14,19 @@ const presentationDuration = 60 * 60_000;
 
 @Component({
   selector: 'app-presentation',
-  imports: [TranslatePipe, ChapterSection, FormBackground, ThemeToggle],
+  imports: [NgTemplateOutlet, TranslatePipe, ChapterSection, FormBackground, ProblemChapter, ThemeToggle],
   templateUrl: './presentation.html',
   host: { '(window:keydown)': 'navigate($event)', '(click)': 'followLink($event)' },
 })
 export class Presentation {
   readonly languages = inject(Languages);
   readonly chapters = chapters;
+  protected readonly openingChapters = chapters.slice(0, 2);
+  protected readonly challengeChapters = chapters.slice(2, 6);
+  protected readonly closingChapters = chapters.slice(6);
+  protected readonly maintenanceResolved = signal(false);
+  protected readonly complexityResolved = signal(false);
+  protected readonly integrationResolved = signal(false);
   readonly compact = signal(matchMedia('(max-width: 700px), (max-height: 650px)').matches);
   readonly activeChapter = signal<string | undefined>(undefined);
   readonly activeIndex = computed(() => chapters.findIndex(chapter => chapter.number === this.activeChapter()));

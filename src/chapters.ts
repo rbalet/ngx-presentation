@@ -12,7 +12,6 @@ export const chapters: Chapter[] = [
   {
     number: "01",
     title: "chapters.01.title",
-    subtitle: "chapters.01.subtitle",
     minutes: 3,
     kind: "main",
     summary: "chapters.01.summary",

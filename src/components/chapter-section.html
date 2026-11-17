@@ -19,9 +19,6 @@
   <app-form-background />
 }
 <div class="chapter-slide">
-  @if (chapter().number === '03') {
-    <app-problem-chapter class="chapter-challenges" part="challenges" [maintenanceResolved]="maintenanceResolved()" [complexityResolved]="complexityResolved()" />
-  }
   <div class="chapter-content chapter-content--motion">
     @if (continuations().length) {
       @if (chapter().subtitle; as text) { <p class="chapter-subtitle" [innerHTML]="text | translate"></p> }
@@ -36,7 +33,7 @@
         @placeholder { <p class="chapter-subtitle">{{ 'demo.builder.loading' | translate }}</p> }
       }
       @case ('06') {
-        @defer (on viewport) { <app-form-builder /> }
+        @defer (on viewport) { <app-form-builder [integrationResolved]="integrationResolved()" /> }
         @placeholder { <p class="chapter-subtitle">{{ 'demo.visualBuilder.loading' | translate }}</p> }
         @error { <p role="alert">{{ 'demo.visualBuilder.error' | translate }}</p> }
       }

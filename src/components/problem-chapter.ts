@@ -14,6 +14,7 @@ const examples = [
     title: 'problem.event', design: 'problem.custom', theme: 'custom',
     challenge: 'problem.complexity',
     icon: 'M12 7v5m-6 6v-3a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v3M10 3h4v4h-4zM4 18h4v4H4zM16 18h4v4h-4z',
+    resolvedIcon: 'M2 9h6v6H2zM8 12h8M16 9h6v6h-6z',
   },
   {
     title: 'problem.access', design: 'problem.bootstrap', theme: 'bootstrap',
@@ -32,6 +33,8 @@ export class ProblemChapter {
   readonly part = input<'comparison' | 'ssf-forms' | 'challenges'>();
   readonly maintenanceResolved = input(false);
   readonly complexityResolved = input(false);
+  readonly integrationResolved = input(false);
+  readonly integrationOnly = input(false);
   readonly examples = computed(() => this.part() === 'comparison' ? examples.slice(0, 2)
     : this.part() === 'ssf-forms' ? examples.slice(2) : examples);
 }
