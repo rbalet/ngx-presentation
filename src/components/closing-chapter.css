@@ -1,7 +1,7 @@
 :host { display: block; }
 p { line-height: 1.5; }
-.closing-line { margin-top: 1.75rem; font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 700; color: var(--red); }
-.discussion-question { margin-block: 0 2rem; font-size: clamp(1.25rem, 2.5vw, 2rem); line-height: 1.45; }
+.closing-line { margin-top: 1.75rem; font-size: clamp(1.125rem, calc(2 * var(--font-vw)), 1.5rem); font-weight: 700; color: var(--red); }
+.discussion-question { margin-block: 0 2rem; font-size: clamp(1.25rem, calc(2.5 * var(--font-vw)), 2rem); line-height: 1.45; white-space: pre-line; }
 .resources { display: flex; flex-wrap: wrap; gap: 1rem 2rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
 .resources a { display: inline-flex; align-items: center; min-height: 2.75rem; }
 .future-directions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem; padding: 0; list-style: none; }
@@ -10,6 +10,33 @@ p { line-height: 1.5; }
 .future-icons svg { flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .future-icon { color: var(--red); }
 .future-field-icons { display: flex; gap: 0.75rem; padding-inline-start: 1rem; border-inline-start: 1px solid var(--rule); color: var(--muted); }
+.future-ellipsis circle { opacity: 0; }
+@media (hover: hover) {
+  .future-card:hover .future-ellipsis circle { opacity: 1; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .future-card:hover .future-ellipsis {
+    --dot-fade-duration: 160ms;
+    --last-dot-delay: 4s;
+    --wave-start: calc(var(--last-dot-delay) + var(--dot-fade-duration));
+  }
+  .future-card:hover .future-ellipsis circle {
+    transition: opacity var(--dot-fade-duration) ease-out;
+    animation: ellipsis-wave 900ms ease-in-out var(--wave-start) infinite;
+  }
+  .future-card:hover .future-ellipsis circle:nth-child(2) {
+    transition-delay: 2s;
+    animation-delay: calc(var(--wave-start) + 150ms);
+  }
+  .future-card:hover .future-ellipsis circle:nth-child(3) {
+    transition-delay: var(--last-dot-delay);
+    animation-delay: calc(var(--wave-start) + 300ms);
+  }
+}
+@keyframes ellipsis-wave {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-4px); }
+}
 @media (max-width: 700px) {
   .future-directions { grid-template-columns: 1fr; gap: 1rem; }
 }

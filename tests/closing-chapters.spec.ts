@@ -91,7 +91,10 @@ test('Q&A shows the audience question and resource links', async ({ page }) => {
   await page.goto('/#chapter-11');
   const content = page.locator('#chapter-11 app-closing-chapter');
   await expect(content.getByText('And you?', { exact: true })).toHaveCount(0);
-  await expect(content.getByText('Is it missing something?', { exact: true })).toBeVisible();
+  const question = content.getByText('Will you use it, or are we missing something?', { exact: true });
+  await expect(question).toBeVisible();
+  await expect(question).toHaveText(/Will you use it,\nor are we missing something\?/);
+  await expect(question).toHaveCSS('white-space', 'pre-line');
   await expect(content.getByRole('button')).toHaveCount(0);
   await expect(content.getByRole('link', { name: 'builder.formly.dev', exact: true })).toHaveAttribute('href', 'https://builder.formly.dev/');
 });

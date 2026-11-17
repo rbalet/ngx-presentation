@@ -5,7 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-theme-toggle',
   imports: [TranslatePipe],
   template: `
-    <button type="button" class="theme-toggle"
+    <button type="button" class="header-icon-button"
       [attr.aria-label]="'theme.dark' | translate" [attr.aria-pressed]="dark()"
       [title]="(dark() ? 'theme.toLight' : 'theme.toDark') | translate" (click)="toggle()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"

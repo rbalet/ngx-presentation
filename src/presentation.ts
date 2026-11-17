@@ -27,6 +27,9 @@ export class Presentation {
   protected readonly maintenanceResolved = signal(false);
   protected readonly complexityResolved = signal(false);
   protected readonly integrationResolved = signal(false);
+  protected readonly minFontScale = 80;
+  protected readonly maxFontScale = 120;
+  protected readonly fontScale = signal(100);
   readonly compact = signal(matchMedia('(max-width: 700px), (max-height: 650px)').matches);
   readonly activeChapter = signal<string | undefined>(undefined);
   readonly activeIndex = computed(() => chapters.findIndex(chapter => chapter.number === this.activeChapter()));
@@ -58,6 +61,7 @@ export class Presentation {
     window.addEventListener('scroll', this.updateNavigation, { passive: true });
     window.addEventListener('resize', this.updateNavigation);
     destroyRef.onDestroy(() => {
+      document.documentElement.style.removeProperty('--font-scale');
       clearInterval(timer);
       media.removeEventListener('change', updateSize);
       window.removeEventListener('scroll', this.updateNavigation);
@@ -85,6 +89,13 @@ export class Presentation {
       observer.observe(list);
       onCleanup(() => observer.disconnect());
     });
+  }
+
+  protected adjustFontScale(step: number) {
+    const scale = Math.min(this.maxFontScale, Math.max(this.minFontScale, this.fontScale() + step));
+    if (scale === this.fontScale()) return;
+    this.fontScale.set(scale);
+    document.documentElement.style.setProperty('--font-scale', String(scale / 100));
   }
 
   private readonly updateNavigation = () => {

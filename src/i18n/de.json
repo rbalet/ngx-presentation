@@ -8,6 +8,8 @@
     "skip": "Zur Präsentation springen",
     "start": "Mit Kapitel 01 beginnen",
     "language": "Sprache",
+    "increaseFontSize": "Schrift vergrössern",
+    "decreaseFontSize": "Schrift verkleinern",
     "notFound": "Seite nicht gefunden",
     "open": "Präsentation öffnen"
   },
@@ -147,7 +149,7 @@
   },
   "closing": {
     "discussion": {
-      "question": "Würdet ihr es nutzen, oder fehlt euch etwas?"
+      "question": "Würdet ihr es nutzen,\noder fehlt euch etwas?"
     },
     "future": {
       "framework": "überall einsetzbar",

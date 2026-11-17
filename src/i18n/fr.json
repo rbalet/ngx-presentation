@@ -8,6 +8,8 @@
     "skip": "Aller à la présentation",
     "start": "Commencer au chapitre 01",
     "language": "Langue",
+    "increaseFontSize": "Augmenter la taille du texte",
+    "decreaseFontSize": "Réduire la taille du texte",
     "notFound": "Page introuvable",
     "open": "Ouvrir la présentation"
   },
@@ -147,7 +149,7 @@
   },
   "closing": {
     "discussion": {
-      "question": "Est-ce que vous l’utiliseriez, ou est-ce qu’il manque quelque chose ?"
+      "question": "Est-ce que vous l’utiliseriez,\nou est-ce qu’il manque quelque chose ?"
     },
     "future": {
       "framework": "utilisable partout",

@@ -8,6 +8,8 @@
     "skip": "Skip to presentation",
     "start": "Start with chapter 01",
     "language": "Language",
+    "increaseFontSize": "Increase font size",
+    "decreaseFontSize": "Decrease font size",
     "notFound": "Page not found",
     "open": "Open the presentation"
   },
@@ -147,7 +149,7 @@
   },
   "closing": {
     "discussion": {
-      "question": "Will you use it, or are we missing something?"
+      "question": "Will you use it,\nor are we missing something?"
     },
     "future": {
       "framework": "run it everywhere",

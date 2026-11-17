@@ -1,10 +1,10 @@
 :host { display: block; min-width: 0; }
-.demo-lead { max-width: 60ch; margin: 1.25rem 0 1.5rem; font-size: clamp(1.1rem, 1.6vw, 1.35rem); line-height: 1.5; }
+.demo-lead { max-width: 60ch; margin: 1.25rem 0 1.5rem; font-size: clamp(1.1rem, calc(1.6 * var(--font-vw)), 1.35rem); line-height: 1.5; }
 .demo-workbench, .skill-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1rem, 2.5vw, 2.5rem); align-items: start; }
-h3 { margin: 0 0 .875rem; font-size: clamp(1.15rem, 1.6vw, 1.5rem); line-height: 1.2; }
+h3 { margin: 0 0 .875rem; font-size: clamp(1.15rem, calc(1.6 * var(--font-vw)), 1.5rem); line-height: 1.2; }
 h4 { margin: 0 0 .65rem; font-size: 1.05rem; }
 .demo-note { color: var(--muted); font-size: .9rem; line-height: 1.5; }
-.code-window { max-width: 100%; margin: 0 0 1rem; padding: 1rem; overflow: auto; border-radius: 8px; background: var(--dark-surface); color: var(--on-dark); font-size: clamp(.72rem, 1vw, .9rem); line-height: 1.6; tab-size: 2; scrollbar-color: var(--muted) var(--dark-surface); }
+.code-window { max-width: 100%; margin: 0 0 1rem; padding: 1rem; overflow: auto; border-radius: 8px; background: var(--dark-surface); color: var(--on-dark); font-size: clamp(.72rem, calc(1 * var(--font-vw)), .9rem); line-height: 1.6; tab-size: 2; scrollbar-color: var(--muted) var(--dark-surface); }
 .code-window code { font-family: 'SFMono-Regular', Consolas, monospace; }
 app-code-editor.code-window { padding: 0; }
 .intro-code { padding: 0; overflow: hidden; border: 1px solid var(--muted); font-family: 'SFMono-Regular', Consolas, monospace; }
@@ -67,7 +67,7 @@ summary { width: fit-content; min-height: 2.75rem; padding-block: .75rem; font-s
 .capability-card[aria-pressed="true"] strong, .capability-card[aria-pressed="true"] svg { color: var(--red); }
 .capability-detail { min-width: 0; }
 .capability-heading { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .875rem; }
-.capability-heading h3 { margin: 0; font-size: clamp(1.5rem, 2.5vw, 2rem); }
+.capability-heading h3 { margin: 0; font-size: clamp(1.5rem, calc(2.5 * var(--font-vw)), 2rem); }
 .capability-example { white-space: pre-wrap; overflow-wrap: anywhere; }
 .mcp-tools { margin: 0 0 1rem; padding: 0; list-style: none; }
 .mcp-tools li { display: flex; align-items: center; gap: .75rem; padding-block: .75rem; border-bottom: 1px solid var(--rule); font-weight: 700; overflow-wrap: anywhere; }

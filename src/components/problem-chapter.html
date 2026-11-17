@@ -9,12 +9,21 @@
       <path [attr.d]="resolved ? (example.resolvedIcon ?? example.icon) : example.icon" />
     </svg>
     <span>{{ example.challenge | translate }}</span>
+    @if (resolved && example.challenge === 'problem.maintenance') {
+      <svg class="form-example-challenge-check" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m5 12 4 4L19 6" />
+      </svg>
+      <span class="visually-hidden">{{ 'nav.completed' | translate }}</span>
+    }
   </p>
 </ng-template>
 @if (part() === 'challenges') {
   <div class="form-examples form-challenges" [class.form-challenges--integration-only]="integrationOnly()">
     @for (example of examples(); track example.theme) {
-      <ng-container [ngTemplateOutlet]="challenge" [ngTemplateOutletContext]="{ $implicit: example }" />
+      <div class="form-challenge-slot">
+        <ng-container [ngTemplateOutlet]="challenge" [ngTemplateOutletContext]="{ $implicit: example }" />
+      </div>
     }
   </div>
 } @else {

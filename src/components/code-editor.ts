@@ -20,7 +20,7 @@ const highlighting = syntaxHighlighting(HighlightStyle.define([
 const theme = EditorView.theme({
   '&': { backgroundColor: 'var(--dark-surface)', color: 'var(--on-dark)' },
   '&.cm-focused': { outline: '2px solid var(--on-dark)', outlineOffset: '-2px' },
-  '.cm-scroller': { maxHeight: '28rem', overflow: 'auto', fontFamily: '"SFMono-Regular", Consolas, monospace', fontSize: '14px', lineHeight: '1.6', scrollbarColor: '#a8b3c2 var(--dark-surface)' },
+  '.cm-scroller': { maxHeight: '28rem', overflow: 'auto', fontFamily: '"SFMono-Regular", Consolas, monospace', fontSize: '0.875rem', lineHeight: '1.6', scrollbarColor: '#a8b3c2 var(--dark-surface)' },
   '.cm-content': { padding: '12px 0', caretColor: 'var(--on-dark)' },
   '.cm-line': { padding: '0 12px 0 8px' },
   '.cm-gutters': { backgroundColor: 'var(--dark-surface)', color: '#a8b3c2', borderRight: '1px solid #465463' },

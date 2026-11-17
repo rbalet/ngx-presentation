@@ -1,5 +1,37 @@
 import { expect, test } from '@playwright/test';
 
+test('header controls resize chapter text without leaving the current chapter', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/?selected=skill#chapter-04');
+  const header = page.locator('.site-header');
+  const increase = header.getByRole('button', { name: 'Increase font size' });
+  const decrease = header.getByRole('button', { name: 'Decrease font size' });
+  const heading = page.locator('#chapter-04 h2').first();
+  const text = page.locator('#chapter-04 .prompt-text').first();
+  const fontSize = (element: typeof heading) => element.evaluate(node => parseFloat(getComputedStyle(node).fontSize));
+  const initialHeading = await fontSize(heading);
+  const initialText = await fontSize(text);
+
+  await increase.click();
+  expect(await fontSize(heading)).toBeCloseTo(initialHeading * 1.1);
+  expect(await fontSize(text)).toBeCloseTo(initialText * 1.1);
+  await increase.click();
+  await expect(increase).toBeDisabled();
+  await increase.press('Enter');
+  expect(await fontSize(heading)).toBeCloseTo(initialHeading * 1.2);
+  await expect(page).toHaveURL(/\?selected=skill#chapter-04$/);
+  const theme = (await header.getByRole('button', { name: 'Dark mode' }).boundingBox())!;
+  expect(theme.x + theme.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+
+  await decrease.click();
+  await decrease.click();
+  expect(await fontSize(heading)).toBeCloseTo(initialHeading);
+  await decrease.click();
+  await decrease.click();
+  await expect(decrease).toBeDisabled();
+  expect(await fontSize(text)).toBeCloseTo(initialText * 0.8);
+});
+
 test('keyboard navigation includes continuation slides and leaves controls alone', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-02');
@@ -112,6 +144,11 @@ test('focus view reveals keyboard controls and restores navigation on narrow scr
   await expect(header).toHaveCSS('opacity', '0');
   await expect(page.locator('.focus-timer')).toBeVisible();
 
+  await page.keyboard.press('Tab');
+  await expect(header.getByRole('button', { name: 'Increase font size' })).toBeFocused();
+  await expect(header).toHaveCSS('opacity', '1');
+  await page.keyboard.press('Tab');
+  await expect(header.getByRole('button', { name: 'Decrease font size' })).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(header.getByRole('combobox')).toBeFocused();
   await expect(header).toHaveCSS('opacity', '1');

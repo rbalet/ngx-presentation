@@ -61,8 +61,10 @@ test('the first code example checkmark toggles the maintenance status', async ({
   const intro = page.locator('#chapter-03');
   const checkmark = intro.getByRole('button', { name: 'Mark ongoing maintenance as addressed' });
   const maintenance = page.locator('.chapter-challenges .form-example-challenge').filter({ hasText: 'Ongoing maintenance' });
-  const wrench = maintenance.locator('svg');
+  const wrench = maintenance.locator('svg').first();
+  const badgeCheck = maintenance.locator('.form-example-challenge-check');
   await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  await expect(badgeCheck).toHaveCount(0);
   await expect(wrench).toHaveCSS('rotate', 'none');
 
   await checkmark.press('Space');
@@ -71,10 +73,13 @@ test('the first code example checkmark toggles the maintenance status', async ({
   await expect(maintenance).toHaveCSS('border-top-color', 'rgb(79, 107, 82)');
   await expect(wrench).toHaveCSS('color', 'rgb(79, 107, 82)');
   await expect(wrench).toHaveCSS('rotate', '8deg');
+  await expect(badgeCheck).toBeVisible();
+  await expect(maintenance.getByText('Completed', { exact: true })).toBeAttached();
   await expect(intro.locator('.intro-code details[open]')).toHaveCount(1);
 
   await checkmark.click();
   await expect(checkmark).toHaveAttribute('aria-pressed', 'false');
+  await expect(badgeCheck).toHaveCount(0);
   await expect(wrench).toHaveCSS('rotate', 'none');
 });
 
