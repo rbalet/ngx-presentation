@@ -29,7 +29,7 @@ pnpm exec playwright install chromium
 pnpm test
 ```
 
-Install the browser once. Playwright covers desktop and mobile chapter navigation, presenter shortcuts, focus view, the timer, themes, direct links, reduced motion, the form demo, export, validation, Periscope walkthrough, language switching and persistence, and layout overflow. It starts Angular directly at http://127.0.0.1:4310. `check:i18n` uses the official ngx-translate skill's checker to compare keys, value types and interpolation parameters against English.
+Install the browser once. Playwright covers desktop and mobile chapter navigation, presenter shortcuts, focus view, the timer, themes, direct links, reduced motion, the form demo, export, validation, PeriScope walkthrough, language switching and persistence, and layout overflow. It starts Angular directly at http://127.0.0.1:4310. `check:i18n` uses the official ngx-translate skill's checker to compare keys, value types and interpolation parameters against English.
 
 Angular’s optional OXC WASM fallback currently reports upstream `@emnapi` peer-version warnings during dependency resolution. The native macOS build and browser tests pass; the WASM fallback has not been exercised.
 
@@ -73,7 +73,7 @@ The skill chapter provides a `/ngx-formly` prompt to add street, postal code, ci
 
 The dependency is a locally built `@ngx-formly/builder@0.0.1` tarball containing the headless-root changes, included under `vendor/`, so installation needs neither a sibling checkout nor npm publication. The package root exposes the engine; the ready-made editor lives at the optional `@ngx-formly/builder/ui` entry point. The demo uses the existing native Formly controls; no builder stylesheet or global UI providers are loaded. See [vendor/README.md](vendor/README.md) for provenance, bundle comparison, refresh commands and verification limits.
 
-Periscope's interactive walkthrough is based on the existing project documentation. Start its separate frontend and API for the actual live demonstration. See [PRESENTING.md](PRESENTING.md) for the exact boundaries and fallback flow.
+PeriScope's interactive walkthrough is based on the existing project documentation. Start its separate frontend and API for the actual live demonstration. See [PRESENTING.md](PRESENTING.md) for the exact boundaries and fallback flow.
 
 ## Repository skills
 

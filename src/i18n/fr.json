@@ -126,7 +126,7 @@
       "summary": ""
     },
     "07": {
-      "title": "Periscope",
+      "title": "PeriScope",
       "summary": "Notre outil de gestion d’événements, de workflows et de sondages. Un vrai formulaire, de la configuration à l’envoi."
     },
     "11": {
@@ -140,40 +140,39 @@
   },
   "presenter": {
     "focus": "Vue présentation",
-    "showIndex": "Afficher les chapitres",
-    "keys": "Les flèches gauche / droite changent de diapositive."
+    "showIndex": "Afficher les chapitres"
   },
   "periscope": {
     "intro": "Mon projet actuel utilise des formulaires configurables pour les événements, workflows et sondages.",
-    "chooseArea": "Explorer Periscope",
+    "chooseArea": "Explorer PeriScope",
     "events": {
       "name": "Événements",
       "title": "Inscrire les participants",
       "capabilities": [
-        "Configurer les champs d’inscription pour chaque événement.",
-        "Afficher les champs adaptés aux personnes ou aux délégations.",
-        "Valider les informations obligatoires et les adresses e-mail."
+        "Configurer les <strong>champs d’inscription</strong> pour chaque événement.",
+        "Afficher les champs adaptés aux <strong>personnes ou aux délégations</strong>.",
+        "Valider les <strong>informations obligatoires</strong> et les <strong>adresses e-mail</strong>."
       ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Faire avancer une demande",
       "capabilities": [
-        "Définir un formulaire pour chaque étape du workflow.",
-        "Afficher ou désactiver des champs selon le statut de la demande.",
-        "Réutiliser les types de champs et la validation entre workflows."
+        "Définir un formulaire pour chaque <strong>étape du workflow</strong>.",
+        "<strong>Afficher ou désactiver des champs</strong> selon le statut de la demande.",
+        "Réutiliser les <strong>types de champs et la validation</strong> entre workflows."
       ]
     },
     "surveys": {
       "name": "Sondages",
       "title": "Recueillir et examiner les réponses",
       "capabilities": [
-        "Créer des questionnaires à partir de types de questions réutilisables.",
-        "Afficher des questions complémentaires selon les réponses précédentes.",
-        "Valider les réponses obligatoires et leur format."
+        "Créer des questionnaires à partir de <strong>types de questions réutilisables</strong>.",
+        "Afficher des <strong>questions complémentaires</strong> selon les réponses précédentes.",
+        "Valider les <strong>réponses obligatoires</strong> et leur <strong>format</strong>."
       ]
     },
-    "open": "Ouvrir Periscope",
+    "open": "Ouvrir PeriScope",
     "capabilities": "Ce que permet ngx-formly"
   },
   "closing": {
@@ -223,7 +222,9 @@
       "promptTitle": "Donner une vraie tâche au Skill",
       "prompt": "/ngx-formly Ajoute des champs pour la rue, le code postal, la ville et le pays au formulaire existant.",
       "copy": "Copier le prompt",
-      "choose": "Découvrir MCP, WebMCP et Skill",
+      "copyCommand": "Copier la commande d’installation",
+      "copyCommandFailed": "Copie indisponible. Sélectionnez et copiez la commande ci-dessus.",
+      "choose": "Découvrir Skill, MCP et WebMCP",
       "readGuide": "Lire la documentation",
       "capabilities": {
         "mcp": {

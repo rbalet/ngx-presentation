@@ -11,10 +11,11 @@ import { FormValidator } from './form-validator';
 import { FormBuilder } from './form-builder';
 import { PeriscopeChapter } from './periscope-chapter';
 import { ClosingChapter } from './closing-chapter';
+import { FormBackground } from './form-background';
 
 @Component({
   selector: 'section[appChapterSection]',
-  imports: [NgTemplateOutlet, TranslatePipe, AboutChapter, ChapterTitle, ProblemChapter, ProblemRequirements, FormDemo, FormValidator, FormBuilder, PeriscopeChapter, ClosingChapter],
+  imports: [NgTemplateOutlet, TranslatePipe, AboutChapter, ChapterTitle, ProblemChapter, ProblemRequirements, FormDemo, FormValidator, FormBuilder, PeriscopeChapter, ClosingChapter, FormBackground],
   templateUrl: './chapter-section.html',
   host: {
     '[id]': "'chapter-' + chapter().number",

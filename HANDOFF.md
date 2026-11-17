@@ -20,7 +20,7 @@ The scrolling presentation uses Angular 22, ngx-translate 18 and ngx-formly 11. 
 | 04      | Agentic Workflow                       | 4       | Main, result reviewed in 05     |
 | 05      | API & validation                       | 6       | Main, editing and Studio export |
 | 06      | Make it yours                          | 4       | Headless builder and live preview |
-| 07      | Periscope                              | 8       | Main                            |
+| 07      | PeriScope                              | 8       | Main                            |
 | 12      | What's next                            | 3       | Main, future plans              |
 | 11      | Q&A                                    | 15      | Discussion                      |
 
@@ -29,10 +29,10 @@ The main content totals 39 minutes. With 15 minutes of Q&A, six minutes remain a
 ## Content decisions
 
 - Chapter 04 uses Formly 11.3's built-in WebMCP integration for its opted-in phone field. The `fill_phone_number` tool requires a browser with WebMCP enabled; ordinary browsers still support manual input. The MCP card links to Formly's hosted server.
-- Periscope is the user's event, workflow and survey tool. Chapter 07 pairs each area with three proposed Formly capabilities and the supplied product illustration. The illustrations are bundled locally; start Periscope's separate environment for a live product demo.
+- PeriScope is the user's event, workflow and survey tool. Chapter 07 pairs each area with three proposed Formly capabilities and the supplied product illustration. The illustrations are bundled locally; start PeriScope's separate environment for a live product demo.
 - Chapter 05 reuses Formly’s JSON validator and starts with chapter 03’s configuration. Chapter 06 uses the packed `@ngx-formly/builder` headless engine with native controls, a live preview and JSON export; see `vendor/README.md` for release findings.
 - Keep translation optional. It supports the main presentation but must not displace it.
-- Do not invent adoption statistics, time savings or Periscope implementation details.
+- Do not invent adoption statistics, time savings or PeriScope implementation details.
 
 ## Current setup
 
@@ -100,7 +100,7 @@ Suggested speaker notes:
 
 ## Next work
 
-Rehearse the complete flow in PRESENTING.md. Confirm the real Periscope environment before the talk and complete the builder repository release separately. The presentation itself uses the hosted Studio import flow and does not depend on an npm publication.
+Rehearse the complete flow in PRESENTING.md. Confirm the real PeriScope environment before the talk and complete the builder repository release separately. The presentation itself uses the hosted Studio import flow and does not depend on an npm publication.
 
 ## Completed interactive presentation
 
@@ -112,4 +112,4 @@ Rehearse the complete flow in PRESENTING.md. Confirm the real Periscope environm
 - [PRESENTING.md](PRESENTING.md) contains the full run of show and rehearsal steps.
 - [Builder release handoff](docs/builder-release.md) records the tested npm candidate, durable version patch and genuine publication prerequisites. Nothing has been published.
 
-Before the talk, rehearse the agent prompt and real Studio import, then start/sign into Periscope. Local simulations are clearly identified in the deck.
+Before the talk, rehearse the agent prompt and real Studio import, then start/sign into PeriScope. Local simulations are clearly identified in the deck.

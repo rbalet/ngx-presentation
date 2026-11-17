@@ -11,8 +11,22 @@ p { line-height: 1.5; }
 .formly-capabilities { display: grid; gap: 0.25rem; margin: 1.125rem 0 0; padding-inline-start: 1.25rem; line-height: 1.5; }
 .formly-capabilities li { padding-inline-start: 0.25rem; }
 .formly-capabilities li::marker { color: var(--red); }
-.capability { display: block; width: 100%; padding: 0.375rem 0; border: 0; background: transparent; text-align: start; line-height: inherit; text-underline-offset: 0.2em; -webkit-tap-highlight-color: transparent; }
-.capability.is-active { color: var(--red); text-decoration: underline; }
+.capability { display: block; width: 100%; padding: 0.375rem 0; border: 0; background: transparent; text-align: start; line-height: inherit; -webkit-tap-highlight-color: transparent; }
+.capability.is-active { color: var(--red); }
+@supports (background-clip: text) {
+  @media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+    .capability-label {
+      display: inline-block;
+      background-image: linear-gradient(to right, var(--red) 50%, var(--ink) 50%);
+      background-size: 200% 100%;
+      background-position: right;
+      background-clip: text;
+      color: transparent;
+      transition: background-position 240ms ease-out;
+    }
+    .capability.is-active .capability-label { background-position: left; }
+  }
+}
 .area-illustration { display: grid; align-items: center; aspect-ratio: 3 / 2; overflow: hidden; background: var(--group); border-radius: 12px; }
 .area-picture { position: relative; }
 .area-image { display: block; width: 100%; height: auto; filter: grayscale(1); }

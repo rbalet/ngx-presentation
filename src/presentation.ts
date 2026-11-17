@@ -2,6 +2,7 @@ import { afterNextRender, afterRenderEffect, Component, computed, DestroyRef, El
 import { TranslatePipe } from '@ngx-translate/core';
 import { chapters } from './chapters';
 import { ChapterSection } from './components/chapter-section';
+import { FormBackground } from './components/form-background';
 import { observeMetricReveal } from './components/metric-reveal';
 import { ThemeToggle } from './components/theme-toggle';
 import { Languages } from './languages';
@@ -11,7 +12,7 @@ const presentationDuration = 60 * 60_000;
 
 @Component({
   selector: 'app-presentation',
-  imports: [TranslatePipe, ChapterSection, ThemeToggle],
+  imports: [TranslatePipe, ChapterSection, FormBackground, ThemeToggle],
   templateUrl: './presentation.html',
   host: { '(window:keydown)': 'navigate($event)', '(click)': 'followLink($event)' },
 })

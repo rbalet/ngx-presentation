@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { ConfigOption, FieldType, FieldTypeConfig, FormlyAttributes, FormlyValidationMessagesPipe } from '@ngx-formly/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { PhoneInput } from './phone-input';
 
 @Component({
   selector: 'app-demo-field',
-  imports: [ReactiveFormsModule, FormlyAttributes, FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe],
+  imports: [ReactiveFormsModule, FormlyAttributes, FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe, PhoneInput],
   template: `
     <label [for]="id">{{ props.label }} @if (props.required) { <span aria-hidden="true">*</span> }</label>
     @switch (field.type) {
@@ -17,6 +19,11 @@ import { TranslatePipe } from '@ngx-translate/core';
       }
       @case ('textarea') {
         <textarea [id]="id" rows="2" [formControl]="formControl" [formlyAttributes]="field" [attr.aria-invalid]="showError" [attr.aria-describedby]="showError ? id + '-error' : null"></textarea>
+      }
+      @case ('phone') {
+        @defer (on immediate) {
+          <app-phone-input [inputId]="id" [formControl]="formControl" [required]="!!props.required" [invalid]="showError" />
+        }
       }
       @default {
         <input [id]="id" [type]="props.type || 'text'" [formControl]="formControl" [formlyAttributes]="field" [attr.aria-invalid]="showError" [attr.aria-describedby]="showError ? id + '-error' : null" />
@@ -45,7 +52,23 @@ export class DemoField extends FieldType<FieldTypeConfig> {
 }
 
 export const demoFormlyConfig: ConfigOption = {
-  types: ['input', 'select', 'textarea'].map(name => ({ name, component: DemoField })),
+  types: [
+    ...['input', 'select', 'textarea'].map(name => ({ name, component: DemoField })),
+    {
+      name: 'phone',
+      component: DemoField,
+      defaultOptions: {
+        props: { type: 'tel' },
+        validators: {
+          phone: {
+            expression: ({ value }: AbstractControl) => value == null || value === ''
+              || (typeof value === 'string' && !!parsePhoneNumberFromString(value, { extract: false })?.isValid()),
+            message: 'demo.errors.invalid',
+          },
+        },
+      },
+    },
+  ],
   validationMessages: [
     { name: 'required', message: 'demo.errors.required' },
     { name: 'pattern', message: 'demo.errors.email' },

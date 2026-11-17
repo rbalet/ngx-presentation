@@ -55,11 +55,35 @@
                 }
               </ul>
             } @else if (capability.id === 'webmcp') {
-              <pre class="code-window capability-example" tabindex="0" [attr.aria-label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate"><code>{{ webMcpExample }}</code></pre>
+              @defer (on immediate) {
+                <app-code-editor class="code-window" [value]="webMcpExample" language="typescript" [label]="'demo.skill.capabilities.webmcp.exampleLabel' | translate" />
+              } @placeholder {
+                <pre class="code-window capability-example"><code>{{ webMcpExample }}</code></pre>
+              }
               <formly-form [form]="form" [fields]="phoneFields()" [model]="phoneModel" [options]="phoneOptions" />
             }
             @if (capability.id === 'skill') {
-              <pre class="code-window capability-example"><code>npx skills add ngx-formly/ngx-formly --skill ngx-formly</code></pre>
+              @let installCommand = 'npx skills add ngx-formly/ngx-formly --skill ngx-formly';
+              @let copyLabel = 'demo.skill.copyCommand' | translate;
+              <div class="code-window install-command">
+                <code>{{ installCommand }}</code>
+                <button class="demo-secondary capability-action" type="button" (click)="copy(installCommand, commandCopied)"
+                  [attr.aria-label]="copyLabel" [title]="copyLabel">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    @if (commandCopied() === 'done') {
+                      <path d="m5 12 4 4L19 6" />
+                    } @else {
+                      <rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V4H4v12h4" />
+                    }
+                  </svg>
+                </button>
+              </div>
+              <div class="demo-status install-status" role="status">
+                @if (commandCopied() === 'done') { {{ 'demo.copy.done' | translate }} }
+                @else if (commandCopied() === 'failed') {
+                  <span class="configuration-error">{{ 'demo.skill.copyCommandFailed' | translate }}</span>
+                }
+              </div>
               <div class="prompt-sheet">
                 <h4>{{ 'demo.skill.promptTitle' | translate }}</h4>
                 <p class="prompt-text">{{ 'demo.skill.prompt' | translate }}</p>

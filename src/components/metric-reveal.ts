@@ -1,7 +1,7 @@
 export function observeMetricReveal(played: Set<string>) {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const controller = new AbortController();
-  const cleanups = Array.from(document.querySelectorAll<HTMLElement>('#chapter-01 .metric-card'), card => {
+  const cleanups = Array.from(document.querySelectorAll<HTMLElement>('#chapter-01 .metric-card'), (card, index) => {
     const logo = card.querySelector<HTMLImageElement>('.metric-logo')!;
     const chart = card.querySelector<HTMLImageElement>('.metric-history')!;
     const counter = card.querySelector<HTMLElement>('[data-count-to]')!;
@@ -19,7 +19,7 @@ export function observeMetricReveal(played: Set<string>) {
     }
 
     function reveal() {
-      if (played.has(chart.src)) return;
+      if (index !== played.size) return;
       played.add(chart.src);
       const from = logo.getBoundingClientRect();
       delete card.dataset.revealPending;

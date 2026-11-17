@@ -42,18 +42,23 @@ for (const host of ['document', 'navigator'] as const) {
       fields: [{ path: ['phoneNumber'], required: true, empty: true, errors: [{ code: 'required' }] }],
     });
     expect(await call({ phoneNumber: '+1 202-555-0147' })).toMatchObject({ status: 'filled', valid: true });
-    await expect(phone).toHaveValue('+1 202-555-0147');
+    await expect(phone).toHaveValue('+1 202 555 0147');
 
     expect(await call({})).toMatchObject({ status: 'filled', valid: true, changed: [] });
     for (const args of [null, [], { phoneNumber: 123 }, { phoneNumber: 'changed', name: 'unexpected' }]) {
       expect(await call(args)).toMatchObject({ status: 'rejected' });
-      await expect(phone).toHaveValue('+1 202-555-0147');
+      await expect(phone).toHaveValue('+1 202 555 0147');
     }
+    expect(await call({ phoneNumber: '+1 123' })).toMatchObject({
+      status: 'filled', valid: false,
+      fields: [{ path: ['phoneNumber'], errors: [{ code: 'phone' }] }],
+    });
     expect(await call({ phoneNumber: '' })).toMatchObject({
       status: 'filled', valid: false,
       fields: [{ path: ['phoneNumber'], empty: true, errors: [{ code: 'required' }] }],
     });
     await expect(phone).toHaveAttribute('aria-invalid', 'true');
+    await expect(phone).toHaveValue('');
     await expect(page.locator('#webmcp-phone-number-error')).toBeVisible();
     expect(await call({ phoneNumber: '+1 202-555-0147' })).toMatchObject({ status: 'filled', valid: true });
     await expect(phone).toHaveAttribute('aria-invalid', 'false');
@@ -61,16 +66,16 @@ for (const host of ['document', 'navigator'] as const) {
     await page.locator('header .language-select').selectOption('fr');
     await expect(phone).toHaveAccessibleName('Numéro de téléphone');
     await expect.poll(() => call({})).toMatchObject({ fields: [{ label: 'Numéro de téléphone' }] });
-    await expect(phone).toHaveValue('+1 202-555-0147');
+    await expect(phone).toHaveValue('+1 202 555 0147');
     expect(await call({ phoneNumber: '+1 202-555-0182' })).toMatchObject({ status: 'filled', valid: true });
-    await expect(phone).toHaveValue('+1 202-555-0182');
+    await expect(phone).toHaveValue('+1 202 555 0182');
 
     const chapter = page.locator('#chapter-04');
     await chapter.getByRole('button', { name: 'MCP', exact: true }).click();
     await expect.poll(() => page.evaluate(() => Object.keys(window.demoTools))).toEqual([]);
     await chapter.getByRole('button', { name: 'WebMCP', exact: true }).click();
     await expect.poll(() => page.evaluate(() => Object.keys(window.demoTools))).toEqual(['fill_phone_number']);
-    await expect(phone).toHaveValue('+1 202-555-0182');
+    await expect(phone).toHaveValue('+1 202 555 0182');
     expect(errors).toEqual([]);
   });
 }
@@ -83,9 +88,18 @@ test('the phone field remains usable without a browser WebMCP API', async ({ pag
     Object.defineProperty(navigator, 'modelContext', { value: undefined });
   });
   await page.goto('/?selected=webmcp#chapter-04');
+  await page.getByRole('button', { name: 'Select country', exact: true }).click();
+  const countries = page.getByRole('dialog', { name: 'Select country' });
+  await countries.getByRole('textbox').fill('Switzerland');
+  const switzerland = countries.getByRole('button', { name: /Switzerland.*\+41/ });
+  await switzerland.focus();
+  await switzerland.press('Enter');
+  await expect(countries).toBeHidden();
   const phone = page.getByRole('textbox', { name: 'Phone number', exact: true });
+  await phone.fill('079 123 45 67');
+  await expect(phone).toHaveValue('+41 79 123 45 67');
   await phone.fill('+1 202-555-0173');
-  await expect(phone).toHaveValue('+1 202-555-0173');
+  await expect(phone).toHaveValue('+1 202 555 0173');
   expect(errors).toEqual([]);
 });
 
@@ -115,7 +129,7 @@ test.describe('native WebMCP', () => {
       status: 'filled', valid: true, changed: [{ path: ['phoneNumber'], value: '+1 202-555-0147' }],
     });
     const phone = page.getByRole('textbox', { name: 'Phone number', exact: true });
-    await expect(phone).toHaveValue('+1 202-555-0147');
+    await expect(phone).toHaveValue('+1 202 555 0147');
     await page.locator('#chapter-04').screenshot({ path: testInfo.outputPath('webmcp-filled.png') });
     expect(await call({ phoneNumber: '' })).toMatchObject({ status: 'filled', valid: false });
     await expect(phone).toHaveAttribute('aria-invalid', 'true');
@@ -125,7 +139,7 @@ test.describe('native WebMCP', () => {
     await page.locator('#chapter-04').getByRole('button', { name: 'WebMCP', exact: true }).click();
     await expect.poll(toolNames).toEqual(['fill_phone_number']);
     expect(await call({ phoneNumber: '+1 202-555-0182' })).toMatchObject({ status: 'filled', valid: true });
-    await expect(phone).toHaveValue('+1 202-555-0182');
+    await expect(phone).toHaveValue('+1 202 555 0182');
     expect(errors).toEqual([]);
   });
 });

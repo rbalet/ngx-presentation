@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/fonts/MaterialIcons-Regular.woff2') format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  @include mat.theme((
+    color: mat.$azure-palette,
+    typography: Arial,
+  ));
+  @include mat.theme-overrides((
+    surface: var(--surface),
+    surface-container-high: var(--surface),
+    on-surface: var(--ink),
+    on-surface-variant: var(--muted),
+    outline: var(--muted),
+  ));
+}
+
+app-phone-input .main-flag .country-selector-code {
+  display: none;
+}
+
+ngx-mat-input-tel-dialog mat-list-item.country-list-item[role='button']:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+}

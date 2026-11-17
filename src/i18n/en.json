@@ -126,7 +126,7 @@
       "summary": ""
     },
     "07": {
-      "title": "Periscope",
+      "title": "PeriScope",
       "summary": "Our event, workflow and survey tool. One real form, from configuration to submission."
     },
     "11": {
@@ -140,40 +140,39 @@
   },
   "presenter": {
     "focus": "Focus view",
-    "showIndex": "Show chapters",
-    "keys": "Left / right arrow keys move between slides."
+    "showIndex": "Show chapters"
   },
   "periscope": {
     "intro": "Our current project, and our ngx-formly use",
-    "chooseArea": "Explore Periscope",
+    "chooseArea": "Explore PeriScope",
     "events": {
       "name": "Events",
       "title": "Register participants",
       "capabilities": [
-        "Configure registration fields for each event.",
-        "Show relevant fields for individuals or delegations.",
-        "Validate required details and email addresses."
+        "Configure <strong>registration fields</strong> for each event.",
+        "Show relevant fields for <strong>individuals or delegations</strong>.",
+        "Validate <strong>required details</strong> and <strong>email addresses</strong>."
       ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Move a request forward",
       "capabilities": [
-        "Define a form for each workflow step.",
-        "Show or disable fields based on the request’s status.",
-        "Reuse field types and validation across workflows."
+        "Define a form for each <strong>workflow step</strong>.",
+        "<strong>Show or disable fields</strong> based on the request’s status.",
+        "Reuse <strong>field types and validation</strong> across workflows."
       ]
     },
     "surveys": {
       "name": "Surveys",
       "title": "Collect and review responses",
       "capabilities": [
-        "Build questionnaires from reusable question types.",
-        "Reveal follow-up questions based on earlier answers.",
-        "Validate required answers and response formats."
+        "Build questionnaires from <strong>reusable question types</strong>.",
+        "Reveal <strong>follow-up questions</strong> based on earlier answers.",
+        "Validate <strong>required answers</strong> and <strong>response formats</strong>."
       ]
     },
-    "open": "Open Periscope",
+    "open": "Open PeriScope",
     "capabilities": "What ngx-formly can do"
   },
   "closing": {
@@ -223,7 +222,9 @@
       "promptTitle": "Give the skill a real task",
       "prompt": "/ngx-formly Add street, postal code, city and country inputs to the existing form.",
       "copy": "Copy prompt",
-      "choose": "Explore MCP, WebMCP and Skill",
+      "copyCommand": "Copy install command",
+      "copyCommandFailed": "Copy unavailable. Select and copy the command above.",
+      "choose": "Explore Skill, MCP and WebMCP",
       "readGuide": "Read the guide",
       "capabilities": {
         "mcp": {

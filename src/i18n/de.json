@@ -126,7 +126,7 @@
       "summary": ""
     },
     "07": {
-      "title": "Periscope",
+      "title": "PeriScope",
       "summary": "Unser Tool für Veranstaltungen, Workflows und Umfragen. Ein echtes Formular, von der Konfiguration bis zum Absenden."
     },
     "11": {
@@ -140,40 +140,39 @@
   },
   "presenter": {
     "focus": "Fokusansicht",
-    "showIndex": "Kapitel anzeigen",
-    "keys": "Mit Pfeil links / rechts zwischen Folien wechseln."
+    "showIndex": "Kapitel anzeigen"
   },
   "periscope": {
     "intro": "Mein aktuelles Projekt nutzt konfigurierbare Formulare für Events, Workflows und Umfragen.",
-    "chooseArea": "Periscope erkunden",
+    "chooseArea": "PeriScope erkunden",
     "events": {
       "name": "Veranstaltungen",
       "title": "Teilnehmende anmelden",
       "capabilities": [
-        "Anmeldefelder für jede Veranstaltung konfigurieren.",
-        "Passende Felder für Einzelpersonen oder Delegationen anzeigen.",
-        "Pflichtangaben und E-Mail-Adressen validieren."
+        "<strong>Anmeldefelder</strong> für jede Veranstaltung konfigurieren.",
+        "Passende Felder für <strong>Einzelpersonen oder Delegationen</strong> anzeigen.",
+        "<strong>Pflichtangaben</strong> und <strong>E-Mail-Adressen</strong> validieren."
       ]
     },
     "workflows": {
       "name": "Workflows",
       "title": "Einen Antrag weiterführen",
       "capabilities": [
-        "Für jeden Workflow-Schritt ein Formular definieren.",
-        "Felder je nach Status des Antrags anzeigen oder deaktivieren.",
-        "Feldtypen und Validierung in mehreren Workflows wiederverwenden."
+        "Für jeden <strong>Workflow-Schritt</strong> ein Formular definieren.",
+        "<strong>Felder</strong> je nach Status des Antrags <strong>anzeigen oder deaktivieren</strong>.",
+        "<strong>Feldtypen und Validierung</strong> in mehreren Workflows wiederverwenden."
       ]
     },
     "surveys": {
       "name": "Umfragen",
       "title": "Antworten sammeln und prüfen",
       "capabilities": [
-        "Fragebögen aus wiederverwendbaren Fragetypen erstellen.",
-        "Folgefragen abhängig von bisherigen Antworten einblenden.",
-        "Pflichtantworten und Antwortformate validieren."
+        "Fragebögen aus <strong>wiederverwendbaren Fragetypen</strong> erstellen.",
+        "<strong>Folgefragen</strong> abhängig von bisherigen Antworten einblenden.",
+        "<strong>Pflichtantworten</strong> und <strong>Antwortformate</strong> validieren."
       ]
     },
-    "open": "Periscope öffnen",
+    "open": "PeriScope öffnen",
     "capabilities": "Was ngx-formly ermöglicht"
   },
   "closing": {
@@ -223,7 +222,9 @@
       "promptTitle": "Dem Skill eine konkrete Aufgabe geben",
       "prompt": "/ngx-formly Ergänze das bestehende Formular um Eingabefelder für Straße, Postleitzahl, Ort und Land.",
       "copy": "Prompt kopieren",
-      "choose": "MCP, WebMCP und Skill kennenlernen",
+      "copyCommand": "Installationsbefehl kopieren",
+      "copyCommandFailed": "Kopieren nicht verfügbar. Markieren und kopieren Sie den Befehl oben.",
+      "choose": "Skill, MCP und WebMCP kennenlernen",
       "readGuide": "Dokumentation lesen",
       "capabilities": {
         "mcp": {

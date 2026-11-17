@@ -26,6 +26,7 @@ const theme = EditorView.theme({
   '.cm-gutters': { backgroundColor: 'var(--dark-surface)', color: '#a8b3c2', borderRight: '1px solid #465463' },
   '.cm-activeLine, .cm-activeLineGutter': { backgroundColor: '#ffffff0d' },
   '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': { backgroundColor: '#3b5169' },
+  '.cm-content ::selection': { color: 'var(--on-dark)' },
   '.cm-cursor': { borderLeftColor: 'var(--on-dark)' },
   '.cm-tooltip, .cm-panels': { backgroundColor: 'var(--dark-surface)', color: 'var(--on-dark)', borderColor: '#465463' },
   '.cm-searchMatch': { backgroundColor: '#3b5169', outline: '1px solid #9cdcfe' },

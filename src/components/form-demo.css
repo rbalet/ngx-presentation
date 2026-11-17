@@ -6,6 +6,7 @@ h4 { margin: 0 0 .65rem; font-size: 1.05rem; }
 .demo-note { color: var(--muted); font-size: .9rem; line-height: 1.5; }
 .code-window { max-width: 100%; margin: 0 0 1rem; padding: 1rem; overflow: auto; border-radius: 8px; background: var(--dark-surface); color: var(--on-dark); font-size: clamp(.72rem, 1vw, .9rem); line-height: 1.6; tab-size: 2; scrollbar-color: var(--muted) var(--dark-surface); }
 .code-window code { font-family: 'SFMono-Regular', Consolas, monospace; }
+app-code-editor.code-window { padding: 0; }
 .intro-code { padding: 0; overflow: hidden; border: 1px solid var(--muted); font-family: 'SFMono-Regular', Consolas, monospace; }
 .intro-code-placeholder { min-height: 38rem; white-space: pre-wrap; }
 .code-label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; margin: 0; padding: .65rem 1rem; border-block: 1px solid #465463; color: var(--on-dark); font-size: .8rem; line-height: 1.5; }
@@ -35,8 +36,8 @@ button:disabled { cursor: wait; opacity: .6; }
 summary { width: fit-content; min-height: 2.75rem; padding-block: .75rem; font-size: .9rem; font-weight: 700; cursor: pointer; }
 .model-details .code-window { margin-bottom: 0; }
 .model-details h4 { margin: 1rem 0 .75rem; font-size: .9rem; }
-.skill-layout { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
-.capability-cards { grid-column: 2; grid-row: 1; display: grid; gap: 1rem; }
+.skill-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+.capability-cards { display: grid; gap: 1rem; }
 .capability-card { position: relative; display: grid; gap: .5rem; min-height: 6rem; padding: 1.25rem 3rem 1.25rem 1.25rem; border: 1px solid var(--group-rule); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
 .capability-card strong { font-size: 1.25rem; }
 .capability-card span { color: var(--muted); font-size: .95rem; line-height: 1.5; }
@@ -44,7 +45,7 @@ summary { width: fit-content; min-height: 2.75rem; padding-block: .75rem; font-s
 .capability-card:hover { background: var(--highlight); }
 .capability-card[aria-pressed="true"] { border-color: var(--red); background: var(--group); }
 .capability-card[aria-pressed="true"] strong, .capability-card[aria-pressed="true"] svg { color: var(--red); }
-.capability-detail { position: relative; grid-column: 1; grid-row: 1; min-width: 0; }
+.capability-detail { position: relative; min-width: 0; }
 .capability-detail:has(> .solution-exit) { overflow: clip; }
 .capability-page.solution-exit { position: absolute; inset: 0; overflow: clip; }
 .capability-heading { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .875rem; }
@@ -55,6 +56,11 @@ summary { width: fit-content; min-height: 2.75rem; padding-block: .75rem; font-s
 .mcp-tools svg { flex: none; color: var(--red); }
 .capability-detail:focus-visible { outline: 3px solid var(--red); outline-offset: 5px; }
 .capability-action { flex: none; width: 2.75rem; padding: 0; }
+.install-command { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .5rem; }
+.install-command code { min-width: 0; overflow-wrap: anywhere; }
+.install-command .capability-action { color: var(--on-dark); border-color: transparent; }
+.install-command .capability-action:hover { background: var(--on-dark); color: var(--dark-surface); }
+.install-command :focus-visible { outline-color: var(--on-dark); outline-offset: 2px; }
 .prompt-sheet { margin-top: 1rem; padding: 1.5rem; background: var(--group); border-radius: 12px; }
 .prompt-text { font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
 .demo-status { align-self: center; font-size: .9rem; line-height: 1.5; color: var(--success); }
@@ -69,7 +75,6 @@ summary { width: fit-content; min-height: 2.75rem; padding-block: .75rem; font-s
 @keyframes live-arrival { from { transform: scale(.4); } to { transform: scale(1); } }
 @media (max-width: 760px) {
   .demo-workbench, .skill-layout { grid-template-columns: minmax(0, 1fr); }
-  .capability-cards, .capability-detail { grid-column: auto; grid-row: auto; }
   .demo-lead { margin-top: 1rem; }
   .prompt-sheet { padding: 1rem; }
 }

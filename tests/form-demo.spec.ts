@@ -295,13 +295,16 @@ test('API and validation precedes the Make it yours builder', async ({ page }) =
   await expect(page).toHaveURL(/#chapter-07$/);
 });
 
-test('capability cards explain each integration and finish with the skill prompt', async ({ page, isMobile }) => {
+test('capability cards start with Skill and explain each integration', async ({ page, isMobile }) => {
   await page.goto('/#chapter-04');
   const skill = page.locator('#chapter-04');
-  const cards = skill.getByRole('group', { name: 'Explore MCP, WebMCP and Skill' }).getByRole('button');
+  const cards = skill.getByRole('group', { name: 'Explore Skill, MCP and WebMCP' }).getByRole('button');
   const detail = skill.locator('#capability-detail');
-  await expect(cards.locator('strong')).toHaveText(['MCP', 'WebMCP', 'Skill']);
+  await expect(cards.locator('strong')).toHaveText(['Skill', 'MCP', 'WebMCP']);
   await expect(cards.first()).toHaveAttribute('aria-pressed', 'true');
+  await expect(detail.getByRole('heading', { name: 'Skill', exact: true })).toBeVisible();
+  await cards.nth(1).click();
+  await expect(detail.locator('.capability-page')).toHaveCount(1);
   await expect(detail.getByRole('heading', { name: 'MCP', exact: true })).toBeVisible();
   await expect(detail.locator('.capability-heading + pre')).toHaveCount(1);
   await expect(detail.locator('.capability-example')).toHaveText('https://formly.dev/mcp');
@@ -316,22 +319,24 @@ test('capability cards explain each integration and finish with the skill prompt
   if (isMobile) {
     expect(detailBounds.y).toBeGreaterThan(cardBounds.y + cardBounds.height);
   } else {
-    expect(cardBounds.x).toBeGreaterThan(detailBounds.x + detailBounds.width);
+    expect(detailBounds.x).toBeGreaterThan(cardBounds.x + cardBounds.width);
   }
-  await cards.nth(1).click();
+  await cards.last().click();
   await expect(cards.first()).toHaveAttribute('aria-pressed', 'false');
   await expect(detail.getByRole('heading', { name: 'WebMCP', exact: true })).toBeVisible();
   await expect(detail.getByRole('textbox', { name: 'Phone number', exact: true })).toBeVisible();
-  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("key: 'phoneNumber'");
-  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText("label: 'Phone number'");
-  await expect(detail.locator('.capability-page:not([inert]) .capability-example')).toContainText('webMcp: true');
+  const example = detail.getByRole('textbox', { name: 'Field configuration with WebMCP enabled' });
+  await expect(example).toHaveAttribute('aria-readonly', 'true');
+  await expect(example).toContainText("key: 'phoneNumber'");
+  await expect(example).toContainText("label: 'Phone number'");
+  await expect(example).toContainText('webMcp: true');
   await expect(detail.getByRole('heading', { level: 4 })).toHaveCount(0);
   await expect(detail.getByRole('link', { name: 'Read the guide' })).toHaveAttribute('href', 'https://formly.dev/guide/web-mcp');
   await expect(skill.locator('.prompt-text')).toHaveCount(0);
-  await cards.last().focus();
-  await cards.last().press('Enter');
-  await expect(cards.last()).toBeFocused();
-  await expect(cards.last()).toHaveAttribute('aria-pressed', 'true');
+  await cards.first().focus();
+  await cards.first().press('Enter');
+  await expect(cards.first()).toBeFocused();
+  await expect(cards.first()).toHaveAttribute('aria-pressed', 'true');
   await expect(detail.getByRole('heading', { name: 'Skill', exact: true })).toBeVisible();
   await expect(detail.locator('.capability-page:not([inert]) > p')).toHaveCount(0);
   await expect(detail.getByRole('heading', { level: 4 })).toHaveText('Give the skill a real task');
@@ -345,10 +350,10 @@ test('capability cards explain each integration and finish with the skill prompt
   await skill.getByRole('button', { name: 'Copy prompt', exact: true }).click();
   await expect(skill.locator('.demo-actions').getByRole('status')).toHaveText('Copied.');
   expect(await page.evaluate(() => sessionStorage.getItem('copied-prompt'))).toBe(prompt);
-  await cards.first().press('Space');
+  await cards.nth(1).press('Space');
   await expect(skill.locator('.prompt-text')).toHaveCount(0);
-  await cards.last().click();
-  await expect(skill.getByRole('status')).toBeEmpty();
+  await cards.first().click();
+  await expect(skill.locator('.demo-actions').getByRole('status')).toBeEmpty();
   for (const language of ['fr', 'de', 'en']) {
     await page.locator('header .language-select').selectOption(language);
     await expect(skill.locator('.prompt-text')).toContainText('/ngx-formly');
@@ -359,6 +364,31 @@ test('capability cards explain each integration and finish with the skill prompt
   await skill.getByRole('link', { name: 'Next: 05', exact: true }).click();
   await expect(page).toHaveURL(/#chapter-05$/);
   await expect(page.locator('#chapter-05').getByRole('textbox', { name: 'Fields JSON', exact: true })).toBeVisible();
+});
+
+test('country dialog renders close icons instead of clipped text', async ({ page }, testInfo) => {
+  await page.goto('/#chapter-04');
+  await page.getByRole('button', { name: 'WebMCP', exact: true }).click();
+  await page.getByRole('button', { name: 'Select country', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await dialog.getByRole('textbox').fill('Switzerland');
+  await page.evaluate(() => document.fonts.ready);
+
+  for (const name of ['Close dialog', 'Clear search']) {
+    const icon = dialog.getByRole('button', { name, exact: true }).locator('mat-icon');
+    await expect(icon).toBeVisible();
+    const fits = await icon.evaluate(element => {
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      return range.getBoundingClientRect().width <= element.getBoundingClientRect().width;
+    });
+    expect(fits, `${name} should render a single icon, not clipped text`).toBe(true);
+  }
+  await dialog.screenshot({ path: testInfo.outputPath('country-dialog.png') });
+  await dialog.getByRole('button', { name: 'Clear search', exact: true }).click();
+  await expect(dialog.getByRole('textbox')).toHaveValue('');
+  await dialog.getByRole('button', { name: 'Close dialog', exact: true }).click();
+  await expect(dialog).not.toBeVisible();
 });
 
 test('the phone example stays editable across capability and language changes', async ({ page }, testInfo) => {
@@ -393,11 +423,11 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
   test(`capability details follow card order with ${reducedMotion} motion`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion });
     await page.goto('/#chapter-04');
-    const cards = page.getByRole('group', { name: 'Explore MCP, WebMCP and Skill' });
+    const cards = page.getByRole('group', { name: 'Explore Skill, MCP and WebMCP' });
     const detail = page.locator('#capability-detail');
     const panels = detail.locator('.capability-page');
 
-    for (const [title, previous, direction] of [['Skill', 'MCP', '1'], ['MCP', 'Skill', '-1']]) {
+    for (const [title, previous, direction] of [['MCP', 'Skill', '1'], ['Skill', 'MCP', '-1']]) {
       await cards.getByRole('button', { name: title, exact: true }).press('Enter');
       if (reducedMotion === 'no-preference') {
         await expect(detail).toHaveCSS('--slide-direction', direction);

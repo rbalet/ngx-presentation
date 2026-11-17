@@ -4,8 +4,8 @@ test("hero forms tint individually on hover in both themes", async ({ page, isMo
   test.skip(isMobile, "Touch devices keep the quiet background without hover.");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const form = page.locator(".hero-form--registration");
-  const otherForm = page.locator(".hero-form--input");
+  const form = page.locator("#overview .hero-form--registration");
+  const otherForm = page.locator("#overview .hero-form--input");
 
   for (const theme of ["light", "dark"]) {
     if (theme === "dark") await page.getByRole("button", { name: "Dark mode" }).click();
@@ -20,25 +20,30 @@ test("hero forms tint individually on hover in both themes", async ({ page, isMo
   }
 });
 
-test("decorative forms stay inside the hero and leave navigation usable", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
-  const hero = page.locator("#overview");
-  const background = hero.locator(".hero-forms");
-  await expect(background).toHaveAttribute("aria-hidden", "true");
-  await expect(background.locator("input, select, textarea, button, a, [tabindex]")).toHaveCount(0);
-  await expect(background).toHaveCSS("overflow", "clip");
-  const heroBounds = (await hero.boundingBox())!;
-  const backgroundBounds = (await background.boundingBox())!;
-  expect(backgroundBounds.x).toBe(heroBounds.x);
-  expect(backgroundBounds.width).toBe(heroBounds.width);
-  expect(backgroundBounds.y + backgroundBounds.height).toBe(heroBounds.y + heroBounds.height);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(page.viewportSize()!.width);
+for (const { sectionId, linkName, nextId } of [
+  { sectionId: "overview", linkName: "Start with chapter 01", nextId: "chapter-01" },
+  { sectionId: "chapter-12", linkName: "Next: 11", nextId: "chapter-11" },
+]) {
+  test(`decorative forms stay inside ${sectionId} and leave navigation usable`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(`/#${sectionId}`);
+    const section = page.locator(`#${sectionId}`);
+    const background = section.locator("app-form-background");
+    await expect(background).toHaveAttribute("aria-hidden", "true");
+    await expect(background.locator("input, select, textarea, button, a, [tabindex]")).toHaveCount(0);
+    await expect(background).toHaveCSS("overflow", "clip");
+    const sectionBounds = (await section.boundingBox())!;
+    const backgroundBounds = (await background.boundingBox())!;
+    expect(backgroundBounds.x).toBe(sectionBounds.x);
+    expect(backgroundBounds.width).toBe(sectionBounds.width);
+    expect(backgroundBounds.y + backgroundBounds.height).toBe(sectionBounds.y + sectionBounds.height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(page.viewportSize()!.width);
 
-  const start = page.getByRole("link", { name: "Start with chapter 01" });
-  await start.focus();
-  await expect(start).toBeFocused();
-  await start.click();
-  await expect(page).toHaveURL(/#chapter-01$/);
-  await expect(background).not.toBeInViewport();
-});
+    const link = section.getByRole("link", { name: linkName });
+    await link.focus();
+    await expect(link).toBeFocused();
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`#${nextId}$`));
+    await expect(background).not.toBeInViewport();
+  });
+}

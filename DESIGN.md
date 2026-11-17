@@ -174,6 +174,8 @@ Illustrative forms in the problem chapter intentionally demonstrate different co
 
 **Display and body font:** Arial, Helvetica, sans-serif. **Code font:** SFMono-Regular, Consolas, monospace. No downloaded display font is required.
 
+Angular Material controls use the locally bundled Material Icons font for icons only, including the country picker's close and clear buttons. Its Apache 2.0 license ships alongside the font in `public/fonts/`.
+
 The character comes from size, weight, and spacing: tight, bold headings against regular body copy. Headings balance their lines; the cover is limited to 16 characters per line and highlights its final phrase in red. Chapter numbers are smaller, regular weight, and use tabular numerals.
 
 - **Display:** cover title; use the frontmatter's display role. At narrow widths the existing cover uses a viewport-based scale, and short screens reduce its maximum size.
@@ -189,7 +191,7 @@ The character comes from size, weight, and spacing: tight, bold headings against
 
 Each chapter is a vertical presentation surface with a minimum height of `100svh`, a fixed header, and content capped at 80rem. The shared gutter and slide inset come from the frontmatter. Slides can grow with their content; readable controls and text take priority over forcing a fixed-height box.
 
-At widths of 1200px and above, the presentation reserves a 23rem right column for the sticky chapter index. Its list scrolls independently when necessary. Focus view hides that index, lets the presentation use the available width, and caps the outer layout at 94rem. The focus control is hidden below this breakpoint, where the index participates in document flow.
+At widths of 1200px and above, the presentation reserves a 23rem right column for the sticky chapter index. Its list scrolls independently when necessary. Focus view hides the header and index, lets the presentation use the available width, and caps the outer layout at 94rem. Hovering the top or right 12px edge reveals the corresponding controls as an overlay; they remain visible while hovered or while a child has visible keyboard focus. The focus control is hidden on devices without hover and below this breakpoint, where the index participates in document flow.
 
 The header is 4.5rem high, reducing to 3.5rem at widths up to 700px. The cover and chapters reserve space for it. Multi-part chapters use a sticky running title and offset subsequent content and focused controls accordingly. Chapter anchors and snap positions share that geometry.
 
@@ -205,7 +207,7 @@ The shared system is flat. There are no reusable shadow tokens. Fine borders and
 
 ## Shapes
 
-Controls have small corners, header controls slightly larger corners, and cards more generous corners; the frontmatter records the observed radius vocabulary. Grouped metric content uses the largest radius. Cover links, ruled navigation, and the external Periscope link retain their square edges. Do not round every element to the same shape.
+Controls have small corners, header controls slightly larger corners, and cards more generous corners; the frontmatter records the observed radius vocabulary. Grouped metric content uses the largest radius. Cover links, ruled navigation, and the external PeriScope link retain their square edges. Do not round every element to the same shape.
 
 Small circular dots indicate live status; contributor portraits and isolated checkmark backgrounds are circular. Borders are generally one pixel. The problem solution container uses a two-pixel success border to make its state visible.
 
@@ -219,7 +221,7 @@ Product areas, language examples, and discussion prompts use compact outlined bu
 
 ### Inputs and form previews
 
-The cover has scattered decorative form outlines, clipped to the hero behind its content. They use muted ink at 16% opacity and tint individually to chapter red at 32% on pointer hover, with a 240ms color transition only when reduced motion is not requested. These shapes have no form behavior or keyboard stops and are hidden from assistive technology.
+The cover and chapter 12 share the `FormBackground` component (`src/components/form-background.ts`), with scattered decorative form outlines clipped behind each section’s content. Place `<app-form-background />` inside a positioned, isolated section; it uses the shared muted/red tokens, reserves the fixed header height, and adds no inputs or configuration. In focus view, both backgrounds extend sideways into the available outer margins while remaining clipped at the viewport edges and each section's top and bottom. They use muted ink at 16% opacity and tint individually to chapter red at 32% on pointer hover, with a 240ms color transition only when reduced motion is not requested. These shapes have no form behavior or keyboard stops and are hidden from assistive technology.
 
 The preview is a raised-paper card with a group-rule border. Inputs, selects, and textareas use the shared surface/ink pair, a stronger muted border, the control radius, and a minimum height of 2.75rem. Editor controls use that same visible boundary. Labels are visibly associated with their controls; required markers are red. Error text appears beside the field's red border and is linked with `aria-describedby`; `aria-invalid` communicates the state. Textareas can grow vertically.
 
@@ -239,7 +241,7 @@ Keep the skip link, direct chapter links, and previous/next links. Arrow keys an
 
 ### Cards, walkthroughs, and code
 
-Metric cards, the form preview, prompt sheet, and Periscope illustrations reuse the same rounded surface vocabulary. Metric logos are flat gray marks on transparent backgrounds: simplify the library symbols to match Stack Overflow, with no colored shield or shading. The Periscope walkthrough pairs three Formly capabilities on the left with the selected area's supplied illustration on the right. The images are bundled in `public/periscope/`, preserve their aspect ratios inside a consistent 3:2 frame, and stack below the text on mobile. Illustrations start in grayscale; hovering, focusing, or tapping a capability reveals the original color of its related objects. The active bullet uses red and an underline, with the shared keyboard focus ring. Color fades over 180ms when reduced motion is not requested. Code windows use the dark-surface/on-dark pair and a distinct monospace face. Their role is to expose the real configuration and submitted model.
+Metric cards, the form preview, prompt sheet, and PeriScope illustrations reuse the same rounded surface vocabulary. Metric logos are flat gray marks on transparent backgrounds: simplify the library symbols to match Stack Overflow, with no colored shield or shading. The PeriScope walkthrough pairs three Formly capabilities on the left with the selected area's supplied illustration on the right. The images are bundled in `public/periscope/`, preserve their aspect ratios inside a consistent 3:2 frame, and stack below the text on mobile. Illustrations start in grayscale; hovering, focusing, or tapping a capability reveals the original color of its related objects. The active bullet uses red and an underline, with the shared keyboard focus ring. Color fades over 180ms when reduced motion is not requested. Code windows use the dark-surface/on-dark pair and a distinct monospace face. Their role is to expose the real configuration and submitted model.
 
 ### Focus and motion
 

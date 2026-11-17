@@ -87,7 +87,7 @@ h2 {
 
 .skip-link {
   position: fixed;
-  z-index: 3;
+  z-index: 4;
   top: 0.75rem;
   left: var(--gutter);
   padding: 0.75rem 1rem;
@@ -156,50 +156,6 @@ h2 {
 }
 .opening > * {
   pointer-events: auto;
-}
-.hero-forms {
-  position: absolute;
-  inset: var(--header-height) 0 0;
-  z-index: -1;
-  overflow: clip;
-  pointer-events: none;
-}
-.hero-form {
-  position: absolute;
-  width: clamp(9rem, 19vw, 17rem);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  color: color-mix(in srgb, var(--muted) 16%, transparent);
-  pointer-events: auto;
-}
-.hero-form--profile { top: 9%; left: -3%; rotate: -12deg; }
-.hero-form--input { top: 7%; left: 35%; rotate: 7deg; }
-.hero-form--registration { top: 13%; right: 5%; rotate: 10deg; }
-.hero-form--choices { top: 53%; left: 3%; width: clamp(7rem, 14vw, 12rem); rotate: -7deg; }
-.hero-form--select { top: 52%; right: -4%; rotate: -9deg; }
-.hero-form--message { bottom: 4%; left: 23%; rotate: 6deg; }
-.hero-form--survey { bottom: -5%; right: 13%; rotate: -8deg; }
-@media (hover: hover) and (pointer: fine) {
-  .hero-form:hover {
-    color: color-mix(in srgb, var(--red) 32%, transparent);
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .hero-form {
-    transition: color 240ms ease-out;
-  }
-}
-@media (max-width: 700px) {
-  .hero-form--profile { top: 3%; left: -16%; }
-  .hero-form--input { top: 4%; left: 49%; }
-  .hero-form--registration { top: 31%; right: -22%; }
-  .hero-form--choices { left: -18%; }
-  .hero-form--message { bottom: 3%; left: -12%; }
-  .hero-form--survey { bottom: -3%; right: -9%; }
-  .hero-form--select { display: none; }
 }
 h1 {
   max-width: 12ch;
@@ -381,7 +337,8 @@ h1 {
   gap: 0.25rem 0.5rem;
   font-size: 0.8rem;
 }
-.timer-readout span:last-child {
+.timer-readout span:last-child,
+.focus-timer-readout {
   color: var(--ink);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -493,6 +450,9 @@ h1 {
 #chapter-02 .chapter-content {
   margin-top: auto;
 }
+#chapter-12 {
+  position: relative;
+}
 .chapter-running-title {
   position: sticky;
   top: var(--header-height);
@@ -539,6 +499,12 @@ h1 {
 }
 .chapter-subtitle strong {
   color: var(--red);
+}
+app-periscope-chapter .capability-label strong {
+  font-weight: inherit;
+}
+app-periscope-chapter .capability.is-active .capability-label strong {
+  font-weight: 700;
 }
 .chapter-summary {
   margin-top: 2rem;
@@ -1267,10 +1233,10 @@ h1 {
   .problem-card[data-visited="true"]:hover {
     background: var(--group);
   }
-  .metric-card:hover {
+  .metric-card:not([data-reveal-pending]):hover {
     border-color: var(--red);
   }
-  .metric-card:hover .metric-value {
+  .metric-card:not([data-reveal-pending]):hover .metric-value {
     color: var(--red);
   }
 }
@@ -1545,23 +1511,72 @@ h1 {
   background: var(--highlight);
   border-color: var(--red);
 }
-.keyboard-hint {
-  margin-top: 0.75rem;
-  color: var(--muted);
-  font-size: 0.75rem;
-  line-height: 1.5;
+.focus-timer {
+  display: none;
 }
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (hover: hover) {
   .presentation--focused {
     display: block;
     max-width: 94rem;
     margin-inline: auto;
   }
-  .presentation--focused .chapter-index-slot { display: none; }
+  .focus-timer {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 2rem;
+    padding-inline: 1rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .focus-timer .presentation-timer:not(.presentation-timer--overdue) {
+    --timer-fill: var(--ink);
+  }
+  .presentation--focused .overview,
+  .presentation--focused .chapter-slide {
+    padding-bottom: calc(var(--slide-inset) + 2rem);
+  }
+  .presentation--focused .overview,
+  .presentation--focused #chapter-12 {
+    width: 100vw;
+    margin-inline: calc((100% - 100vw) / 2);
+    overflow: clip;
+  }
+  .presentation--focused app-form-background {
+    inset-inline: max(0px, calc((100vw - 94rem) / 2));
+    overflow: visible;
+  }
+  .presentation--focused .chapter-index-slot {
+    position: fixed;
+    inset: 0 0 0 auto;
+    z-index: 2;
+    width: 23rem;
+    padding: calc(var(--header-height) + 1rem) 1rem 1rem;
+    border-left: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .site-header--focused {
+    z-index: 3;
+  }
+  /* Keep a narrow hover target; keyboard focus also reveals the controls. */
+  .site-header--focused:not(:hover):not(:has(:focus-visible)) {
+    clip-path: inset(0 0 calc(100% - 12px));
+    opacity: 0;
+  }
+  .presentation--focused .chapter-index-slot:not(:hover):not(:has(:focus-visible)) {
+    clip-path: inset(0 0 0 calc(100% - 12px));
+    opacity: 0;
+  }
   .presentation--focused .chapter-slide,
   .presentation--focused .chapter-running-title { padding-inline: var(--gutter); }
 }
-@media (max-width: 1199px) {
+@media (max-width: 1199px), (hover: none) {
   .focus-toggle { display: none; }
 }
 .language-select {

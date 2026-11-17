@@ -15,6 +15,9 @@
 @if (continuations().length) {
   <div class="chapter-running-title"><ng-container [ngTemplateOutlet]="titleTemplate" /></div>
 }
+@if (chapter().number === '12') {
+  <app-form-background />
+}
 <div class="chapter-slide">
   <div class="chapter-content chapter-content--motion">
     @if (continuations().length) {

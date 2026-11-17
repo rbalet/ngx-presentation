@@ -27,6 +27,24 @@
         ],
         "createdAt": "2026-11-16T18:44:30.187Z",
         "reason": "Codex: Angular binds src to the selected area; Playwright verified that all three bundled Periscope PNGs load on desktop and mobile."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "material icons",
+        "files": [
+          "src/material-theme.scss"
+        ],
+        "createdAt": "2026-11-17T09:55:23.371Z",
+        "reason": "Codex: both declarations load and apply an icon-only ligature font for Angular Material controls; presentation typography uses the existing Arial stack."
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/components/periscope-chapter.css"
+        ],
+        "createdAt": "2026-11-17T10:04:46.985Z",
+        "reason": "Codex: the requested capability color sweep uses a moving boundary between two solid theme colors."
       }
     ]
   }

@@ -16,7 +16,7 @@ BIT developers are the primary audience. They build and maintain forms across pr
 
 ## Positioning
 
-ngx-formly describes Angular forms as configuration. Teams can reuse field behavior and validation while choosing components that fit each application. The talk connects that mechanism to recurring BIT form work through Periscope, an event, workflow and survey tool.
+ngx-formly describes Angular forms as configuration. Teams can reuse field behavior and validation while choosing components that fit each application. The talk connects that mechanism to recurring BIT form work through PeriScope, an event, workflow and survey tool.
 
 ## Operating Context
 
@@ -25,8 +25,8 @@ The session has a 60-minute slot. The main talk takes 39 minutes and Q&A takes 1
 ## Capabilities and Constraints
 
 - Keep the cover unnumbered and the chapter anchors stable: `#chapter-01` through `#chapter-07`, plus `#chapter-11` and `#chapter-12`. Chapters 08, 09 and 10 were removed, chapter 11 is Q&A, and chapter 12 covers future plans.
-- The complete talk includes a shared event-registration example, a prompt for a coding agent to extend the form, live Formly interactions, configuration export to the hosted builder, and a sourced Periscope walkthrough. The agent result is reviewed directly in API & validation.
-- Distinguish skill instructions, MCP tooling and browser-side WebMCP. The API exercise is explicitly simulated. Periscope is shown as a documented walkthrough; a live environment is a separate presenter prerequisite.
+- The complete talk includes a shared event-registration example, a prompt for a coding agent to extend the form, live Formly interactions, configuration export to the hosted builder, and a sourced PeriScope walkthrough. The agent result is reviewed directly in API & validation.
+- Distinguish skill instructions, MCP tooling and browser-side WebMCP. The API exercise is explicitly simulated. PeriScope is shown as a documented walkthrough; a live environment is a separate presenter prerequisite.
 
 ## Evidence on Hand
 

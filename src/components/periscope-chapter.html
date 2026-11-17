@@ -16,7 +16,7 @@
             (mouseenter)="hoveredCapability.set($index)" (mouseleave)="hoveredCapability.set(null)"
             (focus)="focusedCapability.set($index)" (blur)="focusedCapability.set(null)"
             (click)="capabilityButton.focus()">
-            {{ capability }}
+            <span class="capability-label" [innerHTML]="capability"></span>
           </button>
         </li>
       }

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('Periscope pairs each area with three Formly capabilities and a bundled illustration', async ({ page }) => {
+test('PeriScope pairs each area with three Formly capabilities and a bundled illustration', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-07');
   const chapter = page.locator('#chapter-07');
@@ -23,7 +23,7 @@ test('Periscope pairs each area with three Formly capabilities and a bundled ill
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
-  await expect(chapter.getByRole('link', { name: 'Open Periscope' })).toHaveAttribute('href', 'https://int.periscope.bit.admin.ch');
+  await expect(chapter.getByRole('link', { name: 'Open PeriScope' })).toHaveAttribute('href', 'https://int.periscope.bit.admin.ch');
   for (const language of [
     { code: 'de', label: 'Was ngx-formly ermöglicht', first: 'Fragebögen aus wiederverwendbaren Fragetypen erstellen.' },
     { code: 'fr', label: 'Ce que permet ngx-formly', first: 'Créer des questionnaires à partir de types de questions réutilisables.' },
@@ -35,7 +35,7 @@ test('Periscope pairs each area with three Formly capabilities and a bundled ill
   }
 });
 
-test('Periscope reveals only the illustration region for the hovered, focused, or tapped capability', async ({ page, isMobile }) => {
+test('PeriScope reveals only the illustration region for the hovered, focused, or tapped capability', async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/#chapter-07');
   const chapter = page.locator('#chapter-07');
@@ -49,8 +49,12 @@ test('Periscope reveals only the illustration region for the hovered, focused, o
     const capabilities = chapter.getByRole('list', { name: 'What ngx-formly can do' }).getByRole('button');
     for (let index = 0; index < 3; index++) {
       const capability = capabilities.nth(index);
+      const keyword = capability.locator('strong').first();
+      await expect(keyword).toHaveCSS('font-weight', '400');
       if (isMobile) await capability.tap();
       else await capability.hover();
+      await expect(keyword).toHaveCSS('font-weight', '700');
+      await expect(capability).toHaveCSS('font-weight', '400');
       for (let region = 0; region < 3; region++) {
         await expect(colors.nth(region)).toHaveCSS('opacity', region === index ? '1' : '0');
       }

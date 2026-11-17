@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const prompt = 'Use WebMCP to fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot.';
+const prompt = 'Use WebMCP in the browser tab I’m currently viewing. Fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot of that same tab. If you can’t access my tab, tell me and stop.';
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -22,11 +22,11 @@ test('WebMCP test button copies the exact prompt in every language', async ({ pa
     await button.press('Enter');
     await expect(detail.getByRole('status')).toHaveText(confirmation);
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(prompt);
-    await expect(detail.getByRole('textbox')).toBeEmpty();
+    await expect(detail.locator('#webmcp-phone-number')).toBeEmpty();
   }
   await page.locator('#chapter-04').getByRole('button', { name: 'Skill', exact: true }).click();
   await expect(detail.getByRole('button', { name: 'Test-Prompt kopieren', exact: true })).toHaveCount(0);
-  await expect(detail.getByRole('status')).toBeEmpty();
+  await expect(detail.locator('.demo-actions').getByRole('status')).toBeEmpty();
 });
 
 test('WebMCP exposes the prompt for manual copying when clipboard access fails', async ({ page }) => {

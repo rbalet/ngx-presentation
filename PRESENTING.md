@@ -1,11 +1,11 @@
 # Presenting the form story
 
-The same event-registration form runs through the talk. Describe it, generate its configuration with the ngx-formly skill, try it, then edit and validate it. Periscope is the final product example. Invite a colleague to choose a change before opening the validator.
+The same event-registration form runs through the talk. Describe it, generate its configuration with the ngx-formly skill, try it, then edit and validate it. PeriScope is the final product example. Invite a colleague to choose a change before opening the validator.
 
 ## Before the session
 
 1. Run `pnpm dev` and open the URL it prints. Choose the presentation language and theme before the audience arrives.
-2. Prepare the actual Periscope environment and sign in separately. The deck's Periscope walkthrough pairs supplied product illustrations with three Formly capabilities for each area; the images work without the Periscope backend.
+2. Prepare the actual PeriScope environment and sign in separately. The deck's PeriScope walkthrough pairs supplied product illustrations with three Formly capabilities for each area; the images work without the PeriScope backend.
 3. Try the generated form once, reset it, and return to the cover. Reset the presentation timer if this browser has been used for a rehearsal.
 
 Use **Focus view** on desktop to hide the chapter index. Left/right arrows or Page Up/Page Down move between slides; these shortcuts leave form controls alone. Normal scrolling, chapter links, and the mobile index remain available. Use the header language selector at any time, or the selector beside the live form in chapter 03. Animations follow the browser's reduced-motion preference.
@@ -20,7 +20,7 @@ Use **Focus view** on desktop to hide the chapter index. Left/right arrows or Pa
 | 04 · Agentic Workflow | 4 min | Copy the prompt into your coding agent to update the shared form configuration. |
 | 05 · API & validation | 6 min | Review the agent’s result in the Formly validator. Try a wrong property type, select its diagnostic, then correct the value. |
 | 06 · Make it yours | 4 min | Add a text field, rename it, make it required, move it, and check validation in the preview. Download JSON saves the result; Open Builder opens the hosted builder in a new tab. Reset builder restores chapter 03’s current example. |
-| 07 · Periscope | 8 min | Walk through events, workflows and surveys, then switch to the actual application if it is running. Reuse the same registration story. |
+| 07 · PeriScope | 8 min | Walk through events, workflows and surveys, then switch to the actual application if it is running. Reuse the same registration story. |
 | 12 · What's next | 3 min | Discuss the framework-independent and shared accessible-component ambitions as future work. |
 | 11 · Q&A | 15 min | Invite the audience to share what they think is missing. |
 
@@ -41,10 +41,10 @@ Useful review questions:
 
 ## Network and demo boundaries
 
-The presentation, translations, form interactions, JSON validation and Periscope walkthrough run locally. The form uses fictional example data.
+The presentation, translations, form interactions, JSON validation and PeriScope walkthrough run locally. The form uses fictional example data.
 
 Chapter 05 reuses the validator behind [formly.dev/tools/validator](https://formly.dev/tools/validator). It checks JSON syntax and field structure locally without running the configuration. The draft starts with chapter 03’s fields, and edits stay in the validator. **Reset the demo** restores the example and resets the shared form. Diagnostic details use the upstream English wording. Controls and status summaries follow the presentation language.
 
-If Periscope is unavailable, keep the labeled walkthrough on screen and describe the application from the verified project behavior.
+If PeriScope is unavailable, keep the labeled walkthrough on screen and describe the application from the verified project behavior.
 
 No npm publication is needed to run this deck. Publishing `@ngx-formly/builder` is a separate release of the builder repository; see the release preflight notes in the implementation handoff.

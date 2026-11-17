@@ -17,9 +17,9 @@ import { CodeEditor } from './code-editor';
 export class FormDemo {
   readonly mode = input<'intro' | 'skill' | 'validation'>('intro');
   readonly capabilities = [
+    { id: 'skill', title: 'Skill', href: 'https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md' },
     { id: 'mcp', title: 'MCP', href: 'https://formly.dev/guide/mcp' },
     { id: 'webmcp', title: 'WebMCP', href: 'https://formly.dev/guide/web-mcp' },
-    { id: 'skill', title: 'Skill', href: 'https://github.com/ngx-formly/ngx-formly/blob/main/skills/ngx-formly/SKILL.md' },
   ];
   readonly capabilitySelection = signal<{ current: number; previous: number | null }>({ current: this.capabilityFromUrl(), previous: null });
   readonly mcpTools = [
@@ -31,12 +31,12 @@ export class FormDemo {
   readonly webMcpExample = `fields: FormlyFieldConfig[] = [
   {
     key: 'phoneNumber',
-    type: 'input',
+    type: 'phone',
     webMcp: true,
-    props: { label: 'Phone number', type: 'tel', required: true },
+    props: { label: 'Phone number', required: true },
   },
 ];`;
-  readonly webMcpPrompt = 'Use WebMCP to fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot.';
+  readonly webMcpPrompt = 'Use WebMCP in the browser tab I’m currently viewing. Fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot of that same tab. If you can’t access my tab, tell me and stop.';
   readonly state = inject(DemoFormState);
   readonly languages = inject(Languages);
   readonly translate = inject(TranslateService);
@@ -49,9 +49,9 @@ export class FormDemo {
   readonly phoneFields = computed<FormlyFieldConfig[]>(() => {
     this.translate.currentLang();
     return [{
-      key: 'phoneNumber', id: 'webmcp-phone-number', type: 'input',
+      key: 'phoneNumber', id: 'webmcp-phone-number', type: 'phone',
       webMcp: true,
-      props: { label: this.translate.instant('demo.fields.phoneNumber'), type: 'tel', required: true },
+      props: { label: this.translate.instant('demo.fields.phoneNumber'), required: true },
     }];
   });
   readonly form = new FormGroup({});
@@ -92,6 +92,7 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]`;
     demo: { errors: { nameMinLength: this.translate.instant('demo.errors.nameMinLength') } },
   }, null, 2));
   readonly copied = signal<'idle' | 'done' | 'failed'>('idle');
+  readonly commandCopied = signal<'idle' | 'done' | 'failed'>('idle');
   readonly apiStatus = signal<'idle' | 'invalid' | 'pending' | 'rejected' | 'success'>('idle');
   readonly submitted = signal<Registration | null>(null);
   readonly formDirective = viewChild(FormGroupDirective);
@@ -120,6 +121,7 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]`;
     url.searchParams.set('selected', this.capabilities[index].id);
     if (url.href !== location.href) history.replaceState(history.state, '', url);
     this.copied.set('idle');
+    this.commandCopied.set('idle');
     const { current } = this.capabilitySelection();
     if (index === current) return;
 
@@ -172,12 +174,13 @@ imports: [FormlyValidationMessagesPipe, AsyncPipe, TranslatePipe]`;
     this.state.model.update(model => ({ ...model, name: value }));
   }
 
-  async copy(value: string) {
+  async copy(value: string, status = this.copied) {
+    status.set('idle');
     try {
       await navigator.clipboard.writeText(value);
-      this.copied.set('done');
+      status.set('done');
     } catch {
-      this.copied.set('failed');
+      status.set('failed');
     }
   }
 

@@ -254,9 +254,9 @@ test("all numbered chapters are reachable and chapter 07 leads directly to the c
     await expect(page.locator(href!)).toHaveCount(1);
   }
 
-  await index.getByRole("link", { name: /07 Periscope/ }).click();
+  await index.getByRole("link", { name: /07 PeriScope/ }).click();
   const chapter = page.getByRole("region", {
-    name: "07 Periscope",
+    name: "07 PeriScope",
   });
   await chapter.getByRole("link", { name: "Next: 12" }).click();
   await expect(page).toHaveURL(/#chapter-12$/);
@@ -537,7 +537,7 @@ test("the introduction keeps three cards aligned and groups the maintainers", as
   ).toBeInViewport();
 });
 
-test("metrics reveal and count up once per card on hover or tap", async ({ page, isMobile }) => {
+test("metrics reveal in order and count up once per card on hover or tap", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   const events: string[] = [];
   await page.exposeFunction("recordMetricReveal", (event: string) => events.push(event));
@@ -559,7 +559,16 @@ test("metrics reveal and count up once per card on hover or tap", async ({ page,
   const totals = ["100", "1,912,458", "311,233"];
   const sources = ["/metrics/stackoverflow.svg", "/metrics/ngx-translate.svg", "/metrics/ngx-formly.svg"];
 
-  for (const index of [2, 0, 1]) {
+  for (const index of [2, 1]) {
+    const card = cards.nth(index);
+    const border = await card.evaluate(element => getComputedStyle(element).borderTopColor);
+    if (isMobile) await card.tap();
+    else await card.hover();
+    await expect(card).toHaveAttribute("data-reveal-pending", "");
+    await expect(card).toHaveCSS("border-top-color", border);
+  }
+
+  for (const index of [0, 1, 2]) {
     const card = cards.nth(index);
     const logo = card.locator(".metric-logo");
     const counter = card.locator("[data-count-to]");
@@ -589,7 +598,7 @@ test("metrics reveal and count up once per card on hover or tap", async ({ page,
   await page.setViewportSize(isMobile ? { width: 1280, height: 800 } : { width: 600, height: 800 });
   await expect(page.locator(".metric-card[data-reveal-pending]")).toHaveCount(0);
   await expect(cards.locator("[data-count-to]")).toHaveText(totals);
-  expect(events).toEqual(["formly-title", "stackoverflow-title", "translate-title"]);
+  expect(events).toEqual(["stackoverflow-title", "translate-title", "formly-title"]);
 });
 
 test("keyboard focus reveals metrics immediately with reduced motion", async ({ page }) => {

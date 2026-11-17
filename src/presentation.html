@@ -1,5 +1,6 @@
+@let description = startedAt() === null ? ('timer.idle' | translate) : ('timer.elapsed' | translate: { elapsed: elapsedMinutes(), total: 60 }) + (overdue() ? ('timer.overdue' | translate) : '');
 <a class="skip-link" href="#main">{{ 'app.skip' | translate }}</a>
-<header class="site-header">
+<header class="site-header" [class.site-header--focused]="focused()">
   <a class="brand" href="#overview"><img src="/formly.svg" width="27" height="29" alt="" />ngx-formly</a>
   <div class="header-controls">
     <button type="button" class="focus-toggle" [attr.aria-pressed]="focused()" (click)="focused.set(!focused())">
@@ -16,59 +17,7 @@
 </header>
 <main id="main" class="presentation" [class.presentation--focused]="focused()" tabindex="-1">
   <section id="overview" class="overview" aria-labelledby="presentation-title">
-    <div class="hero-forms" aria-hidden="true">
-      <svg class="hero-form hero-form--profile" viewBox="0 0 240 250" focusable="false">
-        <rect x="1" y="1" width="238" height="248" rx="12" />
-        <path d="M24 28h80M24 57h42M24 119h58M24 181h28" />
-        <rect x="24" y="69" width="192" height="32" rx="4" />
-        <rect x="24" y="131" width="192" height="32" rx="4" />
-        <rect x="24" y="199" width="78" height="28" rx="4" />
-        <path d="M38 85h62M38 147h96M41 213h44" />
-      </svg>
-      <svg class="hero-form hero-form--input" viewBox="0 0 240 75" focusable="false">
-        <path d="M2 8h60" />
-        <rect x="1" y="23" width="238" height="50" rx="6" />
-        <path d="M18 48h96M210 40l8 8-8 8" />
-      </svg>
-      <svg class="hero-form hero-form--registration" viewBox="0 0 260 220" focusable="false">
-        <rect x="1" y="1" width="258" height="218" rx="12" />
-        <path d="M24 28h104M24 57h34M142 57h46" />
-        <rect x="24" y="69" width="94" height="32" rx="4" />
-        <rect x="142" y="69" width="94" height="32" rx="4" />
-        <path d="M24 121h56" />
-        <rect x="24" y="133" width="212" height="32" rx="4" />
-        <path d="m211 147 5 5 5-5M49 191h108" />
-        <rect x="24" y="183" width="15" height="15" rx="3" />
-        <path d="m28 190 3 3 5-6" />
-      </svg>
-      <svg class="hero-form hero-form--choices" viewBox="0 0 200 140" focusable="false">
-        <path d="M2 10h88M31 44h114M31 82h85M31 120h126" />
-        <rect x="2" y="34" width="20" height="20" rx="4" />
-        <path d="m7 44 4 4 7-8" />
-        <rect x="2" y="72" width="20" height="20" rx="4" />
-        <rect x="2" y="110" width="20" height="20" rx="4" />
-      </svg>
-      <svg class="hero-form hero-form--select" viewBox="0 0 240 75" focusable="false">
-        <path d="M2 8h78" />
-        <rect x="1" y="23" width="238" height="50" rx="6" />
-        <path d="M18 48h78m108-4 6 6 6-6" />
-      </svg>
-      <svg class="hero-form hero-form--message" viewBox="0 0 260 155" focusable="false">
-        <path d="M2 8h74" />
-        <rect x="1" y="24" width="258" height="130" rx="6" />
-        <path d="M20 49h146M20 69h198M20 89h115m110 50 6-6m-14 6 14-14" />
-      </svg>
-      <svg class="hero-form hero-form--survey" viewBox="0 0 240 245" focusable="false">
-        <rect x="1" y="1" width="238" height="243" rx="12" />
-        <path d="M24 28h96M24 56h58" />
-        <rect x="24" y="68" width="192" height="32" rx="4" />
-        <path d="M24 124h118M51 150h82M51 178h108" />
-        <circle cx="32" cy="150" r="8" /><circle cx="32" cy="150" r="3" />
-        <circle cx="32" cy="178" r="8" />
-        <rect x="134" y="203" width="82" height="24" rx="4" />
-        <path d="M151 215h48" />
-      </svg>
-    </div>
+    <app-form-background />
     <div class="opening">
       <h1 id="presentation-title" [innerHTML]="'app.heading' | translate"></h1>
       <p class="subtitle">{{ 'app.subtitle' | translate }}</p>
@@ -101,7 +50,6 @@
       </ol>
       <div class="presentation-timer-controls">
         <p class="timer-readout" aria-hidden="true"><span>{{ 'timer.title' | translate }}</span><span>{{ 'timer.readout' | translate: { elapsed: elapsedMinutes(), total: 60 } }}</span></p>
-        @let description = startedAt() === null ? ('timer.idle' | translate) : ('timer.elapsed' | translate: { elapsed: elapsedMinutes(), total: 60 }) + (overdue() ? ('timer.overdue' | translate) : '');
         <div class="timer-track">
           <progress class="presentation-timer" [class.presentation-timer--overdue]="overdue()" [value]="progress()" max="100"
             [attr.aria-label]="'timer.title' | translate" [attr.aria-valuetext]="description" [attr.aria-describedby]="activeIndex() >= 0 ? 'timer-target' : null" [title]="description"></progress>
@@ -113,7 +61,6 @@
           [attr.aria-label]="(startedAt() === null ? 'timer.startLabel' : 'timer.resetLabel') | translate">{{ (startedAt() === null ? 'timer.start' : 'timer.reset') | translate }}</button>
         <p id="timer-target" class="timer-target" [style.visibility]="activeIndex() >= 0 ? null : 'hidden'">{{ 'timer.target' | translate: { minutes: targetMinutes() } }}</p>
       </div>
-      <p class="keyboard-hint">{{ 'presenter.keys' | translate }}</p>
     </nav>
   </div>
   <div class="chapter-sections">
@@ -123,3 +70,10 @@
     }
   </div>
 </main>
+@if (focused()) {
+  <div class="focus-timer">
+    <span class="focus-timer-readout" aria-hidden="true">{{ 'timer.readout' | translate: { elapsed: elapsedMinutes(), total: 60 } }}</span>
+    <progress class="presentation-timer" [class.presentation-timer--overdue]="overdue()" [value]="progress()" max="100"
+      [attr.aria-label]="'timer.title' | translate" [attr.aria-valuetext]="description" [title]="description"></progress>
+  </div>
+}
