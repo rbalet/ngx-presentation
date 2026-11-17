@@ -38,7 +38,7 @@ export class FormDemo {
     props: { label: 'Phone number', required: true },
   },
 ];`;
-  readonly webMcpPrompt = 'Use WebMCP in the browser tab I’m currently viewing. Fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot of that same tab. If you can’t access my tab, tell me and stop.';
+  readonly webMcpPrompt = 'In Codex’s built-in browser, open https://ngx-presentation.localhost/?selected=webmcp#chapter-04 or reuse the tab if it’s already open there. Use the WebMCP tool fill_phone_number to enter +1 202-555-0147. Report the validation result and show me a screenshot of that same tab. If the page or tool is unavailable, tell me what blocked you and stop.';
   readonly state = inject(DemoFormState);
   readonly languages = inject(Languages);
   readonly translate = inject(TranslateService);

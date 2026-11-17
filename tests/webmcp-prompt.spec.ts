@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const prompt = 'Use WebMCP in the browser tab I’m currently viewing. Fill the phone field with +1 202-555-0147, report its validation state, and show me a screenshot of that same tab. If you can’t access my tab, tell me and stop.';
+const prompt = 'In Codex’s built-in browser, open https://ngx-presentation.localhost/?selected=webmcp#chapter-04 or reuse the tab if it’s already open there. Use the WebMCP tool fill_phone_number to enter +1 202-555-0147. Report the validation result and show me a screenshot of that same tab. If the page or tool is unavailable, tell me what blocked you and stop.';
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
