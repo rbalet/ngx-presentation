@@ -11,24 +11,22 @@ p { line-height: 1.5; }
 .future-icon { color: var(--red); }
 .future-field-icons { display: flex; gap: 0.75rem; padding-inline-start: 1rem; border-inline-start: 1px solid var(--rule); color: var(--muted); }
 .future-ellipsis circle { opacity: 0; }
-@media (hover: hover) {
-  .future-card:hover .future-ellipsis circle { opacity: 1; }
-}
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .future-card:hover .future-ellipsis {
+.future-ellipsis.is-visible circle { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .future-ellipsis.is-visible {
     --dot-fade-duration: 160ms;
     --last-dot-delay: 4s;
     --wave-start: calc(var(--last-dot-delay) + var(--dot-fade-duration));
   }
-  .future-card:hover .future-ellipsis circle {
+  .future-ellipsis.is-visible circle {
     transition: opacity var(--dot-fade-duration) ease-out;
     animation: ellipsis-wave 900ms ease-in-out var(--wave-start) infinite;
   }
-  .future-card:hover .future-ellipsis circle:nth-child(2) {
+  .future-ellipsis.is-visible circle:nth-child(2) {
     transition-delay: 2s;
     animation-delay: calc(var(--wave-start) + 150ms);
   }
-  .future-card:hover .future-ellipsis circle:nth-child(3) {
+  .future-ellipsis.is-visible circle:nth-child(3) {
     transition-delay: var(--last-dot-delay);
     animation-delay: calc(var(--wave-start) + 300ms);
   }

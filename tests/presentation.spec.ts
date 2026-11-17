@@ -276,6 +276,25 @@ test("all numbered chapters are reachable and chapter 07 leads directly to the c
   expect(errors).toEqual([]);
 });
 
+test("the What's next ellipsis starts when it enters view", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const ellipsis = page.locator("#chapter-12 .future-ellipsis");
+  const firstDot = ellipsis.locator("circle").first();
+  await expect(firstDot).toHaveCSS("animation-name", "none");
+
+  await page.locator("#chapter-12").evaluate(element => element.scrollIntoView({ behavior: "instant" }));
+  await expect(firstDot).toHaveCSS("animation-name", /ellipsis-wave$/);
+
+  await page.locator("#chapter-11").evaluate(element => element.scrollIntoView({ behavior: "instant" }));
+  await expect(firstDot).toHaveCSS("animation-name", "none");
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.locator("#chapter-12").evaluate(element => element.scrollIntoView({ behavior: "instant" }));
+  await expect(ellipsis.locator("circle").last()).toHaveCSS("opacity", "1");
+  await expect(firstDot).toHaveCSS("animation-name", "none");
+});
+
 test("direct links work with reduced motion and without horizontal overflow", async ({
   page,
 }) => {

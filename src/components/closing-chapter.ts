@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { afterRenderEffect, Component, ElementRef, input, signal, viewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -9,4 +9,19 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class ClosingChapter {
   readonly chapter = input.required<string>();
+  protected readonly ellipsisVisible = signal(false);
+  private readonly ellipsis = viewChild<ElementRef<SVGSVGElement>>('ellipsis');
+
+  constructor() {
+    afterRenderEffect(onCleanup => {
+      const ellipsis = this.ellipsis()?.nativeElement;
+      if (!ellipsis) return;
+
+      const observer = new IntersectionObserver(([entry]) => {
+        this.ellipsisVisible.set(entry.isIntersecting);
+      });
+      observer.observe(ellipsis);
+      onCleanup(() => observer.disconnect());
+    });
+  }
 }

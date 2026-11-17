@@ -797,6 +797,7 @@ app-periscope-chapter .capability-label strong {
   rotate: none;
 }
 .form-challenges .form-example-challenge { position: relative; }
+.form-challenge-spark { display: none; }
 @media (prefers-reduced-motion: no-preference) {
   .form-challenge-slot {
     position: relative;
@@ -806,48 +807,41 @@ app-periscope-chapter .capability-label strong {
   }
   .form-challenges .form-example-challenge { transition: border-color 160ms ease-out; }
   .form-challenges .form-example-challenge svg { transition: color 160ms ease-out, rotate 180ms ease-out; }
-  .form-challenge-slot:has(> .form-example-challenge--resolved)::before {
-    --spark: radial-gradient(circle closest-side, currentColor 80%, transparent);
-    --spark-center: 50% calc(50% - 0.25rem);
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: -0.5rem -0.375rem -1rem;
-    pointer-events: none;
-    color: var(--success);
-    background-image: var(--spark), var(--spark), var(--spark), var(--spark),
-      var(--spark), var(--spark), var(--spark), var(--spark);
-    background-size: 6px 6px, 4px 4px, 7px 7px, 5px 5px, 5px 5px, 7px 7px, 5px 5px, 6px 6px;
-    background-repeat: no-repeat;
-    animation: challenge-sparks 4s ease-in-out both;
-  }
   .form-challenges--integration-only .form-challenge-slot:not(:last-child) {
     translate: 0 -4px;
   }
+  @supports (offset-path: inset(0)) {
+    .form-example-challenge--resolved ~ .form-challenge-spark {
+      display: block;
+      position: absolute;
+      z-index: -1;
+      inset: 0 auto auto 0;
+      width: 6px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--success);
+      pointer-events: none;
+      animation: challenge-spark-orbit 2.4s cubic-bezier(0.55, 0.12, 0.85, 0.65) both,
+        challenge-spark-fade 2.4s linear both;
+    }
+    .form-example-challenge--resolved ~ .form-challenge-spark:nth-child(even) {
+      width: 4px;
+    }
+  }
 }
-@keyframes challenge-sparks {
-  0%, 100% {
-    background-position:
-      var(--spark-center), var(--spark-center), var(--spark-center), var(--spark-center),
-      var(--spark-center), var(--spark-center), var(--spark-center), var(--spark-center);
-    opacity: 0;
+@keyframes challenge-spark-orbit {
+  from {
+    offset-path: inset(-4px round 16px);
+    offset-distance: var(--spark-start);
   }
-  2.5%, 97.5% { opacity: 1; }
-  12.5%, 87.5% {
-    background-position: 9% 0%, 42% 0%, 85% 0%, 0% 65%, 100% 48%, 18% 92%, 55% 100%, 92% 93%;
+  to {
+    offset-path: inset(-12px round 24px);
+    offset-distance: calc(var(--spark-start) + 150%);
   }
-  37.5% {
-    background-position:
-      calc(9% + 4px) 2px, calc(42% - 2px) 4px, calc(85% + 3px) 0,
-      3px calc(65% - 4px), calc(100% - 4px) calc(48% + 2px),
-      calc(18% - 4px) calc(92% + 2px), calc(55% + 2px) calc(100% - 4px), calc(92% + 3px) 93%;
-  }
-  62.5% {
-    background-position:
-      calc(9% - 3px) 4px, calc(42% + 4px) 1px, calc(85% - 4px) 3px,
-      1px calc(65% + 4px), calc(100% - 1px) calc(48% - 4px),
-      calc(18% + 3px) calc(92% - 4px), calc(55% - 4px) calc(100% - 1px), calc(92% - 2px) calc(93% - 4px);
-  }
+}
+@keyframes challenge-spark-fade {
+  0%, 100% { opacity: 0; }
+  8%, 65% { opacity: 1; }
 }
 .challenge-chapters {
   --challenge-row-height: 3.625rem;

@@ -23,6 +23,9 @@
     @for (example of examples(); track example.theme) {
       <div class="form-challenge-slot">
         <ng-container [ngTemplateOutlet]="challenge" [ngTemplateOutletContext]="{ $implicit: example }" />
+        @for (start of [0, 12, 26, 38, 49, 63, 76, 90]; track start) {
+          <span class="form-challenge-spark" [style.--spark-start]="start + '%'" aria-hidden="true"></span>
+        }
       </div>
     }
   </div>
