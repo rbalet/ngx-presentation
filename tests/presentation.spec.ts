@@ -245,7 +245,7 @@ test("all numbered chapters are reachable and chapter 07 leads directly to the c
   await expect(page.locator("#chapter-08, #chapter-09, #chapter-10")).toHaveCount(0);
   await expect(page.locator('a[href="#chapter-08"], a[href="#chapter-09"], a[href="#chapter-10"]')).toHaveCount(0);
   await expect(
-    page.locator("#chapter-07").getByRole("link", { name: "Next: 12" }),
+    page.locator("#chapter-07").getByRole("link", { name: "Next: 08" }),
   ).toHaveAttribute("href", "#chapter-12");
   await expect(
     page.locator("#chapter-12").getByRole("link", { name: "Previous: 07" }),
@@ -260,19 +260,19 @@ test("all numbered chapters are reachable and chapter 07 leads directly to the c
   const chapter = page.getByRole("region", {
     name: "07 PeriScope",
   });
-  await chapter.getByRole("link", { name: "Next: 12" }).click();
+  await chapter.getByRole("link", { name: "Next: 08" }).click();
   await expect(page).toHaveURL(/#chapter-12$/);
-  const whatsNext = page.getByRole("region", { name: "12 What's next" });
+  const whatsNext = page.getByRole("region", { name: "08 What's next" });
   await expect(whatsNext.getByRole("heading", { level: 2 })).toBeInViewport();
   await expect(whatsNext.getByRole("heading", { level: 3 })).toHaveText([
     "Framework agnostic",
     "Shared ARIA component",
   ]);
-  await whatsNext.getByRole("link", { name: "Next: 11" }).click();
+  await whatsNext.getByRole("navigation", { name: "Chapter 08 navigation" }).getByRole("link", { name: "Next: 09" }).click();
   await expect(page).toHaveURL(/#chapter-11$/);
-  const discussion = page.getByRole("region", { name: "11 Q&A" });
+  const discussion = page.getByRole("region", { name: "09 Q&A" });
   await expect(discussion.getByRole("heading", { level: 2 })).toBeInViewport();
-  await expect(discussion.getByRole("link", { name: "Previous: 12" })).toHaveAttribute("href", "#chapter-12");
+  await expect(discussion.getByRole("link", { name: "Previous: 08" })).toHaveAttribute("href", "#chapter-12");
   await discussion.getByRole("link", { name: "Back to overview" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
   expect(errors).toEqual([]);
@@ -434,10 +434,10 @@ test("the same chapter index sticks without jumping and highlights the chapter w
       .locator("#chapter-03 .chapter-content")
       .boundingBox();
     expect(content!.x + content!.width).toBeLessThan(bounds!.x);
-    await index.getByRole("link", { name: /11 Q&A/ }).click();
+    await index.getByRole("link", { name: /09 Q&A/ }).click();
     await expect(current).toHaveAttribute("href", "#chapter-11");
     await expect(
-      page.getByRole("heading", { name: "11 Q&A" }),
+      page.getByRole("heading", { name: "09 Q&A" }),
     ).toBeInViewport();
     await page.setViewportSize({ width: 1280, height: 500 });
     await page.goto("/#chapter-03");

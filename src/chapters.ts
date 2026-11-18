@@ -1,5 +1,6 @@
 export type Chapter = {
   number: string;
+  displayNumber: string;
   title: string;
   subtitle?: string;
   minutes: number;
@@ -7,8 +8,8 @@ export type Chapter = {
   summary: string;
 };
 
-// Keep these numbers stable so each chapter can be discussed and edited independently.
-export const chapters: Chapter[] = [
+// Keep chapter numbers stable for existing links.
+const chapterDefinitions: Omit<Chapter, "displayNumber">[] = [
   {
     number: "01",
     title: "chapters.01.title",
@@ -73,3 +74,8 @@ export const chapters: Chapter[] = [
     summary: "chapters.11.summary",
   },
 ];
+
+export const chapters: Chapter[] = chapterDefinitions.map((chapter, index) => ({
+  ...chapter,
+  displayNumber: (index + 1).toString().padStart(2, "0"),
+}));

@@ -1,9 +1,9 @@
 <ng-template #titleTemplate>
-  <h2 appChapterTitle [number]="chapter().number" [title]="chapter().title" [subtitle]="continuations().length ? undefined : chapter().subtitle"></h2>
+  <h2 appChapterTitle [id]="'title-' + chapter().number" [number]="chapter().displayNumber" [title]="chapter().title" [subtitle]="continuations().length ? undefined : chapter().subtitle"></h2>
 </ng-template>
 <ng-template #nextLinks>
   <div>
-    <a [href]="next() ? '#chapter-' + next()!.number : '#overview'">{{ (next() ? 'nav.next' : 'nav.overview') | translate: { number: next()?.number } }}</a>
+    <a [href]="next() ? '#chapter-' + next()!.number : '#overview'">{{ (next() ? 'nav.next' : 'nav.overview') | translate: { number: next()?.displayNumber } }}</a>
   </div>
 </ng-template>
 <ng-template #connector let-slide>
@@ -41,8 +41,8 @@
       @default { <app-closing-chapter [chapter]="chapter().number" /> }
     }
   </div>
-  <nav class="chapter-controls" [attr.aria-label]="'nav.chapter' | translate: { number: chapter().number }">
-    <a [href]="previous() ? '#chapter-' + previous()!.number : '#overview'">{{ (previous() ? 'nav.previous' : 'nav.overview') | translate: { number: previous()?.number } }}</a>
+  <nav class="chapter-controls" [attr.aria-label]="'nav.chapter' | translate: { number: chapter().displayNumber }">
+    <a [href]="previous() ? '#chapter-' + previous()!.number : '#overview'">{{ (previous() ? 'nav.previous' : 'nav.overview') | translate: { number: previous()?.displayNumber } }}</a>
     @if (continuations().length) {
       <ng-container [ngTemplateOutlet]="connector" [ngTemplateOutletContext]="{ $implicit: continuations()[0] }" />
     } @else { <ng-container [ngTemplateOutlet]="nextLinks" /> }
@@ -56,7 +56,7 @@
         @case ('ssf-forms') { <app-problem-chapter part="ssf-forms" /> }
       }
     </div>
-    <nav class="chapter-controls" [attr.aria-label]="'nav.slide' | translate: { number: chapter().number, slide: index + 2 }">
+    <nav class="chapter-controls" [attr.aria-label]="'nav.slide' | translate: { number: chapter().displayNumber, slide: index + 2 }">
       <a [href]="'#' + (continuations()[index - 1]?.id ?? 'chapter-' + chapter().number)">{{ 'nav.previousSlide' | translate }}</a>
       @if (continuations()[index + 1]; as nextSlide) {
         <ng-container [ngTemplateOutlet]="connector" [ngTemplateOutletContext]="{ $implicit: nextSlide }" />

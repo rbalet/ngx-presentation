@@ -22,7 +22,7 @@ test("hero forms tint individually on hover in both themes", async ({ page, isMo
 
 for (const { sectionId, linkName, nextId } of [
   { sectionId: "overview", linkName: "Start with chapter 01", nextId: "chapter-01" },
-  { sectionId: "chapter-12", linkName: "Next: 11", nextId: "chapter-11" },
+  { sectionId: "chapter-12", linkName: "Next: 09", nextId: "chapter-11" },
 ]) {
   test(`decorative forms stay inside ${sectionId} and leave navigation usable`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
