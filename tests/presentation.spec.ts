@@ -238,7 +238,9 @@ test("all numbered chapters are reachable and chapter 07 leads directly to the c
     name: "Chapter index",
     exact: true,
   });
-  await expect(index.getByRole("link")).toHaveCount(9);
+  await expect(index.locator(".index-number")).toHaveText([
+    "01", "02", "03", "04", "05", "06", "07", "08", "09",
+  ]);
   await expect(index.getByRole("link").last()).toHaveAttribute("href", "#chapter-11");
   await expect(page.locator("#chapter-08, #chapter-09, #chapter-10")).toHaveCount(0);
   await expect(page.locator('a[href="#chapter-08"], a[href="#chapter-09"], a[href="#chapter-10"]')).toHaveCount(0);

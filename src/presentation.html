@@ -45,7 +45,7 @@
       <ol #indexList role="list">
         @for (chapter of chapters; track chapter.number; let index = $index) {
           <li><a [href]="'#chapter-' + chapter.number" [attr.aria-current]="activeChapter() === chapter.number ? 'location' : null">
-            <span class="index-number">{{ chapter.number }}</span>
+            <span class="index-number">{{ (index + 1).toString().padStart(2, '0') }}</span>
             <span>
               <span class="index-title" [class.index-title--completed]="index < activeIndex()">{{ chapter.title | translate }}</span>
             </span>
