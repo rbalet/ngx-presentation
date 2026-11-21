@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <title>ngx-translate</title>
+  <g fill="none" stroke="#586575" stroke-width="2" stroke-linejoin="miter">
+    <path d="M13 2H1v13h3v4l5-4h4V2Z M16 9h7v12h-3v2l-4-2h-5v-3"/>
+    <path d="m4 12 3-7 3 7 M5 10h4 M16 12h5 M18 10v2 M19 12c0 3-2 5-4 6 M16 14c1 2 3 3 5 4"/>
+  </g>
+</svg>
