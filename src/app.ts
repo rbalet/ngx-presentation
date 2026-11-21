@@ -15,6 +15,6 @@ export class App {
 @Component({
   selector: 'app-not-found',
   imports: [TranslatePipe],
-  template: `<main class="not-found"><h1>{{ 'app.notFound' | translate }}</h1><a href="/">{{ 'app.open' | translate }}</a></main>`,
+  template: `<main class="not-found"><h1>{{ 'app.notFound' | translate }}</h1><a href="./">{{ 'app.open' | translate }}</a></main>`,
 })
 export class NotFound {}

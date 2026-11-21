@@ -618,7 +618,7 @@ test("metrics reveal in order and count up once per card on hover or tap", async
   await expect(page.locator(".metric-card[data-reveal-pending]")).toHaveCount(3);
   expect(events).toEqual([]);
   const totals = ["100", "1,912,458", "311,233"];
-  const sources = ["/metrics/stackoverflow.svg", "/metrics/ngx-translate.svg", "/metrics/ngx-formly.svg"];
+  const sources = ["metrics/stackoverflow.svg", "metrics/ngx-translate.svg", "metrics/ngx-formly.svg"];
 
   for (const index of [2, 1]) {
     const card = cards.nth(index);
